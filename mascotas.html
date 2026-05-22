@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mascotas | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; padding: 15px 12px; }
+
+        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; }
+        .txt-verde-bosque { color: #14532d; }
+        .txt-marino { color: #1e3a8a; }
+
+        .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
+
+        /* MAPA */
+        .contenedor-mapa-fijo { width: 100%; height: 350px; margin-bottom: 25px; }
+        .map-wrapper { width: 100%; height: 100%; overflow: hidden; border-radius: 14px; border: 1px solid #cbd5e1; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); }
+        .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
+
+        /* BUSCADOR */
+        .contenedor-buscador { margin-bottom: 20px; width: 100%; }
+        .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 2px solid #cbd5e1; border-radius: 12px; outline: none; transition: border-color 0.2s; }
+        .input-buscador:focus { border-color: #14532d; }
+
+        /* TARJETAS */
+        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; padding-bottom: 25px; visibility: hidden; }
+        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #14532d; border-radius: 14px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); display: flex; flex-direction: column; }
+        .info-comercio { padding: 20px; flex-grow: 1; }
+        .nombre-comercio { font-size: 19px; font-weight: 700; color: #14532d; margin-bottom: 5px; }
+        .enlace-web { font-size: 13.5px; color: #475569; text-decoration: none; margin-bottom: 8px; display: block; word-break: break-all; }
+        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+        
+        .btn { text-decoration: none; font-size: 13px; font-weight: 700; padding: 11px; border-radius: 10px; text-align: center; color: #fff; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .btn-llamar { background: #000; flex: 1; }
+        .btn-whatsapp { background: #10b981; flex: 1; }
+        .btn-maps { background: #1a73e8; width: 100%; }
+        .btn-email { background: #facc15; color: #000; width: 100%; }
+    </style>
+</head>
+<body>
+
+    <h2 class="titulo-seccion-principal">
+        <span class="txt-verde-bosque">Mascotas</span> y <span class="txt-marino">Veterinaria</span>
+    </h2>
+
+    <div class="titulo-bloque">Localización de servicios</div>
+    <div class="contenedor-mapa-fijo">
+        <div class="map-wrapper">
+            <iframe src="https://www.google.com/maps/d/embed?mid=13tCRPicquTdHMFa4EcKgaj1taHkU6qc&ehbc=2E312F&noprof=1"></iframe>
+        </div>
+    </div>
+
+    <div class="contenedor-buscador">
+        <input type="text" id="buscadorMascotas" class="input-buscador" placeholder="🔍 Buscar veterinario, alimentación, guardería...">
+    </div>
+
+    <div class="grid-comercios" id="gridVeterinarias">
+        <div class="tarjeta-comercio" data-search="anumanu nutricion bienestar animal espinar">
+            <div class="info-comercio">
+                <div class="nombre-comercio">Anumanu Nutrición</div>
+                <a href="https://www.anumanu.es" class="enlace-web">🌐 anumanu.es</a>
+                <div class="direccion-comercio">📍 El Espinar</div>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <a href="tel:+34654050468" class="btn btn-llamar">📞 Llamar</a>
+                    <a href="https://wa.me/34654050468" class="btn btn-whatsapp">💬 WhatsApp</a>
+                </div>
+                <a href="mailto:animal@anumanu.es" class="btn btn-email">📧 Enviar Email</a>
+            </div>
+        </div>
+
+        <div class="tarjeta-comercio" data-search="bea-vet veterinaria san rafael">
+            <div class="info-comercio">
+                <div class="nombre-comercio">BEA-VET</div>
+                <div class="direccion-comercio">📍 P.º Apeadero, 13, San Rafael</div>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <a href="tel:+34677327010" class="btn btn-llamar">📞 Llamar</a>
+                    <a href="https://wa.me/34677327010" class="btn btn-whatsapp">💬 WhatsApp</a>
+                </div>
+                <a href="https://maps.google.com/?q=BEA-VET+Paseo+Apeadero+13+San+Rafael" class="btn btn-maps">📍 Ver en Maps</a>
+            </div>
+        </div>
+
+        <div class="tarjeta-comercio" data-search="centro veterinario san rafael">
+            <div class="info-comercio">
+                <div class="nombre-comercio">Centro Veterinario San Rafael</div>
+                <div class="direccion-comercio">📍 Tr.ª Alto del León, 7, San Rafael</div>
+                <a href="tel:+34921171594" class="btn btn-llamar" style="margin-bottom:10px;">📞 Llamar</a>
+                <a href="https://maps.google.com/?q=Centro+Veterionario+San+Rafael+Travesia+Alto+del+Leon+7" class="btn btn-maps">📍 Ver en Maps</a>
+            </div>
+        </div>
+
+        <div class="tarjeta-comercio" data-search="vetiva alimentacion el espinar">
+            <div class="info-comercio">
+                <div class="nombre-comercio">Vetiva Alimentación</div>
+                <a href="http://vetivanimal.com/" class="enlace-web">🌐 vetivanimal.com</a>
+                <div class="direccion-comercio">📍 Ctra. Coruña, 19, El Espinar</div>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <a href="tel:+34602014015" class="btn btn-llamar">📞 Llamar</a>
+                    <a href="https://wa.me/34602014015" class="btn btn-whatsapp">💬 WhatsApp</a>
+                </div>
+                <a href="https://maps.google.com/?q=Vetiva+Alimentacion+Carretera+Coruña+19+El+Espinar" class="btn btn-maps" style="margin-bottom:10px;">📍 Ver en Maps</a>
+                <a href="mailto:vetivalternativa@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+            </div>
+        </div>
+        
+        <div class="tarjeta-comercio" data-search="clinica veterinaria el espinar">
+            <div class="info-comercio">
+                <div class="nombre-comercio">Clínica Veterinaria El Espinar</div>
+                <a href="http://www.clinicaelespinar.es/" class="enlace-web">🌐 clinicaelespinar.es</a>
+                <div class="direccion-comercio">📍 P.º de las Peñitas, 22, El Espinar</div>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <a href="tel:+34921181396" class="btn btn-llamar">📞 Llamar</a>
+                    <a href="https://wa.me/34606745641" class="btn btn-whatsapp">💬 WhatsApp</a>
+                </div>
+                <a href="https://maps.google.com/?q=Clinica+Veterinaria+El+Espinar+Paseo+Peñitas+22" class="btn btn-maps" style="margin-bottom:10px;">📍 Ver en Maps</a>
+                <a href="mailto:cvelespinar@hotmail.com" class="btn btn-email">📧 Enviar Email</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const contenedor = document.getElementById("gridVeterinarias");
+      const tarjetas = Array.from(document.querySelectorAll(".tarjeta-comercio"));
+      const buscador = document.getElementById("buscadorMascotas");
+      
+      // Mezcla aleatoria
+      for (let i = tarjetas.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+      }
+      tarjetas.forEach(t => contenedor.appendChild(t));
+      contenedor.style.visibility = "visible";
+      
+      buscador.addEventListener("input", function() {
+        const termino = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        document.querySelectorAll(".tarjeta-comercio").forEach(t => {
+          t.style.display = (t.dataset.search || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(termino) ? "flex" : "none";
+        });
+        actualizarAltura();
+      });
+      actualizarAltura();
+    });
+
+    function actualizarAltura() {
+      if(window.parent && window.parent.postMessage) {
+        window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 40}, '*');
+      }
+    }
+    window.addEventListener('resize', actualizarAltura);
+    setTimeout(actualizarAltura, 500);
+    </script>
+</body>
+</html>
