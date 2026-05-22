@@ -1,1 +1,482 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpieza | infoespinar.com</title>
+    <style>
+        /* 🎨 VARIABLES Y ESTILOS GENERALES */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* 📋 ENCABEZADO */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .header-logo-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .header-bandera {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 6px;
+            aspect-ratio: 1 / 1;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* 🏛️ CONTENEDOR PRINCIPAL RESTRINGIDO EN PC */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
+        }
+
+        /* 🎪 TITULAR COLOR LIMPIEZA */
+        .titulo-seccion-principal {
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .txt-celeste { color: #0284c7; } /* Azul limpieza dinámico */
+        .txt-marino { color: #1e3a8a; }  /* Azul marino formal */
+
+        .titulo-bloque {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 25px 0 12px 4px;
+            font-weight: 700;
+        }
+
+        /* 🗺️ MAPA CON RECORTE PARA GOOGLE SITES */
+        .contenedor-mapa-fijo {
+            width: 100%;
+            height: 350px;
+            margin-bottom: 25px;
+        }
+
+        .map-wrapper {
+            width: 100%;
+            height: 100%; 
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+        }
+
+        .map-wrapper iframe {
+            position: absolute;
+            top: -60px; /* Oculta el título nativo de My Maps */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 60px);
+            border: 0;
+        }
+
+        /* 🏷️ BANNER PUBLICIDAD */
+        .banner-comercio {
+            width: 100%;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .banner-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            transition: transform 0.3s ease;
+        }
+
+        .banner-comercio:hover .banner-img {
+            transform: scale(1.02);
+        }
+
+        .banner-info {
+            position: relative;
+            padding: 15px 20px;
+            z-index: 2;
+        }
+
+        .banner-label {
+            display: inline-block;
+            background: #059669;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .banner-nombre {
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .banner-sub {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            margin-top: 3px;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+
+        /* 🔍 BUSCADOR INTERNO */
+        .contenedor-buscador {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .input-buscador {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-buscador:focus {
+            border-color: #0284c7; /* Foco unificado en azul de limpieza */
+        }
+
+        /* 📇 CUADRÍCULA DE COMERCIOS */
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            width: 100%;
+            padding-bottom: 25px;
+            visibility: hidden;
+        }
+
+        .tarjeta-comercio {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #0284c7; /* Color Azul Limpieza */
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tarjeta-comercio:active {
+            transform: scale(0.99);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .info-comercio {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .nombre-comercio {
+            font-size: 19px;
+            font-weight: 700;
+            color: #0284c7; 
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .enlace-web {
+            display: inline-block;
+            font-size: 13.5px;
+            color: #475569; 
+            text-decoration: none;
+            font-weight: 400;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .enlace-web:hover {
+            text-decoration: underline;
+            color: #0284c7; 
+        }
+
+        .direccion-comercio {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        /* BOTONES DE ACCIÓN */
+        .bloque-botones {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fila-contacto {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        .btn-llamar { background-color: #0f172a; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps { background-color: #1a73e8; width: 100%; }
+        .btn-email { background-color: #facc15; color: #000000; width: 100%; }
+
+        /* ⚠️ AVISO LEGAL / DISCLAIMER */
+        .disclaimer-box {
+            background-color: #edd3be;
+            border-left: 4px solid #b45309;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 30px 4px 15px 4px;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #78350f;
+            text-align: justify;
+        }
+
+        @media screen and (min-width: 768px) {
+            .grid-comercios {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 16px;
+            }
+        }
+
+        /* 👣 FOOTER */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #3b82f6;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar"> 
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <main class="main-container">
+
+        <h2 class="titulo-seccion-principal">
+            <span class="txt-celeste">Servicios</span> de <span class="txt-marino">Limpieza</span>
+        </h2>
+
+        <div class="titulo-bloque">Localización de servicios</div>
+        <div class="contenedor-mapa-fijo">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1AiWcv9nvoLQBrH0JMpPFOoQVfnnch78&ehbc=2E312F&noprof=1"></iframe>
+            </div>
+        </div>
+
+        <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Eres comerciante?</span>
+                <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
+                <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
+            </div>
+        </a>
+
+        <div class="titulo-bloque">Listado de profesionales</div>
+        <div class="contenedor-buscador">
+            <input type="text" id="buscadorLimpieza" class="input-buscador" placeholder="🔍 Buscar empresa, cristales, comunidades o por núcleo...">
+        </div>
+
+        <div class="grid-comercios" id="gridLimpieza">
+
+            <div class="tarjeta-comercio" data-search="namaste limpiezas integrales oficinas comunidades cristales locales el espinar gonzalez bravo">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Namasté Limpiezas Integrales</div>
+                    <a href="https://www.namastelimpiezas.com/" target="_blank" rel="noopener" class="enlace-web">🌐 www.namastelimpiezas.com</a>
+                    <div class="direccion-comercio">📍 Paseo Dr. González Bravo, 15, 3º, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34646748787" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34646114950" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Paseo+Dr.+Gonzalez+Bravo+15+El+Espinar+Segovia" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@namastelimpiezas.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hecelan mantenimiento limpieza industrial hogar oficinas comunidades fin de obra el espinar bruno ortega">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hecelan</div>
+                    <a href="http://www.hecelan.es/" target="_blank" rel="noopener" class="enlace-web">🌐 www.hecelan.es</a>
+                    <div class="direccion-comercio">📍 C. Bruno Ortega, 9, Of. 4, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34678610971" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34678610971" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Calle+Bruno+Ortega+9+El+Espinar+Segovia" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@hecelan.es" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>Aviso de responsabilidad:</strong> infoespinar.com es un directorio vecinal meramente informativo que recopila de buena fe los datos públicos y de contacto de los comercios y profesionales de la zona. Esta web no tiene vinculación contractual, comercial ni societaria con los negocios aquí listados, ni se responsabiliza de los presupuestos, trabajos, servicios prestados, retrasos o posibles incidencias que puedan surgir entre los usuarios y dichos profesionales. Recomendamos solicitar siempre presupuesto previo por escrito.
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const contenedor = document.getElementById("gridLimpieza");
+        const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+        const buscador = document.getElementById("buscadorLimpieza");
+        
+        // 1. Algoritmo de mezcla aleatoria (Fisher-Yates)
+        for (let i = tarjetas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+        }
+        
+        tarjetas.forEach(tarjeta => contenedor.appendChild(tarjeta));
+        contenedor.style.visibility = "visible";
+        
+        // 2. Lógica del Buscador en tiempo real
+        buscador.addEventListener("input", function() {
+            const termino = buscador.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            
+            tarjetas.forEach(tarjeta => {
+                const textoTarjeta = tarjeta.getAttribute("data-search").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (textoTarjeta.includes(termino)) {
+                    tarjeta.style.display = "flex";
+                } else {
+                    tarjeta.style.display = "none";
+                }
+            });
+            
+            actualizarAltura();
+        });
+
+        actualizarAltura();
+    });
+
+    function actualizarAltura() {
+        const grid = document.getElementById('gridLimpieza');
+        if(grid && window.parent && window.parent.postMessage) {
+            window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
+        }
+    }
+    window.addEventListener('resize', actualizarAltura);
+    setTimeout(actualizarAltura, 350);
+    </script>
+</body>
+</html>
