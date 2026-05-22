@@ -1,72 +1,59 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
-  *, *:before, *:after { box-sizing: border-box; }
-
-  body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 16px;
-    background: transparent;
-  }
-
-  /* Buscador */
-  .contenedor-buscador { margin-bottom: 24px; }
-  .input-buscador {
-    width: 100%;
-    padding: 14px 20px;
-    font-size: 15px;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    background: #ffffff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    outline: none;
-    transition: all 0.2s;
-  }
-  .input-buscador:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
-
-  /* Grid y Tarjetas */
-  .grid-comercios {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    visibility: hidden;
-  }
-
-  .tarjeta-comercio {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
-  .tarjeta-comercio:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
-
-  /* Estilo destacado Oficial */
-  .oficial-destacado { border-left: 4px solid #10b981; background: #fdfdfe; }
-
-  .nombre-comercio { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 6px; }
-  .enlace-web { font-size: 13px; color: #0ea5e9; text-decoration: none; margin-bottom: 12px; display: block; }
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const contenedor = document.getElementById("gridComercios");
+  const buscador = document.getElementById("buscadorSalud");
+  // Obtenemos las tarjetas frescas del DOM
+  const tarjetas = Array.from(document.querySelectorAll(".tarjeta-comercio"));
   
-  .contenedor-burbujas { display: flex; gap: 8px; margin-bottom: 12px; }
-  .burbuja { font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 6px; text-transform: uppercase; }
-  .burbuja-nucleo { background: #f1f5f9; color: #475569; }
-  .burbuja-publico { background: #dcfce7; color: #166534; }
-
-  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
-
-  .bloque-botones { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
-  .btn { 
-    padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 600; text-align: center; 
-    text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; 
-    transition: 0.2s;
+  // Separar oficiales de privadas
+  const oficiales = tarjetas.filter(t => t.dataset.oficial === "true");
+  const privadas = tarjetas.filter(t => t.dataset.oficial !== "true");
+  
+  // Algoritmo de mezcla Fisher-Yates para privadas
+  for (let i = privadas.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [privadas[i], privadas[j]] = [privadas[j], privadas[i]];
   }
-  .btn-llamar { background: #0f172a; color: white; }
-  .btn-maps { background: #f1f5f9; color: #1e293b; }
-  .btn-whatsapp { background: #22c55e; color: white; }
-  .btn-email { background: #e2e8f0; color: #1e293b; }
-</style>
+  
+  // Limpiamos el contenedor y reinsertamos en orden: Oficiales (fijas) + Privadas (aleatorias)
+  contenedor.innerHTML = '';
+  oficiales.forEach(t => contenedor.appendChild(t));
+  privadas.forEach(t => contenedor.appendChild(t));
+  
+  // Hacemos visible
+  contenedor.style.visibility = "visible";
+  
+  // Lógica del Buscador optimizada
+  buscador.addEventListener("input", function() {
+    const termino = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    
+    // Volvemos a seleccionar todas las tarjetas tras el reordenamiento inicial
+    const todasLasTarjetas = document.querySelectorAll(".tarjeta-comercio");
+    
+    todasLasTarjetas.forEach(tarjeta => {
+      const textoBusqueda = (tarjeta.dataset.search || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      tarjeta.style.display = textoBusqueda.includes(termino) ? "flex" : "none";
+    });
+    
+    actualizarAltura();
+  });
 
-<!-- (Mantener la estructura HTML y Script anterior, el diseño ya heredará estos estilos) -->
+  actualizarAltura();
+});
+
+function actualizarAltura() {
+  const height = document.body.scrollHeight + 40; // Margen extra de seguridad
+  if(window.parent && window.parent.postMessage) {
+    window.parent.postMessage({
+      type: 'resize', 
+      height: height
+    }, '*');
+  }
+}
+
+// Múltiples disparos para asegurar que el iframe se adapte tras cargar imágenes o fuentes
+window.addEventListener('resize', actualizarAltura);
+window.addEventListener('load', actualizarAltura);
+setTimeout(actualizarAltura, 500);
+setTimeout(actualizarAltura, 1500);
+</script>
