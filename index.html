@@ -265,12 +265,25 @@
         .clima-nocturno .tiempo-dinamico { color: #f8fafc !important; }
         .clima-nocturno .icono-wrap { background-color: #1e293b !important; color: #f1f5f9 !important; }
 
-        /* 🏷️ 3. SECCIÓN: BOTONES DE CATEGORÍAS (MÓVIL VS PC) */
+       /* 🏷️ 3. SECCIÓN: BOTONES DE CATEGORÍAS (MÓVIL VS PC) */
         .grid-servicios {
             display: grid;
-            grid-template-columns: 1fr; /* 1 columna en móvil */
-            gap: 12px;
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas en móvil */
+            gap: 8px; /* Un pelín más juntos en móvil para aprovechar espacio */
             width: 100%;
+        }
+
+        .card-servicio {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 12px 10px; /* Un poco más compacto para que no se corte el texto */
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .card-servicio {
