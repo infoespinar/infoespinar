@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automoción | infoespinar.com</title>
+    <style>
+        /* 🎨 VARIABLES Y ESTILOS GENERALES */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* 📋 ENCABEZADO */
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .header-logo-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .header-bandera {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 6px;
+            aspect-ratio: 1 / 1;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* 🏛️ CONTENEDOR PRINCIPAL RESTRINGIDO EN PC */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
+        }
+
+        /* 🎪 TITULAR PRINCIPAL COLOR SECCIÓN */
+        .titulo-seccion-principal {
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .txt-negro { color: #000000; }
+        .txt-motor { color: #dc2626; } /* Rojo Asfalto / Automoción */
+
+        .titulo-bloque {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 25px 0 12px 4px;
+            font-weight: 700;
+        }
+
+        /* 🗺️ MAPA CON RECORTE PARA GOOGLE SITES */
+        .contenedor-mapa-fijo {
+            width: 100%;
+            height: 350px;
+            margin-bottom: 25px;
+        }
+
+        .map-wrapper {
+            width: 100%;
+            height: 100%; 
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+        }
+
+        .map-wrapper iframe {
+            position: absolute;
+            top: -60px; /* Oculta el título de My Maps */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 60px);
+            border: 0;
+        }
+
+        /* 🏷️ BANNER PUBLICIDAD */
+        .banner-comercio {
+            width: 100%;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .banner-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            transition: transform 0.3s ease;
+        }
+
+        .banner-comercio:hover .banner-img {
+            transform: scale(1.02);
+        }
+
+        .banner-info {
+            position: relative;
+            padding: 15px 20px;
+            z-index: 2;
+        }
+
+        .banner-label {
+            display: inline-block;
+            background: #059669;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .banner-nombre {
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .banner-sub {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            margin-top: 3px;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+
+        /* 🔍 BUSCADOR INTERNO */
+        .contenedor-buscador {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .input-buscador {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-buscador:focus {
+            border-color: #000000;
+        }
+
+        /* 📇 CUADRÍCULA DE COMERCIOS */
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            width: 100%;
+            padding-bottom: 25px;
+            visibility: hidden;
+        }
+
+        .tarjeta-comercio {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #000000; /* Borde superior negro sólido */
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tarjeta-comercio:active {
+            transform: scale(0.99);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .info-comercio {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .nombre-comercio {
+            font-size: 19px;
+            font-weight: 700;
+            color: #000000; /* Texto Negro */
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        /* 🏷️ BURBUJAS DE NÚCLEOS */
+        .bloque-nucleos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .burbuja-nucleo {
+            background-color: #f1f5f9;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .enlace-web {
+            display: inline-block;
+            font-size: 13.5px;
+            color: #334155; 
+            text-decoration: none;
+            font-weight: 400;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .enlace-web:hover {
+            text-decoration: underline;
+            color: #000000; 
+        }
+
+        .direccion-comercio {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        /* BOTONES DE ACCIÓN */
+        .bloque-botones {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fila-contacto {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        .btn-llamar { background-color: #000000; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps { background-color: #1a73e8; width: 100%; }
+        .btn-email { background-color: #facc15; color: #000000; width: 100%; }
+
+       /* ⚠️ AVISO DE INFORMACIÓN */
+.disclaimer-box {
+    background-color: #f1f5f9; /* Gris azulado suave */
+    border-left: 4px solid #64748b; /* Azul grisáceo neutro */
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 30px 4px 15px 4px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #475569;
+    text-align: justify;
+}
+
+        @media screen and (min-width: 768px) {
+            .grid-comercios {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 16px;
+            }
+        }
+
+        /* 👣 FOOTER */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #000000;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar"> 
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <main class="main-container">
+
+        <h2 class="titulo-seccion-principal">
+            <span class="txt-negro">Servicios de</span> <span class="txt-motor">Automoción</span>
+        </h2>
+
+        <div class="titulo-bloque">Localización de talleres y servicios</div>
+        <div class="contenedor-mapa-fijo">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1jA3XCZCt5A7F4aK3JUiGDpB6OQgoLTM&ehbc=2E312F&noprof=1"></iframe>
+            </div>
+        </div>
+
+        <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Eres comerciante?</span>
+                <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
+                <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
+            </div>
+        </a>
+
+        <div class="titulo-bloque">Listado de talleres y asistencia</div>
+        <div class="contenedor-buscador">
+            <input type="text" id="buscadorMotor" class="input-buscador" placeholder="🔍 Buscar taller, grúa, ITV, ruedas, chapa o por núcleo (San Rafael, El Espinar...)...">
+        </div>
+
+        <div class="grid-comercios" id="gridAutomocion">
+
+            <div class="tarjeta-comercio" data-search="exclusive car automocion taller mecanica mantenimiento reparacion diagnosis aceite filtros frenos averia san rafael el espinar la estacion los angeles de san rafael lasr mejorana">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Exclusive Car</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">San Rafael</span>
+                        <span class="burbuja-nucleo">El Espinar</span>
+                        <span class="burbuja-nucleo">La Estación</span>
+                        <span class="burbuja-nucleo">LASR</span>
+                    </div>
+                    <a href="https://exclusivecarauto.com/" target="_blank" rel="noopener" class="enlace-web">🌐 exclusivecarauto.com</a>
+                    <div class="direccion-comercio">📍 C. Mejorana, 40410 El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34682349865" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34682349865" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Exclusive+Car+Calle+Mejorana+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:admin@exclusivecarauto.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="talleres millauto mecanica taller reparacion motor mantenimiento revision averias coches san rafael nacional vi">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Talleres Millauto</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">San Rafael</span>
+                    </div>
+                    <div class="direccion-comercio">📍 N-6, KM 64, 40400 San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921172347" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Talleres+Millauto+N-6+Km+64+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="euromaster taller neumaticos ruedas mecanica rapida alineacion frenos aceite mantenimiento san rafael parador del sol">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Euromaster</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">San Rafael</span>
+                    </div>
+                    <a href="https://ebooking.euromaster.com/es_ES/Retailplus/services" target="_blank" rel="noopener" class="enlace-web">🌐 Cita Online Euromaster</a>
+                    <div class="direccion-comercio">📍 Calle Parador del Sol, KM 64, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171688" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Euromaster+Calle+Parador+del+Sol+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="itv el espinar inspeccion tecnica vehiculos revision obligatoria cita previa coches motos camiones la pililla pililla">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">ITV El Espinar</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <a href="https://www.tuvsud.com/es-es/industrias/movilidad-automocion/inspeccion-tecnica-de-vehiculos/estaciones-itv/castilla-y-leon/itv-el-espinar" target="_blank" rel="noopener" class="enlace-web">🌐 Web Oficial / Cita ITV</a>
+                    <div class="direccion-comercio">📍 Sector La Pililla, Ctra. N-6, KM 67, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921183173" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=ITV+El+Espinar+La+Pililla" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="gruas villa asistencia carretera remolque rescate vehiculos averia taller el espinar san rafael la estacion lasr">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Grúas Villa</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">San Rafael</span>
+                        <span class="burbuja-nucleo">El Espinar</span>
+                        <span class="burbuja-nucleo">La Estación</span>
+                        <span class="burbuja-nucleo">LASR</span>
+                    </div>
+                    <div class="direccion-comercio">📍 Ctra. Espinar, 4A, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34639340714" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34639340714" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Gruas+Villa+Carretera+Espinar+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="xtress motor taller motos mecanica reparacion ciclomotores motocicletas revision palomeras el espinar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Xtress Motor</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <a href="https://www.xtressmotor.com/" target="_blank" rel="noopener" class="enlace-web">🌐 xtressmotor.com</a>
+                    <div class="direccion-comercio">📍 C. Palomeras, 2, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34627494684" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34627494684" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Xtress+Motor+Calle+Palomeras+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="auto recambios dialsa repuestos piezas tiendas accesorios componentes herramientas baterias el espinar bruno ortega">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Auto Recambios Dialsa</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <div class="direccion-comercio">📍 C. Bruno Ortega, 13, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34645650084" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34645650084" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Auto+Recambios+Dialsa+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="autoservice el espinar taller mecanica reparacion coches mantenimiento diagnosis revision los llanos">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Autoservice El Espinar</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <a href="https://autoserviceelespinar.com/" target="_blank" rel="noopener" class="enlace-web">🌐 autoserviceelespinar.com</a>
+                    <div class="direccion-comercio">📍 Polígono Los Llanos, 32, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921182282" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34617867365" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Autoservice+El+Espinar+Poligono+Los+Llanos" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="talleres y gruas arse mecanica asistencia carretera remolque rescate averias llanos de san pedro el espinar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Talleres y Grúas Arse</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <div class="direccion-comercio">📍 Pol. Ind. Llanos de San Pedro, Parc. 51, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34610523172" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34610523172" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Talleres+y+Gruas+Arse+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="gruas sanchidrian asistencia carretera portavehiculos remolque rescate averia llanos de san pedro el espinar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Grúas Sanchidrián</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <a href="http://www.gruassanchidrian.com/" target="_blank" rel="noopener" class="enlace-web">🌐 gruassanchidrian.com</a>
+                    <div class="direccion-comercio">📍 Calle Llanos de San Pedro, 40, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921182087" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Gruas+Sanchidrian+Calle+Llanos+de+San+Pedro+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="taller vega auto espinar mecanica general reparacion coches mantenimiento diagnosis llanos de san pedro el espinar facebook">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Taller Vega Auto</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <a href="https://www.facebook.com/profile.php?id=100064725560729&locale2=es_LA" target="_blank" rel="noopener" class="enlace-web">🌐 Facebook Vega Auto</a>
+                    <div class="direccion-comercio">📍 Pol. Ind. Llanos de San Pedro, 11, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921051311" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34680141616" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Taller+Vega+Auto+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:heroz1978@hotmail.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="los llanos automecanica taller mecanica general reparacion revision coches poligono los llanos el espinar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Los Llanos Automecánica</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <div class="direccion-comercio">📍 Polígono Los Llanos, 72, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921060839" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Los+Llanos+Automecanica+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="pirricar chapa pintura taller carrocero carroceria golpes pintura vehiculos bollos los llanos el espinar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Pirricar Chapa</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <div class="direccion-comercio">📍 Polígono Los Llanos, Nave 11, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34678084781" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34678084781" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Pirricar+Chapa+Poligono+Los+Llanos+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="electromecanicas calvo taller electricidad electromecanica motor diagnosis alternador bateria coche carretera avila el espinar sg500">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Electromecánicas Calvo</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <div class="direccion-comercio">📍 SG-500 KM 20 (Ctra. de Ávila), El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921183127" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Electromecanicas+Calvo+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="eurorepar alvaro lopez soto taller mecanica mantenimiento oficial frenos distribucion amortiguadores los llanos el espinar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Eurorepar Álvaro López Soto</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <a href="http://www.eurorepar.es/" target="_blank" rel="noopener" class="enlace-web">🌐 eurorepar.es</a>
+                    <div class="direccion-comercio">📍 Pol. Ind. Los Llanos, 16, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921182678" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Eurorepar+Alvaro+Lopez+Soto+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="saga cars taller mecanica general reparacion mantenimiento coches revision diagnosis llanos de san pedro el espinar carretera avila">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Saga Cars</div>
+                    <div class="bloque-nucleos">
+                        <span class="burbuja-nucleo">El Espinar</span>
+                    </div>
+                    <div class="direccion-comercio">📍 Ctra. Ávila, 6 (Pol. Llanos de San Pedro), El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34629940917" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34629940917" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Saga+Cars+Llanos+de+San+Pedro+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+      <div class="disclaimer-box">
+    <strong>Nota informativa:</strong> Los datos de este directorio se recopilan de forma voluntaria para ayudar a los vecinos. La información podría contener algún error o no estar completamente actualizada, por lo que te recomendamos verificar los detalles directamente con cada establecimiento.
+</div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const contenedor = document.getElementById("gridAutomocion");
+        const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+        const buscador = document.getElementById("buscadorMotor");
+        
+        // 1. Algoritmo de mezcla aleatoria (Fisher-Yates)
+        for (let i = tarjetas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+        }
+        
+        tarjetas.forEach(tarjeta => contenedor.appendChild(tarjeta));
+        contenedor.style.visibility = "visible";
+        
+        // 2. Lógica del Buscador predictivo en tiempo real
+        buscador.addEventListener("input", function() {
+            const termino = buscador.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            
+            tarjetas.forEach(tarjeta => {
+                const textoTarjeta = tarjeta.getAttribute("data-search").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (textoTarjeta.includes(termino)) {
+                    tarjeta.style.display = "flex";
+                } else {
+                    tarjeta.style.display = "none";
+                }
+            });
+            
+            actualizarAltura();
+        });
+
+        actualizarAltura();
+    });
+
+    function actualizarAltura() {
+        const grid = document.getElementById('gridAutomocion');
+        if(grid && window.parent && window.parent.postMessage) {
+            window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
+        }
+    }
+    window.addEventListener('resize', actualizarAltura);
+    setTimeout(actualizarAltura, 350);
+    </script>
+</body>
+</html>
