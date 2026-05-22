@@ -675,6 +675,29 @@
     }
 
     document.addEventListener('DOMContentLoaded', mostrarAviso);
+
+        /* 🔍 LÓGICA DE DATOS DINÁMICOS */
+function cargarDatos() {
+    // 1. Simulación o actualización del Tiempo
+    // Aquí es donde iría tu llamada a la API si la tuvieras
+    document.getElementById('tiempoTexto').innerText = "Consultar previsión";
+    
+    // 2. Lógica para la Farmacia de Guardia
+    // Si tenías una función que calculaba la farmacia, debes restaurarla aquí
+    document.getElementById('txtFarmaciaNombre').innerText = "Ver Farmacia de Guardia";
+    
+    // 3. Lógica para la Agenda
+    document.getElementById('agendaTexto').innerText = "Consultar eventos próximos";
+}
+
+// Ejecutar al cargar la página
+document.addEventListener('DOMContentLoaded', cargarDatos);
+
+// Función de la farmacia que faltaba en el script
+function irAFarmaciaGuardiaHoy() {
+    // Aquí deberías poner la URL de la web donde se consulta la guardia
+    window.open('https://www.google.com/search?q=farmacia+de+guardia+el+espinar', '_blank');
+}
     </script>
 </body>
 </html>
