@@ -297,15 +297,21 @@
         }
 
         .servicio-icono {
-            width: 42px;
-            height: 42px;
-            background-color: #f1f5f9;
-            border-radius: 10px;
+            /* 💥 Quitamos fondo gris, bordes y formas */
+            background-color: transparent; 
+            border-radius: 0;
+            border: none;
+            
+            /* 🎨 Centramos el emoji */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px;
-            margin-right: 14px;
+            
+            /* 📏 Subimos el tamaño para que destaque sobre el blanco */
+            font-size: 30px; 
+            
+            /* Separación perfecta */
+            margin-bottom: 0; /* Ya la controlamos con el 'gap' del padre */
             flex-shrink: 0;
         }
 
@@ -483,22 +489,22 @@
         <div class="titulo-seccion">Categorías profesionales</div>
         <div class="grid-servicios">
             <a href="jardineria.html" class="card-servicio"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
+            <a href="limpieza.html" class="card-servicio"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza</span></a>    
             <a href="reformas.html" class="card-servicio"><div class="servicio-icono">🏗️</div><span class="servicio-texto">Reformas - Mantenimiento</span></a>
-            <a href="talleres.html" class="card-servicio"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
-            <a href="panaderia.html" class="card-servicio"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
-            <a href="salud.html" class="card-servicio"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
-            <a href="formacion.html" class="card-servicio"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
-            <a href="otros-servicios.html" class="card-servicio"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
-            <a href="artesania.html" class="card-servicio"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
-            <a href="empleo.html" class="card-servicio"><div class="servicio-icono">💼</div><span class="servicio-texto">Empleo</span></a>
-            <a href="limpieza.html" class="card-servicio"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza</span></a>
             <a href="fontaneria.html" class="card-servicio"><div class="servicio-icono">🔧</div><span class="servicio-texto">Fontanería - Climatización</span></a>
+            <a href="talleres.html" class="card-servicio"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
             <a href="ferreteria.html" class="card-servicio"><div class="servicio-icono">🔨</div><span class="servicio-texto">Ferretería - Materiales</span></a>
+            <a href="panaderia.html" class="card-servicio"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
             <a href="restaurantes.html" class="card-servicio"><div class="servicio-icono">🍴</div><span class="servicio-texto">A Comer</span></a>
+            <a href="salud.html" class="card-servicio"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
             <a href="bienestar.html" class="card-servicio"><div class="servicio-icono">💆</div><span class="servicio-texto">Bienestar</span></a>
+            <a href="formacion.html" class="card-servicio"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
             <a href="ocio.html" class="card-servicio"><div class="servicio-icono">🚵‍♀️</div><span class="servicio-texto">Ocio - Deporte</span></a>
-            <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
+            <a href="artesania.html" class="card-servicio"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
             <a href="eventos.html" class="card-servicio"><div class="servicio-icono">🎉</div><span class="servicio-texto">Eventos</span></a>
+           <a href="otros-servicios.html" class="card-servicio"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
+            <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
+            <a href="empleo.html" class="card-servicio"><div class="servicio-icono">💼</div><span class="servicio-texto">Empleo</span></a>
             <a href="particulares.html" class="card-servicio"><div class="servicio-icono">🤝</div><span class="servicio-texto">Particulares</span></a>
             <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
         </div>
