@@ -1,0 +1,71 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+  *, *:before, *:after { box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    padding: 16px;
+    background: transparent;
+  }
+
+  /* Buscador */
+  .contenedor-buscador { margin-bottom: 24px; }
+  .input-buscador {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 15px;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    outline: none;
+    transition: all 0.2s;
+  }
+  .input-buscador:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+
+  /* Grid y Tarjetas */
+  .grid-comercios {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    visibility: hidden;
+  }
+
+  .tarjeta-comercio {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 4px solid #2563eb; /* Azul corporativo */
+  }
+  .tarjeta-comercio:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+
+  .nombre-comercio { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+  .enlace-web { font-size: 13px; color: #2563eb; text-decoration: none; margin-bottom: 12px; display: block; }
+  
+  .contenedor-burbujas { display: flex; gap: 8px; margin-bottom: 12px; }
+  .burbuja-nucleo { 
+    background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 600; 
+    padding: 4px 10px; border-radius: 6px; text-transform: uppercase; 
+  }
+
+  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
+
+  .bloque-botones { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
+  .btn { 
+    padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 600; text-align: center; 
+    text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; 
+    transition: 0.2s;
+  }
+  .btn-llamar { background: #0f172a; color: white; }
+  .btn-maps { background: #f1f5f9; color: #1e293b; }
+  .btn-whatsapp { background: #22c55e; color: white; }
+  .btn-email { background: #e2e8f0; color: #1e293b; }
+</style>
+
+<!-- Mantener el HTML y el Script original; la estructura de clases ya coincidirá con el nuevo CSS -->
