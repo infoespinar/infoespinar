@@ -1,127 +1,101 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ocio y Deporte | infoespinar.com</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; padding: 15px 12px; }
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
 
-        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; }
-        .txt-verde-oscuro { color: #1e3932; }
-        .txt-marino { color: #1e3a8a; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Lato', sans-serif; background-color: transparent; padding: 8px 4px; overflow-y: auto; overflow-x: hidden; }
 
-        .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
+  /* Header Unificado */
+  .header-seccion { padding: 15px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; text-align: center; }
+  .header-titulo { font-size: 22px; font-weight: 900; color: #1e3a8a; margin: 0; text-transform: uppercase; }
+  .header-titulo span { color: #15803d; }
+  .header-sub { font-size: 12px; color: #64748b; margin-top: 5px; }
 
-        /* MAPA */
-        .contenedor-mapa-fijo { width: 100%; height: 350px; margin-bottom: 25px; }
-        .map-wrapper { width: 100%; height: 100%; overflow: hidden; border-radius: 14px; border: 1px solid #cbd5e1; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); }
-        .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
+  /* Mapa */
+  .map-wrapper { width: 100%; height: 350px; overflow: hidden; border-radius: 12px; border: 1px solid #e0e0e0; position: relative; margin-bottom: 25px; }
+  .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
 
-        /* BUSCADOR */
-        .contenedor-buscador { margin-bottom: 20px; width: 100%; }
-        .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 2px solid #cbd5e1; border-radius: 12px; outline: none; transition: border-color 0.2s; }
-        .input-buscador:focus { border-color: #1e3932; }
+  /* Buscador */
+  .contenedor-buscador { margin-bottom: 20px; width: 100%; }
+  .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 2px solid #cbd5e1; border-radius: 12px; outline: none; transition: border-color 0.2s; }
+  .input-buscador:focus { border-color: #1e3932; }
 
-        /* TARJETAS */
-        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; padding-bottom: 25px; visibility: hidden; }
-        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1e3932; border-radius: 14px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); display: flex; flex-direction: column; }
-        .info-comercio { padding: 20px; flex-grow: 1; }
-        .nombre-comercio { font-size: 19px; font-weight: 700; color: #1e3932; margin-bottom: 5px; }
-        .enlace-web { font-size: 13.5px; color: #475569; text-decoration: none; margin-bottom: 8px; display: block; word-break: break-all; }
-        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 10px; }
-        
-        .burbuja-nucleo { display: inline-block; background-color: #f1f5f9; color: #475569; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; margin-bottom: 10px; border: 1px solid #e2e8f0; }
+  /* Tarjetas */
+  .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; width: 100%; padding-bottom: 25px; visibility: hidden; }
+  .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1e3932; border-radius: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; transition: all 0.15s ease-in-out; }
+  .info-comercio { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+  .nombre-comercio { font-size: 19px; font-weight: 700; color: #1e3932; margin-bottom: 4px; line-height: 1.3; }
+  .enlace-web { display: inline-block; font-size: 14px; color: #334155; text-decoration: none; margin-bottom: 8px; }
+  .burbuja-nucleo { display: inline-block; background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; border: 1px solid #e2e8f0; }
+  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4; }
+  
+  .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+  .fila-contacto { display: flex; gap: 10px; }
+  .btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff; transition: background-color 0.2s ease; }
+  .btn-llamar { background-color: #000000; flex: 1; }
+  .btn-whatsapp { background-color: #10b981; flex: 1; }
+  .btn-maps { background-color: #1a73e8; width: 100%; }
+  .btn-email { background-color: #facc15; color: #000000; width: 100%; }
+</style>
 
-        .btn { text-decoration: none; font-size: 13px; font-weight: 700; padding: 11px; border-radius: 10px; text-align: center; color: #fff; display: flex; align-items: center; justify-content: center; gap: 6px; }
-        .btn-llamar { background: #000; flex: 1; }
-        .btn-whatsapp { background: #10b981; flex: 1; }
-        .btn-maps { background: #1a73e8; width: 100%; }
-        .btn-email { background: #facc15; color: #000; width: 100%; }
-    </style>
-</head>
-<body>
+<div class="header-seccion">
+    <h1 class="header-titulo">Info<span>Espinar</span></h1>
+    <p class="header-sub">Directorio de servicios locales</p>
+</div>
 
-    <h2 class="titulo-seccion-principal">
-        <span class="txt-verde-oscuro">Ocio</span> y <span class="txt-marino">Deporte</span>
-    </h2>
+<div class="map-wrapper">
+  <iframe src="https://www.google.com/maps/d/embed?mid=1c4Kx6ivp7VSdTVbo0quvDvtzNGZEsrA&ehbc=2E312F&noprof=1"></iframe>
+</div>
 
-    <div class="titulo-bloque">Localización de servicios</div>
-    <div class="contenedor-mapa-fijo">
-        <div class="map-wrapper">
-            <iframe src="https://www.google.com/maps/d/embed?mid=1c4Kx6ivp7VSdTVbo0quvDvtzNGZEsrA&ehbc=2E312F&noprof=1"></iframe>
+<div class="contenedor-buscador">
+  <input type="text" id="buscadorOcio" class="input-buscador" placeholder="🔍 Buscar deporte, danza, piscina, naturaleza...">
+</div>
+
+<div class="grid-comercios" id="gridOcio">
+  <div class="tarjeta-comercio" data-search="escuela de danza laura sanchez el espinar">
+    <div class="info-comercio">
+      <div class="nombre-comercio">Escuela de Danza Laura Sánchez</div>
+      <a href="http://www.escueladedanzalaurasanchez.es/" target="_blank" class="enlace-web">🌐 escueladedanzalaurasanchez.es</a>
+      <span class="burbuja-nucleo">El Espinar</span>
+      <div class="direccion-comercio">📍 P.º de las Peñitas, 9, El Espinar</div>
+      <div class="bloque-botones">
+        <div class="fila-contacto">
+          <a href="tel:+34653428069" class="btn btn-llamar">📞 Llamar</a>
+          <a href="https://wa.me/34653428069" class="btn btn-whatsapp">💬 WhatsApp</a>
         </div>
+        <a href="https://www.google.com/maps/dir/?api=1&destination=Farmacia+Calle+Marques+de+Perales+El+Espinar+Segovia46" class="btn btn-maps">📍 Ver en Maps</a>
+      </div>
     </div>
+  </div>
+</div>
 
-    <div class="contenedor-buscador">
-        <input type="text" id="buscadorOcio" class="input-buscador" placeholder="🔍 Buscar deporte, danza, piscina, naturaleza...">
-    </div>
-
-    <div class="grid-comercios" id="gridOcio">
-        <div class="tarjeta-comercio" data-search="escuela de danza laura sanchez el espinar">
-            <div class="info-comercio">
-                <div class="nombre-comercio">Escuela de Danza Laura Sánchez</div>
-                <a href="http://www.escueladedanzalaurasanchez.es/" class="enlace-web">🌐 escueladedanzalaurasanchez.es</a>
-                <span class="burbuja-nucleo">El Espinar</span>
-                <div class="direccion-comercio">📍 P.º de las Peñitas, 9, El Espinar</div>
-                <div style="display:flex; gap:10px; margin-bottom:10px;">
-                    <a href="tel:+34653428069" class="btn btn-llamar">📞 Llamar</a>
-                    <a href="https://wa.me/34653428069" class="btn btn-whatsapp">💬 WhatsApp</a>
-                </div>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=Farmacia+Calle+Marques+de+Perales+El+Espinar+Segovia46" class="btn btn-maps">📍 Ver en Maps</a>
-            </div>
-        </div>
-
-        <div class="tarjeta-comercio" data-search="danzartes artes escenicas la estacion">
-            <div class="info-comercio">
-                <div class="nombre-comercio">Danzartes Artes Escénicas</div>
-                <a href="https://espaciodanzartes.com/" class="enlace-web">🌐 espaciodanzartes.com</a>
-                <span class="burbuja-nucleo">La Estación</span>
-                <div class="direccion-comercio">📍 Ctra. de La Garganta, La Estación</div>
-                <div style="display:flex; gap:10px; margin-bottom:10px;">
-                    <a href="tel:+34648040374" class="btn btn-llamar">📞 Llamar</a>
-                    <a href="https://wa.me/34648040374" class="btn btn-whatsapp">💬 WhatsApp</a>
-                </div>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=Farmacia+Calle+Marques+de+Perales+El+Espinar+Segovia47" class="btn btn-maps">📍 Ver en Maps</a>
-            </div>
-        </div>
-        
-        </div>
-
-    <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const contenedor = document.getElementById("gridOcio");
-      const tarjetas = Array.from(document.querySelectorAll(".tarjeta-comercio"));
-      const buscador = document.getElementById("buscadorOcio");
-      
-      // Mezcla aleatoria
-      for (let i = tarjetas.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
-      }
-      tarjetas.forEach(t => contenedor.appendChild(t));
-      contenedor.style.visibility = "visible";
-      
-      buscador.addEventListener("input", function() {
-        const termino = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-        document.querySelectorAll(".tarjeta-comercio").forEach(t => {
-          t.style.display = (t.dataset.search || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(termino) ? "flex" : "none";
-        });
-        actualizarAltura();
-      });
-      actualizarAltura();
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const contenedor = document.getElementById("gridOcio");
+  const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+  const buscador = document.getElementById("buscadorOcio");
+  
+  // Mezcla aleatoria
+  for (let i = tarjetas.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+  }
+  tarjetas.forEach(t => contenedor.appendChild(t));
+  contenedor.style.visibility = "visible";
+  
+  buscador.addEventListener("input", function() {
+    const term = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    tarjetas.forEach(t => {
+      t.style.display = (t.dataset.search.includes(term)) ? "flex" : "none";
     });
+    actualizarAltura();
+  });
+  actualizarAltura();
+});
 
-    function actualizarAltura() {
-      if(window.parent && window.parent.postMessage) {
-        window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 40}, '*');
-      }
-    }
-    window.addEventListener('resize', actualizarAltura);
-    setTimeout(actualizarAltura, 500);
-    </script>
-</body>
-</html>
+function actualizarAltura() {
+  if(window.parent && window.parent.postMessage) {
+    window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
+  }
+}
+window.addEventListener('resize', actualizarAltura);
+</script>
