@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Taxis en El Espinar - InfoEspinar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* 🎨 1. CONFIGURACIÓN GENERAL / RESET */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f8fafc; /* Gris azulado muy limpio */
+            color: #1e293b;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* 🟦 2. CABECERA (HEADER) IDÉNTICA AL INDEX */
+        header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            padding: 30px 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* Enlace de volver atrás limpio */
+        .btn-volver {
+            align-self: flex-start;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background-color: rgba(255, 255, 255, 0.15);
+            padding: 6px 14px;
+            border-radius: 20px;
+            transition: background 0.2s;
+        }
+
+        .btn-volver:hover {
+            background-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .header-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-title h1 {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header-title p {
+            font-size: 14px;
+            color: #bfdbfe;
+            margin-top: 4px;
+        }
+
+        /* Buscador integrado y funcional */
+        .search-container {
+            position: relative;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 14px;
+            font-family: 'Lato', sans-serif;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .search-input::placeholder {
+            color: #bfdbfe;
+        }
+
+        .search-input:focus {
+            background-color: white;
+            color: #1e293b;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 📢 3. BLOQUE DE ANUNCIO DE COMERCIANTES */
+        .seccion-anuncio {
+            margin-top: 30px;
+        }
+
+        .banner-comercio {
+            width: 100%;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .banner-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            transition: transform 0.3s ease;
+        }
+
+        .banner-comercio:hover .banner-img {
+            transform: scale(1.02);
+        }
+
+        .banner-info {
+            position: relative;
+            padding: 15px 20px;
+            z-index: 2;
+        }
+
+        .banner-label {
+            display: inline-block;
+            background: #059669;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .banner-nombre {
+            color: white;
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+
+        .banner-sub {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            margin-top: 4px;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.4);
+            line-height: 1.3;
+        }
+
+        /* 🚖 4. SECCIÓN DE NEGOCIOS (GRID) */
+        .seccion-taxis {
+            margin-top: 30px;
+            flex-grow: 1; /* Empuja el footer abajo si hay pocos elementos */
+        }
+
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            width: 100%;
+            padding-bottom: 30px;
+            opacity: 0; /* Suavizado de carga al barajar */
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .tarjeta-comercio {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .tarjeta-comercio:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Colores de los bordes superiores */
+        .borde-taxi-verde    { border-top: 5px solid #10b981; }
+        .borde-taxi-azul     { border-top: 5px solid #3b82f6; }
+        .borde-taxi-naranja  { border-top: 5px solid #f97316; }
+        .borde-taxi-amarillo { border-top: 5px solid #eab308; }
+        .borde-taxi-carmin   { border-top: 5px solid #e11d48; }
+        .borde-taxi-turquesa { border-top: 5px solid #06b6d4; }
+
+        .info-comercio {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .nombre-comercio {
+            font-size: 19px;
+            font-weight: 700;
+            color: #0f172a; 
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .contenedor-burbujas {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .burbuja-nucleo {
+            display: inline-block;
+            background-color: #f1f5f9;
+            color: #475569;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .bloque-botones {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fila-contacto {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .btn {
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 700;
+            padding: 12px 14px;
+            border-radius: 12px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: background-color 0.15s ease;
+            width: 100%;
+        }
+
+        /* Variaciones de colores de botones */
+        .btn-verde-suave { background-color: #10b981; }
+        .btn-verde-suave:hover { background-color: #059669; }
+
+        .btn-azul-suave { background-color: #3b82f6; }
+        .btn-azul-suave:hover { background-color: #2563eb; }
+
+        .btn-naranja-suave { background-color: #f97316; }
+        .btn-naranja-suave:hover { background-color: #ea580c; }
+
+        .btn-amarillo-suave { background-color: #eab308; color: #1e293b; }
+        .btn-amarillo-suave:hover { background-color: #ca8a04; color: #ffffff; }
+
+        .btn-carmin-suave { background-color: #ec4899; }
+        .btn-carmin-suave:hover { background-color: #db2777; }
+
+        .btn-turquesa-suave { background-color: #14b8a6; }
+        .btn-turquesa-suave:hover { background-color: #0d9488; }
+
+        /* ⚠️ 5. TEXTO DISCLAIMER */
+        .disclaimer-box {
+            background-color: #fff;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #94a3b8;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #64748b;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        /* <tfoot> 6. FOOTER COMPLETAMENTE IDÉNTICO AL INDEX */
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            padding: 30px 0;
+            font-size: 14px;
+            border-top: 1px solid #1e293b;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            margin-left: 20px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        /* 📱 RESPONSIVO ADICIONAL PARA MÓVILES */
+        @media (max-width: 600px) {
+            .header-main {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-container {
+                max-width: 100%;
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .footer-links a {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="btn-volver">← Volver a Inicio</a>
+            <div class="header-main">
+                <div class="header-title">
+                    <h1>Taxis de El Espinar</h1>
+                    <p>Contacta directamente con los conductores de la zona</p>
+                </div>
+                <div class="search-container">
+                    <input type="text" id="buscador" class="search-input" placeholder="Buscar taxista, plazas, móvil...">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="seccion-anuncio">
+        <div class="container">
+            <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+                <div class="banner-img"></div>
+                <div class="banner-info">
+                    <span class="banner-label">¿Eres comerciante?</span>
+                    <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
+                    <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <main class="seccion-taxis">
+        <div class="container">
+            <div class="grid-comercios" id="gridComercios">
+
+                <div class="tarjeta-comercio borde-taxi-verde" data-search="alicia adiego ruiz taxi telefono transporte 628826577">
+                    <div class="info-comercio">
+                        <div class="nombre-comercio">Alicia Adiego Ruíz</div>
+                        <div class="bloque-botones">
+                            <a href="tel:+34628826577" class="btn btn-verde-suave">📞 Llamar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-comercio borde-taxi-azul" data-search="cristian vasile vidae taxi telefono transporte 666154968">
+                    <div class="info-comercio">
+                        <div class="nombre-comercio">Cristian Vasile Vidae</div>
+                        <div class="bloque-botones">
+                            <a href="tel:+34666154968" class="btn btn-azul-suave">📞 Llamar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-comercio borde-taxi-naranja" data-search="rafael espinosa taxi telefono transporte 6 plazas monovolumen grande 649553180 639752456">
+                    <div class="info-comercio">
+                        <div class="nombre-comercio">Rafael Espinosa</div>
+                        <div class="contenedor-burbujas">
+                            <span class="burbuja-nucleo">Taxi 6 plazas</span>
+                        </div>
+                        <div class="bloque-botones">
+                            <div class="fila-contacto">
+                                <a href="tel:+34649553180" class="btn btn-naranja-suave">📞 Tel. 1</a>
+                                <a href="tel:+34639752456" class="btn btn-naranja-suave">📞 Tel. 2</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-comercio borde-taxi-amarillo" data-search="sergio prieto perez taxi telefono transporte 722501122">
+                    <div class="info-comercio">
+                        <div class="nombre-comercio">Sergio Prieto Pérez</div>
+                        <div class="bloque-botones">
+                            <a href="tel:+34722501122" class="btn btn-amarillo-suave">📞 Llamar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-comercio borde-taxi-carmin" data-search="victor bragado vacas taxi telefono transporte 697920835">
+                    <div class="info-comercio">
+                        <div class="nombre-comercio">Víctor Bragado Vacas</div>
+                        <div class="bloque-botones">
+                            <a href="tel:+34697920835" class="btn btn-carmin-suave">📞 Llamar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-comercio borde-taxi-turquesa" data-search="ionel trica taxi telefono transporte 662958026">
+                    <div class="info-comercio">
+                        <div class="nombre-comercio">Ionel Trica</div>
+                        <div class="bloque-botones">
+                            <a href="tel:+34662958026" class="btn btn-turquesa-suave">📞 Llamar</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tarjeta-comercio borde-taxi-verde" data-search="fernando martin rodriguez taxi telefono transporte 690840809">
+                    <div class="info-comercio">
+                        <div class="nombre-comercio">Fernando Martín Rodríguez</div>
+                        <div class="bloque-botones">
+                            <a href="tel:+34690840809" class="btn btn-verde-suave">📞 Llamar</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <section class="seccion-disclaimer">
+        <div class="container">
+            <div class="disclaimer-box">
+                <strong>Aviso:</strong> La información de este sitio web puede contener errores o no estar actualizada. Se recomienda verificar los datos directamente con el establecimiento o profesional.
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-copy">
+                &copy; 2026 InfoEspinar. Todos los derechos reservados.
+            </div>
+            <div class="footer-links">
+                <a href="mailto:info@infoespinar.com">Contacto</a>
+                <a href="#">Privacidad</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const contenedor = document.getElementById("gridComercios");
+            const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+            
+            // 🎲 1. Barajamos las tarjetas (Fisher-Yates) antes de mostrarlas
+            for (let i = tarjetas.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+            }
+            
+            // Reinyectamos en el DOM
+            tarjetas.forEach(tarjeta => contenedor.appendChild(tarjeta));
+            
+            // Hacemos el grid visible elegantemente
+            contenedor.style.opacity = "1";
+
+            // 🔍 2. Lógica del Buscador en tiempo real
+            const buscador = document.getElementById("buscador");
+            
+            buscador.addEventListener("input", function() {
+                const textoBusqueda = buscador.value.toLowerCase().trim();
+                
+                tarjetas.forEach(tarjeta => {
+                    const datosBusqueda = tarjeta.getAttribute("data-search").toLowerCase();
+                    
+                    // Si coincide con lo que escribe el usuario, se muestra; si no, se oculta
+                    if (datosBusqueda.includes(textoBusqueda)) {
+                        tarjeta.style.display = "flex";
+                    } else {
+                        tarjeta.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
