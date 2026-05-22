@@ -3,37 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inscripción | infoespinar.com</title>
+    <title>Inscripción de Empresa | infoespinar.com</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
+        /* Estilos Header InfoEspinar */
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; margin: 0; padding-bottom: 50px; }
-        
-        /* Header compartido */
-        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 20px; }
         .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; }
         .header-bandera { width: 32px; height: 32px; border-radius: 6px; background-color: rgba(255, 255, 255, 0.2); }
 
-        /* Estilos específicos del formulario (Integrados) */
-        .contenedor-main { max-width: 660px; margin: 20px auto; padding: 0 15px; }
-        .formulario-publicar { background: #ffffff; padding: 32px; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
-        
-        .titulo-principal-form { font-family: 'Inter', sans-serif; font-weight: 700; font-size: 28px; color: #0F172A; text-align: center; margin: 0 0 8px 0; }
-        .subtitulo-form { font-family: 'Inter', sans-serif; font-weight: 400; font-size: 14px; color: #64748B; margin: 0 0 32px 0; text-align: center; line-height: 1.6; }
-        
-        .grupo-campo { margin-bottom: 24px; }
-        .titulo-campo { display: block; font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 8px; }
-        .grupo-campo input { width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: 'Inter', sans-serif; font-size: 15px; box-sizing: border-box; }
-        
-        .cuadrícula-sectores, .linea-nucleos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; background: #f8fafc; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; }
-        .opcion-seleccion { display: flex; align-items: center; gap: 10px; font-size: 14px; color: #475569; cursor: pointer; }
-        .campo-oculto { margin-top: 12px; display: none; }
-        
-        .btn-enviar { width: 100%; padding: 14px; background: #0F172A; color: #fff; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 16px; margin-top: 20px; }
-        .bloque-oferta-web { background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 20px; margin-top: 12px; display: none; }
-        .btn-solicitar-web { padding: 10px 20px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; }
-        
-        @media(max-width: 500px) { .cuadrícula-sectores, .linea-nucleos, .fila-doble { grid-template-columns: 1fr; } }
+        /* Estilos Formulario (Tu código original) */
+        .formulario-publicar { background: #fff; padding: 26px; border-radius: 14px; border: 1px solid #cbd5e1; max-width: 660px; margin: 10px auto; box-shadow: 0 4px 10px rgba(0,0,0,0.04); }
+        .titulo-principal-form { font-family: 'Lato', sans-serif; font-weight: 600; font-size: 32px; color: #007BA7; text-align: center; margin: 0 0 10px 0; letter-spacing: 0.5px; }
+        .subtitulo-form { font-family: 'Lato', sans-serif; font-weight: 300; font-size: 13.5px; color: #000000; margin: 0 0 26px 0; text-align: center; line-height: 1.5; }
+        .grupo-campo { margin-bottom: 22px; }
+        .grupo-campo label.titulo-campo { display: block; font-size: 15px; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+        .grupo-campo input { width: 100%; padding: 11px 14px; border: 1px solid #94a3b8; border-radius: 8px; font-family: inherit; box-sizing: border-box; font-size: 15px; color: #334155; }
+        .grupo-campo input:focus { border-color: #0284c7; outline: none; box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15); }
+        #txtNombre { text-transform: uppercase; }
+        .cuadrícula-sectores { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 24px; background: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .linea-nucleos { display: flex; flex-wrap: wrap; gap: 12px 20px; background: #f8fafc; padding: 16px; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .opcion-seleccion { display: flex; align-items: center; gap: 10px; font-size: 15px; color: #334155; cursor: pointer; user-select: none; }
+        .opcion-seleccion input { width: 18px; height: 18px; margin: 0; cursor: pointer; }
+        .grupo-privacidad { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 22px; font-size: 14px; color: #475569; line-height: 1.5; }
+        .grupo-privacidad input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; }
+        .grupo-privacidad a { color: #0284c7; font-weight: 700; text-decoration: none; }
+        .bloque-oferta-web { background: #f0fdf4; border: 1px dashed #16a34a; border-radius: 8px; padding: 16px; margin-top: 12px; display: none; text-align: center; }
+        .bloque-oferta-web p { margin: 0 0 12px 0; font-size: 14px; color: #14532d; line-height: 1.5; text-align: left; }
+        .btn-solicitar-web { display: inline-block; padding: 8px 16px; background: #22c55e; color: white; border: none; border-radius: 6px; font-weight: 700; font-size: 13.5px; cursor: pointer; transition: background 0.2s; text-transform: uppercase; }
+        .btn-solicitar-web:hover { background: #16a34a; }
+        .btn-solicitar-web.solicitado { background: #14532d; cursor: default; }
+        .campo-oculto { margin-top: 10px; display: none; }
+        .btn-enviar { width: 100%; padding: 14px; background: #0284c7; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 16px; transition: background 0.2s; margin-top: 10px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-enviar:hover { background: #0369a1; }
+        .cargando { text-align: center; padding: 15px; color: #64748b; font-size: 14px; }
+        .fila-doble { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media(max-width: 500px) { .cuadrícula-sectores { grid-template-columns: 1fr; } .fila-doble { grid-template-columns: 1fr; gap: 0; } }
     </style>
 </head>
 <body>
@@ -45,54 +51,194 @@
         </a>
     </header>
 
-    <main class="contenedor-main">
-        <div class="formulario-publicar">
-            <h1 class="titulo-principal-form">Inscripción de Empresa</h1>
-            <p class="subtitulo-form">Completa el formulario para incluir tu negocio en la plataforma.</p>
-            
-            <form id="formAnuncio">
-                <!-- Campos del formulario -->
-                <div class="grupo-campo">
-                    <label class="titulo-campo">Nombre de la Empresa *</label>
-                    <input id="txtNombre" required oninput="this.value = this.value.toUpperCase()">
-                </div>
+    <div class="formulario-publicar" id="wrapper">
+        <h1 class="titulo-principal-form">INSCRIPCIÓN</h1>
+        <p class="subtitulo-form">LA INSCRIPCIÓN ES TOTALMENTE GRATUITA Y SE LLEVARÁ A CABO DESPUÉS DE UN PROCESO DE REVISIÓN</p>
+        
+        <form id="formAnuncio" onsubmit="enviar(event)">
+            <div class="grupo-campo">
+                <label class="titulo-campo">Nombre de la Empresa o Comercio *</label>
+                <input id="txtNombre" required placeholder="Ej: FONTANERÍA EL ESPINAR, PANADERÍA SAN RAFAEL..." oninput="this.value = this.value.toUpperCase()">
+            </div>
 
-                <div class="grupo-campo">
-                    <label class="titulo-campo">Sector / Categoría *</label>
-                    <div class="cuadrícula-sectores">
-                        <label class="opcion-seleccion"><input type="checkbox" name="sector" value="jardinería"> Jardinería 🏡</label>
-                        <label class="opcion-seleccion"><input type="checkbox" name="sector" value="limpieza"> Limpieza 🧹</label>
-                        <label class="opcion-seleccion"><input type="checkbox" name="sector" value="reformas"> Reformas 🏗️</label>
-                        <label class="opcion-seleccion"><input type="checkbox" name="sector" value="otros" onchange="document.getElementById('txtOtro').style.display = this.checked ? 'block' : 'none'"> Otros</label>
-                    </div>
-                    <input type="text" id="txtOtro" class="campo-oculto" placeholder="Especifica tu actividad...">
-                </div>
-
-                <div class="grupo-campo">
-                    <label class="titulo-campo">¿Tienes página web? *</label>
-                    <div class="linea-nucleos">
-                        <label class="opcion-seleccion"><input type="radio" name="tiene_web" value="si" checked onclick="document.getElementById('ofertaWeb').style.display='none'; document.getElementById('txtWeb').style.display='block'"> Sí</label>
-                        <label class="opcion-seleccion"><input type="radio" name="tiene_web" value="no" onclick="document.getElementById('ofertaWeb').style.display='block'; document.getElementById('txtWeb').style.display='none'"> No</label>
-                    </div>
-                    <input type="url" id="txtWeb" style="margin-top: 10px;" placeholder="https://tuweb.com">
-                    
-                    <div id="ofertaWeb" class="bloque-oferta-web">
-                        <p>💡 <strong>¿Te gustaría tener presencia online?</strong> En infoespinar.com creamos tu web sencilla y económica.</p>
-                        <button type="button" class="btn-solicitar-web" onclick="this.innerHTML='✓ ¡Solicitado!'">Quiero información</button>
+            <div class="grupo-campo">
+                <label class="titulo-campo">Sector / Categoría (Selecciona una o varias) *</label>
+                <div class="cuadrícula-sectores">
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="jardinería"> Jardinería 🏡</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="limpieza"> Limpieza 🧹</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="reformas"> Reformas 🏗️</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="restaurantes"> Restaurantes 🍽️</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="talleres"> Talleres 🚗</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="ferretería"> Ferretería 🔨</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="panadería-pastelería"> Panadería-Pastelería 🥖</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="fontanería-climatización"> Fontanería-Climatización 🚰</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="salud"> Salud ❤️​</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="bienestar"> Bienestar 💆</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="alojamiento"> Alojamiento 🛎️​</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="ocio-deporte"> Ocio-Deporte ⚽</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="formación"> Formación 📚</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="mascotas"> Mascotas 🐾</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="artesanía-regalos"> Artesanía-Regalos 🎨​</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="eventos"> Eventos 🎉</label>
+                    <div style="grid-column: span 2; margin-top: 4px;">
+                        <label class="opcion-seleccion"><input type="checkbox" name="sector_opc" value="Otros" id="chkOtroSector" onchange="alternarSectorOtro(this)"> Otros (Especificar cuál abajo)</label>
                     </div>
                 </div>
+                <input type="text" id="txtOtroSector" class="campo-oculto" placeholder="¿Cuál es tu actividad comercial?">
+            </div>
 
-                <button type="submit" class="btn-enviar">Enviar Inscripción</button>
-            </form>
-        </div>
-    </main>
+            <div class="grupo-campo">
+                <label class="titulo-campo">¿En qué núcleos ofreces tus servicios? *</label>
+                <div class="linea-nucleos">
+                    <label class="opcion-seleccion"><input type="checkbox" name="lugar_opc" value="El Espinar"> El Espinar</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="lugar_opc" value="San Rafael"> San Rafael</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="lugar_opc" value="La Estación"> La Estación</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="lugar_opc" value="LASR"> LASR</label>
+                    <label class="opcion-seleccion"><input type="checkbox" name="lugar_opc" value="Otro" id="chkOtroLugar" onchange="alternarLugarOtro(this)"> Otro pueblo</label>
+                </div>
+                <input type="text" id="txtOtroLugar" class="campo-oculto" placeholder="Especifica qué pueblos (ej: Villacastín...)">
+            </div>
+
+            <div class="fila-doble">
+                <div class="grupo-campo">
+                    <label class="titulo-campo">Teléfono Contacto *</label>
+                    <input id="txtTelefono" type="tel" required pattern="[0-9]{9}" maxlength="9" placeholder="Fijo o móvil de contacto">
+                </div>
+                <div class="grupo-campo">
+                    <label class="titulo-campo">WhatsApp (Opcional)</label>
+                    <input id="txtWhatsapp" type="tel" pattern="[0-9]{9}" maxlength="9" placeholder="Móvil para mensajes">
+                </div>
+            </div>
+
+            <div class="fila-doble">
+                <div class="grupo-campo">
+                    <label class="titulo-campo">Dirección física (Opcional)</label>
+                    <input id="txtDireccion" placeholder="Ej: Calle Real Nº 14">
+                </div>
+                <div class="grupo-campo">
+                    <label class="titulo-campo">Email de contacto</label>
+                    <input id="txtEmail" type="email" placeholder="Ej: info@tuweb.com">
+                </div>
+            </div>
+
+            <div class="grupo-campo">
+                <label class="titulo-campo">¿Dispone tu negocio de Página Web? *</label>
+                <div class="linea-nucleos" style="padding: 10px 16px; gap: 40px;">
+                    <label class="opcion-seleccion"><input type="radio" name="tiene_web" value="si" onclick="evaluarWeb(this)" checked> Sí, tengo</label>
+                    <label class="opcion-seleccion"><input type="radio" name="tiene_web" value="no" onclick="evaluarWeb(this)"> No tengo</label>
+                </div>
+                <input type="url" id="txtWeb" style="display: block; margin-top: 10px;" required placeholder="Introduce la dirección de tu web (ej: https://miempresa.com)">
+                <div id="ofertaWeb" class="bloque-oferta-web">
+                    <p>💡 <strong>¿Te gustaría tener tu propia presencia online?</strong> Desde <strong>infoespinar.com</strong> podemos diseñar una página web sencilla, rápida y muy económica con la información clave de tu negocio para que los vecinos te localicen inmediatamente de forma directa.</p>
+                    <button type="button" id="btnInteresWeb" class="btn-solicitar-web" onclick="solicitarInformacionWeb()">✨ Quiero una web, contáctame</button>
+                </div>
+            </div>
+
+            <div class="grupo-privacidad">
+                <input type="checkbox" id="checkPrivacidad" required>
+                <label for="checkPrivacidad">He leído y acepto la <a href="https://www.infoespinar.com/privacidad" target="_blank">Política de Privacidad</a> y consiento que mis datos comerciales sean publicados en la web para que otros vecinos contacten conmigo.</label>
+            </div>
+
+            <button class="btn-enviar" id="btnPublicar">🚀 Enviar Inscripción</button>
+        </form>
+        <div id="status"></div>
+    </div>
 
     <script>
-        // Lógica de envío simplificada
-        document.getElementById('formAnuncio').onsubmit = function(e) {
+        const urlScript = "https://script.google.com/macros/s/AKfycbzu9F8N6T1-EJGWrCnMmqL-AaAiHEjugavye5P5MmNEob1KNAePVG_nyFJYwlebhpIp/exec"; 
+        let solicitoDiseñoWeb = false;
+
+        function alternarSectorOtro(checkbox) {
+            const txtOtroSec = document.getElementById("txtOtroSector");
+            txtOtroSec.style.display = checkbox.checked ? "block" : "none";
+            txtOtroSec.required = checkbox.checked;
+        }
+
+        function alternarLugarOtro(checkbox) {
+            const txtOtroLug = document.getElementById("txtOtroLugar");
+            txtOtroLug.style.display = checkbox.checked ? "block" : "none";
+            txtOtroLug.required = checkbox.checked;
+        }
+
+        function evaluarWeb(radio) {
+            const inputWeb = document.getElementById("txtWeb");
+            const bloqueOferta = document.getElementById("ofertaWeb");
+            const btnInteres = document.getElementById("btnInteresWeb");
+            
+            if (radio.value === "si") {
+                inputWeb.style.display = "block";
+                inputWeb.required = true;
+                bloqueOferta.style.display = "none";
+            } else {
+                inputWeb.style.display = "none";
+                inputWeb.required = false;
+                inputWeb.value = "";
+                bloqueOferta.style.display = "block";
+                solicitoDiseñoWeb = false;
+                btnInteres.innerHTML = "✨ Quiero una web, contáctame";
+                btnInteres.className = "btn-solicitar-web";
+            }
+        }
+
+        function solicitarInformacionWeb() {
+            const btnInteres = document.getElementById("btnInteresWeb");
+            solicitoDiseñoWeb = true;
+            btnInteres.innerHTML = "✓ ¡Solicitado! Te informaremos";
+            btnInteres.className = "btn-solicitar-web solicitado";
+        }
+
+        async function enviar(e){
             e.preventDefault();
-            alert("Inscripción recibida. Revisaremos los datos.");
-        };
+            const chkSectores = document.querySelectorAll('input[name="sector_opc"]:checked');
+            if(chkSectores.length === 0) { alert("Por favor, selecciona al menos una categoría o sector."); return; }
+            let sectoresSeleccionados = [];
+            chkSectores.forEach(cb => {
+                if(cb.value === "Otros") {
+                    const valorOtroSec = document.getElementById("txtOtroSector").value.trim();
+                    if(valorOtroSec !== "") sectoresSeleccionados.push(valorOtroSec);
+                } else { sectoresSeleccionados.push(cb.value); }
+            });
+
+            const chkLugares = document.querySelectorAll('input[name="lugar_opc"]:checked');
+            if(chkLugares.length === 0) { alert("Por favor, marca al menos un núcleo donde trabajes."); return; }
+            let ubicaciones = [];
+            chkLugares.forEach(cb => {
+                if(cb.value === "Otro") {
+                    const valorOtroLug = document.getElementById("txtOtroLugar").value.trim();
+                    if(valorOtroLug !== "") ubicaciones.push(valorOtroLug);
+                } else { ubicaciones.push(cb.value); }
+            });
+
+            const tieneWebRadio = document.querySelector('input[name="tiene_web"]:checked').value;
+            let valorWebFinal = (tieneWebRadio === "si") ? document.getElementById("txtWeb").value : "No tiene";
+
+            const btn = document.getElementById("btnPublicar");
+            const status = document.getElementById("status");
+            btn.disabled = true;
+            status.innerHTML = "<div class='cargando'>Guardando datos comerciales...</div>";
+
+            const payload = {
+                nombre: document.getElementById("txtNombre").value.toUpperCase().trim(),
+                sector: sectoresSeleccionados.join(", "),
+                nucleo: ubicaciones.join(", "),
+                direccion: document.getElementById("txtDireccion").value,
+                telefono: document.getElementById("txtTelefono").value,
+                whatsapp: document.getElementById("txtWhatsapp").value.trim(),
+                email: document.getElementById("txtEmail").value,
+                web: valorWebFinal,
+                solicita: solicitoDiseñoWeb ? "SÍ" : "NO"
+            };
+
+            try {
+                const res = await fetch(urlScript,{ method: "POST", body: JSON.stringify(payload) });
+                const r = await res.json();
+                if(r.resultado === "ok"){
+                    status.innerHTML = "<div style='color:#16a34a; text-align:center; font-weight:bold; padding:15px; font-size:15px;'>¡Inscripción enviada correctamente!</div>";
+                    document.getElementById("formAnuncio").reset();
+                } else { status.innerHTML = "<div class='cargando' style='color:#dc2626;'>Error al guardar.</div>"; }
+            } catch(error) { status.innerHTML = "<div class='cargando' style='color:#dc2626;'>Error de red.</div>"; }
+            finally { btn.disabled = false; }
+        }
     </script>
 </body>
 </html>
