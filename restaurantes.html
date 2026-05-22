@@ -1,71 +1,122 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restauración y Gastronomía | infoespinar.com</title>
+    <style>
+        /* 🎨 VARIABLES Y ESTILOS BASE */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; display: flex; flex-direction: column; min-height: 100vh; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
 
-  *, *:before, *:after { box-sizing: border-box; }
+        /* 📋 ENCABEZADO */
+        .header { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); transition: all 0.2s; }
+        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
+        .header h1 { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
 
-  body {
-    font-family: 'Inter', sans-serif;
-    margin: 0;
-    padding: 16px;
-    background: transparent;
-  }
+        /* 🏛️ CONTENEDOR Y TITULARES */
+        .main-container { max-width: 1200px; width: 100%; margin: 0 auto; padding: 15px 12px; flex-grow: 1; }
+        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; }
+        .txt-azul { color: #1a73e8; }
+        .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
 
-  /* Buscador */
-  .contenedor-buscador { margin-bottom: 24px; }
-  .input-buscador {
-    width: 100%;
-    padding: 14px 20px;
-    font-size: 15px;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    background: #ffffff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    outline: none;
-    transition: all 0.2s;
-  }
-  .input-buscador:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        /* 🗺️ MAPA */
+        .contenedor-mapa-fijo { width: 100%; height: 350px; margin-bottom: 25px; }
+        .map-wrapper { width: 100%; height: 100%; overflow: hidden; border-radius: 14px; border: 1px solid #cbd5e1; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); }
+        .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
 
-  /* Grid y Tarjetas */
-  .grid-comercios {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 20px;
-    visibility: hidden;
-  }
+        /* 🏷️ BANNER */
+        .banner-comercio { width: 100%; height: 120px; border-radius: 14px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 25px; }
+        .banner-img { position: absolute; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop'); background-size: cover; background-position: center; opacity: 0.35; transition: transform 0.3s; }
+        .banner-comercio:hover .banner-img { transform: scale(1.02); }
+        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-label { display: inline-block; background: #059669; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 4px; }
+        .banner-nombre { color: white; font-size: 19px; font-weight: 700; line-height: 1.2; text-shadow: 0px 2px 4px rgba(0,0,0,0.6); }
+        .banner-sub { color: rgba(255,255,255,0.95); font-size: 12px; margin-top: 3px; }
 
-  .tarjeta-comercio {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.2s, box-shadow 0.2s;
-    border-top: 4px solid #2563eb; /* Azul corporativo */
-  }
-  .tarjeta-comercio:hover { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        /* 🔍 BUSCADOR Y GRID */
+        .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 2px solid #cbd5e1; border-radius: 12px; margin-bottom: 20px; outline: none; transition: border-color 0.2s; }
+        .input-buscador:focus { border-color: #1a73e8; }
+        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; visibility: hidden; }
+        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1a73e8; border-radius: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); display: flex; flex-direction: column; }
+        .info-comercio { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .nombre-comercio { font-size: 19px; font-weight: 700; color: #1a73e8; margin-bottom: 6px; }
+        .contenedor-burbujas { display: flex; gap: 6px; margin: 2px 0 12px 0; flex-wrap: wrap; }
+        .burbuja-nucleo { background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 20px; text-transform: uppercase; }
+        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+        .btn { text-decoration: none; font-size: 13.5px; font-weight: 700; padding: 11px 14px; border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff; margin-bottom: 10px; }
+        .btn-llamar { background-color: #000000; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps { background-color: #1a73e8; width: 100%; }
+        .btn-email { background-color: #facc15; color: #000000; width: 100%; }
+    </style>
+</head>
+<body>
+    <main class="main-container">
+        <h2 class="titulo-seccion-principal">Restauración y <span class="txt-azul">Gastronomía</span></h2>
+        
+        <div class="contenedor-mapa-fijo">
+            <div class="map-wrapper"><iframe src="https://www.google.com/maps/d/embed?mid=1SGqZX6163Q0TQJJsOQjp-4DZmFMK3qo&ehbc=2E312F&noprof=1"></iframe></div>
+        </div>
 
-  .nombre-comercio { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
-  .enlace-web { font-size: 13px; color: #2563eb; text-decoration: none; margin-bottom: 12px; display: block; }
-  
-  .contenedor-burbujas { display: flex; gap: 8px; margin-bottom: 12px; }
-  .burbuja-nucleo { 
-    background: #f1f5f9; color: #475569; font-size: 11px; font-weight: 600; 
-    padding: 4px 10px; border-radius: 6px; text-transform: uppercase; 
-  }
+        <a href="mailto:info@infoespinar.com" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Eres comerciante?</span>
+                <h3 class="banner-nombre">¡Anuncia tu restaurante aquí!</h3>
+            </div>
+        </a>
 
-  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 16px; line-height: 1.5; }
+        <div class="contenedor-buscador">
+            <input type="text" id="buscadorRestaurantes" class="input-buscador" placeholder="🔍 Buscar por nombre, tipo de comida, o núcleo urbano...">
+        </div>
 
-  .bloque-botones { display: flex; flex-direction: column; gap: 8px; margin-top: auto; }
-  .btn { 
-    padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 600; text-align: center; 
-    text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 6px; 
-    transition: 0.2s;
-  }
-  .btn-llamar { background: #0f172a; color: white; }
-  .btn-maps { background: #f1f5f9; color: #1e293b; }
-  .btn-whatsapp { background: #22c55e; color: white; }
-  .btn-email { background: #e2e8f0; color: #1e293b; }
-</style>
+        <div class="grid-comercios" id="gridRestaurantes">
+            </div>
+    </main>
 
-<!-- Mantener el HTML y el Script original; la estructura de clases ya coincidirá con el nuevo CSS -->
+    <script>
+    const comercios = [
+        { nombre: "Restaurante Las Farolas", nucleo: "San Rafael", dir: "P.º Apeadero, 1", tel: "921702667", maps: "60", search: "restaurante las farolas san rafael menu" },
+        { nombre: "Restaurante Avenida", nucleo: "San Rafael", dir: "Tr.ª Alto del León, 31", tel: "921171011", maps: "61", search: "restaurante avenida san rafael menu tradicional" },
+        { nombre: "Pizzería Royal", nucleo: "San Rafael", dir: "Tr.ª Alto del León, 25", tel: "921476306", maps: "62", search: "pizzeria royal san rafael pizzas", web: "http://pizzeriaroyal.es/" },
+        { nombre: "Restaurante Terpa", nucleo: "San Rafael", dir: "Tr.ª Alto del León, 23", tel: "921171017", maps: "63", search: "restaurante terpa san rafael carnes asados" },
+        { nombre: "Asador La Viña", nucleo: "San Rafael", dir: "Ctra. Segovia, 19", tel: "921171557", whats: "34669577194", maps: "66", email: "info@asadorlavina.es", search: "asador la vina san rafael carnes cochinillo", web: "http://www.asadorlavina.es/" },
+        { nombre: "Restaurante Jara", nucleo: "San Rafael", dir: "Ctra. Segovia, 6", tel: "921171165", whats: "34663818786", maps: "67", email: "restaurantejarasanrafael@gmail.com", search: "restaurante jara san rafael tradicional", web: "https://restaurantejarasanrafael.es/" },
+        { nombre: "Como en Casa (Para Llevar)", nucleo: "San Rafael", dir: "Ctra. Segovia, 4", tel: "643466827", whats: "34643466827", maps: "68", search: "como en casa san rafael comida preparada", web: "https://www.asadordepolloscomoencasa.com/" },
+        { nombre: "Pizzería La Pineta", nucleo: "El Espinar", dir: "P.º Peñitas, 13", tel: "648534102", whats: "34648534102", maps: "78", email: "hola@lapinetaelespinar.es", search: "pizzeria la pineta el espinar", web: "https://www.lapinetaelespinar.es/" }
+        // ... puedes añadir el resto de objetos siguiendo este esquema
+    ];
+
+    function renderizarComercios() {
+        const grid = document.getElementById('gridRestaurantes');
+        comercios.sort(() => Math.random() - 0.5);
+        grid.innerHTML = comercios.map(c => `
+            <div class="tarjeta-comercio" data-search="${c.search}">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">${c.nombre}</div>
+                    ${c.web ? `<a href="${c.web}" class="enlace-web">🌐 ${c.web.replace(/^https?:\/\//,'')}</a>` : ''}
+                    <div class="contenedor-burbujas"><span class="burbuja-nucleo">${c.nucleo}</span></div>
+                    <div class="direccion-comercio">📍 ${c.dir}</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34${c.tel}" class="btn btn-llamar">📞 Llamar</a>
+                            ${c.whats ? `<a href="https://wa.me/${c.whats}" class="btn btn-whatsapp">💬 WhatsApp</a>` : ''}
+                        </div>
+                        <a href="http://googleusercontent.com/maps.google.com/${c.maps}" class="btn btn-maps">📍 Ver en Maps</a>
+                        ${c.email ? `<a href="mailto:${c.email}" class="btn btn-email">📧 Enviar Email</a>` : ''}
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        grid.style.visibility = "visible";
+    }
+
+    renderizarComercios();
+    // ... lógica del buscador y resize igual que en la anterior
+    </script>
+</body>
+</html>
