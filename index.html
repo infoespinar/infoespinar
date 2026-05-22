@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>infoespinar.com | El portal de El Espinar</title>
     <style>
-        /* 🎨 ESTILOS GENERALES Y FUENTE */
-        @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600;700&display=swap');
+        /* 🎨 VARIABLES Y ESTILOS GENERALES */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
         * {
             box-sizing: border-box;
@@ -15,18 +15,20 @@
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, sans-serif;
+            font-family: 'Lato', sans-serif;
             background-color: #f4f6f9;
             color: #334155;
-            padding-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* 📋 ENCABEZADO TOTALMENTE RESPONSIVO */
+        /* 📋 ENCABEZADO RESPONSIVO */
         .header {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
             text-align: center;
-            padding: 40px 20px;
+            padding: 35px 20px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
@@ -34,25 +36,23 @@
             font-size: 32px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .header p {
-            font-size: 16px;
+            font-size: 15px;
             opacity: 0.9;
-            margin-bottom: 20px;
+            margin-bottom: 18px;
         }
 
-        /* 🔍 BARRA DE BÚSQUEDA DEL ENCABEZADO */
         .buscador-container {
             max-width: 500px;
             margin: 0 auto;
-            position: relative;
         }
 
         .buscador-container input {
             width: 100%;
-            padding: 14px 20px;
+            padding: 12px 20px;
             border-radius: 30px;
             border: none;
             font-size: 15px;
@@ -60,82 +60,328 @@
             outline: none;
         }
 
-        /* 📦 CONTENEDOR DE CATEGORÍAS (MÓVIL VS PC) */
+        /* 🏛️ CONTENEDOR PRINCIPAL RESTRINGIDO EN PC */
         .main-container {
             max-width: 1200px;
-            margin: 30px auto;
-            padding: 0 20px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
         }
 
-        .grid-categorias {
+        .titulo-seccion {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 20px 0 12px 4px;
+            font-weight: 700;
+        }
+
+        /* 🎪 1. SECCIÓN: CARRUSEL DE ANUNCIOS */
+        .contenedor-ofertas {
+            width: 100%;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        .carrusel-track {
+            display: flex;
+            width: 100%;
+            overflow-x: auto; 
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 10px;
+        }
+
+        .carrusel-track::-webkit-scrollbar { display: none; }
+        .carrusel-track { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .oferta-item {
+            width: 140px;
+            margin: 0 10px 0 0;
+            text-align: center;
+            flex-shrink: 0;
+            display: block;
+            text-decoration: none;
+            scroll-snap-align: start; 
+        }
+
+        .imagen-oferta {
+            width: 140px;
+            height: 140px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+            user-select: none;
+            -webkit-user-drag: none; 
+        }
+
+        .nombre-comercio {
+            display: block;
+            font-size: 10px;
+            color: #334155;
+            margin-top: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* ⚡ 2. SECCIÓN: INFORMACIÓN DE INTERÉS */
+        .grid-utilidades {
             display: grid;
-            gap: 16px;
-            /* Por defecto: 1 columna en móvil (como en tu captura) */
-            grid-template-columns: 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            width: 100%;
         }
 
-        /* 🗺️ ADAPTACIÓN PARA PC (Pantallas medianas y grandes) */
-        @media screen and (min-width: 768px) {
-            .grid-categorias {
-                /* En PC se distribuyen automáticamente en columnas elegantes */
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-                gap: 20px;
-            }
-            .header {
-                padding: 60px 20px;
-            }
-            .header h1 {
-                font-size: 40px;
-            }
-        }
-
-        /* 🗂️ DISEÑO DE LAS TARJETAS (Heredado de tus capturas) */
-        .card-categoria {
+        .enlace-util, .boton-util-guardia {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
             background-color: #ffffff;
+            border: 2px solid #cbd5e1;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #1e293b;
+            font-size: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .enlace-util:hover, .boton-util-guardia:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        .contenedor-split-taxi {
+            display: flex;
+            background-color: #fefce8;
+            border: 2px solid #fef08a;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            width: 100%;
+            overflow: hidden;
+        }
+        .contenedor-split-taxi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.08);
+            border-color: #eab308;
+        }
+        .taxi-mitad-web {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 14px 14px 18px;
+            text-decoration: none;
+            flex-grow: 1;
+            color: #1e293b;
+        }
+        .taxi-mitad-web:hover { background-color: #fef9c3; }
+        .taxi-mitad-azar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 15px;
+            background-color: transparent;
+            border: none;
+            border-left: 2px dashed #fde047;
+            cursor: pointer;
+            min-width: 65px;
+        }
+        .taxi-mitad-azar:hover { background-color: #fef9c3; }
+        
+        .taxi-color-texto { color: #a16207 !important; }
+        .taxi-color-secundario { color: #854d0e !important; font-weight: 700; }
+        .bg-amarillo { background-color: #fef08a; color: #a16207; }
+        .boton-util-guardia { background-color: #e6fbd0; border-color: #a7f3d0; }
+        .boton-util-guardia:hover { border-color: #10b981; }
+
+        .icono-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
             border-radius: 12px;
-            padding: 20px;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .bg-azul { background-color: #7dd3fc; color: #0369a1; }
+        .bg-rojo { background-color: #fecdd3; color: #be123c; }
+        .bg-morado { background-color: #f5d0fe; color: #a21caf; }
+
+        .titulo-boton {
+            display: block;
+            font-weight: 900;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: #475569;
+            margin-bottom: 2px;
+        }
+
+        .nombre-farmacia-viva, .tiempo-dinamico {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nombre-farmacia-viva { color: #065f46; }
+        .texto-secundario { display: block; font-size: 12px; color: #64748b; }
+        .agenda-color { background-color: #fae8ff; border-color: #f5d0fe; }
+        .agenda-color:hover { border-color: #d946ef; }
+        .agenda-color .titulo-boton { color: #a21caf; }
+        .agenda-color .texto-secundario { color: #701a75; font-weight: 700; }
+
+        /* Climas */
+        .clima-soleado { background-color: #fef9c3 !important; border-color: #fde047 !important; }
+        .clima-soleado .titulo-boton { color: #854d0e !important; }
+        .clima-soleado .tiempo-dinamico { color: #713f12 !important; }
+        .clima-soleado .icono-wrap { background-color: #fde047 !important; color: #854d0e !important; }
+        .clima-nublado { background-color: #f1f5f9 !important; border-color: #cbd5e1 !important; }
+        .clima-nublado .titulo-boton { color: #334155 !important; }
+        .clima-nublado .tiempo-dinamico { color: #0f172a !important; }
+        .clima-nublado .icono-wrap { background-color: #cbd5e1 !important; color: #334155 !important; }
+        .clima-lluvia { background-color: #e0f2fe !important; border-color: #7dd3fc !important; }
+        .clima-lluvia .titulo-boton { color: #0369a1 !important; }
+        .clima-lluvia .tiempo-dinamico { color: #1e3a8a !important; }
+        .clima-lluvia .icono-wrap { background-color: #7dd3fc !important; color: #0369a1 !important; }
+        .clima-nieve { background-color: #e0e7ff !important; border-color: #c7d2fe !important; }
+        .clima-nieve .titulo-boton { color: #3730a3 !important; }
+        .clima-nieve .tiempo-dinamico { color: #1e1b4b !important; }
+        .clima-nieve .icono-wrap { background-color: #c7d2fe !important; color: #3730a3 !important; }
+        .clima-nocturno { background-color: #0f172a !important; border-color: #334155 !important; }
+        .clima-nocturno .titulo-boton { color: #94a3b8 !important; }
+        .clima-nocturno .tiempo-dinamico { color: #f8fafc !important; }
+        .clima-nocturno .icono-wrap { background-color: #1e293b !important; color: #f1f5f9 !important; }
+
+        /* 🏷️ 3. SECCIÓN: BOTONES DE CATEGORÍAS (MÓVIL VS PC) */
+        .grid-servicios {
+            display: grid;
+            grid-template-columns: 1fr; /* 1 columna en móvil */
+            gap: 12px;
+            width: 100%;
+        }
+
+        .card-servicio {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 16px;
             display: flex;
             align-items: center;
             text-decoration: none;
             color: #1e293b;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             border: 1px solid #e2e8f0;
             transition: transform 0.2s, box-shadow 0.2s;
         }
 
-        .card-categoria:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+        .card-servicio:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.06);
             background-color: #f8fafc;
         }
 
-        .icono-wrapper {
-            width: 48px;
-            height: 48px;
-            background-color: #eff6ff;
+        .servicio-icono {
+            width: 42px;
+            height: 42px;
+            background-color: #f1f5f9;
             border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            margin-right: 16px;
+            font-size: 20px;
+            margin-right: 14px;
             flex-shrink: 0;
         }
 
-        .texto-wrapper {
+        .servicio-texto {
+            font-size: 15px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        /* 🚨 4. SECCIÓN: EMERGENCIAS */
+        .grid-telefonos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 10px;
+            width: 100%;
+        }
+
+        .telf-item {
             display: flex;
-            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background-color: #ffffff;
+            border: 1px solid #fee2e2;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: background-color 0.2s, transform 0.1s;
         }
 
-        .titulo-categoria {
-            font-size: 16px;
-            font-weight: 600;
+        .telf-item:hover {
+            background-color: #fef2f2;
+            transform: translateY(-1px);
         }
 
-        .subtitulo-categoria {
-            font-size: 12px;
-            color: #64748b;
-            margin-top: 2px;
+        .telf-112 {
+            background-color: #dc2626;
+            border-color: #dc2626;
+            color: #ffffff;
+        }
+        .telf-112:hover { background-color: #b91c1c; }
+        .telf-112 .numero-telf {
+            color: #ffffff;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .nombre-servicio { font-size: 13.5px; font-weight: 700; }
+        .numero-telf { font-size: 13.5px; font-weight: 700; color: #dc2626; }
+
+        /* 💻 RESPONSIVE AJUSTES PARA PANTALLAS GRANDES (PC) */
+        @media screen and (min-width: 768px) {
+            .header { padding: 50px 20px; }
+            .header h1 { font-size: 42px; }
+            
+            /* Los 19 servicios se ordenan solos en 3 columnas en PC */
+            .grid-servicios {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 16px;
+            }
+        }
+
+        /* 👣 FOOTER */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #3b82f6;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 700;
         }
     </style>
 </head>
@@ -144,73 +390,323 @@
     <header class="header">
         <h1>infoespinar.com</h1>
         <p>Tu guía local de comercios, servicios y teléfonos de interés</p>
-        
         <div class="buscador-container">
             <input type="text" placeholder="¿Qué estás buscando? (Ej: kebab, fontanero...)">
         </div>
     </header>
 
     <main class="main-container">
-        <div class="grid-categorias">
-            
-            <a href="kebab.html" class="card-categoria">
-                <div class="icono-wrapper">🍴</div>
-                <div class="texto-wrapper">
-                    <span class="titulo-categoria">A comer</span>
-                    <span class="subtitulo-categoria">Restaurantes, bares y comida a domicilio</span>
-                </div>
-            </a>
 
-            <a href="#" class="card-categoria">
-                <div class="icono-wrapper">🧹</div>
-                <div class="texto-wrapper">
-                    <span class="titulo-categoria">Reformas e Instalación</span>
-                    <span class="subtitulo-categoria">Fontanería, electricidad, limpieza</span>
-                </div>
-            </a>
-
-            <a href="#" class="card-categoria">
-                <div class="icono-wrapper">🏗️</div>
-                <div class="texto-wrapper">
-                    <span class="titulo-categoria">Construcción</span>
-                    <span class="subtitulo-categoria">Materiales, obras y profesionales</span>
-                </div>
-            </a>
-
-            <a href="#" class="card-categoria">
-                <div class="icono-wrapper">🐾</div>
-                <div class="texto-wrapper">
-                    <span class="titulo-categoria">Mascotas</span>
-                    <span class="subtitulo-categoria">Veterinarios, tiendas y cuidado</span>
-                </div>
-            </a>
-
-            <a href="#" class="card-categoria">
-                <div class="icono-wrapper">❤️</div>
-                <div class="texto-wrapper">
-                    <span class="titulo-categoria">Salud y Belleza</span>
-                    <span class="subtitulo-categoria">Clínicas, peluquerías y bienestar</span>
-                </div>
-            </a>
-
-            <a href="#" class="card-categoria">
-                <div class="icono-wrapper">🌳</div>
-                <div class="texto-wrapper">
-                    <span class="titulo-categoria">Ayto. y Servicios</span>
-                    <span class="subtitulo-categoria">Trámites, bandos e información útil</span>
-                </div>
-            </a>
-
-            <a href="#" class="card-categoria" style="border-left: 4px solid #ef4444;">
-                <div class="icono-wrapper" style="background-color: #fef2f2;">📞</div>
-                <div class="texto-wrapper">
-                    <span class="titulo-categoria" style="color: #ef4444;">Emergencias</span>
-                    <span class="subtitulo-categoria">Teléfonos de guardia y urgencias</span>
-                </div>
-            </a>
-
+        <div class="titulo-seccion">Ofertas destacadas</div>
+        <div class="contenedor-ofertas">
+            <div class="carrusel-track" id="track">
+                <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item">
+                    <img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">El Taller de Boli</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Cafetería</span>
+                </a>
+                <a href="https://andrearuibal.com" class="oferta-item">
+                    <img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Andrea Comesaña</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Limpiezas</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Floristería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Panadería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Cafetería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Reformas</span>
+                </a>
+            </div>
         </div>
+
+        <div class="titulo-seccion">Información de interés</div>
+        <div class="grid-utilidades">
+            <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" rel="noopener" class="enlace-util" id="botonTiempo">
+                <div class="icono-wrap bg-azul" id="tiempoIcono">🌤️</div>
+                <div>
+                    <span class="titulo-boton" id="tiempoTitulo">EL TIEMPO</span>
+                    <span id="tiempoTexto" class="tiempo-dinamico">Consultar Previsión</span>
+                </div>
+            </a>
+
+            <button onclick="irAFarmaciaGuardiaHoy()" class="boton-util-guardia">
+                <div class="icono-wrap bg-rojo">🏥</div>
+                <div>
+                    <span class="titulo-boton">FARMACIA DE GUARDIA</span>
+                    <span id="txtFarmaciaNombre" class="nombre-farmacia-viva">Ver Farmacia de Guardia</span>
+                </div>
+            </button>
+
+            <a href="https://elespinar.es/agenda/" target="_blank" rel="noopener" class="enlace-util agenda-color">
+                <div class="icono-wrap bg-morado">📅</div>
+                <div>
+                    <span class="titulo-boton">AGENDA CULTURAL</span>
+                    <span id="agendaTexto" class="texto-secundario">Cargando eventos...</span>
+                </div>
+            </a>
+
+            <div class="contenedor-split-taxi">
+                <a href="taxi.html" class="taxi-mitad-web">
+                    <div class="icono-wrap bg-amarillo">🚖</div>
+                    <div>
+                        <span class="titulo-boton taxi-color-texto">TAXIS</span>
+                        <span class="texto-secundario taxi-color-secundario">Teléfonos</span>
+                    </div>
+                </a>
+                <button onclick="llamarTaxiAzar()" class="taxi-mitad-azar" title="Llamar a un taxi aleatorio">
+                    <span style="font-size: 18px; margin-bottom: 2px;">🎲</span>
+                    <span style="font-size: 10px; font-weight: 900; color: #a16207; letter-spacing: 0.3px;">AZAR</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="titulo-seccion">Categorías profesionales</div>
+        <div class="grid-servicios">
+            <a href="jardineria.html" class="card-servicio"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
+            <a href="reformas.html" class="card-servicio"><div class="servicio-icono">🏗️</div><span class="servicio-texto">Reformas - Mantenimiento</span></a>
+            <a href="talleres.html" class="card-servicio"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
+            <a href="panaderia.html" class="card-servicio"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
+            <a href="salud.html" class="card-servicio"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
+            <a href="formacion.html" class="card-servicio"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
+            <a href="otros-servicios.html" class="card-servicio"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
+            <a href="artesania.html" class="card-servicio"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
+            <a href="empleo.html" class="card-servicio"><div class="servicio-icono">💼</div><span class="servicio-texto">Empleo</span></a>
+            <a href="limpieza.html" class="card-servicio"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza</span></a>
+            <a href="fontaneria.html" class="card-servicio"><div class="servicio-icono">🔧</div><span class="servicio-texto">Fontanería - Climatización</span></a>
+            <a href="ferreteria.html" class="card-servicio"><div class="servicio-icono">🔨</div><span class="servicio-texto">Ferretería - Materiales</span></a>
+            <a href="restaurantes.html" class="card-servicio"><div class="servicio-icono">🍴</div><span class="servicio-texto">A Comer</span></a>
+            <a href="bienestar.html" class="card-servicio"><div class="servicio-icono">💆</div><span class="servicio-texto">Bienestar</span></a>
+            <a href="ocio.html" class="card-servicio"><div class="servicio-icono">🚵‍♀️</div><span class="servicio-texto">Ocio - Deporte</span></a>
+            <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
+            <a href="eventos.html" class="card-servicio"><div class="servicio-icono">🎉</div><span class="servicio-texto">Eventos</span></a>
+            <a href="particulares.html" class="card-servicio"><div class="servicio-icono">🤝</div><span class="servicio-texto">Particulares</span></a>
+            <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
+        </div>
+
+        <div class="titulo-seccion" style="color: #dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
+        <div class="grid-telefonos">
+            <a href="tel:112" class="telf-item telf-112">
+                <span class="nombre-servicio">Emergencias General</span>
+                <span class="numero-telf">112</span>
+            </a>
+            <a href="tel:921182323" class="telf-item">
+                <span class="nombre-servicio">Policía Municipal (Fijo)</span>
+                <span class="numero-telf">921 182 323</span>
+            </a>
+            <a href="tel:600400880" class="telf-item">
+                <span class="nombre-servicio">Policía Municipal (Móvil)</span>
+                <span class="numero-telf">600 400 880</span>
+            </a>
+            <a href="tel:921181029" class="telf-item">
+                <span class="nombre-servicio">Guardia Civil El Espinar</span>
+                <span class="numero-telf">921 181 029</span>
+            </a>
+            <a href="tel:921422222" class="telf-item">
+                <span class="nombre-servicio">Bomberos (Provincia)</span>
+                <span class="numero-telf">921 422 222</span>
+            </a>
+        </div>
+
     </main>
 
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
+    <script>
+    const telefonosTaxis = ["628826577", "666154968", "649553180", "639752456", "722501122", "697920835", "662958026", "690840809"];
+
+    function llamarTaxiAzar() {
+        if (telefonosTaxis.length === 0) return;
+        const indiceAzar = Math.floor(Math.random() * telefonosTaxis.length);
+        window.location.href = `tel:${telefonosTaxis[indiceAzar]}`;
+    }
+
+    const MAPS_URL_SR = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+San+Rafael+Travesia+Alto+del+Leon+19+San+Rafael"; 
+    const MAPS_HONTANILLA = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+Aparicio+Av+Hontanilla+18+El+Espinar"; 
+    const MAPS_PERALES = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+El+Espinar+Calle+Marques+de+Perales+2+El+Espinar"; 
+    const MAPS_GENERICO = "https://elespinar.es/farmacias/";
+
+    const calendarioGuardias = [
+        { inicio: "2026-01-01", fin: "2026-01-04", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-01-05", fin: "2026-01-11", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-01-12", fin: "2026-01-18", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-01-19", fin: "2026-01-25", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-01-26", fin: "2026-02-01", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-02-02", fin: "2026-02-08", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-02-09", fin: "2026-02-15", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-02-16", fin: "2026-02-22", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-02-23", fin: "2026-03-01", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-03-02", fin: "2026-03-08", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-03-09", fin: "2026-03-15", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-03-16", fin: "2026-03-22", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-03-23", fin: "2026-03-29", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-03-30", fin: "2026-04-05", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-04-06", fin: "2026-04-12", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-04-13", fin: "2026-04-19", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-04-20", fin: "2026-04-26", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-04-27", fin: "2026-05-03", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-05-04", fin: "2026-05-10", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-05-11", fin: "2026-05-17", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-05-18", fin: "2026-05-24", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-05-25", fin: "2026-05-31", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-06-01", fin: "2026-06-07", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-06-08", fin: "2026-06-14", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-06-15", fin: "2026-06-21", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-06-22", fin: "2026-06-28", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-06-29", fin: "2026-07-05", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-07-06", fin: "2026-07-12", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-07-13", fin: "2026-07-19", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-07-20", fin: "2026-07-26", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-07-27", fin: "2026-08-02", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-08-03", fin: "2026-08-09", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-08-10", fin: "2026-08-16", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-08-17", fin: "2026-08-23", farmacia: MAPS_PERALES, nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-08-24", fin: "2026-08-30", farmacia: MAPS_URL_SR, nombre: "San Rafael" },
+        { inicio: "2026-08-31", fin: "2026-09-06", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" }
+    ];
+
+    const listaEventos = [
+        { fecha: "2026-05-22", texto: "22 May: Jornadas KuPfunana" },
+        { fecha: "2026-05-23", texto: "23 May: Teatro 'El último que apague la luz'" },
+        { fecha: "2026-05-29", texto: "29 May: Prevención y Salud Mental" },
+        { fecha: "2026-05-29", texto: "29 May: Titirimundi en El Espinar" },
+        { fecha: "2026-05-30", texto: "30 May: Carga Leña Fest II Edición" },
+        { fecha: "2026-06-06", texto: "06 Jun: Música para Hitler (Teatro)" },
+        { fecha: "2026-06-07", texto: "07 Jun: Torneo Ajedrez Diputación" },
+        { fecha: "2026-06-19", texto: "19 Jun: Una Noche de Película (Orquesta)" },
+        { fecha: "2026-07-04", xxtexto: "04 Jul: Gala Mundial de la Magia" },
+        { fecha: "2026-07-11", texto: "11 Jul: Monólogo de J.J. Vaquero" },
+        { fecha: "2026-07-25", texto: "25 Jul: Concierto Piano y Candelas Trío" }
+    ];
+
+    function obtenerFechaLocal() {
+        const ahora = new Date();
+        const offset = ahora.getTimezoneOffset() * 60000; 
+        return new Date(ahora.getTime() - offset).toISOString().split('T')[0];
+    }
+
+    function obtenerTurnoHoy() {
+        try {
+            const fechaHoyStr = obtenerFechaLocal();
+            for (let i = 0; i < calendarioGuardias.length; i++) {
+                if (fechaHoyStr >= calendarioGuardias[i].inicio && fechaHoyStr <= calendarioGuardias[i].fin) {
+                    return calendarioGuardias[i];
+                }
+            }
+        } catch(e) { console.error(e); }
+        return null;
+    }
+
+    function cargarTiempoReal() {
+        const urlApi = "https://api.open-meteo.com/v1/forecast?latitude=40.7183&longitude=-4.2415&current=temperature_2m,weather_code,is_day";
+        const btnTiempo = document.getElementById("botonTiempo");
+
+        fetch(urlApi)
+            .then(res => res.json())
+            .then(data => {
+                if (data && data.current) {
+                    const temp = Math.round(data.current.temperature_2m);
+                    const code = data.current.weather_code;
+                    const esDia = data.current.is_day === 1;
+                    
+                    let icono = "☀️", estado = "Despejado", claseClima = "clima-soleado";
+
+                    if (code === 0) { 
+                        icono = esDia ? "☀️" : "🌙"; estado = "Despejado"; claseClima = esDia ? "clima-soleado" : "clima-nocturno"; 
+                    } else if (code >= 1 && code <= 3) { 
+                        icono = esDia ? "⛅" : "☁️"; estado = "Intervalos"; claseClima = esDia ? "clima-nublado" : "clima-nocturno"; 
+                    } else if (code >= 45 && code <= 48) { 
+                        icono = "🌫️"; estado = "Niebla"; claseClima = esDia ? "clima-nublado" : "clima-nocturno"; 
+                    } else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) { 
+                        icono = "🌧️"; estado = "Lluvia"; claseClima = esDia ? "clima-lluvia" : "clima-nocturno"; 
+                    } else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) { 
+                        icono = "❄️"; estado = "Nieve"; claseClima = esDia ? "clima-nieve" : "clima-nocturno"; 
+                    } else if (code >= 95) { 
+                        icono = "⛈️"; estado = "Tormenta"; claseClima = esDia ? "clima-lluvia" : "clima-nocturno"; 
+                    }
+
+                    document.getElementById("tiempoIcono").innerText = icono;
+                    document.getElementById("tiempoTexto").innerText = `${temp}°C - ${estado}`;
+                    btnTiempo.className = `enlace-util ${claseClima}`;
+                }
+            }).catch(() => {
+                document.getElementById("tiempoIcono").innerText = "🌤️";
+                document.getElementById("tiempoTexto").innerText = "Previsión Local";
+            });
+    }
+
+    function cargarAgendaLocal() {
+        const txtAgenda = document.getElementById("agendaTexto");
+        const fechaHoyStr = obtenerFechaLocal();
+        let proximoEvento = null;
+
+        for (let i = 0; i < listaEventos.length; i++) {
+            if (listaEventos[i].fecha >= fechaHoyStr) { proximoEvento = listaEventos[i]; break; }
+        }
+        txtAgenda.innerText = proximoEvento ? proximoEvento.texto : "Ver Agenda Completa";
+    }
+
+    function irAFarmaciaGuardiaHoy() {
+        const turno = obtenerTurnoHoy();
+        window.open(turno ? turno.farmacia : MAPS_GENERICO, "_blank", "noopener");
+    }
+
+    // 🏎️ LÓGICA DEL CARRUSEL (TACTIL + RATÓN)
+    const track = document.getElementById("track");
+    let isDown = false, startX, scrollLeft, intervaloAutoPlay, tiempoReinicioAutoPlay;
+
+    function iniciarAutoPlay() {
+        intervaloAutoPlay = setInterval(() => {
+            const maxScroll = track.scrollWidth - track.clientWidth;
+            if (track.scrollLeft >= maxScroll - 10) {
+                track.style.scrollBehavior = 'auto'; track.scrollLeft = 0; track.style.scrollBehavior = 'smooth';
+            } else { track.scrollLeft += 160; }
+        }, 3000); 
+    }
+    function detenerAutoPlay() { clearInterval(intervaloAutoPlay); clearTimeout(tiempoReinicioAutoPlay); }
+    function programarReinicio() { tiempoReinicioAutoPlay = setTimeout(iniciarAutoPlay, 2500); }
+
+    track.addEventListener('mousedown', (e) => {
+        detenerAutoPlay(); isDown = true; startX = e.pageX - track.offsetLeft; scrollLeft = track.scrollLeft; track.style.scrollBehavior = 'auto';
+    });
+    track.addEventListener('mouseleave', () => { if(isDown) { isDown = false; track.style.scrollBehavior = 'smooth'; programarReinicio(); } });
+    track.addEventListener('mouseup', () => { isDown = false; track.style.scrollBehavior = 'smooth'; programarReinicio(); });
+    track.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - track.offsetLeft; track.scrollLeft = scrollLeft - (x - startX) * 1.3; });
+    track.addEventListener('touchstart', detenerAutoPlay, { passive: true });
+    track.addEventListener('touchend', programarReinicio, { passive: true });
+    track.addEventListener('mouseenter', detenerAutoPlay);
+    track.addEventListener('mouseleave', () => { if(!isDown) programarReinicio(); });
+
+    // CARGA INICIAL
+    window.onload = () => {
+        const txtNombre = document.getElementById("txtFarmaciaNombre");
+        if (txtNombre) {
+            const turno = obtenerTurnoHoy();
+            txtNombre.innerText = turno ? turno.nombre : "Consultar Guardia";
+        }
+        cargarTiempoReal();
+        cargarAgendaLocal();
+        iniciarAutoPlay();
+    };
+    </script>
 </body>
 </html>
