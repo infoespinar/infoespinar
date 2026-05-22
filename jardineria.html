@@ -1,0 +1,592 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardinería y Leña | infoespinar.com</title>
+    <style>
+        /* 🎨 VARIABLES Y ESTILOS GENERALES */
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto; 
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch; 
+        }
+
+        /* 📋 ENCABEZADO PULIDO CON REGRESO A INICIO */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .header-logo-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .header-bandera {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 6px;
+            aspect-ratio: 1 / 1;
+        }
+
+        .header h1 {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* 🏛️ CONTENEDOR PRINCIPAL RESTRINGIDO EN PC */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
+        }
+
+        /* 🎪 TITULAR DIVERTIDO EN DOS COLORES */
+        .titulo-seccion-principal {
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .txt-verde { color: #16a34a; }   /* Verde Jardín */
+        .txt-marron { color: #854d0e; }  /* Marrón Leña */
+
+        .titulo-bloque {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 25px 0 12px 4px;
+            font-weight: 700;
+        }
+
+        /* 🗺️ MAPA CON RECORTE PARA GOOGLE SITES */
+        .contenedor-mapa-fijo {
+            width: 100%;
+            height: 350px; /* Altura controlada para el mapa */
+            margin-bottom: 25px;
+        }
+
+        .map-wrapper {
+            width: 100%;
+            height: 100%; 
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+        }
+
+        .map-wrapper iframe {
+            position: absolute;
+            top: -60px; /* Oculta el título nativo de My Maps */
+            left: 0;
+            width: 100%;
+            height: calc(100% + 60px);
+            border: 0;
+        }
+
+        /* 🏷️ BANNER PUBLICITARIO AUTOMÁTICO */
+        .banner-comercio {
+            width: 100%;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .banner-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            transition: transform 0.3s ease;
+        }
+
+        .banner-comercio:hover .banner-img {
+            transform: scale(1.02);
+        }
+
+        .banner-info {
+            position: relative;
+            padding: 15px 20px;
+            z-index: 2;
+        }
+
+        .banner-label {
+            display: inline-block;
+            background: #059669;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .banner-nombre {
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+
+        .banner-sub {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            margin-top: 3px;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+
+        /* 🔍 BUSCADOR INTERNO */
+        .contenedor-buscador {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .input-buscador {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-buscador:focus {
+            border-color: #15803d; /* Verde corporativo de jardín */
+        }
+
+        /* 📇 CUADRÍCULA DE COMERCIOS */
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            width: 100%;
+            padding-bottom: 25px;
+            visibility: hidden; /* Evita parpadeos al desordenar */
+        }
+
+        .tarjeta-comercio {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #15803d; /* Unificado con el sector verde */
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .tarjeta-comercio:active {
+            transform: scale(0.99);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .info-comercio {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .nombre-comercio {
+            font-size: 19px;
+            font-weight: 700;
+            color: #15803d; 
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .enlace-web {
+            display: inline-block;
+            font-size: 13.5px;
+            color: #475569; 
+            text-decoration: none;
+            font-weight: 400;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .enlace-web:hover {
+            text-decoration: underline;
+            color: #15803d; 
+        }
+
+        .direccion-comercio {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        /* BOTONES DE ACCIÓN EN TARJETA */
+        .bloque-botones {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fila-contacto {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+
+        .btn-llamar { background-color: #0f172a; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps { background-color: #1a73e8; width: 100%; }
+        .btn-email { background-color: #facc15; color: #000000; width: 100%; }
+
+        /* ⚠️ AVISO LEGAL / DISCLAIMER RESPONSIVO */
+        .disclaimer-box {
+            background-color: #edd3be;
+            border-left: 4px solid #b45309;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 30px 4px 15px 4px;
+            font-size: 12.5px;
+            line-height: 1.5;
+            color: #78350f;
+            text-align: justify;
+        }
+
+        /* 💻 RESPONSIVE PC */
+        @media screen and (min-width: 768px) {
+            .grid-comercios {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 16px;
+            }
+        }
+
+        /* 👣 FOOTER */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #3b82f6;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar"> 
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <main class="main-container">
+
+        <h2 class="titulo-seccion-principal">
+            <span class="txt-verde">Jardinería</span> y <span class="txt-marron">Leña</span>
+        </h2>
+
+        <div class="titulo-bloque">Localización de servicios</div>
+        <div class="contenedor-mapa-fijo">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1gAyfGpQEERcdEd7osI6N_p0aPNrJl20&ehbc=2E312F&noprof=1"></iframe>
+            </div>
+        </div>
+
+        <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Eres comerciante?</span>
+                <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
+                <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
+            </div>
+        </a>
+
+        <div class="titulo-bloque">Listado de profesionales</div>
+        <div class="contenedor-buscador">
+            <input type="text" id="buscadorJardin" class="input-buscador" placeholder="🔍 Buscar jardinero, vivero, leña, desbroce o por núcleo...">
+        </div>
+
+        <div class="grid-comercios" id="gridComercios">
+
+            <div class="tarjeta-comercio" data-search="vivero la estacion plantas jardineria arboles flores madrid la estacion de el espinar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Vivero La Estación</div>
+                    <a href="https://www.viverolaestacion.es/" target="_blank" rel="noopener" class="enlace-web">🌐 www.viverolaestacion.es</a>
+                    <div class="direccion-comercio">📍 C. Madrid, 2, La Estación de El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921188205" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34615413703" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Vivero+La+Estacion+Calle+Madrid+2+La+Estacion+de+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@viverolaestacion.es" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="jardineria jimenez diseño jardines mantenimiento san rafael n-6">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Jardinería Jiménez</div>
+                    <a href="http://www.jardineriajimenez.com/" target="_blank" rel="noopener" class="enlace-web">🌐 www.jardineriajimenez.com</a>
+                    <div class="direccion-comercio">📍 N-6, 4, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34626597508" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34626597508" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Jardineria+Jimenez+N-6+4+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@jardineriajimenez.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="jardineria y leña ricosan chimeneas podas desbroces el espinar n-6">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Jardinería y Leña Ricosán</div>
+                    <a href="https://www.jardineriaricosan.com/" target="_blank" rel="noopener" class="enlace-web">🌐 www.jardineriaricosan.com</a>
+                    <div class="direccion-comercio">📍 N-6, 65, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34918549884" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34630278830" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Jardineria+y+Leña+Ricosan+N-6+65+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="marcelo jardineria mvjardineria mantenimiento riegos el espinar alambique">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Marcelo Jardinería</div>
+                    <a href="http://www.mvjardineria.es/" target="_blank" rel="noopener" class="enlace-web">🌐 www.mvjardineria.es</a>
+                    <div class="direccion-comercio">📍 C. Alambique, 3, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34654392433" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34654392433" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Marcelo+Jardineria+Calle+Alambique+3+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="leñas hermanos muñumel carbon calefaccion madera el espinar sg-a-7225">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Leñas Hermanos Muñumel</div>
+                    <div class="direccion-comercio">📍 SG-A-7225, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34646352448" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34646352448" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Leñas+Hermanos+Muñumel+SG-A-7225+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="bunes muñoz trabajos forestales talas madera desbroces carretera coruña km 67">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Bunes Muñoz Trabajos Forestales</div>
+                    <a href="http://www.bunestrabajosforestales.es/" target="_blank" rel="noopener" class="enlace-web">🌐 bunestrabajosforestales.es</a>
+                    <div class="direccion-comercio">📍 Vía de servicio margen izquierdo, Ctra. de La Coruña, km 67</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34659444869" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34659444870" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Bunes+Muñoz+Trabajos+Forestales+Carretera+de+La+Coruña+km+67" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="kern jardineria y servicios podas mantenimiento riegos el espinar colombia">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Kern Jardinería y Servicios</div>
+                    <a href="https://kernjardineria.es/" target="_blank" rel="noopener" class="enlace-web">🌐 kernjardineria.es</a>
+                    <div class="direccion-comercio">📍 C. Colombia, 1367 (Buzón 855), El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34620463328" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34620463328" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Kern+Jardineria+y+Servicios+Calle+Colombia+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="poda y tala profesional jardineria desbroce motosierra altura el espinar angeles">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Poda y Tala Profesional</div>
+                    <a href="http://podaytalaprofesional.es/" target="_blank" rel="noopener" class="enlace-web">🌐 podaytalaprofesional.es</a>
+                    <div class="direccion-comercio">📍 Av. de Los Ángeles, 123 (Buzón 500), El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34602498406" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34602498406" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Poda+y+Tala+Jardineria+y+Desbroce+Avenida+de+Los+Angeles+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="paraiso jardin mantenimiento paisajismo los angeles de san rafael belgica lasr">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Paraíso Jardin</div>
+                    <a href="http://paraiso-jardin.com/" target="_blank" rel="noopener" class="enlace-web">🌐 paraiso-jardin.com</a>
+                    <div class="direccion-comercio">📍 Av. de Bélgica, 794, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34677448117" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34677448117" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Paraiso+Jardin+Avenida+de+Belgica+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>Aviso de responsabilidad:</strong> infoespinar.com es un directorio vecinal meramente informativo que recopila de buena fe los datos públicos y de contacto de los comercios y profesionales de la zona. Esta web no tiene vinculación contractual, comercial ni societaria con los negocios aquí listados, ni se responsabiliza de los presupuestos, trabajos, servicios prestados, retrasos o posibles incidencias que puedan surgir entre los usuarios y dichos profesionales. Recomendamos solicitar siempre presupuesto previo por escrito.
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const contenedor = document.getElementById("gridComercios");
+        const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+        const buscador = document.getElementById("buscadorJardin");
+        
+        // 1. Algoritmo de mezcla aleatoria (Fisher-Yates)
+        for (let i = tarjetas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+        }
+        
+        // Volver a inyectar las tarjetas en orden aleatorio
+        tarjetas.forEach(tarjeta => contenedor.appendChild(tarjeta));
+        
+        // Mostrar contenedor ordenado sin saltos visuales
+        contenedor.style.visibility = "visible";
+        
+        // 2. Lógica del Buscador en tiempo real
+        buscador.addEventListener("input", function() {
+            const termino = buscador.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            
+            tarjetas.forEach(tarjeta => {
+                const textoTarjeta = tarjeta.getAttribute("data-search").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (textoTarjeta.includes(termino)) {
+                    tarjeta.style.display = "flex";
+                } else {
+                    tarjeta.style.display = "none";
+                }
+            });
+            
+            actualizarAltura();
+        });
+
+        // Forzar cálculo inicial de altura en Google Sites
+        actualizarAltura();
+    });
+
+    function actualizarAltura() {
+        const grid = document.getElementById('gridComercios');
+        if(grid && window.parent && window.parent.postMessage) {
+            window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
+        }
+    }
+    window.addEventListener('resize', actualizarAltura);
+    setTimeout(actualizarAltura, 350);
+    </script>
+</body>
+</html>
