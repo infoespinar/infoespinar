@@ -2,13 +2,31 @@
   @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Lato', sans-serif; background-color: transparent; padding: 8px 4px; overflow-y: auto; overflow-x: hidden; }
+  body { font-family: 'Lato', sans-serif; background-color: transparent; padding: 0 4px; overflow-y: auto; overflow-x: hidden; }
 
-  /* Header Unificado */
-  .header-seccion { padding: 15px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; text-align: center; }
-  .header-titulo { font-size: 22px; font-weight: 900; color: #1e3a8a; margin: 0; text-transform: uppercase; }
-  .header-titulo span { color: #1a73e8; }
-  .header-sub { font-size: 12px; color: #64748b; margin-top: 5px; }
+  /* Banner de Anuncio (Header) */
+  .banner-comercio {
+    width: 100%;
+    height: 120px;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: #1e293b;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+  }
+  .banner-img {
+    position: absolute; width: 100%; height: 100%;
+    background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop');
+    background-size: cover; background-position: center; opacity: 0.4;
+  }
+  .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+  .banner-label { display: inline-block; background: #059669; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 3px; }
+  .banner-nombre { color: white; font-size: 20px; font-weight: 700; margin: 0; text-shadow: 0px 2px 4px rgba(0,0,0,0.6); }
+  .banner-sub { color: rgba(255,255,255,0.95); font-size: 12px; margin-top: 3px; }
 
   /* Mapa */
   .map-wrapper { width: 100%; height: 350px; overflow: hidden; border-radius: 12px; border: 1px solid #e0e0e0; position: relative; margin-bottom: 25px; }
@@ -16,38 +34,36 @@
 
   /* Buscador */
   .contenedor-buscador { margin-bottom: 20px; width: 100%; }
-  .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 2px solid #cbd5e1; border-radius: 12px; outline: none; transition: border-color 0.2s; }
-  .input-buscador:focus { border-color: #1a73e8; }
+  .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+  .input-buscador:focus { border-color: #1a73e8; outline: none; }
 
-  /* Tarjetas */
+  /* Grid y Tarjetas */
   .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; width: 100%; padding-bottom: 25px; visibility: hidden; }
-  .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1a73e8; border-radius: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; }
-  .info-comercio { padding: 20px; flex-grow: 1; }
-  .nombre-comercio { font-size: 19px; font-weight: 700; color: #1a73e8; margin-bottom: 4px; line-height: 1.3; }
-  .enlace-web { display: inline-block; font-size: 14px; color: #334155; text-decoration: none; margin-bottom: 8px; }
-  .burbuja-nucleo { display: inline-block; background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; border: 1px solid #e2e8f0; }
-  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4; }
-  
+  .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1a73e8; border-radius: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; padding: 20px; }
+  .nombre-comercio { font-size: 19px; font-weight: 700; color: #1a73e8; margin-bottom: 4px; }
+  .burbuja-nucleo { display: inline-block; background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; margin: 8px 0; border: 1px solid #e2e8f0; }
+  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; }
   .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
-  .fila-contacto { display: flex; gap: 10px; }
-  .btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff; transition: background-color 0.2s ease; }
-  .btn-llamar { background-color: #000000; flex: 1; }
-  .btn-whatsapp { background-color: #10b981; flex: 1; }
+  .btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 10px; text-align: center; color: #fff; display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .btn-llamar { background-color: #000; flex: 1; }
   .btn-maps { background-color: #1a73e8; width: 100%; }
-  .btn-email { background-color: #facc15; color: #000000; width: 100%; }
 </style>
 
-<div class="header-seccion">
-    <h1 class="header-titulo">Info<span>Espinar</span></h1>
-    <p class="header-sub">Directorio gastronómico y restauración</p>
-</div>
+<a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+  <div class="banner-img"></div>
+  <div class="banner-info">
+    <span class="banner-label">¿Eres comerciante?</span>
+    <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
+    <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos.</div>
+  </div>
+</a>
 
 <div class="map-wrapper">
   <iframe src="https://www.google.com/maps/d/embed?mid=1SGqZX6163Q0TQJJsOQjp-4DZmFMK3qo&ehbc=2E312F&noprof=1"></iframe>
 </div>
 
 <div class="contenedor-buscador">
-  <input type="text" id="buscadorRestaurantes" class="input-buscador" placeholder="🔍 Buscar restaurante, bar, asador...">
+  <input type="text" id="buscadorRestaurantes" class="input-buscador" placeholder="🔍 Buscar restaurante, bar, menú...">
 </div>
 
 <div class="grid-comercios" id="gridRestaurantes">
@@ -56,20 +72,20 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   const contenedor = document.getElementById("gridRestaurantes");
-  const buscador = document.getElementById("buscadorRestaurantes");
-  const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+  const tarjetas = Array.from(document.querySelectorAll(".tarjeta-comercio"));
   
+  // Mezcla aleatoria
   for (let i = tarjetas.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
   }
   tarjetas.forEach(t => contenedor.appendChild(t));
   contenedor.style.visibility = "visible";
-  
-  buscador.addEventListener("input", function() {
-    const term = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  document.getElementById("buscadorRestaurantes").addEventListener("input", function(e) {
+    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     tarjetas.forEach(t => {
-      t.style.display = (t.getAttribute("data-search").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(term)) ? "flex" : "none";
+      t.style.display = (t.dataset.search.includes(term)) ? "flex" : "none";
     });
     actualizarAltura();
   });
@@ -82,5 +98,4 @@ function actualizarAltura() {
   }
 }
 window.addEventListener('resize', actualizarAltura);
-setTimeout(actualizarAltura, 500);
 </script>
