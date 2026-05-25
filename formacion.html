@@ -10,6 +10,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
 
+        /* Header */
         .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 25px 20px; }
         .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
         .header-bandera { width: 32px; height: 32px; border-radius: 6px; }
@@ -18,23 +19,34 @@
         .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; color: #1e40af; }
         .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
 
-        .contenedor-mapa-fijo { width: 100%; height: 350px; margin-bottom: 25px; }
+        /* Mapa y Banner */
+        .contenedor-mapa-fijo { width: 100%; height: 300px; margin-bottom: 25px; }
         .map-wrapper { width: 100%; height: 100%; overflow: hidden; border-radius: 14px; border: 1px solid #cbd5e1; position: relative; }
         .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
+        
+        .banner-comercio { width: 100%; height: 120px; border-radius: 14px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .banner-info { padding: 15px 20px; z-index: 2; }
+        .banner-label { display: inline-block; background: #059669; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; }
+        .banner-nombre { color: white; font-size: 19px; font-weight: 700; margin: 0; }
 
+        /* Buscador */
+        .input-buscador { width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 14px; margin-bottom: 25px; font-size: 16px; outline: none; }
+
+        /* Tarjetas */
         .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; }
-        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1e40af; border-radius: 14px; padding: 20px; }
+        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1e40af; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; }
         .nombre-comercio { font-size: 18px; font-weight: 700; color: #1e40af; margin-bottom: 8px; }
-        .enlace-web { display: block; font-size: 13px; color: #475569; text-decoration: none; margin-bottom: 5px; }
+        .enlace-web { display: block; font-size: 13px; color: #475569; text-decoration: none; margin-bottom: 10px; }
         .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 15px; }
         
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; color: white; margin-top: 5px; }
+        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; color: white; }
         .btn-llamar { background-color: #0f172a; }
         .btn-whatsapp { background-color: #10b981; }
-        .btn-maps { background-color: #1a73e8; }
         .btn-email { background-color: #facc15; color: #000; }
 
-        .footer { text-align: center; padding: 25px; margin-top: 40px; color: #64748b; font-size: 12px; }
+        .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
+        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -47,7 +59,7 @@
     </header>
 
     <main class="main-container">
-        <h2 class="titulo-seccion-principal">Formación y Centros</h2>
+        <h2 class="titulo-seccion-principal">Formación</h2>
 
         <div class="titulo-bloque">Localización</div>
         <div class="contenedor-mapa-fijo">
@@ -56,43 +68,77 @@
             </div>
         </div>
 
-        <div class="grid-comercios">
-            <div class="tarjeta-comercio">
+        <a href="mailto:info@infoespinar.com" class="banner-comercio">
+            <div class="banner-info">
+                <span class="banner-label">¿Eres comerciante?</span>
+                <h3 class="banner-nombre">¡Anuncia tu centro aquí!</h3>
+            </div>
+        </a>
+
+        <input type="text" id="buscador" class="input-buscador" placeholder="🔍 Buscar centro o formación...">
+
+        <div class="grid-comercios" id="gridComercios">
+            <div class="tarjeta-comercio" data-nombre="Autoescuela Teodoro González Sanz">
                 <div class="nombre-comercio">Autoescuela Teodoro González Sanz</div>
                 <a href="https://autoescuelateodoro.es/" class="enlace-web">🌐 autoescuelateodoro.es</a>
                 <div class="direccion-comercio">📍 C. Real, 36, El Espinar</div>
-                <a href="tel:+34921438286" class="btn btn-llamar">📞 921 438 286</a>
+                <div class="btn-group"><a href="tel:+34921438286" class="btn btn-llamar">📞 921 438 286</a></div>
             </div>
 
-            <div class="tarjeta-comercio">
+            <div class="tarjeta-comercio" data-nombre="Autoescuela Guadarrama">
                 <div class="nombre-comercio">Autoescuela Guadarrama</div>
                 <a href="https://www.autoescuelaguadarrama.com/" class="enlace-web">🌐 autoescuelaguadarrama.com</a>
                 <div class="direccion-comercio">📍 Av. Hontanilla, 16, El Espinar</div>
-                <a href="tel:+34635434229" class="btn btn-llamar">📞 635 434 229</a>
-                <a href="https://wa.me/34635434229" class="btn btn-whatsapp">💬 WhatsApp</a>
-                <a href="mailto:info@autoescuelaguadarrama.com" class="btn btn-email">📧 Email</a>
+                <div class="btn-group">
+                    <a href="tel:+34635434229" class="btn btn-llamar">📞 635 434 229</a>
+                    <a href="https://wa.me/34635434229" class="btn btn-whatsapp">💬 WhatsApp</a>
+                    <a href="mailto:info@autoescuelaguadarrama.com" class="btn btn-email">📧 Email</a>
+                </div>
             </div>
 
-            <div class="tarjeta-comercio">
+            <div class="tarjeta-comercio" data-nombre="Centro Ecuestre La Morada del Caballo">
                 <div class="nombre-comercio">Centro Ecuestre La Morada del Caballo</div>
                 <a href="https://lamoradadelcaballo.com/" class="enlace-web">🌐 lamoradadelcaballo.com</a>
                 <div class="direccion-comercio">📍 Camino "Peña el Gato", El Espinar</div>
-                <a href="tel:+34657188821" class="btn btn-llamar">📞 657 188 821</a>
-                <a href="https://wa.me/34657188821" class="btn btn-whatsapp">💬 WhatsApp</a>
-                <a href="mailto:lamoradadelcaballo@gmail.com" class="btn btn-email">📧 Email</a>
+                <div class="btn-group">
+                    <a href="tel:+34657188821" class="btn btn-llamar">📞 657 188 821</a>
+                    <a href="https://wa.me/34657188821" class="btn btn-whatsapp">💬 WhatsApp</a>
+                    <a href="mailto:lamoradadelcaballo@gmail.com" class="btn btn-email">📧 Email</a>
+                </div>
             </div>
 
-            <div class="tarjeta-comercio">
+            <div class="tarjeta-comercio" data-nombre="Centro de Formación para el Empleo">
                 <div class="nombre-comercio">Centro de Formación para el Empleo</div>
                 <a href="http://empleo.jcyl.es/" class="enlace-web">🌐 empleo.jcyl.es</a>
                 <div class="direccion-comercio">📍 N-6, 64, El Espinar</div>
-                <a href="tel:+34921171500" class="btn btn-llamar">📞 921 171 500</a>
+                <div class="btn-group"><a href="tel:+34921171500" class="btn btn-llamar">📞 921 171 500</a></div>
             </div>
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas. Si observa algún error o desea actualizar su información, por favor póngase en contacto con nosotros.
         </div>
     </main>
 
     <footer class="footer">
         <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
     </footer>
+
+    <script>
+        // Carga aleatoria
+        const grid = document.getElementById("gridComercios");
+        const cards = Array.from(grid.children);
+        cards.sort(() => Math.random() - 0.5);
+        cards.forEach(card => grid.appendChild(card));
+
+        // Buscador
+        document.getElementById("buscador").addEventListener("input", function() {
+            const term = this.value.toLowerCase();
+            cards.forEach(card => {
+                const name = card.getAttribute("data-nombre").toLowerCase();
+                card.style.display = name.includes(term) ? "flex" : "none";
+            });
+        });
+    </script>
 </body>
 </html>
