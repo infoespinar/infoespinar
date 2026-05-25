@@ -1,90 +1,412 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienestar | infoespinar.com</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700&display=swap');
 
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: #f4f6f9;
-            color: #334155;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            padding: 15px 12px;
-        }
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 
-        /* 🏛️ TITULAR PERSONALIZADO PARA BIENESTAR */
-        .titulo-seccion-principal {
-            font-size: 26px;
-            font-weight: 900;
-            text-align: center;
-            margin: 20px 0;
-            text-transform: uppercase;
-        }
-        .txt-violeta { color: #7c3aed; } /* Color para Bienestar */
-        .txt-marino { color: #1e3a8a; }
+  html, body {
+    font-family: 'Lato', sans-serif;
+    background-color: transparent;
+    padding: 8px 4px;
+    overflow: hidden;
+    width: 100%;
+  }
 
-        .titulo-bloque {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #475569;
-            margin: 25px 0 12px 4px;
-            font-weight: 700;
-        }
+  /* Diseño móvil elegante también en PC */
+  .wrapper-movil-pc {
+    max-width: 450px;
+    margin: 0 auto;
+    width: 100%;
+    background: transparent;
+  }
 
-        /* 🗺️ MAPA CON RECORTE */
-        .contenedor-mapa-fijo { width: 100%; height: 350px; margin-bottom: 25px; }
-        .map-wrapper {
-            width: 100%; height: 100%; overflow: hidden;
-            border-radius: 14px; border: 1px solid #cbd5e1;
-            position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
-        }
-        .map-wrapper iframe {
-            position: absolute; top: -60px; left: 0;
-            width: 100%; height: calc(100% + 60px); border: 0;
-        }
-    </style>
-</head>
-<body>
+  /* Buscador */
+  .contenedor-buscador {
+    margin-bottom: 20px;
+    width: 100%;
+    padding: 0 2px;
+  }
 
-    <header style="padding: 15px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; text-align: center;">
-    <h1 style="font-size: 22px; font-weight: 900; color: #1e3a8a; margin: 0; text-transform: uppercase;">
-        Info<span style="color: #15803d;">Espinar</span>
-    </h1>
-    <p style="font-size: 12px; color: #64748b; margin-top: 5px;">Directorio de servicios locales</p>
-</header>
-    <main class="main-container">
-        <h2 class="titulo-seccion-principal">
-            <span class="txt-violeta">Bienestar</span> y <span class="txt-marino">Salud</span>
-        </h2>
+  .input-buscador {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    font-family: 'Lato', sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    outline: none;
+    transition: border-color 0.2s;
+  }
 
-        <div class="titulo-bloque">Ubicación de servicios</div>
-        <div class="contenedor-mapa-fijo">
-            <div class="map-wrapper">
-                <iframe src="https://www.google.com/maps/d/embed?mid=1_0mLK5kqoOnOq3NG6W2t0_gbvsotnm0&ehbc=2E312F&noprof=1"></iframe>
-            </div>
+  .input-buscador:focus {
+    border-color: #a855f7;
+  }
+
+  /* Grid */
+  .grid-comercios {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
+    padding-bottom: 35px;
+    visibility: hidden;
+  }
+
+  /* Tarjetas */
+  .tarjeta-comercio {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-top: 4px solid #a855f7;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.15s ease-in-out;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .tarjeta-comercio:active {
+    transform: scale(0.99);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .info-comercio {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .nombre-comercio {
+    font-size: 19px;
+    font-weight: 700;
+    color: #7e22ce;
+    margin-bottom: 4px;
+    line-height: 1.3;
+  }
+
+  .enlace-web {
+    display: inline-block;
+    font-size: 14px;
+    color: #334155;
+    text-decoration: none;
+    font-weight: 400;
+    margin-bottom: 8px;
+    word-break: break-all;
+  }
+
+  .enlace-web:hover {
+    text-decoration: underline;
+    color: #7e22ce;
+  }
+
+  .contenedor-burbujas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 2px;
+    margin-bottom: 8px;
+  }
+
+  .burbuja-nucleo {
+    display: inline-block;
+    background-color: #faf5ff;
+    color: #7e22ce;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: 1px solid #e9d5ff;
+  }
+
+  .direccion-comercio {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .bloque-botones {
+    margin-top: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .fila-contacto {
+    display: flex;
+    gap: 10px;
+  }
+
+  .btn {
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 14px;
+    border-radius: 10px;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: background-color 0.2s ease;
+  }
+
+  .btn-llamar { background-color: #000000; flex: 1; }
+  .btn-whatsapp { background-color: #10b981; flex: 1; }
+  .btn-maps { background-color: #1a73e8; width: 100%; }
+  .btn-email { background-color: #facc15; color: #000000; width: 100%; }
+</style>
+
+<div class="wrapper-movil-pc">
+
+  <div class="contenedor-buscador">
+    <input type="text" id="buscadorBienestar" class="input-buscador" placeholder="🔍 Buscar peluquería, yoga, uñas, estética o por núcleo...">
+  </div>
+
+  <div class="grid-comercios" id="gridComercios">
+
+    <!-- Nataraja -->
+    <div class="tarjeta-comercio" data-search="nataraja yoga school la estacion yoga meditacion bienestar pilates">
+      <div class="info-comercio">
+        <div class="nombre-comercio">Nataraja Yoga School</div>
+
+        <div class="contenedor-burbujas">
+          <span class="burbuja-nucleo">La Estación</span>
         </div>
 
-        <div class="disclaimer-box" style="background-color: #f5f3ff; border-left: 4px solid #7c3aed; padding: 14px; border-radius: 8px; font-size: 13px; color: #5b21b6;">
-            <strong>Nota:</strong> Esta sección engloba centros de terapias, estética, bienestar físico y mental en el municipio.
+        <div class="direccion-comercio">
+          📍 C. Chatún, 20D, La Estación de El Espinar
         </div>
-    </main>
 
-    <script>
-    function actualizarAltura() {
-        if(window.parent && window.parent.postMessage) {
-            window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
-        }
-    }
-    window.addEventListener('resize', actualizarAltura);
-    setTimeout(actualizarAltura, 500);
-    </script>
-</body>
-</html>
+        <div class="bloque-botones">
+          <div class="fila-contacto">
+            <a href="tel:+34691151960" class="btn btn-llamar">📞 Llamar</a>
+            <a href="https://wa.me/34691151960" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Nataraja+Yoga+School+La+Estacion+El+Espinar" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- En Armonía -->
+    <div class="tarjeta-comercio" data-search="en armonia san rafael estetica belleza facial uñas masajes">
+      <div class="info-comercio">
+        <div class="nombre-comercio">Centro de Estética En Armonía</div>
+
+        <a href="https://www.facebook.com/enarmoniasanrafael" target="_blank" class="enlace-web">
+          🌐 Facebook Oficial
+        </a>
+
+        <div class="contenedor-burbujas">
+          <span class="burbuja-nucleo">San Rafael</span>
+        </div>
+
+        <div class="direccion-comercio">
+          📍 C. Doña Leocadia Gómez, 5, San Rafael
+        </div>
+
+        <div class="bloque-botones">
+          <div class="fila-contacto">
+            <a href="tel:+34688955975" class="btn btn-llamar">📞 Llamar</a>
+            <a href="https://wa.me/34688955975" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Centro+de+Estetica+En+Armonia+San+Rafael" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+
+          <a href="mailto:enarmoniasanrafael@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Peluquería Mar Pérez -->
+    <div class="tarjeta-comercio" data-search="peluqueria mar perez san rafael peinados cortes tintes">
+      <div class="info-comercio">
+        <div class="nombre-comercio">Peluquería Mar Pérez</div>
+
+        <div class="contenedor-burbujas">
+          <span class="burbuja-nucleo">San Rafael</span>
+        </div>
+
+        <div class="direccion-comercio">
+          📍 Travesía Alto del León, 26, San Rafael
+        </div>
+
+        <div class="bloque-botones">
+          <div class="fila-contacto">
+            <a href="tel:+34665865414" class="btn btn-llamar">📞 Llamar</a>
+            <a href="https://wa.me/34665865414" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Peluqueria+Mar+Perez+San+Rafael" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- GG Studio -->
+    <div class="tarjeta-comercio" data-search="gg studio nails los angeles de san rafael uñas manicura pedicura">
+      <div class="info-comercio">
+        <div class="nombre-comercio">GG Studio Nails</div>
+
+        <a href="https://www.ggstudionails.com/" target="_blank" class="enlace-web">
+          🌐 ggstudionails.com
+        </a>
+
+        <div class="contenedor-burbujas">
+          <span class="burbuja-nucleo">Los Ángeles de San Rafael</span>
+        </div>
+
+        <div class="direccion-comercio">
+          📍 Centro de Negocios, Ofic. 2.3, Los Ángeles de San Rafael
+        </div>
+
+        <div class="bloque-botones">
+          <div class="fila-contacto">
+            <a href="tel:+34672863672" class="btn btn-llamar">📞 Llamar</a>
+            <a href="https://wa.me/34672863672" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=GG+Studio+Nails+Los+Angeles+de+San+Rafael" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Beauty by Gema -->
+    <div class="tarjeta-comercio" data-search="beauty by gema garrido el espinar estetica pestañas facial">
+      <div class="info-comercio">
+        <div class="nombre-comercio">Beauty by Gema Garrido</div>
+
+        <div class="contenedor-burbujas">
+          <span class="burbuja-nucleo">El Espinar</span>
+        </div>
+
+        <div class="direccion-comercio">
+          📍 Av. Hontanilla, 8, El Espinar
+        </div>
+
+        <div class="bloque-botones">
+          <div class="fila-contacto">
+            <a href="tel:+34670983649" class="btn btn-llamar">📞 Llamar</a>
+            <a href="https://wa.me/34670983649" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Beauty+by+Gema+Garrido+El+Espinar" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alba Array -->
+    <div class="tarjeta-comercio" data-search="alba array peluqueria estetica el espinar mechas maquillaje">
+      <div class="info-comercio">
+        <div class="nombre-comercio">Alba Array Peluquería & Estética</div>
+
+        <div class="contenedor-burbujas">
+          <span class="burbuja-nucleo">El Espinar</span>
+        </div>
+
+        <div class="direccion-comercio">
+          📍 C. Arquitecto Aranguren, 10, El Espinar
+        </div>
+
+        <div class="bloque-botones">
+          <div class="fila-contacto">
+            <a href="tel:+34600441665" class="btn btn-llamar">📞 Llamar</a>
+            <a href="https://wa.me/34600441665" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Alba+Array+Peluqueria+El+Espinar" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flor de Vida -->
+    <div class="tarjeta-comercio" data-search="flor de vida el espinar belleza depilacion cejas tratamientos">
+      <div class="info-comercio">
+        <div class="nombre-comercio">Centro de Belleza Flor de Vida</div>
+
+        <div class="contenedor-burbujas">
+          <span class="burbuja-nucleo">El Espinar</span>
+        </div>
+
+        <div class="direccion-comercio">
+          📍 C. La Luna, 2, El Espinar
+        </div>
+
+        <div class="bloque-botones">
+          <div class="fila-contacto">
+            <a href="tel:+34624092987" class="btn btn-llamar">📞 Llamar</a>
+            <a href="https://wa.me/34624092987" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+          </div>
+
+          <a href="https://maps.google.com/?q=Flor+de+Vida+El+Espinar" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+
+          <a href="mailto:flordevidabyjuliaperez@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const contenedor = document.getElementById("gridComercios");
+  const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+  const buscador = document.getElementById("buscadorBienestar");
+
+  // Aleatorizar
+  for (let i = tarjetas.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+  }
+
+  tarjetas.forEach(t => contenedor.appendChild(t));
+
+  contenedor.style.visibility = "visible";
+
+  // Buscador
+  buscador.addEventListener("input", function() {
+    const termino = buscador.value
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .trim();
+
+    tarjetas.forEach(tarjeta => {
+      const texto = tarjeta.getAttribute("data-search")
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+
+      tarjeta.style.display = texto.includes(termino) ? "flex" : "none";
+    });
+
+    actualizarAltura();
+  });
+
+  actualizarAltura();
+});
+
+function actualizarAltura() {
+  if(window.parent && window.parent.postMessage) {
+    window.parent.postMessage({
+      type: 'resize',
+      height: document.documentElement.offsetHeight + 20
+    }, '*');
+  }
+}
+
+window.addEventListener('resize', actualizarAltura);
+window.addEventListener('load', actualizarAltura);
+
+setTimeout(actualizarAltura, 150);
+setTimeout(actualizarAltura, 500);
+</script>
