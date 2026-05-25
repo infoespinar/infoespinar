@@ -1,116 +1,143 @@
-<style>
-  /* Importamos la fuente para mantener la coherencia */
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salud y Bienestar | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; display: flex; flex-direction: column; min-height: 100vh; overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+        .header { background: linear-gradient(135deg, #0f766e 0%, #0d9488 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); transition: background 0.2s, transform 0.2s; }
+        .header-logo-link:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
+        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
+        .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
-  body {
-    font-family: 'Lato', sans-serif;
-    background-color: transparent;
-    padding: 8px 4px;
-    overflow-y: auto; 
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch; 
-  }
+        .main-container { max-width: 1200px; width: 100%; margin: 0 auto; padding: 15px 12px; flex-grow: 1; }
+        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; letter-spacing: 0.5px; text-transform: uppercase; }
+        .txt-verde { color: #0f766e; }
+        .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
 
-  /* Contenedor del Buscador */
-  .contenedor-buscador { margin-bottom: 20px; width: 100%; padding: 0 2px; }
-  .input-buscador {
-    width: 100%; padding: 14px 16px; font-size: 16px; border: 1px solid #cbd5e1;
-    border-radius: 12px; font-family: 'Lato', sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-    outline: none; transition: border-color 0.2s;
-  }
-  .input-buscador:focus { border-color: #059669; }
+        .contenedor-mapa-fijo { width: 100%; height: 350px; margin-bottom: 25px; }
+        .map-wrapper { width: 100%; height: 100%; overflow: hidden; border-radius: 14px; border: 1px solid #cbd5e1; position: relative; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); }
+        .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
 
-  /* Grid */
-  .grid-comercios {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 16px; width: 100%; padding-bottom: 25px; visibility: hidden;
-  }
+        .banner-comercio { width: 100%; height: 120px; border-radius: 14px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 25px; }
+        .banner-img { position: absolute; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?q=80&w=1000&auto=format&fit=crop'); background-size: cover; background-position: center; opacity: 0.35; }
+        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-label { display: inline-block; background: #0d9488; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 4px; }
+        .banner-nombre { color: white; font-size: 19px; font-weight: 700; margin: 0; text-shadow: 0px 2px 4px rgba(0,0,0,0.6); }
+        .banner-sub { color: rgba(255,255,255,0.95); font-size: 12px; margin-top: 3px; }
 
-  /* Tarjeta Salud */
-  .tarjeta-comercio {
-    background: #ffffff; border: 1px solid #e2e8f0;
-    border-top: 4px solid #059669; /* Verde Salud */
-    border-radius: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-    display: flex; flex-direction: column; transition: all 0.15s ease-in-out;
-  }
-  .tarjeta-comercio.oficial-destacado {
-    background: #f0fdf4; border-top: 6px solid #059669;
-  }
+        .contenedor-buscador { margin-bottom: 20px; width: 100%; }
+        .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 2px solid #cbd5e1; border-radius: 12px; outline: none; transition: border-color 0.2s; }
+        .input-buscador:focus { border-color: #0f766e; }
 
-  .info-comercio { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-  .nombre-comercio { font-size: 19px; font-weight: 700; color: #065f46; margin-bottom: 4px; line-height: 1.3; }
-  .enlace-web { display: inline-block; font-size: 14px; color: #334155; text-decoration: none; margin-bottom: 8px; }
-  .enlace-web:hover { text-decoration: underline; color: #059669; }
+        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; visibility: hidden; }
+        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #0f766e; border-radius: 14px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03); display: flex; flex-direction: column; }
+        .info-comercio { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .nombre-comercio { font-size: 19px; font-weight: 700; color: #0f766e; margin-bottom: 5px; }
+        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+        .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+        .fila-contacto { display: flex; gap: 10px; }
+        .btn { text-decoration: none; font-size: 13.5px; font-weight: 700; padding: 11px 14px; border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff; transition: opacity 0.2s; }
+        .btn-llamar { background-color: #0f172a; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps { background-color: #1a73e8; width: 100%; }
+        
+        .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; border-radius: 8px; padding: 14px 16px; margin: 30px 4px 15px 4px; font-size: 13px; color: #475569; }
+        .footer { background-color: #1e293b; color: #94a3b8; text-align: center; padding: 25px 20px; margin-top: 30px; font-size: 13px; border-top: 3px solid #0d9488; }
+    </style>
+</head>
+<body>
 
-  /* Etiquetas */
-  .contenedor-burbujas { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px 0; }
-  .burbuja { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; }
-  .burbuja-nucleo { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
-  .burbuja-publico { background: #059669; color: #fff; }
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar"> 
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
 
-  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 15px; line-height: 1.4; }
+    <main class="main-container">
+        <h2 class="titulo-seccion-principal"><span class="txt-verde">Salud</span> y Bienestar</h2>
 
-  /* Botones */
-  .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
-  .fila-contacto { display: flex; gap: 10px; }
-  .btn {
-    text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 14px;
-    border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #fff;
-  }
-  .btn-llamar { background-color: #000; flex: 1; }
-  .btn-whatsapp { background-color: #10b981; flex: 1; }
-  .btn-maps { background-color: #1a73e8; width: 100%; }
-</style>
-
-<div class="contenedor-buscador">
-  <input type="text" id="buscadorSalud" class="input-buscador" placeholder="🔍 Buscar centro, farmacia, clínica...">
-</div>
-
-<div class="grid-comercios" id="gridComercios">
-  <div class="tarjeta-comercio" data-search="nombre del centro">
-    <div class="info-comercio">
-      <div class="nombre-comercio">Nombre del Centro</div>
-      <a href="#" class="enlace-web">🌐 sitio-web.com</a>
-      <div class="contenedor-burbujas">
-        <span class="burbuja burbuja-nucleo">Localidad</span>
-      </div>
-      <div class="direccion-comercio">📍 Dirección completa</div>
-      <div class="bloque-botones">
-        <div class="fila-contacto">
-          <a href="tel:..." class="btn btn-llamar">📞 Llamar</a>
+        <div class="titulo-bloque">Centros Médicos y Salud</div>
+        <div class="contenedor-mapa-fijo">
+            <div class="map-wrapper">
+                <iframe src="http://googleusercontent.com/maps.google.com/SALUD_MAP_ID"></iframe>
+            </div>
         </div>
-        <a href="..." class="btn btn-maps">📍 Ver en Maps</a>
-      </div>
-    </div>
-  </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const contenedor = document.getElementById("gridComercios");
-  const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
-  const buscador = document.getElementById("buscadorSalud");
+        <a href="mailto:info@infoespinar.com" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Eres profesional?</span>
+                <h3 class="banner-nombre">¡Anuncia tu clínica o consulta!</h3>
+                <div class="banner-sub">Llega a todos los vecinos de El Espinar.</div>
+            </div>
+        </a>
 
-  // Lógica de búsqueda
-  buscador.addEventListener("input", function() {
-    const termino = buscador.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    tarjetas.forEach(t => {
-      const texto = t.getAttribute("data-search").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-      t.style.display = texto.includes(termino) ? "flex" : "none";
+        <div class="titulo-bloque">Directorio de servicios</div>
+        <div class="contenedor-buscador">
+            <input type="text" id="buscadorSalud" class="input-buscador" placeholder="🔍 Buscar centro, farmacia, clínica, dentista...">
+        </div>
+
+        <div class="grid-comercios" id="gridComercios">
+            <div class="tarjeta-comercio" data-search="centro de salud el espinar medico publico">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Centro de Salud El Espinar</div>
+                    <div class="direccion-comercio">📍 C. Cañada Mari García, 5</div>
+                    <div class="bloque-botones">
+                        <a href="tel:+34921181602" class="btn btn-llamar">📞 921 18 16 02</a>
+                        <a href="http://googleusercontent.com/maps.google.com/SALUD_1" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+        <div class="disclaimer-box">
+            <strong>Nota informativa:</strong> Directorio colaborativo. Por favor, confirma horarios y citas directamente con cada centro.
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const contenedor = document.getElementById("gridComercios");
+        const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+        const buscador = document.getElementById("buscadorSalud");
+        
+        for (let i = tarjetas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+        }
+        tarjetas.forEach(tarjeta => contenedor.appendChild(tarjeta));
+        contenedor.style.visibility = "visible";
+        
+        buscador.addEventListener("input", function() {
+            const termino = buscador.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            tarjetas.forEach(tarjeta => {
+                const textoTarjeta = tarjeta.getAttribute("data-search").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                tarjeta.style.display = textoTarjeta.includes(termino) ? "flex" : "none";
+            });
+            actualizarAltura();
+        });
+        actualizarAltura();
     });
-    actualizarAltura();
-  });
 
-  contenedor.style.visibility = "visible";
-  actualizarAltura();
-});
-
-function actualizarAltura() {
-  if(window.parent && window.parent.postMessage) {
-    window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
-  }
-}
-</script>
+    function actualizarAltura() {
+        const grid = document.getElementById('gridComercios');
+        if(window.parent && window.parent.postMessage) {
+            window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
+        }
+    }
+    window.addEventListener('resize', actualizarAltura);
+    </script>
+</body>
+</html>
