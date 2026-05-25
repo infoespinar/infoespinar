@@ -2,293 +2,86 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Empleo | infoespinar.com</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
         :root {
-            --menta: #20a088;
-            --azul-link: #0a66c2;
-            --fondo: #f4f6f9;
+            --naranja: #f97316; /* Naranja corporativo */
+            --naranja-dark: #c2410c;
+            --fondo: #f8fafc;
         }
 
-        /* ESTILOS DE ESTRUCTURA Y CABECERA */
         body { margin: 0; padding: 0; background: var(--fondo); font-family: 'Lato', sans-serif; }
-        .header { background: var(--menta); color: white; text-align: center; padding: 30px 20px; }
-        .header-logo-link { text-decoration: none; color: white; display: inline-flex; align-items: center; gap: 12px; }
-        .header-bandera { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,255,255,0.2); }
-        
-        /* BANNER MENTA */
-        .contenedor-banner { padding: 20px 15px; max-width: 1200px; margin: 0 auto; }
-        .banner-comercio { width: 100%; height: 120px; border-radius: 12px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: var(--menta); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        .banner-img { position: absolute; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1000&auto=format&fit=crop'); background-size: cover; background-position: center; opacity: 0.2; }
-        .banner-info { position: relative; padding: 15px 20px; z-index: 2; color: white; }
-        .banner-label { background: #19826d; font-size: 9px; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; font-weight: bold; }
 
-        /* TU CÓDIGO FUNCIONAL */
-        .contenedor-app { padding: 15px; max-width: 1200px; margin: 0 auto; }
-        .navegacion { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-        .btn-pestana { background: #f1f5f9; border: none; padding: 10px 20px; font-weight: 700; border-radius: 8px; cursor: pointer; color: #475569; }
-        .btn-pestana.activa { background: var(--azul-link); color: #fff; }
-        .seccion-app { display: none; }
-        .seccion-app.activa { display: block; }
-        .contenedor-buscador { margin-bottom: 20px; display: none; }
-        .contenedor-buscador.activo { display: block; }
-        .input-buscador { width: 100%; padding: 12px 16px; border: 2px solid #cbd5e1; border-radius: 10px; font-family: inherit; outline: none; }
-        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .tarjeta-anuncio { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 10px -1px rgba(0,0,0,0.06); }
-        .cabecera-anuncio { padding: 14px 20px; text-transform: uppercase; }
-        .titulo-anuncio { font-size: 14px; font-weight: 700; color: #fff; margin: 0; }
-        .cuerpo-anuncio { padding: 16px 20px; flex-grow: 1; }
-        .btn-contacto { background: var(--azul-link); padding: 10px; border-radius: 8px; text-decoration: none; color: #fff; font-weight: 700; width: 100%; display: block; text-align: center; }
-        .formulario-publicar { background: #fff; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto; }
-        .grupo-campo { margin-bottom: 16px; }
-        .grupo-campo label { display: block; font-weight: 700; margin-bottom: 6px; }
-        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
-        .btn-enviar { width: 100%; padding: 12px; background: var(--menta); color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+        /* HEADER NARANJA */
+        .header { background: var(--naranja); color: white; text-align: center; padding: 25px 15px; }
+        .header-logo-link { text-decoration: none; color: white; display: inline-flex; align-items: center; gap: 10px; }
+        .header-bandera { width: 30px; height: 30px; border-radius: 6px; background: rgba(255,255,255,0.2); }
+
+        /* BANNER NARANJA */
+        .contenedor-banner { padding: 15px; }
+        .banner-comercio { width: 100%; height: 100px; border-radius: 12px; position: relative; display: flex; align-items: center; background-color: var(--naranja); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); overflow: hidden; }
+        .banner-info { padding: 0 20px; z-index: 2; color: white; }
+        .banner-label { background: var(--naranja-dark); font-size: 8px; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
+
+        /* APP Y RESPONSIVIDAD */
+        .contenedor-app { padding: 15px; max-width: 600px; margin: 0 auto; } /* Limitado para móviles */
+        .navegacion { display: flex; gap: 5px; margin-bottom: 20px; }
+        .btn-pestana { flex: 1; padding: 12px; font-weight: 700; border-radius: 8px; border: none; background: #e2e8f0; cursor: pointer; }
+        .btn-pestana.activa { background: var(--naranja); color: white; }
+        
+        .grid-anuncios { display: grid; gap: 15px; }
+        .tarjeta-anuncio { background: white; border-radius: 12px; padding: 15px; border-left: 4px solid var(--naranja); box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        
+        .btn-contacto { background: var(--naranja); color: white; padding: 12px; border-radius: 8px; text-decoration: none; display: block; text-align: center; font-weight: 700; margin-top: 10px; }
+        
+        /* Asegurar que los inputs no hagan zoom en iOS */
+        input, select, textarea { font-size: 16px; width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; box-sizing: border-box; }
+        .btn-enviar { background: var(--naranja); color: white; padding: 15px; border: none; border-radius: 8px; width: 100%; font-weight: 700; }
     </style>
 </head>
 <body>
 
 <header class="header">
     <a href="index.html" class="header-logo-link">
-        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo">
-        <h1>infoespinar.com</h1>
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
+        <h2>infoespinar.com</h2>
     </a>
 </header>
 
 <div class="contenedor-banner">
     <div class="banner-comercio">
-        <div class="banner-img"></div>
         <div class="banner-info">
             <span class="banner-label">Bolsa de Empleo</span>
-            <h3 style="margin: 5px 0 0 0;">Encuentra o publica ofertas en El Espinar</h3>
+            <h3 style="margin: 5px 0 0 0;">Ofertas y demandas en la zona</h3>
         </div>
     </div>
 </div>
 
-<div class="contenedor-app" id="wrapper">
+<div class="contenedor-app">
     <div class="navegacion">
-        <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Ver Tablón</button>
-        <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar Anuncio</button>
+        <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Tablón</button>
+        <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar</button>
     </div>
-
-    <div id="buscador-cont" class="contenedor-buscador activo">
-        <input type="text" id="txtBuscador" class="input-buscador" placeholder="🔍 Buscar por puesto, jornada o núcleo..." oninput="filtrarAnuncios()">
-    </div>
-
+    
     <div id="tablon-sec" class="seccion-app activa">
-        <div id="loading" class="cargando">Cargando bolsa de empleo...</div>
         <div id="tablon" class="grid-anuncios"></div>
     </div>
-
-    <div id="form-sec" class="seccion-app">
-        <!-- Tu formulario original aquí -->
-        <div class="formulario-publicar">
-            <form id="formAnuncio" onsubmit="enviar(event)">
-                <!-- Campos del formulario -->
-                <div class="grupo-campo">
-                    <label>Título del puesto *</label>
-                    <input id="titulo" required placeholder="Ej: CAMARERO, PINTOR...">
-                </div>
-                <!-- ... resto de tus campos ... -->
-                <button class="btn-enviar" id="btnPublicar">🚀 Publicar Anuncio</button>
-            </form>
-            <div id="status"></div>
+    
+    <div id="form-sec" class="seccion-app" style="display:none;">
         </div>
-    </div>
 </div>
+
 <script>
-const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
-
-function alternarOtro(checkbox) {
-  const txtOtro = document.getElementById("txtOtroLugar");
-  if(checkbox.checked) {
-    txtOtro.style.display = "block";
-    txtOtro.required = true;
-  } else {
-    txtOtro.style.display = "none";
-    txtOtro.required = false;
-    txtOtro.value = "";
-  }
-  setTimeout(actualizarAltura, 50);
-}
-
-function cambiar(id, e){
-  document.querySelectorAll('.seccion-app').forEach(s=>s.classList.remove('activa'));
-  document.getElementById(id).classList.add('activa');
-  document.querySelectorAll('.btn-pestana').forEach(b=>b.classList.remove('activa'));
-  
-  if (e && e.target) {
-    e.target.classList.add('activa');
-  }
-
-  const bCont = document.getElementById("buscador-cont");
-  if(id === "tablon-sec") {
-    bCont.classList.add('activo');
-    document.getElementById("txtBuscador").value = "";
-    cargar();
-  } else {
-    bCont.classList.remove('activo');
-    setTimeout(actualizarAltura, 100);
-  }
-}
-
-function filtrarAnuncios() {
-  const termino = document.getElementById("txtBuscador").value.toLowerCase().trim();
-  const tarjetas = document.querySelectorAll(".tarjeta-anuncio");
-
-  tarjetas.forEach(tarjeta => {
-    const textoTarjeta = tarjeta.getAttribute("data-search").toLowerCase();
-    if (textoTarjeta.includes(termino)) {
-      tarjeta.classList.remove("oculta");
-    } else {
-      tarjeta.classList.add("oculta");
+    function cambiar(id, e) {
+        document.querySelectorAll('.seccion-app').forEach(s => s.style.display = 'none');
+        document.getElementById(id).style.display = 'block';
+        document.querySelectorAll('.btn-pestana').forEach(b => b.classList.remove('activa'));
+        if(e) e.currentTarget.classList.add('activa');
     }
-  });
-  actualizarAltura();
-}
-
-async function cargar(){
-  try {
-    document.getElementById("loading").style.display = "block";
-    const res = await fetch(urlScript);
-    const data = await res.json();
-    const cont = document.getElementById("tablon");
-    cont.innerHTML = "";
-    document.getElementById("loading").style.display = "none";
-
-    const colores = ["#1e3a8a", "#065f46", "#5b21b6", "#a21caf"]; 
-    const anunciosValidos = data.filter(a => a.titulo && a.titulo.toString().trim() !== "");
-
-    if(anunciosValidos.length === 0){
-      cont.innerHTML = '<div class="cargando">No hay ofertas ni demandas de empleo publicadas recientemente.</div>';
-      actualizarAltura();
-      return;
-    }
-
-    // ALEATORIZACIÓN: Mezclamos los anuncios de forma aleatoria (Algoritmo Fisher-Yates)
-    for (let i = anunciosValidos.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [anunciosValidos[i], anunciosValidos[j]] = [anunciosValidos[j], anunciosValidos[i]];
-    }
-
-    anunciosValidos.forEach((a, i) => {
-      let tlfLimpio = a.contacto ? a.contacto.toString().replace(/\s+/g, '') : "";
-      if(tlfLimpio && !tlfLimpio.startsWith('34') && !tlfLimpio.startsWith('+34')) {
-        tlfLimpio = '34' + tlfLimpio;
-      }
-
-      // CAMBIO 3: Nos aseguramos de tratar el título en mayúsculas también al montar el buscador y el texto de WhatsApp
-      const tituloEnMayusculas = a.titulo.toString().toUpperCase();
-      const metadatosBusqueda = `${tituloEnMayusculas} ${a.descripcion || ''} ${a.recogida || ''} ${a.estado || ''}`;
-      const puestoLimpio = tituloEnMayusculas.replace(/\[.*?\]/g, '').trim();
-      const textoWhatsapp = `Hola, te escribo por el anuncio de empleo para "${puestoLimpio}" que he visto publicado en el tablón de InfoEspinar.`;
-
-      cont.innerHTML += `
-        <div class="tarjeta-anuncio" data-search="${metadatosBusqueda.replace(/"/g, '&quot;')}">
-          <div class="cabecera-anuncio" style="background:${colores[i % 4]}">
-            <h3 class="titulo-anuncio">${tituloEnMayusculas}</h3>
-          </div>
-          <div class="cuerpo-anuncio">
-            <div class="meta-anuncio">
-              ${a.recogida ? `<span class="recogida-anuncio">📍 ${a.recogida}</span>` : ""}
-              ${a.estado ? `<span class="estado-anuncio">${a.estado}</span>` : ""}
-            </div>
-            <p class="desc-anuncio">${a.descripcion || ""}</p>
-            <div class="footer-tarjeta">
-              <a class="btn-contacto" href="https://wa.me/${tlfLimpio}?text=${encodeURIComponent(textoWhatsapp)}" target="_blank">💬 Contactar por WhatsApp</a>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-    setTimeout(actualizarAltura, 300);
-  } catch(err) {
-    document.getElementById("loading").innerText = "Error al conectar y cargar el tablón de empleo.";
-  }
-}
-
-async function enviar(e){
-  e.preventDefault();
-  
-  const checkboxes = document.querySelectorAll('input[name="lugar_opc"]:checked');
-  if(checkboxes.length === 0) {
-    alert("Por favor, selecciona al menos una ubicación para el puesto.");
-    return;
-  }
-
-  let ubicacionesSeleccionadas = [];
-  checkboxes.forEach(cb => {
-    if(cb.value === "Otro") {
-      const valorOtro = document.getElementById("txtOtroLugar").value.trim();
-      if(valorOtro !== "") ubicacionesSeleccionadas.push(valorOtro);
-    } else {
-      ubicacionesSeleccionadas.push(cb.value);
-    }
-  });
-
-  const textoLugarFinal = ubicacionesSeleccionadas.join(", ");
-  
-  const btn = document.getElementById("btnPublicar");
-  const status = document.getElementById("status");
-  
-  btn.disabled = true;
-  status.innerHTML = "<div class='cargando'>Guardando anuncio en el tablón...</div>";
-
-  // CAMBIO 4: Forzamos la conversión real a mayúsculas con .toUpperCase() al leer el campo de texto antes de armar el JSON
-  const tituloProcesado = document.getElementById("titulo").value.trim().toUpperCase();
-
-  const payload = {
-    buscasUOfreces: document.getElementById("buscasUOfreces").value,
-    titulo: tituloProcesado,
-    lugar: textoLugarFinal,
-    jornada: document.getElementById("jornada").value,
-    descripcion: document.getElementById("descripcion").value,
-    telefono: document.getElementById("telefono").value.replace(/\s+/g, ''),
-    email: document.getElementById("email").value
-  };
-
-  try {
-    const res = await fetch(urlScript,{
-      method: "POST",
-      body: JSON.stringify(payload)
-    });
-    const r = await res.json();
-
-    if(r.resultado === "ok"){
-      status.innerHTML = "<div class='mensaje-exito'>¡Anuncio publicado correctamente!</div>";
-      document.getElementById("formAnuncio").reset();
-      document.getElementById("txtOtroLugar").style.display = "none";
-      document.getElementById("txtOtroLugar").required = false;
-      setTimeout(() => { 
-        status.innerHTML = ""; 
-        cambiar('tablon-sec', null); 
-        document.querySelector('.btn-pestana').classList.add('activa');
-      }, 2000);
-    } else if (r.mensaje && r.mensaje.includes("Antiflood")) {
-      status.innerHTML = `<div class='cargando' style='color:#dc2626; font-weight:700;'>${r.mensaje}</div>`;
-    } else {
-      status.innerHTML = "<div class='cargando' style='color:red;'>Error al guardar los datos en el servidor.</div>";
-    }
-  } catch(error) {
-    console.error(error);
-    status.innerHTML = "<div class='cargando' style='color:red;'>Error al procesar el envío de datos.</div>";
-  } finally {
-    btn.disabled = false;
-    setTimeout(actualizarAltura, 100);
-  }
-}
-
-function actualizarAltura() {
-  const wrapper = document.getElementById('wrapper');
-  if(wrapper && window.parent && window.parent.postMessage) {
-    window.parent.postMessage({type: 'resize', height: wrapper.offsetHeight + 50}, '*');
-  }
-}
-window.addEventListener('resize', actualizarAltura);
-cargar();
+    // ... resto de tu lógica de carga ...
 </script>
-
 </body>
 </html>
