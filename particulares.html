@@ -1,36 +1,178 @@
-<style>
-  /* ESTILOS DEL HEADER CORPORATIVO + TITULO PARTICULARES */
-  .header-total { background: linear-gradient(135deg, #16a34a 0%, #b45309 100%); color: white; padding: 20px; text-align: center; }
-  
-  .header-logo-link {
-      display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white;
-      background: rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 30px; margin-bottom: 15px;
-  }
-  .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
-  .header-total h1 { font-size: 20px; font-weight: 900; text-transform: uppercase; margin: 0; }
-  
-  .titulo-seccion-especial { font-size: 24px; font-weight: 900; margin: 10px 0 5px 0; text-transform: uppercase; }
-  .subtitulo-seccion { font-size: 13px; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.4; }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jardinería y Leña | infoespinar.com</title>
+    <style>
+        /* 🎨 VARIABLES Y ESTILOS GENERALES (Paleta Menta/Wallapop) */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        
+        :root {
+            --menta: #25b399; /* Verde característico */
+            --menta-oscuro: #1e9982;
+            --gris-fondo: #f5f6f7;
+            --texto: #2a2a2a;
+        }
 
-  /* RESTO DE TU ESTILO (Sección, Tablón, etc) */
-  /* ... (Mantén aquí el resto de tus estilos CSS que ya tenías) ... */
-</style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-<!-- HEADER INTEGRADO -->
-<header class="header-total">
-    <a href="https://www.infoespinar.com" class="header-logo-link">
-        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo">
-        <span>infoespinar.com</span>
-    </a>
-    <div class="titulo-seccion-especial">PARTICULARES</div>
-    <div class="subtitulo-seccion">USA ESTE ESPACIO COMO TABLÓN DE COMPRA-VENTA Y ANUNCIOS PARTICULARES. LOS ANUNCIOS SERÁN VISIBLES 20 DÍAS.</div>
-</header>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--gris-fondo);
+            color: var(--texto);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-<div class="contenedor-app" id="wrapper">
-  <!-- Aquí tu contenido de navegación, tablón y formulario -->
-  <div class="navegacion">
-    <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Ver Tablón</button>
-    <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar Anuncio</button>
-  </div>
-  <!-- ... (El resto de tu HTML) ... -->
-</div>
+        /* 📋 ENCABEZADO NEUTRO */
+        .header {
+            background: #ffffff;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--texto);
+        }
+
+        .header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
+
+        /* 🏛️ CONTENEDOR PRINCIPAL */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px 15px;
+        }
+
+        /* 🎪 TÍTULO FUERA DEL HEADER */
+        .titulo-principal {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 10px 0 20px 0;
+        }
+
+        .titulo-bloque {
+            font-size: 14px;
+            font-weight: 700;
+            margin: 20px 0 15px 0;
+            color: #757575;
+        }
+
+        /* 🏷️ BANNER ESTILO MENTA */
+        .banner-comercio {
+            background-color: var(--menta);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 25px;
+        }
+        .banner-nombre { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
+
+        /* 🔍 BUSCADOR MENTA */
+        .input-buscador {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .input-buscador:focus { border-color: var(--menta); outline: none; }
+
+        /* 📇 TARJETAS */
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+            visibility: hidden;
+        }
+
+        .tarjeta-comercio {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .nombre-comercio { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            border-radius: 6px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            margin-top: 8px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-menta { background-color: var(--menta); color: white; }
+        .btn-outline { border: 1px solid #ddd; color: #555; }
+
+        /* 👣 FOOTER */
+        .footer { text-align: center; padding: 40px; color: #888; font-size: 12px; }
+
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <main class="main-container">
+        
+        <!-- Título fuera del header -->
+        <h2 class="titulo-principal">Jardinería y Leña</h2>
+
+        <div class="titulo-bloque">Listado de profesionales</div>
+        
+        <input type="text" id="buscadorJardin" class="input-buscador" placeholder="Buscar servicios...">
+
+        <div class="grid-comercios" id="gridComercios">
+            <!-- Ejemplo de tarjeta -->
+            <div class="tarjeta-comercio" data-search="vivero la estacion">
+                <div class="nombre-comercio">Vivero La Estación</div>
+                <div style="font-size: 13px; color: #666; margin-bottom: 15px;">C. Madrid, 2, La Estación</div>
+                <a href="tel:+34921188205" class="btn btn-menta">Llamar</a>
+                <a href="https://wa.me/34615413703" class="btn btn-outline">WhatsApp</a>
+            </div>
+            <!-- Añadir más tarjetas aquí -->
+        </div>
+    </main>
+
+    <footer class="footer">
+        © 2026 InfoEspinar
+    </footer>
+
+    <script>
+        // Lógica simplificada de filtrado y altura
+        document.addEventListener("DOMContentLoaded", function() {
+            const grid = document.getElementById("gridComercios");
+            grid.style.visibility = "visible";
+            
+            document.getElementById("buscadorJardin").addEventListener("input", function(e) {
+                const term = e.target.value.toLowerCase();
+                document.querySelectorAll(".tarjeta-comercio").forEach(card => {
+                    card.style.display = card.dataset.search.includes(term) ? "block" : "none";
+                });
+            });
+        });
+    </script>
+</body>
+</html>
