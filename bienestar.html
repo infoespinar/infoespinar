@@ -1,254 +1,118 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Directorio de Bienestar</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Lato', sans-serif; background-color: #f8fafc; padding: 20px; width: 100%; }
-    .wrapper-movil-pc { max-width: 450px; margin: 0 auto; width: 100%; }
-    
-    /* Buscador */
-    .contenedor-buscador { margin-bottom: 20px; width: 100%; }
-    .input-buscador { width: 100%; padding: 14px 16px; font-size: 16px; border: 2px solid #332d4a; border-radius: 12px; outline: none; transition: border-color 0.2s; }
-    .input-buscador:focus { border-color: #8b5cf6; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: transparent; padding: 8px 4px; overflow: hidden; width: 100%; }
 
-    /* Grid */
-    .grid-comercios { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; }
+        .wrapper-movil-pc { max-width: 450px; margin: 0 auto; width: 100%; background: transparent; }
 
-    /* Tarjetas Morado/Negro */
-    .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 5px solid #4c1d95; border-radius: 14px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
-    .info-comercio { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-    .nombre-comercio { font-size: 19px; font-weight: 700; color: #2e1065; margin-bottom: 4px; }
-    .enlace-web { display: inline-block; font-size: 14px; color: #4b5563; text-decoration: none; margin-bottom: 8px; }
-    .contenedor-burbujas { display: flex; flex-wrap: wrap; gap: 6px; margin: 4px 0 8px 0; }
-    .burbuja-nucleo { background-color: #f3e8ff; color: #581c87; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; }
-    .direccion-comercio { font-size: 13px; color: #4b5563; margin-bottom: 20px; }
-    
-    /* Botones */
-    .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
-    .fila-contacto { display: flex; gap: 10px; }
-    .btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; color: #fff; transition: opacity 0.2s; }
-    .btn-llamar { background-color: #000000; flex: 1; }
-    .btn-whatsapp { background-color: #7e22ce; flex: 1; }
-    .btn-maps { background-color: #1a73e8; width: 100%; }
-    .btn-email { background-color: #374151; color: #fff; width: 100%; }
-  </style>
+        /* Estilos del buscador */
+        .contenedor-buscador { margin-bottom: 20px; width: 100%; padding: 0 2px; }
+        .input-buscador { width: 100%; padding: 14px 16px; font-size: 16px; border: 1px solid #cbd5e1; border-radius: 12px; font-family: 'Lato', sans-serif; box-shadow: 0 2px 4px rgba(0,0,0,0.02); outline: none; transition: border-color 0.2s; }
+        .input-buscador:focus { border-color: #15803d; }
+
+        /* Grid y tarjetas */
+        .grid-comercios { display: grid; grid-template-columns: 1fr; gap: 16px; width: 100%; padding-bottom: 35px; visibility: hidden; }
+        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #15803d; border-radius: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; transition: all 0.15s ease-in-out; }
+        .tarjeta-comercio:active { transform: scale(0.99); }
+        .info-comercio { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
+        .nombre-comercio { font-size: 19px; font-weight: 700; color: #15803d; margin-bottom: 4px; line-height: 1.3; }
+        .enlace-web { display: inline-block; font-size: 14px; color: #334155; text-decoration: none; margin-bottom: 8px; word-break: break-all; }
+        .enlace-web:hover { text-decoration: underline; color: #15803d; }
+        
+        .contenedor-burbujas { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; margin-bottom: 8px; }
+        .burbuja-nucleo { background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; border: 1px solid #e2e8f0; }
+        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4; }
+
+        /* Botones */
+        .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+        .fila-contacto { display: flex; gap: 10px; }
+        .btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        .btn-llamar { background-color: #000000; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps { background-color: #1a73e8; width: 100%; }
+        .btn-email { background-color: #facc15; color: #000000; width: 100%; }
+    </style>
 </head>
 <body>
 
 <div class="wrapper-movil-pc">
-  <div class="contenedor-buscador">
-    <input type="text" id="buscador" class="input-buscador" placeholder="🔍 Buscar negocio...">
-  </div>
-
-  <div class="grid-comercios" id="grid">
-
-    <div class="tarjeta-comercio" data-search="nataraja yoga school">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Nataraja Yoga School</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">La Estación</span></div>
-        <div class="direccion-comercio">📍 C. Chatún, 20, D</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34691151960" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34691151960" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-        </div>
-      </div>
+    <div class="contenedor-buscador">
+        <input type="text" id="buscadorEstetica" class="input-buscador" placeholder="🔍 Buscar peluquería, estética, yoga...">
     </div>
 
-    <div class="tarjeta-comercio" data-search="centro de estetica en armonia san rafael">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Centro de Estética En Armonía</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">San Rafael</span></div>
-        <div class="direccion-comercio">📍 C. Doña Leocadia Gómez, 5</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34688955975" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34688955975" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-          <a href="mailto:enarmoniasanrafael@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+    <div class="grid-comercios" id="gridComercios">
+        <div class="tarjeta-comercio" data-search="nataraja yoga school la estacion c chatun yoga meditacion bienestar pilates deporte">
+            <div class="info-comercio">
+                <div class="nombre-comercio">Nataraja Yoga School</div>
+                <div class="contenedor-burbujas"><span class="burbuja-nucleo">La Estación</span></div>
+                <div class="direccion-comercio">📍 C. Chatún, 20, D, La Estación de El Espinar</div>
+                <div class="bloque-botones">
+                    <div class="fila-contacto">
+                        <a href="tel:+34691151960" class="btn btn-llamar">📞 Llamar</a>
+                        <a href="https://wa.me/34691151960" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+                    </div>
+                    <a href="https://maps.google.com/?q=Nataraja+Yoga+School+El+Espinar" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="tarjeta-comercio" data-search="peluqueria mar perez">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Peluquería Mar Pérez</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">San Rafael</span></div>
-        <div class="direccion-comercio">📍 Tr.ª Alto del León, 26</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34665865414" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34665865414" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
+        <div class="tarjeta-comercio" data-search="centro de estetica en armonia san rafael c doña leocadia gomez belleza uñas masajes facial">
+            <div class="info-comercio">
+                <div class="nombre-comercio">Centro de Estética En Armonía</div>
+                <a href="https://www.facebook.com/enarmoniasanrafael" target="_blank" class="enlace-web">🌐 Facebook Oficial</a>
+                <div class="contenedor-burbujas"><span class="burbuja-nucleo">San Rafael</span></div>
+                <div class="direccion-comercio">📍 C. Doña Leocadia Gómez, 5, San Rafael</div>
+                <div class="bloque-botones">
+                    <div class="fila-contacto">
+                        <a href="tel:+34688955975" class="btn btn-llamar">📞 Llamar</a>
+                        <a href="https://wa.me/34688955975" target="_blank" class="btn btn-whatsapp">💬 WhatsApp</a>
+                    </div>
+                    <a href="https://maps.google.com/?q=En+Armonia+San+Rafael" target="_blank" class="btn btn-maps">📍 Ver en Maps</a>
+                    <a href="mailto:enarmoniasanrafael@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
 
-    <div class="tarjeta-comercio" data-search="peluqueria za z&a">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Peluquería Z&A</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">San Rafael</span></div>
-        <div class="direccion-comercio">📍 Ctra. Coruña, 1</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34600650534" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34600650534" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="peluqueria raquel">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Peluquería Raquel</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">San Rafael</span></div>
-        <div class="direccion-comercio">📍 C. Serrano, 12</div>
-        <div class="bloque-botones">
-           <a href="tel:+34921172036" class="btn btn-llamar">📞 Llamar</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="peluqueria caballeros rafa">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Peluquería Caballeros Rafa</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">San Rafael</span></div>
-        <div class="direccion-comercio">📍 N-6, 9</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34618813619" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34618813619" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="peluqueria celia feijoo">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Peluquería Celia Feijoo</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">San Rafael</span></div>
-        <div class="direccion-comercio">📍 Ctra. Segovia, 2</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34628516858" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34628516858" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="gg studio nails">
-      <div class="info-comercio">
-        <div class="nombre-comercio">GG Studio Nails</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">Los Ángeles de San Rafael</span></div>
-        <div class="direccion-comercio">📍 Centro de Negocios, Ofic. 2.3</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34672863672" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34672863672" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="ester soto eventos">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Ester Soto Eventos</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">El Espinar</span></div>
-        <div class="direccion-comercio">📍 C. Rey, 10</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34657599450" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34657599450" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-          <a href="mailto:INFO@ESTERSOTOEVENTOS.COM" class="btn btn-email">📧 Enviar Email</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="beauty by gema garrido">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Beauty by Gema Garrido</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">El Espinar</span></div>
-        <div class="direccion-comercio">📍 Av. Hontanilla, 8</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34670983649" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34670983649" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="alba array">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Alba Array Peluquería & Estética</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">El Espinar</span></div>
-        <div class="direccion-comercio">📍 C. Arquitecto Aranguren, 10</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34600441665" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34600441665" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="centro de belleza flor de vida">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Centro de Belleza Flor de Vida</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">El Espinar</span></div>
-        <div class="direccion-comercio">📍 C. la Luna, 2</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34624092987" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34624092987" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-           <a href="mailto:flordevidabyjuliaperez@gmail.com" class="btn btn-email">📧 Enviar Email</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="fantastic nails">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Fantastic Nails</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">El Espinar</span></div>
-        <div class="direccion-comercio">📍 C. Sepúlveda</div>
-        <div class="bloque-botones">
-          <div class="fila-contacto">
-            <a href="tel:+34636446587" class="btn btn-llamar">📞 Llamar</a>
-            <a href="https://wa.me/34636446587" class="btn btn-whatsapp">💬 WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="tarjeta-comercio" data-search="peluqueria rocio">
-      <div class="info-comercio">
-        <div class="nombre-comercio">Peluquería Rocío</div>
-        <div class="contenedor-burbujas"><span class="burbuja-nucleo">El Espinar</span></div>
-        <div class="direccion-comercio">📍 C. Segovia, 22</div>
-        <div class="bloque-botones">
-          <a href="tel:+34921181153" class="btn btn-llamar">📞 Llamar</a>
-        </div>
-      </div>
-    </div>
-
-  </div>
 </div>
 
 <script>
-  const input = document.getElementById('buscador');
-  const tarjetas = document.querySelectorAll('.tarjeta-comercio');
-  input.addEventListener('input', () => {
-    const val = input.value.toLowerCase();
-    tarjetas.forEach(t => t.style.display = t.getAttribute('data-search').includes(val) ? 'flex' : 'none');
-  });
-</script>
+document.addEventListener("DOMContentLoaded", function() {
+    const contenedor = document.getElementById("gridComercios");
+    const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+    const buscador = document.getElementById("buscadorEstetica");
 
+    // Aleatorizar tarjetas
+    for (let i = tarjetas.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+    }
+    tarjetas.forEach(t => contenedor.appendChild(t));
+    contenedor.style.visibility = "visible";
+
+    buscador.addEventListener("input", function() {
+        const t = buscador.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        tarjetas.forEach(card => {
+            const txt = card.getAttribute("data-search").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            card.style.display = txt.includes(t) ? "flex" : "none";
+        });
+        actualizarAltura();
+    });
+
+    function actualizarAltura() {
+        if(window.parent && window.parent.postMessage) {
+            window.parent.postMessage({type: 'resize', height: document.documentElement.offsetHeight + 30}, '*');
+        }
+    }
+    actualizarAltura();
+    window.addEventListener('resize', actualizarAltura);
+});
+</script>
 </body>
 </html>
