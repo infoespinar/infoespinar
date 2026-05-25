@@ -7,63 +7,46 @@
   
   html, body{ margin:0; padding:0; background:transparent; font-family:'Lato',sans-serif; width:100%; overflow-x:hidden; }
   
-  /* NUEVO HEADER ESTILO MARKETPLACE */
-  .header-app { 
-      background: linear-gradient(135deg, #00bd9d 0%, #009980 100%); 
-      color: white; 
-      padding: 30px 20px; 
-      text-align: center; 
-      border-radius: 0 0 25px 25px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-  }
-  .header-app h1 { font-size: 28px; font-weight: 900; text-transform: uppercase; margin: 0; letter-spacing: 1px; }
-
-  .contenedor-app{ padding:0 15px 30px 15px; max-width:1200px; margin:0 auto; }
+  /* HEADER CORPORATIVO INFOESPINAR */
+  .header-web { display: flex; align-items: center; gap: 15px; padding: 15px; background: #fff; border-bottom: 2px solid #00bd9d; }
+  .header-web img { width: 40px; height: 40px; border-radius: 8px; }
+  .header-web h2 { font-size: 20px; font-weight: 900; color: #1e293b; margin: 0; }
   
-  /* Resto de estilos */
-  .navegacion{ display:flex; gap:10px; margin-bottom:20px; border-bottom:2px solid #e2e8f0; padding-bottom:10px; }
-  .btn-pestana{ background:#f1f5f9; border:none; padding:10px 20px; font-weight:700; border-radius:8px; cursor:pointer; color:#475569; }
+  /* TÍTULO SECCIÓN COMPRA-VENTA */
+  .titulo-seccion { background: #00bd9d; color: white; padding: 15px; text-align: center; font-weight: 800; font-size: 18px; text-transform: uppercase; }
+
+  .contenedor-app{ padding: 20px 15px; max-width: 1200px; margin:0 auto; }
+  
+  /* Resto de estilos (optimizados para móvil) */
+  .navegacion{ display:flex; gap:5px; margin-bottom:20px; border-bottom:2px solid #e2e8f0; padding-bottom:10px; flex-wrap: wrap; }
+  .btn-pestana{ background:#f1f5f9; border:none; padding:10px 15px; font-weight:700; border-radius:8px; cursor:pointer; color:#475569; font-size: 14px; flex: 1; }
   .btn-pestana.activa{ background:#1e293b; color:#fff; }
   .seccion-app{ display:none; }
   .seccion-app.activa{ display:block; }
-  .contenedor-buscador{ margin-bottom:20px; display:none; }
-  .contenedor-buscador.activo{ display:block; }
-  .input-buscador{ width:100%; padding:12px 16px; border:2px solid #cbd5e1; border-radius:10px; font-family:inherit; font-size:14px; box-sizing:border-box; outline:none; }
-  .grid-anuncios{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-  .tarjeta-anuncio{ background:#fff; border:1px solid #e2e8f0; border-radius:16px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 4px 10px -1px rgba(0,0,0,.06); }
-  .tarjeta-anuncio.oculta{ display:none !important; }
-  .cabecera-anuncio{ padding:14px 20px; text-transform:uppercase; }
-  .titulo-anuncio{ font-size:15px; font-weight:700; color:#fff; margin:0; }
-  .contenedor-foto{ width:100%; height:200px; background:#f8fafc; }
+  .input-buscador{ width:100%; padding:12px; border:2px solid #cbd5e1; border-radius:10px; box-sizing:border-box; }
+  .grid-anuncios{ display:grid; grid-template-columns:1fr; gap:20px; }
+  @media (min-width: 600px) { .grid-anuncios { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); } }
+  
+  .tarjeta-anuncio{ background:#fff; border:1px solid #e2e8f0; border-radius:12px; overflow:hidden; box-shadow:0 2px 8px rgba(0,0,0,0.05); }
+  .cabecera-anuncio{ padding:12px 15px; color: white; font-weight:700; text-transform:uppercase; font-size: 14px; }
+  .contenedor-foto{ width:100%; height:180px; background:#f8fafc; }
   .foto-articulo{ width:100%; height:100%; object-fit:cover; }
-  .cuerpo-anuncio{ padding:16px 20px; display:flex; flex-direction:column; flex-grow:1; }
-  .meta-anuncio{ display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap; }
-  .recogida-anuncio{ font-size:11px; color:#0284c7; font-weight:700; }
-  .estado-anuncio{ font-size:10px; font-weight:700; padding:2px 8px; border:1px solid #cbd5e1; border-radius:6px; background:#f8fafc; }
-  .desc-anuncio{ font-size:13px; color:#475569; margin-bottom:16px; flex-grow:1; }
-  .footer-tarjeta{ display:flex; justify-content:space-between; align-items:center; gap:10px; border-top:1px solid #f1f5f9; padding-top:12px; }
-  .precio-anuncio{ font-size:17px; font-weight:700; color:#0f172a; }
-  .bloque-botones{ display:flex; gap:6px; }
-  .btn-contacto{ padding:8px 10px; border-radius:6px; text-decoration:none; color:#fff; font-size:11px; font-weight:700; }
+  .cuerpo-anuncio{ padding:15px; }
+  .footer-tarjeta{ display:flex; justify-content:space-between; align-items:center; border-top:1px solid #f1f5f9; padding-top:12px; margin-top: 10px; }
+  .btn-contacto{ padding:8px 12px; border-radius:6px; text-decoration:none; color:#fff; font-size:12px; font-weight:700; }
   .btn-whatsapp{ background:#25d366; }
   .btn-llamar{ background:#3b82f6; }
-  .cargando{ text-align:center; padding:30px; color:#64748b; }
-  .formulario-publicar{ background:#fff; padding:25px; border-radius:16px; border:1px solid #e2e8f0; max-width:600px; margin:0 auto; }
-  .grupo-campo{ margin-bottom:16px; }
-  .grupo-campo label{ display:block; font-size:13px; font-weight:700; margin-bottom:6px; }
-  .grupo-campo input, .grupo-campo select, .grupo-campo textarea{ width:100%; padding:10px; border:1px solid #cbd5e1; border-radius:8px; box-sizing:border-box; font-family:inherit; }
-  #titulo{ text-transform:uppercase; }
-  .btn-enviar{ width:100%; padding:12px; background:#059669; color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; }
-  .btn-enviar:disabled{ background:#94a3b8; cursor:not-allowed; }
-  .mensaje-exito{ text-align:center; color:#059669; font-weight:700; padding:15px 0; }
+  .formulario-publicar{ background:#fff; padding:20px; border-radius:12px; border:1px solid #e2e8f0; }
+  .btn-enviar{ width:100%; padding:14px; background:#059669; color:#fff; border:none; border-radius:8px; font-weight:700; font-size: 16px; cursor:pointer; }
 </style>
 </head>
 <body>
 
-<div class="header-app">
-    <h1>Compra Venta</h1>
+<div class="header-web">
+    <img src="https://i.imgur.com/di5CaLV.png" alt="Logo">
+    <h2>infoespinar.com</h2>
 </div>
+<div class="titulo-seccion">Compra - Venta</div>
 
 <div class="contenedor-app" id="wrapper">
   <div class="navegacion">
@@ -72,7 +55,7 @@
   </div>
 
   <div id="buscador-cont" class="contenedor-buscador activo">
-    <input type="text" id="txtBuscador" class="input-buscador" placeholder="🔍 Buscar..." oninput="filtrarAnuncios()">
+    <input type="text" id="txtBuscador" class="input-buscador" placeholder="🔍 Buscar anuncios..." oninput="filtrarAnuncios()">
   </div>
 
   <div id="tablon-sec" class="seccion-app activa">
@@ -83,21 +66,7 @@
   <div id="form-sec" class="seccion-app">
     <div class="formulario-publicar">
       <form id="formAnuncio" onsubmit="enviar(event)">
-        <div class="grupo-campo"><label>Título *</label><input id="titulo" required></div>
-        <div class="grupo-campo"><label>Estado</label>
-          <select id="estado"><option>Nuevo</option><option>Buen estado</option><option>Usado</option></select>
-        </div>
-        <div class="grupo-campo"><label>Descripción</label><textarea id="desc"></textarea></div>
-        <div class="grupo-campo"><label>Precio</label><input id="precio" type="number" required></div>
-        <div class="grupo-campo"><label>Teléfono *</label><input id="contacto" required></div>
-        <div class="grupo-campo"><label>Zona</label>
-          <select id="recogida"><option>El Espinar</option><option>San Rafael</option><option>La Estación</option></select>
-        </div>
-        <div class="grupo-campo"><label>Foto</label><input type="file" id="foto" accept="image/*"></div>
-        <div class="grupo-campo">
-          <input type="checkbox" id="checkPrivacidad" onchange="validarCheck()"> Acepto privacidad
-        </div>
-        <button id="btnPublicar" class="btn-enviar" disabled>🚀 Publicar</button>
+        <button id="btnPublicar" class="btn-enviar" disabled>🚀 Publicar Anuncio</button>
       </form>
       <div id="status"></div>
     </div>
@@ -105,97 +74,14 @@
 </div>
 
 <script>
-const urlScript = "TU_URL_GOOGLE_SCRIPT"; // Recuerda poner aquí tu URL
-
-function escaparHTML(texto){ const div = document.createElement("div"); div.textContent = texto || ""; return div.innerHTML; }
-function validarCheck(){ const check = document.getElementById("checkPrivacidad"); document.getElementById("btnPublicar").disabled = !check.checked; }
-
-function cambiar(id,e){
-  document.querySelectorAll(".seccion-app").forEach(s => s.classList.remove("activa"));
-  document.getElementById(id).classList.add("activa");
-  document.querySelectorAll(".btn-pestana").forEach(b => b.classList.remove("activa"));
-  const botones = document.querySelectorAll(".btn-pestana");
-  if(e && e.target){ e.target.classList.add("activa"); }
-  else{ if(id === "tablon-sec"){ botones[0].classList.add("activa"); }else{ botones[1].classList.add("activa"); } }
-  const buscador = document.getElementById("buscador-cont");
-  if(id === "tablon-sec"){ buscador.classList.add("activo"); cargar(); }else{ buscador.classList.remove("activo"); }
-  setTimeout(actualizarAltura,100);
+// ... Mantén tu misma lógica de funciones cargar(), enviar(), etc ...
+// Solo asegúrate de que al final del script, la altura de actualizarAltura sea suficiente:
+function actualizarAltura(){ 
+    const wrapper = document.getElementById("wrapper"); 
+    if(window.parent){ 
+        window.parent.postMessage({type:"resize", height:wrapper.offsetHeight + 200}, "*"); 
+    } 
 }
-
-function filtrarAnuncios(){
-  const texto = document.getElementById("txtBuscador").value.toLowerCase();
-  document.querySelectorAll(".tarjeta-anuncio").forEach(t => {
-    const contenido = t.dataset.search.toLowerCase();
-    t.classList.toggle("oculta", !contenido.includes(texto));
-  });
-  actualizarAltura();
-}
-
-async function cargar(){
-  try{
-    document.getElementById("loading").style.display = "block";
-    const res = await fetch(urlScript);
-    const data = await res.json();
-    const cont = document.getElementById("tablon");
-    cont.innerHTML = "";
-    document.getElementById("loading").style.display = "none";
-    const colores = ["#2563eb","#059669","#7c3aed","#ea580c"];
-    data.forEach((a,i)=>{
-      const titulo = escaparHTML((a.titulo || "").toUpperCase());
-      const descripcion = escaparHTML(a.descripcion || "");
-      const recogida = escaparHTML(a.recogida || "");
-      const estado = escaparHTML(a.estado || "");
-      let precio = (a.precio && a.precio != 0) ? a.precio + "€" : "Gratis";
-      let foto = a.imagen ? `<div class="contenedor-foto"><img class="foto-articulo" src="${a.imagen}" alt="${titulo}" loading="lazy"></div>` : "";
-      let tel = (a.contacto || "").toString().replace(/\s+/g,'');
-      let wa = tel.startsWith("34") ? tel : "34" + tel;
-      cont.innerHTML += `
-      <div class="tarjeta-anuncio" data-search="${titulo} ${descripcion} ${recogida}">
-        <div class="cabecera-anuncio" style="background:${colores[i%4]}"><h3 class="titulo-anuncio">${titulo}</h3></div>
-        ${foto}
-        <div class="cuerpo-anuncio">
-          <div class="meta-anuncio"><span class="recogida-anuncio">📍 ${recogida}</span><span class="estado-anuncio">${estado}</span></div>
-          <p class="desc-anuncio">${descripcion}</p>
-          <div class="footer-tarjeta"><span class="precio-anuncio">${precio}</span>
-            <div class="bloque-botones">
-              <a class="btn-contacto btn-llamar" href="tel:${tel}">📞 Llamar</a>
-              <a class="btn-contacto btn-whatsapp" target="_blank" href="https://wa.me/${wa}">💬 WhatsApp</a>
-            </div>
-          </div>
-        </div>
-      </div>`;
-    });
-    actualizarAltura();
-  }catch(err){ document.getElementById("loading").innerHTML = "Error cargando anuncios"; console.error(err); }
-}
-
-async function enviar(e){
-  e.preventDefault();
-  const btn = document.getElementById("btnPublicar");
-  const status = document.getElementById("status");
-  btn.disabled = true;
-  status.innerHTML = "<div class='cargando'>Publicando...</div>";
-  try{
-    const file = document.getElementById("foto").files[0];
-    let imagenBase64 = file ? await new Promise((res,rej)=>{ const reader = new FileReader(); reader.onload = () => res(reader.result); reader.onerror = rej; reader.readAsDataURL(file); }) : "";
-    const datos = new URLSearchParams();
-    datos.append("titulo", document.getElementById("titulo").value.trim().toUpperCase());
-    datos.append("estado", document.getElementById("estado").value);
-    datos.append("descripcion", document.getElementById("desc").value);
-    datos.append("precio", document.getElementById("precio").value);
-    datos.append("contacto", document.getElementById("contacto").value);
-    datos.append("recogida", document.getElementById("recogida").value);
-    datos.append("imagenBase64", imagenBase64);
-    await fetch(urlScript, { method:"POST", headers:{"Content-Type":"application/x-www-form-urlencoded"}, body:datos.toString() });
-    status.innerHTML = "<div class='mensaje-exito'>Anuncio publicado</div>";
-    document.getElementById("formAnuncio").reset();
-    setTimeout(()=>{ cambiar("tablon-sec"); status.innerHTML = ""; }, 1500);
-  }catch(err){ status.innerHTML = "<div class='cargando' style='color:red'>"+err.message+"</div>"; btn.disabled = false; }
-}
-
-function actualizarAltura(){ const wrapper = document.getElementById("wrapper"); if(window.parent){ window.parent.postMessage({type:"resize", height:wrapper.offsetHeight + 150}, "*"); } }
-window.addEventListener("resize",actualizarAltura);
-cargar();
 </script>
 </body>
 </html>
