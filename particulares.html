@@ -1,25 +1,113 @@
-<style>
-    /* ... (resto de tus estilos) ... */
-    
-    /* Ajuste de espacio: redúcelo cambiando el primer valor de padding (de 40px a 15px) */
-    .titulo-seccion { 
-        text-align: center; 
-        padding: 15px 20px 10px; 
-        font-size: 28px; 
-        font-weight: 900; 
-        color: #000000; 
-        text-transform: uppercase; 
-    }
-    
-    /* ... (resto de tus estilos) ... */
-</style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particulares | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        
+        :root {
+            --menta: #20a088;
+            --menta-dark: #19826d;
+            --azul-fin: #3b82f6;
+            --fondo: #f4f6f9;
+        }
+
+        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; margin: 0; }
+
+        /* HEADER MENTA */
+        .header { background: var(--menta); color: white; text-align: center; padding: 30px 20px; }
+        .header-logo-link { text-decoration: none; color: white; display: inline-flex; align-items: center; gap: 12px; }
+        .header-logo-link:hover {background: rgba(255, 255, 255, 0.15);transform: translateY(-1px); }
+        .header-bandera { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,255,255,0.2); }
+
+        /* BANNER MENTA */
+        .contenedor-banner { padding: 20px 15px 0; max-width: 1200px; margin: 0 auto; }
+        .banner-comercio { width: 100%; height: 120px; border-radius: 12px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: var(--menta); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .banner-img { position: absolute; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop'); background-size: cover; background-position: center; opacity: 0.2; }
+        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-label { display: inline-block; background: var(--menta-dark); color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 3px; }
+        .banner-nombre { color: white; font-size: 20px; font-weight: 700; margin: 0; }
+        .banner-sub { color: rgba(255,255,255,0.95); font-size: 12px; margin-top: 3px; }
+
+        /* TEXTOS Y BOTONES */
+        .titulo-seccion { text-align: center; padding: 40px 20px 10px; font-size: 28px; font-weight: 900; color: #000000; text-transform: uppercase; }
+        .subtitulo-seccion { text-align: center; padding: 0 20px 30px; font-size: 14px; color: #64748b; }
+        .btn-pestana.activa { background: var(--menta); color: white; border-color: var(--menta); }
+        
+        /* GRID DE ANUNCIOS */
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 15px 50px; max-width: 1200px; margin: 0 auto; }
+        .tarjeta-anuncio { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+        .foto-articulo { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+        .cuerpo-anuncio { padding: 20px; }
+    </style>
+</head>
+<body>
 
 <header class="header">
     <a href="index.html" class="header-logo-link">
         <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo">
         <h1>infoespinar.com</h1>
     </a>
-</header>
-
-<h2 class="titulo-seccion">Tablón de Particulares</h2>
+</header> <h2 class="titulo-seccion">Tablón de Particulares</h2>
 <p class="subtitulo-seccion">USA ESTE ESPACIO COMO TABLÓN DE COMPRA-VENTA Y ANUNCIOS PARTICULARES. LOS ANUNCIOS SERÁN VISIBLES 20 DÍAS.</p>
+
+<div class="contenedor-banner">
+    <a href="mailto:info@infoespinar.com" class="banner-comercio">
+        <div class="banner-img"></div>
+        <div class="banner-info">
+            <span class="banner-label">¿Eres comerciante?</span>
+            <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
+            <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos. Pulsa para informarte.</div>
+        </div>
+    </a>
+</div>
+    
+<div id="tablon" class="grid-anuncios">
+    <div id="loading" style="text-align:center; padding:50px; grid-column: 1/-1;">Cargando anuncios...</div>
+</div>
+</br>
+<script>
+const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
+
+async function cargar() {
+    const cont = document.getElementById("tablon");
+    const loader = document.getElementById("loading");
+    
+    try {
+        const res = await fetch(urlScript);
+        const data = await res.json();
+        
+        loader.style.display = "none";
+        cont.innerHTML = "";
+
+        data.forEach((a) => {
+            cont.innerHTML += `
+            <div class="tarjeta-anuncio">
+                ${a.imagen ? `<img src="${a.imagen}" class="foto-articulo" alt="foto">` : ''}
+                <div class="cuerpo-anuncio">
+                    <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+                        ${a.recogida ? `<span style="font-size: 10px; background: #e0f2f1; color: #19826d; padding: 3px 8px; border-radius: 4px; font-weight: 800; text-transform: uppercase;">📍 ${a.recogida}</span>` : ''}
+                        ${a.estado ? `<span style="font-size: 10px; background: #f1f5f9; color: #475569; padding: 3px 8px; border-radius: 4px; font-weight: 700; text-transform: uppercase;">📦 ${a.estado}</span>` : ''}
+                    </div>
+
+                    <h3 style="color:var(--menta); margin-bottom:10px; margin-top:0;">${(a.titulo || "").toUpperCase()}</h3>
+                    <p style="font-size:13px; color:#475569; margin-bottom:15px;">${a.descripcion || ""}</p>
+                    
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:900; font-size:17px;">${a.precio ? a.precio + "€" : "Gratis"}</span>
+                        <a href="tel:${a.contacto}" style="background:var(--menta); color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:700;">LLAMAR</a>
+                    </div>
+                </div>
+            </div>`;
+        });
+    } catch(err) {
+        loader.innerHTML = "Error al cargar los anuncios.";
+    }
+}
+
+document.addEventListener('DOMContentLoaded', cargar);
+</script>
+</body>
+</html>
