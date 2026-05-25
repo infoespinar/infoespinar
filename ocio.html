@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ocio | infoespinar.com</title>
+    <title>Ocio y Deporte | infoespinar.com</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
 
-        /* Header Estilo unificado */
+        /* Header Estilo Montaña */
         .header { background: linear-gradient(135deg, #065f46 0%, #10b981 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); transition: background 0.2s, transform 0.2s; }
         .header-logo-link:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
@@ -18,10 +18,9 @@
         .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
         .main-container { max-width: 1200px; margin: 0 auto; padding: 20px 12px; }
-        .titulo-seccion-principal {font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase;
-        }
+        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; }
         .txt-verdeoscuro { color: #065f46; }
-        .txt-negro { color: #1e293b; } /* Usamos un gris muy oscuro para mayor elegancia que el negro puro */
+        .txt-negro { color: #1e293b; }
         .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
 
         .contenedor-mapa-fijo { width: 100%; height: 300px; margin-bottom: 25px; }
@@ -30,20 +29,20 @@
         
         .banner-comercio { width: 100%; height: 120px; border-radius: 14px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 25px; }
         .banner-info { padding: 15px 20px; z-index: 2; }
-        .banner-label { display: inline-block; background: #7c3aed; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
+        .banner-label { display: inline-block; background: #065f46; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
         .banner-nombre { color: white; font-size: 19px; font-weight: 700; margin: 0; }
 
         .input-buscador { width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 14px; margin-bottom: 25px; font-size: 16px; outline: none; }
 
         .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; }
-        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #7c3aed; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; }
-        .nombre-comercio { font-size: 18px; font-weight: 700; color: #7c3aed; margin-bottom: 8px; }
+        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #065f46; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; }
+        .nombre-comercio { font-size: 18px; font-weight: 700; color: #065f46; margin-bottom: 8px; }
         .enlace-web { display: block; font-size: 13px; color: #475569; text-decoration: none; margin-bottom: 10px; }
         .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 15px; }
         
         .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; color: white; }
-        .btn-llamar { background-color: #0f172a; }
+        .btn-llamar { background-color: #dc2626; }
         .btn-whatsapp { background-color: #10b981; }
         .btn-email { background-color: #f59e0b; color: #fff; }
 
@@ -61,7 +60,8 @@
     </header>
 
     <main class="main-container">
-<h2 class="titulo-seccion-principal"><span class="txt-verdeoscuro">Ocio</span> y <span class="txt-negro">Deporte</span></h2>
+        <h2 class="titulo-seccion-principal"><span class="txt-verdeoscuro">Ocio</span> y <span class="txt-negro">Deporte</span></h2>
+        
         <div class="titulo-bloque">Localización de servicios</div>
         <div class="contenedor-mapa-fijo"><div class="map-wrapper"><iframe src="https://www.google.com/maps/d/embed?mid=1c4Kx6ivp7VSdTVbo0quvDvtzNGZEsrA&ehbc=2E312F&noprof=1"></iframe></div></div>
 
@@ -75,41 +75,41 @@
             <div class="tarjeta-comercio" data-nombre="Escuela de Danza Laura Sánchez">
                 <div class="nombre-comercio">Escuela de Danza Laura Sánchez</div>
                 <div class="direccion-comercio">📍 P.º de las Peñitas, 9, El Espinar</div>
-                <div class="btn-group"><a href="tel:+34653428069" class="btn btn-llamar">📞 653 428 069</a><a href="https://wa.me/34653428069" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+                <div class="btn-group"><a href="tel:+34653428069" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34653428069" class="btn btn-whatsapp">💬 WhatsApp</a></div>
             </div>
             <div class="tarjeta-comercio" data-nombre="Danzartes Artes Escénicas">
                 <div class="nombre-comercio">Danzartes Artes Escénicas</div>
                 <a href="https://espaciodanzartes.com/" class="enlace-web">🌐 espaciodanzartes.com</a>
                 <div class="direccion-comercio">📍 Carr. de La Garganta, La Estación</div>
-                <div class="btn-group"><a href="tel:+34648040374" class="btn btn-llamar">📞 648 040 374</a><a href="https://wa.me/34648040374" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+                <div class="btn-group"><a href="tel:+34648040374" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34648040374" class="btn btn-whatsapp">💬 WhatsApp</a></div>
             </div>
             <div class="tarjeta-comercio" data-nombre="Taller Bicicletas Golpe de Pedal">
                 <div class="nombre-comercio">Taller Bicicletas Golpe de Pedal</div>
                 <div class="direccion-comercio">📍 Tr.ª Alto del León, 12, San Rafael</div>
-                <div class="btn-group"><a href="tel:+34611816066" class="btn btn-llamar">📞 611 816 066</a><a href="https://wa.me/34611816066" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+                <div class="btn-group"><a href="tel:+34611816066" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34611816066" class="btn btn-whatsapp">💬 WhatsApp</a></div>
             </div>
             <div class="tarjeta-comercio" data-nombre="Beone Fitness & Sport">
                 <div class="nombre-comercio">Beone Fitness & Sport</div>
                 <a href="https://beone.es/" class="enlace-web">🌐 beone.es</a>
                 <div class="direccion-comercio">📍 Ctra. San Rafael - El Espinar, Km 2,5</div>
-                <div class="btn-group"><a href="tel:+34921126552" class="btn btn-llamar">📞 921 126 552</a><a href="mailto:info@beone.es" class="btn btn-email">📧 Email</a></div>
+                <div class="btn-group"><a href="tel:+34921126552" class="btn btn-llamar">📞 Llamar</a><a href="mailto:info@beone.es" class="btn btn-email">📧 Email</a></div>
             </div>
             <div class="tarjeta-comercio" data-nombre="Ebizing">
                 <div class="nombre-comercio">Ebizing</div>
                 <a href="http://www.ebizing.es/" class="enlace-web">🌐 ebizing.es</a>
                 <div class="direccion-comercio">📍 P.º de las Peñitas, 15, El Espinar</div>
-                <div class="btn-group"><a href="tel:+34639642271" class="btn btn-llamar">📞 639 642 271</a></div>
+                <div class="btn-group"><a href="tel:+34639642271" class="btn btn-llamar">📞 Llamar</a></div>
             </div>
             <div class="tarjeta-comercio" data-nombre="De Pino a Pino San Rafael">
                 <div class="nombre-comercio">De Pino a Pino</div>
                 <a href="http://www.depinoapino.com/" class="enlace-web">🌐 depinoapino.com</a>
                 <div class="direccion-comercio">📍 P.º Quintana, 50, San Rafael</div>
-                <div class="btn-group"><a href="tel:+34659454568" class="btn btn-llamar">📞 659 454 568</a><a href="https://wa.me/34659454568" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+                <div class="btn-group"><a href="tel:+34659454568" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34659454568" class="btn btn-whatsapp">💬 WhatsApp</a></div>
             </div>
         </div>
 
         <div class="disclaimer-box">
-            <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas. Si observa algún error o desea actualizar su información, por favor póngase en contacto con nosotros.
+            <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas.
         </div>
     </main>
 
