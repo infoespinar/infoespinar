@@ -6,7 +6,6 @@
     <title>Salud | infoespinar.com</title>
 
     <style>
-        /* 🎨 ESTILOS GENERALES */
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
 
         * {
@@ -27,7 +26,6 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* 📋 HEADER */
         .header {
             background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
             color: white;
@@ -46,12 +44,6 @@
             padding: 8px 16px;
             border-radius: 30px;
             border: 1px solid rgba(255,255,255,0.15);
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .header-logo-link:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-1px);
         }
 
         .header-bandera {
@@ -68,7 +60,6 @@
             text-transform: uppercase;
         }
 
-        /* 🏛️ CONTENEDOR PRINCIPAL */
         .main-container {
             max-width: 1200px;
             width: 100%;
@@ -77,7 +68,6 @@
             flex-grow: 1;
         }
 
-        /* 🎪 TÍTULO */
         .titulo-seccion-principal {
             font-size: 26px;
             font-weight: 900;
@@ -104,7 +94,6 @@
             font-weight: 700;
         }
 
-        /* 🗺️ MAPA */
         .contenedor-mapa-fijo {
             width: 100%;
             height: 350px;
@@ -130,7 +119,6 @@
             border: 0;
         }
 
-        /* 🏷️ BANNER */
         .banner-comercio {
             width: 100%;
             height: 120px;
@@ -153,11 +141,6 @@
             background-size: cover;
             background-position: center;
             opacity: 0.35;
-            transition: transform 0.3s ease;
-        }
-
-        .banner-comercio:hover .banner-img {
-            transform: scale(1.02);
         }
 
         .banner-info {
@@ -183,9 +166,6 @@
             color: white;
             font-size: 19px;
             font-weight: 700;
-            margin: 0;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
-            letter-spacing: 0.5px;
             line-height: 1.2;
         }
 
@@ -193,11 +173,9 @@
             color: rgba(255,255,255,0.95);
             font-size: 12px;
             margin-top: 3px;
-            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
             line-height: 1.3;
         }
 
-        /* 🔍 BUSCADOR */
         .contenedor-buscador {
             margin-bottom: 20px;
             width: 100%;
@@ -210,16 +188,13 @@
             border: 2px solid #cbd5e1;
             border-radius: 12px;
             font-family: 'Lato', sans-serif;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
             outline: none;
-            transition: border-color 0.2s;
         }
 
         .input-buscador:focus {
             border-color: #0f766e;
         }
 
-        /* 📇 GRID */
         .grid-comercios {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -229,7 +204,6 @@
             visibility: hidden;
         }
 
-        /* 🩺 TARJETAS */
         .tarjeta-comercio {
             background: #ffffff;
             border: 1px solid #e2e8f0;
@@ -238,12 +212,6 @@
             box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
             display: flex;
             flex-direction: column;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .tarjeta-comercio:active {
-            transform: scale(0.99);
         }
 
         .tarjeta-comercio.oficial-destacado {
@@ -273,11 +241,6 @@
             text-decoration: none;
             margin-bottom: 8px;
             word-break: break-all;
-        }
-
-        .enlace-web:hover {
-            text-decoration: underline;
-            color: #0f766e;
         }
 
         .contenedor-burbujas {
@@ -319,7 +282,6 @@
             line-height: 1.4;
         }
 
-        /* 🔘 BOTONES */
         .bloque-botones {
             margin-top: auto;
             display: flex;
@@ -344,12 +306,6 @@
             justify-content: center;
             gap: 6px;
             color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            transition: opacity 0.2s;
-        }
-
-        .btn:hover {
-            opacity: 0.9;
         }
 
         .btn-llamar {
@@ -373,7 +329,6 @@
             width: 100%;
         }
 
-        /* ⚠️ DISCLAIMER */
         .disclaimer-box {
             background-color: #f1f5f9;
             border-left: 4px solid #64748b;
@@ -386,7 +341,6 @@
             text-align: justify;
         }
 
-        /* 👣 FOOTER */
         .footer {
             background-color: #1e293b;
             color: #94a3b8;
@@ -435,31 +389,71 @@
         </div>
     </div>
 
-    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+    <a href="mailto:info@infoespinar.com?subject=Anuncio%20Salud" class="banner-comercio">
         <div class="banner-img"></div>
         <div class="banner-info">
             <span class="banner-label">¿Eres profesional sanitario?</span>
             <h3 class="banner-nombre">¡Anuncia tu consulta aquí!</h3>
-            <div class="banner-sub">Da visibilidad a tu centro, clínica o consulta y llega a todos los vecinos de la zona.</div>
+            <div class="banner-sub">
+                Da visibilidad a tu centro, clínica o consulta.
+            </div>
         </div>
     </a>
 
     <div class="titulo-bloque">Listado de profesionales</div>
 
     <div class="contenedor-buscador">
-        <input type="text" id="buscadorSalud" class="input-buscador" placeholder="🔍 Buscar centro médico, clínica, dentista, psicólogo o farmacia...">
+        <input type="text" id="buscadorSalud" class="input-buscador"
+            placeholder="🔍 Buscar centro médico, clínica, dentista, psicólogo o farmacia...">
     </div>
 
     <div class="grid-comercios" id="gridComercios">
 
-        <!-- EJEMPLO OFICIAL -->
-        <div class="tarjeta-comercio oficial-destacado" data-oficial="true" data-search="centro salud el espinar medico ambulatorio publico">
+        <!-- CENTROS PÚBLICOS -->
+
+        <div class="tarjeta-comercio oficial-destacado" data-oficial="true"
+            data-search="consultorio medico la estacion centro salud publico">
+            <div class="info-comercio">
+
+                <div class="nombre-comercio">Consultorio Médico La Estación</div>
+
+                <a href="http://www.elespinar.es/municipio/centros-de-salud-y-consultorios.html"
+                    target="_blank" class="enlace-web">
+                    🌐 elespinar.es
+                </a>
+
+                <div class="contenedor-burbujas">
+                    <span class="burbuja-publico">🏛️ Centro Público</span>
+                    <span class="burbuja-nucleo">La Estación</span>
+                </div>
+
+                <div class="direccion-comercio">
+                    📍 C. de la Panera, 9
+                </div>
+
+                <div class="bloque-botones">
+                    <div class="fila-contacto">
+                        <a href="tel:+34921188335" class="btn btn-llamar">📞 Llamar</a>
+                    </div>
+
+                    <a href="https://www.google.com/maps/search/?api=1&query=Consultorio+Medico+La+Estacion"
+                        target="_blank" class="btn btn-maps">
+                        📍 Ver en Maps
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tarjeta-comercio oficial-destacado" data-oficial="true"
+            data-search="centro salud espinar publico ambulatorio">
             <div class="info-comercio">
 
                 <div class="nombre-comercio">Centro de Salud El Espinar</div>
 
-                <a href="http://www.elespinar.es/municipio/centros-de-salud-y-consultorios.html" target="_blank" rel="noopener" class="enlace-web">
-                    🌐 elespinar.es/centros-de-salud
+                <a href="http://www.elespinar.es/municipio/centros-de-salud-y-consultorios.html"
+                    target="_blank" class="enlace-web">
+                    🌐 elespinar.es
                 </a>
 
                 <div class="contenedor-burbujas">
@@ -468,7 +462,7 @@
                 </div>
 
                 <div class="direccion-comercio">
-                    📍 C. Cañada Mari García, 5, El Espinar
+                    📍 C. Cañada Mari García, 5
                 </div>
 
                 <div class="bloque-botones">
@@ -476,7 +470,8 @@
                         <a href="tel:+34921181602" class="btn btn-llamar">📞 Llamar</a>
                     </div>
 
-                    <a href="https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Centro+de+Salud+El+Espinar"
+                        target="_blank" class="btn btn-maps">
                         📍 Ver en Maps
                     </a>
                 </div>
@@ -484,14 +479,17 @@
             </div>
         </div>
 
-        <!-- EJEMPLO PRIVADO -->
-        <div class="tarjeta-comercio" data-search="fisioterapia sanchez fisio rehabilitacion san rafael">
+        <!-- PRIVADOS -->
+
+        <div class="tarjeta-comercio"
+            data-search="fisioterapia sanchez fisio rehabilitacion san rafael">
 
             <div class="info-comercio">
 
                 <div class="nombre-comercio">Fisioterapia Sánchez</div>
 
-                <a href="http://www.fisioterapiasanchez.com/" target="_blank" rel="noopener" class="enlace-web">
+                <a href="http://www.fisioterapiasanchez.com/" target="_blank"
+                    class="enlace-web">
                     🌐 fisioterapiasanchez.com
                 </a>
 
@@ -500,44 +498,105 @@
                 </div>
 
                 <div class="direccion-comercio">
-                    📍 C. Doña Leocadia Gómez, 3, San Rafael
+                    📍 C. Doña Leocadia Gómez, 3
                 </div>
 
                 <div class="bloque-botones">
 
                     <div class="fila-contacto">
-                        <a href="tel:+34640236168" class="btn btn-llamar">📞 Llamar</a>
 
-                        <a href="https://wa.me/34640236168" target="_blank" rel="noopener" class="btn btn-whatsapp">
+                        <a href="tel:+34640236168" class="btn btn-llamar">
+                            📞 Llamar
+                        </a>
+
+                        <a href="https://wa.me/34640236168" target="_blank"
+                            class="btn btn-whatsapp">
                             💬 WhatsApp
                         </a>
+
                     </div>
 
-                    <a href="https://www.google.com/maps/search/?api=1&query=Fisioterapia+Sanchez+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">
+                    <a href="https://www.google.com/maps/search/?api=1&query=Fisioterapia+Sanchez+San+Rafael"
+                        target="_blank" class="btn btn-maps">
                         📍 Ver en Maps
                     </a>
 
-                    <a href="mailto:info@fisioterapiasanchez.com" class="btn btn-email">
+                    <a href="mailto:info@fisioterapiasanchez.com"
+                        class="btn btn-email">
                         📧 Enviar Email
                     </a>
 
                 </div>
 
             </div>
+
+        </div>
+
+        <div class="tarjeta-comercio"
+            data-search="clinica dental san rafael dentista">
+
+            <div class="info-comercio">
+
+                <div class="nombre-comercio">Clínica Dental San Rafael</div>
+
+                <a href="http://www.clinicadentalsanrafael.es/" target="_blank"
+                    class="enlace-web">
+                    🌐 clinicadentalsanrafael.es
+                </a>
+
+                <div class="contenedor-burbujas">
+                    <span class="burbuja-nucleo">San Rafael</span>
+                </div>
+
+                <div class="direccion-comercio">
+                    📍 Ctra. Coruña, 17
+                </div>
+
+                <div class="bloque-botones">
+
+                    <div class="fila-contacto">
+
+                        <a href="tel:+34626539609" class="btn btn-llamar">
+                            📞 Llamar
+                        </a>
+
+                        <a href="https://wa.me/34626539609"
+                            target="_blank"
+                            class="btn btn-whatsapp">
+                            💬 WhatsApp
+                        </a>
+
+                    </div>
+
+                    <a href="https://www.google.com/maps/search/?api=1&query=Clinica+Dental+San+Rafael"
+                        target="_blank"
+                        class="btn btn-maps">
+                        📍 Ver en Maps
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
     </div>
 
     <div class="disclaimer-box">
-        <strong>Nota informativa:</strong> Los datos de este directorio se recopilan de forma voluntaria para ayudar a los vecinos. La información podría contener algún error o no estar completamente actualizada, por lo que recomendamos verificar los detalles directamente con cada establecimiento o profesional.
+        <strong>Nota informativa:</strong>
+        Los datos de este directorio se recopilan de forma voluntaria y podrían contener errores o cambios no actualizados.
     </div>
 
 </main>
 
 <footer class="footer">
     <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
-    <p>Página optimizada de forma nativa para móviles y PC.</p>
-    <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    <p>Optimizado para móviles y ordenador.</p>
+    <p>Contacto:
+        <a href="mailto:info@infoespinar.com">
+            info@infoespinar.com
+        </a>
+    </p>
 </footer>
 
 <script>
@@ -548,23 +607,26 @@ document.addEventListener("DOMContentLoaded", function() {
     const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
     const buscador = document.getElementById("buscadorSalud");
 
-    // Separar oficiales y privadas
-    const oficiales = tarjetas.filter(t => t.getAttribute("data-oficial") === "true");
-    const privadas = tarjetas.filter(t => t.getAttribute("data-oficial") !== "true");
+    const oficiales = tarjetas.filter(
+        t => t.getAttribute("data-oficial") === "true"
+    );
 
-    // Shuffle privadas
+    const privadas = tarjetas.filter(
+        t => t.getAttribute("data-oficial") !== "true"
+    );
+
     for (let i = privadas.length - 1; i > 0; i--) {
+
         const j = Math.floor(Math.random() * (i + 1));
+
         [privadas[i], privadas[j]] = [privadas[j], privadas[i]];
     }
 
-    // Render ordenado
     oficiales.forEach(t => contenedor.appendChild(t));
     privadas.forEach(t => contenedor.appendChild(t));
 
     contenedor.style.visibility = "visible";
 
-    // Buscador
     buscador.addEventListener("input", function() {
 
         const termino = buscador.value
@@ -580,30 +642,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 .normalize("NFD")
                 .replace(/[\u0300-\u036f]/g, "");
 
-            tarjeta.style.display = textoTarjeta.includes(termino)
+            tarjeta.style.display =
+                textoTarjeta.includes(termino)
                 ? "flex"
                 : "none";
         });
 
         actualizarAltura();
-
     });
 
     actualizarAltura();
-
 });
 
 function actualizarAltura() {
 
-    const grid = document.getElementById('gridComercios');
-
-    if(grid && window.parent && window.parent.postMessage) {
+    if(window.parent && window.parent.postMessage) {
 
         window.parent.postMessage({
             type: 'resize',
             height: document.body.scrollHeight + 30
         }, '*');
-
     }
 }
 
