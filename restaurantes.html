@@ -1,101 +1,721 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurantes y Bares | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Lato', sans-serif; background-color: transparent; padding: 0 4px; overflow-y: auto; overflow-x: hidden; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* Banner de Anuncio (Header) */
-  .banner-comercio {
-    width: 100%;
-    height: 120px;
-    border-radius: 12px;
-    overflow: hidden;
-    position: relative;
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    background-color: #1e293b;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-  }
-  .banner-img {
-    position: absolute; width: 100%; height: 100%;
-    background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop');
-    background-size: cover; background-position: center; opacity: 0.4;
-  }
-  .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
-  .banner-label { display: inline-block; background: #059669; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 3px; }
-  .banner-nombre { color: white; font-size: 20px; font-weight: 700; margin: 0; text-shadow: 0px 2px 4px rgba(0,0,0,0.6); }
-  .banner-sub { color: rgba(255,255,255,0.95); font-size: 12px; margin-top: 3px; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
 
-  /* Mapa */
-  .map-wrapper { width: 100%; height: 350px; overflow: hidden; border-radius: 12px; border: 1px solid #e0e0e0; position: relative; margin-bottom: 25px; }
-  .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
+        /* ── ENCABEZADO ── */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
 
-  /* Buscador */
-  .contenedor-buscador { margin-bottom: 20px; width: 100%; }
-  .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 1px solid #cbd5e1; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-  .input-buscador:focus { border-color: #1a73e8; outline: none; }
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .header-logo-link:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
 
-  /* Grid y Tarjetas */
-  .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; width: 100%; padding-bottom: 25px; visibility: hidden; }
-  .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1a73e8; border-radius: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; padding: 20px; }
-  .nombre-comercio { font-size: 19px; font-weight: 700; color: #1a73e8; margin-bottom: 4px; }
-  .burbuja-nucleo { display: inline-block; background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; margin: 8px 0; border: 1px solid #e2e8f0; }
-  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; }
-  .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
-  .btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px; border-radius: 10px; text-align: center; color: #fff; display: flex; align-items: center; justify-content: center; gap: 6px; }
-  .btn-llamar { background-color: #000; flex: 1; }
-  .btn-maps { background-color: #1a73e8; width: 100%; }
-</style>
+        .header-bandera {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 6px;
+            aspect-ratio: 1 / 1;
+        }
 
-<a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
-  <div class="banner-img"></div>
-  <div class="banner-info">
-    <span class="banner-label">¿Eres comerciante?</span>
-    <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
-    <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos.</div>
-  </div>
-</a>
+        .header h1 {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
 
-<div class="map-wrapper">
-  <iframe src="https://www.google.com/maps/d/embed?mid=1SGqZX6163Q0TQJJsOQjp-4DZmFMK3qo&ehbc=2E312F&noprof=1"></iframe>
-</div>
+        /* ── CONTENEDOR PRINCIPAL ── */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
+        }
 
-<div class="contenedor-buscador">
-  <input type="text" id="buscadorRestaurantes" class="input-buscador" placeholder="🔍 Buscar restaurante, bar, menú...">
-</div>
+        /* ── TÍTULO DE SECCIÓN ── */
+        .titulo-seccion-principal {
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .txt-rojo  { color: #dc2626; }
+        .txt-naranja { color: #ea580c; }
 
-<div class="grid-comercios" id="gridRestaurantes">
-  </div>
+        .titulo-bloque {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 25px 0 12px 4px;
+            font-weight: 700;
+        }
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const contenedor = document.getElementById("gridRestaurantes");
-  const tarjetas = Array.from(document.querySelectorAll(".tarjeta-comercio"));
-  
-  // Mezcla aleatoria
-  for (let i = tarjetas.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
-  }
-  tarjetas.forEach(t => contenedor.appendChild(t));
-  contenedor.style.visibility = "visible";
+        /* ── MAPA ── */
+        .contenedor-mapa-fijo {
+            width: 100%;
+            height: 350px;
+            margin-bottom: 25px;
+        }
+        .map-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+        }
+        .map-wrapper iframe {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 60px);
+            border: 0;
+        }
 
-  document.getElementById("buscadorRestaurantes").addEventListener("input", function(e) {
-    const term = e.target.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    tarjetas.forEach(t => {
-      t.style.display = (t.dataset.search.includes(term)) ? "flex" : "none";
+        /* ── BANNER PUBLICITARIO ── */
+        .banner-comercio {
+            width: 100%;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .banner-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            transition: transform 0.3s ease;
+        }
+        .banner-comercio:hover .banner-img { transform: scale(1.02); }
+        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-label {
+            display: inline-block;
+            background: #dc2626;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .banner-nombre {
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        .banner-sub {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            margin-top: 3px;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+
+        /* ── BUSCADOR ── */
+        .contenedor-buscador { margin-bottom: 20px; width: 100%; }
+        .input-buscador {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-buscador:focus { border-color: #dc2626; }
+
+        /* ── GRID DE TARJETAS ── */
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            width: 100%;
+            padding-bottom: 25px;
+            visibility: hidden;
+        }
+
+        .tarjeta-comercio {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #dc2626;
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .tarjeta-comercio:active {
+            transform: scale(0.99);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .info-comercio {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .nombre-comercio {
+            font-size: 19px;
+            font-weight: 700;
+            color: #dc2626;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .burbuja-nucleo {
+            display: inline-block;
+            background-color: #fff1f2;
+            color: #9f1239;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin: 6px 0 8px;
+            border: 1px solid #fecdd3;
+        }
+
+        .enlace-web {
+            display: inline-block;
+            font-size: 13.5px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 400;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .enlace-web:hover { text-decoration: underline; color: #dc2626; }
+
+        .direccion-comercio {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        /* ── BOTONES ── */
+        .bloque-botones {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .fila-contacto { display: flex; gap: 10px; }
+
+        .btn {
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-llamar   { background-color: #0f172a; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps     { background-color: #1a73e8; width: 100%; }
+        .btn-email    { background-color: #facc15; color: #000000; width: 100%; }
+
+        /* ── AVISO ── */
+        .disclaimer-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #64748b;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 30px 4px 15px 4px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #475569;
+            text-align: justify;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media screen and (min-width: 768px) {
+            .grid-comercios {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #3b82f6;
+        }
+        .footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <main class="main-container">
+
+        <h2 class="titulo-seccion-principal">
+            <span class="txt-rojo">Restaurantes</span> y <span class="txt-naranja">Bares</span>
+        </h2>
+
+        <div class="titulo-bloque">Localización de servicios</div>
+        <div class="contenedor-mapa-fijo">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1SGqZX6163Q0TQJJsOQjp-4DZmFMK3qo&ehbc=2E312F&noprof=1"></iframe>
+            </div>
+        </div>
+
+        <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Eres comerciante?</span>
+                <h3 class="banner-nombre">¡Anuncia tu restaurante aquí!</h3>
+                <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
+            </div>
+        </a>
+
+        <div class="titulo-bloque">Listado de profesionales</div>
+        <div class="contenedor-buscador">
+            <input type="text" id="buscadorRestaurantes" class="input-buscador" placeholder="🔍 Buscar restaurante, bar, menú, núcleo...">
+        </div>
+
+        <div class="grid-comercios" id="gridRestaurantes">
+
+            <div class="tarjeta-comercio" data-search="restaurante las farolas san rafael paseo apeadero comer cenar menu comida">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Las Farolas</div>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 P.º Apeadero, 1, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921702667" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Las+Farolas+Paseo+Apeadero+1+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante avenida san rafael travesia alto del leon menu tradicional raciones casera">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Avenida</div>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 31, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171011" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Avenida+Travesia+Alto+del+Leon+31+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="pizzeria royal san rafael travesia alto del leon pizzas italianas cenar comida a domicilio">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Pizzería Royal</div>
+                    <a href="http://pizzeriaroyal.es/" target="_blank" rel="noopener" class="enlace-web">🌐 pizzeriaroyal.es</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 25, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921476306" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Pizzeria+Royal+Travesia+Alto+del+Leon+25+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante terpa san rafael travesia alto del leon raciones menu carnes asados">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Terpa</div>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 23, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171017" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Terpa+Travesia+Alto+del+Leon+23+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante chino qingdao quingdao san rafael travesia alto del leon comida asiatica rollito arroz tallarines para llevar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Chino Qingdao</div>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 23, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921042441" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Chino+Qingdao+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="la pizzeria san rafael calle serrano pizzas pasta artesanal cenar comida">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">La Pizzería</div>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 C. Serrano, 1, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171868" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=La+Pizzeria+Calle+Serrano+1+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante asador la vina san rafael carretera segovia asados cordero cochinillo carnes menu">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Asador La Viña</div>
+                    <a href="http://www.asadorlavina.es/" target="_blank" rel="noopener" class="enlace-web">🌐 asadorlavina.es</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Ctra. Segovia, 19, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171557" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34669577194" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Asador+La+Vina+Carretera+Segovia+19+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@asadorlavina.es" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante jara san rafael carretera segovia comida tradicional croquetas carnes menu diario">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Jara</div>
+                    <a href="https://restaurantejarasanrafael.es/" target="_blank" rel="noopener" class="enlace-web">🌐 restaurantejarasanrafael.es</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Ctra. Segovia, 6, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171165" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34663818786" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Jara+Carretera+Segovia+6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:restaurantejarasanrafael@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="como en casa para llevar san rafael carretera segovia asador de pollos croquetas comida casera preparada">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Como en Casa (Para Llevar)</div>
+                    <a href="https://www.asadordepolloscomoencasa.com/" target="_blank" rel="noopener" class="enlace-web">🌐 asadordepolloscomoencasa.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Ctra. Segovia, 4, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34643466827" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34643466827" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Como+en+Casa+Carretera+Segovia+4+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante volvoreta san rafael calle pinar comer carnes cocina casera menu">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Volvoreta</div>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 C. Pinar, 2, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171582" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Volvoreta+Calle+Pinar+2+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="bar restaurante la terraza la estacion carretera de la garganta del herrerillo terraza raciones menu">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">La Terraza del Herrerillo</div>
+                    <a href="http://www.laterrazadelherrerillo.es/" target="_blank" rel="noopener" class="enlace-web">🌐 laterrazadelherrerillo.es</a>
+                    <span class="burbuja-nucleo">La Estación</span>
+                    <div class="direccion-comercio">📍 Ctra. de La Garganta, 44, La Estación</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921188202" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=La+Terraza+del+Herrerillo+Carretera+de+La+Garganta+44+La+Estacion" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="bar restaurante san antonio la estacion carretera de la garganta raciones comidas menu">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante San Antonio</div>
+                    <a href="http://www.sanantoniorestaurante.com/" target="_blank" rel="noopener" class="enlace-web">🌐 sanantoniorestaurante.com</a>
+                    <span class="burbuja-nucleo">La Estación</span>
+                    <div class="direccion-comercio">📍 Ctra. de La Garganta, La Estación</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921188244" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+San+Antonio+Carretera+de+La+Garganta+La+Estacion" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:hola@sanantoniorestaurante.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="asador alto de los angeles lasr los angeles de san rafael calle rio tajo carnes parrilla asados">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Asador Alto de los Ángeles</div>
+                    <span class="burbuja-nucleo">Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio">📍 C. Río Tajo, 5, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34605241308" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34605241308" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Asador+Alto+de+los+Angeles+Calle+Rio+Tajo+5+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante baguettinn baguetin lasr los angeles de san rafael calle rio tajo bocadillos raciones hamburguesas">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Baguettinn</div>
+                    <a href="https://restaurantebaguettin.shop/" target="_blank" rel="noopener" class="enlace-web">🌐 restaurantebaguettin.shop</a>
+                    <span class="burbuja-nucleo">Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio">📍 C. Río Tajo, s/n, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34602627516" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34602627516" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Baguettinn+Calle+Rio+Tajo+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="mimarmita mi marmita para llevar lasr los angeles de san rafael avenida de belgica comida casera preparada">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">MiMarmita (Para Llevar)</div>
+                    <a href="https://mimarmita.net/" target="_blank" rel="noopener" class="enlace-web">🌐 mimarmita.net</a>
+                    <span class="burbuja-nucleo">Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio">📍 Av. de Bélgica, 46, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34630739617" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34630739617" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=MiMarmita+Avenida+de+Belgica+46+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="los jardines de la braseria san rafael calle calzada finca la casona del pinar brasa carnes eventos cenar">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Los Jardines de la Brasería</div>
+                    <a href="http://www.fincalacasonadelpinar.com/restaurante-los-jardines-de-la-braseria/" target="_blank" rel="noopener" class="enlace-web">🌐 fincalacasonadelpinar.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 C. Calzada, 4, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171790" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Los+Jardines+de+la+Braseria+Calle+Calzada+4+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hamburgueseria los rosales el espinar paseo de las penitas hamburguesas patatas bocadillos cenar perritos">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hamburguesería Los Rosales</div>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 P.º de las Peñitas, 11, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921181737" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Hamburguesia+Los+Rosales+Paseo+de+las+Penitas+11+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="lr gastrobar el espinar paseo de las penitas raciones tapas moderno cenar cañas">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">LR Gastrobar</div>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 P.º de las Peñitas, 11, El Espinar</div>
+                    <div class="bloque-botones">
+                        <a href="https://maps.google.com/?q=LR+Gastrobar+Paseo+de+las+Penitas+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="pizzeria la pineta el espinar paseo de las penitas pizzas italianas horno cenas">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Pizzería La Pineta</div>
+                    <a href="https://www.lapinetaelespinar.es/" target="_blank" rel="noopener" class="enlace-web">🌐 lapinetaelespinar.es</a>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 P.º de las Peñitas, 13, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34648534102" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34648534102" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Pizzeria+La+Pineta+Paseo+de+las+Penitas+13+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:hola@lapinetaelespinar.es" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante el espino el espinar plaza altozano raciones carnes menu tradicional casero">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante El Espino</div>
+                    <a href="https://restauranteelespino.makro.rest/" target="_blank" rel="noopener" class="enlace-web">🌐 restauranteelespino.makro.rest</a>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 Pl. Altozano, 4, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921182360" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+El+Espino+Plaza+Altozano+4+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="restaurante plaza hostal san rafael travesia alto del leon menu comer cenar comida tradicional casera alojamiento">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Restaurante Plaza Hostal</div>
+                    <a href="https://www.restauranteplazahostal.com/" target="_blank" rel="noopener" class="enlace-web">🌐 restauranteplazahostal.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 6, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921172031" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Restaurante+Plaza+Hostal+Travesia+Alto+del+Leon+6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@restauranteplazahostal.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>Nota informativa:</strong> Los datos de este directorio se recopilan de forma voluntaria para ayudar a los vecinos. La información podría contener algún error o no estar completamente actualizada, por lo que te recomendamos verificar los detalles directamente con cada establecimiento.
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const contenedor = document.getElementById("gridRestaurantes");
+        const tarjetas   = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+        const buscador   = document.getElementById("buscadorRestaurantes");
+
+        // Orden aleatorio (Fisher-Yates)
+        for (let i = tarjetas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+        }
+        tarjetas.forEach(t => contenedor.appendChild(t));
+        contenedor.style.visibility = "visible";
+
+        // Buscador en tiempo real
+        buscador.addEventListener("input", function () {
+            const term = buscador.value.toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            tarjetas.forEach(t => {
+                const texto = t.getAttribute("data-search")
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                t.style.display = texto.includes(term) ? "flex" : "none";
+            });
+        });
     });
-    actualizarAltura();
-  });
-  actualizarAltura();
-});
+    </script>
 
-function actualizarAltura() {
-  if(window.parent && window.parent.postMessage) {
-    window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
-  }
-}
-window.addEventListener('resize', actualizarAltura);
-</script>
+</body>
+</html>
