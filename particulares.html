@@ -37,94 +37,77 @@
     </a>
 </header>
 
-<div class="contenedor-app">
-    <div style="text-align: center; margin-bottom: 20px;">
-        <button onclick="toggleForm()" class="btn-accion" style="max-width: 250px;">➕ PUBLICAR ANUNCIO</button>
-    </div>
+<div id="app" style="font-family: sans-serif; max-width: 900px; margin: auto;">
+  <button onclick="document.getElementById('form').style.display='block'" style="background:#20a088; color:white; padding:10px; border:none; border-radius:5px;">➕ PUBLICAR ANUNCIO</button>
+  
+  <div id="form" style="display:none; background:#f4f4f4; padding:20px; margin:20px 0; border-radius:10px;">
+    <form id="publicarForm" onsubmit="enviar(event)">
+      <input type="text" id="titulo" placeholder="TÍTULO (MAYÚSCULAS)" required oninput="this.value=this.value.toUpperCase()">
+      <select id="estado" required>
+        <option value="">Selecciona estado...</option>
+        <option>A ESTRENAR</option><option>COMO NUEVO</option><option>BUEN ESTADO</option><option>USADO</option><option>PARA RESTAURAR</option>
+      </select>
+      <textarea id="descripcion" placeholder="Descripción" required></textarea>
+      <input type="number" id="precio" placeholder="Precio (€)" required>
+      <select id="recogida" required>
+        <option value="">Selecciona zona...</option>
+        <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
+      </select>
+      <input type="tel" id="contacto" placeholder="Teléfono (9 cifras)" required pattern="[0-9]{9}" maxlength="9">
+      <input type="file" id="imagen" accept="image/*" required>
+      <button type="submit" id="btn">ENVIAR</button>
+    </form>
+  </div>
 
-    <div id="contenedor-formulario" class="formulario-publicar">
-        <form id="formPublicar" onsubmit="enviar(event)">
-            <input type="text" id="titulo" placeholder="TÍTULO (SOLO MAYÚSCULAS)" required oninput="this.value = this.value.toUpperCase()">
-            <select id="estado" required>
-                <option value="" disabled selected>Estado del artículo...</option>
-                <option>NUEVO</option><option>BUEN ESTADO</option><option>MUY USADO</option><option>PARA RESTAURAR</option>
-            </select>
-            <textarea id="descripcion" placeholder="Descripción" required rows="2"></textarea>
-            <input type="number" id="precio" placeholder="Precio (€)" required>
-            <select id="recogida" required>
-                <option value="" disabled selected>Lugar de recogida...</option>
-                <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
-            </select>
-            <input type="tel" id="contacto" placeholder="Teléfono (9 dígitos)" required pattern="[0-9]{9}" maxlength="9">
-            <input type="file" id="foto" accept="image/*" style="border:none;">
-            <button type="submit" id="btnPublicar" class="btn-accion">PUBLICAR</button>
-        </form>
-    </div>
-
-    <div id="tablon" class="grid-anuncios">
-        <div id="loading" style="text-align:center; padding:40px; grid-column: 1/-1;">Cargando anuncios...</div>
-    </div>
+  <div id="tablon" style="display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));"></div>
 </div>
 
 <script>
-const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
-
-function toggleForm() {
-    const f = document.getElementById('contenedor-formulario');
-    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
-}
+const url = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec"; // Pega aquí tu URL del paso 1
 
 async function cargar() {
-    const cont = document.getElementById("tablon");
-    try {
-        const res = await fetch(urlScript);
-        const data = await res.json();
-        document.getElementById("loading").style.display = "none";
-        cont.innerHTML = data.map(a => `
-            <div class="tarjeta-anuncio">
-                ${a.imagen ? `<img src="${a.imagen}" class="foto-articulo">` : ''}
-                <div class="cuerpo-anuncio">
-                    <h3 style="color:var(--menta); font-size:16px; margin-bottom:8px;">${(a.titulo||"").toUpperCase()}</h3>
-                    <p style="font-size:13px; color:#64748b; margin-bottom:10px;">${a.descripcion}</p>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-weight:900;">${a.precio}€</span>
-                        <a href="tel:${a.contacto}" style="background:var(--menta); color:white; padding:6px 10px; text-decoration:none; border-radius:4px; font-size:11px;">LLAMAR</a>
-                    </div>
-                </div>
-            </div>`).join('');
-    } catch(err) { cont.innerHTML = "Error al cargar anuncios."; }
+  const res = await fetch(url);
+  const data = await res.json();
+  // Algoritmo de aleatorización (Fisher-Yates)
+  for (let i = data.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [data[i], data[j]] = [data[j], data[i]];
+  }
+  document.getElementById('tablon').innerHTML = data.map(a => `
+    <div style="border:1px solid #ddd; padding:10px; border-radius:10px;">
+      <img src="${a.imagen}" style="width:100%; height:150px; object-fit:cover;">
+      <h3>${a.titulo}</h3>
+      <p>${a.descripcion}</p>
+      <small>${a.recogida} | ${a.estado}</small>
+      <p><b>${a.precio}€</b> | <a href="tel:${a.contacto}">Llamar</a></p>
+    </div>`).join('');
 }
 
 async function enviar(e) {
-    e.preventDefault();
-    const btn = document.getElementById("btnPublicar");
-    btn.disabled = true; btn.innerText = "Publicando...";
-    const tel = document.getElementById("contacto").value;
-    
-    // Antiflood
-    if (localStorage.getItem('last_post_' + tel)) {
-        alert("¡Espera 5 minutos entre publicaciones!");
-        btn.disabled = false; btn.innerText = "PUBLICAR"; return;
-    }
-
-    const file = document.getElementById("foto").files[0];
-    const datos = new URLSearchParams({
-        titulo: document.getElementById("titulo").value,
-        estado: document.getElementById("estado").value,
-        descripcion: document.getElementById("descripcion").value,
-        precio: document.getElementById("precio").value,
-        recogida: document.getElementById("recogida").value,
-        contacto: tel,
-        imagenBase64: file ? await new Promise(r => { let rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(file); }) : ""
+  e.preventDefault();
+  const btn = document.getElementById('btn');
+  btn.disabled = true;
+  
+  const file = document.getElementById('imagen').files[0];
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = async () => {
+    const params = new URLSearchParams({
+      titulo: document.getElementById('titulo').value,
+      estado: document.getElementById('estado').value,
+      descripcion: document.getElementById('descripcion').value,
+      precio: document.getElementById('precio').value,
+      contacto: document.getElementById('contacto').value,
+      recogida: document.getElementById('recogida').value,
+      imagenBase64: reader.result
     });
-
-    try {
-        await fetch(urlScript, { method: "POST", body: datos });
-        localStorage.setItem('last_post_' + tel, Date.now());
-        alert("Publicado con éxito."); location.reload();
-    } catch(err) { alert("Error."); btn.disabled = false; }
+    
+    const res = await fetch(url, {method: 'POST', body: params});
+    const txt = await res.text();
+    if(txt === "OK") { alert("Publicado!"); location.reload(); }
+    else { alert("Error: Inténtalo en 5 minutos."); btn.disabled = false; }
+  };
 }
-
 cargar();
 </script>
 </body>
