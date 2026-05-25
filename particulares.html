@@ -5,40 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Particulares | infoespinar.com</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
         :root {
-            --azul-inicio: #1e3a8a;
+            --menta: #20a088;
+            --menta-dark: #19826d;
             --azul-fin: #3b82f6;
             --fondo: #f4f6f9;
         }
 
         body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; margin: 0; }
 
-        /* HEADER */
-        .header { background: linear-gradient(135deg, var(--azul-inicio) 0%, var(--azul-fin) 100%); color: white; text-align: center; padding: 30px 20px; }
+        /* HEADER MENTA */
+        .header { background: var(--menta); color: white; text-align: center; padding: 30px 20px; }
         .header-logo-link { text-decoration: none; color: white; display: inline-flex; align-items: center; gap: 12px; }
         .header-bandera { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,255,255,0.2); }
-        
-        /* BANNER Y TITULARES */
-        .banner-publicidad { background: #e2e8f0; text-align: center; padding: 10px; font-size: 12px; color: #64748b; border-bottom: 1px solid #cbd5e1; }
-        .titulo-seccion { text-align: center; padding: 40px 20px 10px; font-size: 28px; font-weight: 900; color: var(--azul-inicio); text-transform: uppercase; }
+
+        /* BANNER MENTA */
+        .contenedor-banner { padding: 20px 15px 0; max-width: 1200px; margin: 0 auto; }
+        .banner-comercio { width: 100%; height: 120px; border-radius: 12px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: var(--menta); box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .banner-img { position: absolute; width: 100%; height: 100%; background-image: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=1000&auto=format&fit=crop'); background-size: cover; background-position: center; opacity: 0.2; }
+        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-label { display: inline-block; background: var(--menta-dark); color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; margin-bottom: 3px; }
+        .banner-nombre { color: white; font-size: 20px; font-weight: 700; margin: 0; }
+        .banner-sub { color: rgba(255,255,255,0.95); font-size: 12px; margin-top: 3px; }
+
+        /* TEXTOS Y BOTONES */
+        .titulo-seccion { text-align: center; padding: 40px 20px 10px; font-size: 28px; font-weight: 900; color: var(--menta); text-transform: uppercase; }
         .subtitulo-seccion { text-align: center; padding: 0 20px 30px; font-size: 14px; color: #64748b; }
-
-        /* NAVEGACIÓN Y APP */
-        .contenedor-app { padding: 0 15px 50px; max-width: 1200px; margin: 0 auto; }
-        .navegacion { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; }
-        .btn-pestana { background: white; border: 1px solid #cbd5e1; padding: 10px 20px; font-weight: 700; border-radius: 8px; cursor: pointer; color: #475569; }
-        .btn-pestana.activa { background: var(--azul-inicio); color: white; border-color: var(--azul-inicio); }
-        .seccion-app { display: none; }
-        .seccion-app.activa { display: block; }
-
-        /* GRID */
-        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .btn-pestana.activa { background: var(--menta); color: white; border-color: var(--menta); }
+        
+        /* GRID DE ANUNCIOS */
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 15px 50px; max-width: 1200px; margin: 0 auto; }
         .tarjeta-anuncio { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
-        .cabecera-anuncio { padding: 14px 20px; }
-        .titulo-anuncio { font-size: 15px; font-weight: 700; color: white; margin: 0; }
-        .cargando { text-align: center; padding: 50px; font-weight: 700; color: var(--azul-inicio); }
+        .foto-articulo { width: 100%; height: 200px; object-fit: cover; background: #eee; }
+        .cuerpo-anuncio { padding: 20px; }
     </style>
 </head>
 <body>
@@ -50,71 +51,53 @@
     </a>
 </header>
 
-<div class="banner-publicidad">Espacio para banner publicitario - infoespinar.com</div>
+<div class="contenedor-banner">
+    <a href="mailto:info@infoespinar.com" class="banner-comercio">
+        <div class="banner-img"></div>
+        <div class="banner-info">
+            <span class="banner-label">¿Eres comerciante?</span>
+            <h3 class="banner-nombre">¡Anuncia tu comercio aquí!</h3>
+            <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos. Pulsa para informarte.</div>
+        </div>
+    </a>
+</div>
 
 <h2 class="titulo-seccion">Tablón de Particulares</h2>
 <p class="subtitulo-seccion">USA ESTE ESPACIO COMO TABLÓN DE COMPRA-VENTA Y ANUNCIOS PARTICULARES. LOS ANUNCIOS SERÁN VISIBLES 20 DÍAS.</p>
 
-<div class="contenedor-app">
-    <div class="navegacion">
-        <button class="btn-pestana activa" onclick="cambiarTab('tablon-sec', event)">📌 Ver Tablón</button>
-        <button class="btn-pestana" onclick="cambiarTab('form-sec', event)">➕ Publicar Anuncio</button>
-    </div>
-
-    <div id="tablon-sec" class="seccion-app activa">
-        <div id="loading" class="cargando">Cargando anuncios...</div>
-        <div id="tablon" class="grid-anuncios"></div>
-    </div>
-
-    <div id="form-sec" class="seccion-app">
-        <!-- Aquí iría tu formulario de publicación -->
-        <div style="text-align:center; padding:50px;">Formulario de publicación en construcción...</div>
-    </div>
+<div id="tablon" class="grid-anuncios">
+    <div id="loading" style="text-align:center; padding:50px; grid-column: 1/-1;">Cargando anuncios...</div>
 </div>
 
 <script>
 const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
 
-function cambiarTab(id, e) {
-    document.querySelectorAll(".seccion-app").forEach(s => s.classList.remove("activa"));
-    document.querySelectorAll(".btn-pestana").forEach(b => b.classList.remove("activa"));
-    document.getElementById(id).classList.add("activa");
-    e.target.classList.add("activa");
-}
-
 async function cargar() {
     const cont = document.getElementById("tablon");
-    const loader = document.getElementById("loading");
-    
     try {
         const res = await fetch(urlScript);
         const data = await res.json();
-        loader.style.display = "none";
         cont.innerHTML = "";
-        const colores = ["#1e3a8a", "#059669", "#7c3aed", "#ea580c"];
 
-        data.forEach((a, i) => {
+        data.forEach((a) => {
             cont.innerHTML += `
             <div class="tarjeta-anuncio">
-                <div class="cabecera-anuncio" style="background:${colores[i % 4]}">
-                    <h3 class="titulo-anuncio">${(a.titulo || "").toUpperCase()}</h3>
-                </div>
-                <div style="padding:20px;">
+                ${a.imagen ? `<img src="${a.imagen}" class="foto-articulo" alt="foto">` : ''}
+                <div class="cuerpo-anuncio">
+                    <h3 style="color:var(--menta); margin-bottom:10px;">${(a.titulo || "").toUpperCase()}</h3>
                     <p style="font-size:13px; color:#475569; margin-bottom:15px;">${a.descripcion || ""}</p>
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <span style="font-weight:900; font-size:17px;">${a.precio ? a.precio + "€" : "Gratis"}</span>
-                        <a href="tel:${a.contacto}" style="background:var(--azul-fin); color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:700;">LLAMAR</a>
+                        <a href="tel:${a.contacto}" style="background:var(--menta); color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:700;">LLAMAR</a>
                     </div>
                 </div>
             </div>`;
         });
     } catch(err) {
-        loader.innerHTML = "Error al cargar los anuncios.";
+        cont.innerHTML = "<p>Error al cargar anuncios.</p>";
     }
 }
-
 document.addEventListener('DOMContentLoaded', cargar);
 </script>
-
 </body>
 </html>
