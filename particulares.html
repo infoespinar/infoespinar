@@ -8,24 +8,33 @@
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         :root { --menta: #20a088; --fondo: #f4f6f9; }
-        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; }
+        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; padding-bottom: 50px; }
 
-        /* HEADER COMPACTO Y LIMPIO */
         .header { background: var(--menta); padding: 15px 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
         .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; }
         .header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        /* FORMULARIO Y TABLÓN */
-        .contenedor-app { max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .formulario-publicar { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; display: none; margin-bottom: 20px; }
-        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; }
-        .btn-accion { width: 100%; padding: 12px; background: var(--menta); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+        .contenedor-app { max-width: 900px; margin: 0 auto; padding: 20px; }
+        h2.titulo-seccion { text-align: center; margin: 30px 0; font-size: 24px; text-transform: uppercase; color: #1e293b; }
+
+        /* BOTONES */
+        .btn-publicar { display: block; width: 250px; margin: 0 auto 30px; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s; }
         
-        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
-        .tarjeta-anuncio { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; }
-        .foto-articulo { width: 100%; height: 160px; object-fit: cover; }
-        .cuerpo-anuncio { padding: 15px; }
+        /* FORMULARIO */
+        #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 8px; }
+        
+        /* TARJETAS */
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .tarjeta { background: white; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; position: relative; }
+        .cont-img { position: relative; height: 180px; }
+        .foto-articulo { width: 100%; height: 100%; object-fit: cover; }
+        .titulo-sobre-img { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: white; padding: 20px 15px 10px; font-size: 18px; font-weight: 900; }
+        .burbujas { padding: 15px; display: flex; gap: 8px; flex-wrap: wrap; }
+        .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
+        .precio { font-weight: 900; font-size: 20px; padding: 0 15px 15px; }
+        .btn-llamar { display: block; margin: 0 15px 15px; background: #000; color: white; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -37,60 +46,63 @@
     </a>
 </header>
 
-<div id="app" style="font-family: sans-serif; max-width: 900px; margin: auto;">
-  <button onclick="document.getElementById('form').style.display='block'" style="background:#20a088; color:white; padding:10px; border:none; border-radius:5px;">➕ PUBLICAR ANUNCIO</button>
+<div class="contenedor-app">
+    <h2 class="titulo-seccion">Anuncios Particulares</h2>
+    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">➕ PUBLICAR ANUNCIO</button>
   
-  <div id="form" style="display:none; background:#f4f4f4; padding:20px; margin:20px 0; border-radius:10px;">
-    <form id="publicarForm" onsubmit="enviar(event)">
-      <input type="text" id="titulo" placeholder="TÍTULO (MAYÚSCULAS)" required oninput="this.value=this.value.toUpperCase()">
-      <select id="estado" required>
-        <option value="">Selecciona estado...</option>
-        <option>A ESTRENAR</option><option>COMO NUEVO</option><option>BUEN ESTADO</option><option>USADO</option><option>PARA RESTAURAR</option>
-      </select>
-      <textarea id="descripcion" placeholder="Descripción" required></textarea>
-      <input type="number" id="precio" placeholder="Precio (€)" required>
-      <select id="recogida" required>
-        <option value="">Selecciona zona...</option>
-        <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
-      </select>
-      <input type="tel" id="contacto" placeholder="Teléfono (9 cifras)" required pattern="[0-9]{9}" maxlength="9">
-      <input type="file" id="imagen" accept="image/*" required>
-      <button type="submit" id="btn">ENVIAR</button>
-    </form>
-  </div>
+    <div id="form" style="display:none;">
+        <form id="publicarForm" onsubmit="enviar(event)">
+            <input type="text" id="titulo" placeholder="TÍTULO EN MAYÚSCULAS" required oninput="this.value=this.value.toUpperCase()">
+            <select id="estado" required>
+                <option value="">Estado...</option>
+                <option>A ESTRENAR</option><option>COMO NUEVO</option><option>BUEN ESTADO</option><option>USADO</option><option>PARA RESTAURAR</option>
+            </select>
+            <textarea id="descripcion" placeholder="Descripción" required rows="3"></textarea>
+            <input type="number" id="precio" placeholder="Precio (€)" required>
+            <select id="recogida" required>
+                <option value="">Zona de recogida...</option>
+                <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
+            </select>
+            <input type="tel" id="contacto" placeholder="Teléfono (9 cifras)" required pattern="[0-9]{9}" maxlength="9">
+            <input type="file" id="imagen" accept="image/*" required>
+            <button type="submit" id="btn" class="btn-publicar" style="width:100%; margin-bottom:0;">ENVIAR ANUNCIO</button>
+        </form>
+    </div>
 
-  <div id="tablon" style="display:grid; gap:20px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));"></div>
+    <div id="tablon" class="grid-anuncios"></div>
 </div>
 
 <script>
-const url = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec"; // Pega aquí tu URL del paso 1
+const url = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
 
 async function cargar() {
   const res = await fetch(url);
   const data = await res.json();
-  // Algoritmo de aleatorización (Fisher-Yates)
-  for (let i = data.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [data[i], data[j]] = [data[j], data[i]];
-  }
+  data.sort(() => Math.random() - 0.5); // Aleatorio
+  
   document.getElementById('tablon').innerHTML = data.map(a => `
-    <div style="border:1px solid #ddd; padding:10px; border-radius:10px;">
-      <img src="${a.imagen}" style="width:100%; height:150px; object-fit:cover;">
-      <h3>${a.titulo}</h3>
-      <p>${a.descripcion}</p>
-      <small>${a.recogida} | ${a.estado}</small>
-      <p><b>${a.precio}€</b> | <a href="tel:${a.contacto}">Llamar</a></p>
+    <div class="tarjeta">
+      <div class="cont-img">
+        <img src="${a.imagen}" class="foto-articulo">
+        <div class="titulo-sobre-img">${a.titulo}</div>
+      </div>
+      <div class="burbujas">
+        <span class="tag">📍 ${a.recogida}</span>
+        <span class="tag">📦 ${a.estado}</span>
+      </div>
+      <p style="padding:0 15px 15px; font-size:14px; color:#64748b;">${a.descripcion}</p>
+      <div class="precio">${a.precio}€</div>
+      <a href="tel:${a.contacto}" class="btn-llamar">LLAMAR AL PROPIETARIO</a>
     </div>`).join('');
 }
 
 async function enviar(e) {
   e.preventDefault();
   const btn = document.getElementById('btn');
-  btn.disabled = true;
+  btn.disabled = true; btn.innerText = "Publicando...";
   
-  const file = document.getElementById('imagen').files[0];
   const reader = new FileReader();
-  reader.readAsDataURL(file);
+  reader.readAsDataURL(document.getElementById('imagen').files[0]);
   reader.onload = async () => {
     const params = new URLSearchParams({
       titulo: document.getElementById('titulo').value,
@@ -101,11 +113,9 @@ async function enviar(e) {
       recogida: document.getElementById('recogida').value,
       imagenBase64: reader.result
     });
-    
     const res = await fetch(url, {method: 'POST', body: params});
-    const txt = await res.text();
-    if(txt === "OK") { alert("Publicado!"); location.reload(); }
-    else { alert("Error: Inténtalo en 5 minutos."); btn.disabled = false; }
+    if(await res.text() === "OK") { alert("¡Publicado!"); location.reload(); }
+    else { alert("Espera 5 minutos entre publicaciones."); btn.disabled = false; btn.innerText = "ENVIAR"; }
   };
 }
 cargar();
