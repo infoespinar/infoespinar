@@ -1,11 +1,55 @@
-<div style="text-align: center; margin: 20px;">
-    <button onclick="toggleForm()" style="background: var(--menta); color: white; border: none; padding: 15px 30px; border-radius: 30px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particulares | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --menta: #20a088; --menta-dark: #19826d; --fondo: #f4f6f9; }
+        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; }
+
+        /* HEADER */
+        .header { background: var(--menta); color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); }
+        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
+        .header h1 { font-size: 24px; font-weight: 900; text-transform: uppercase; }
+
+        /* BANNER */
+        .contenedor-banner { padding: 20px 15px 0; max-width: 1200px; margin: 0 auto; }
+        .banner-comercio { width: 100%; height: 120px; border-radius: 12px; background-color: var(--menta); display: flex; align-items: center; text-decoration: none; color: white; padding: 20px; position: relative; overflow: hidden; }
+        
+        /* FORMULARIO OCULTO */
+        .formulario-publicar { max-width: 600px; margin: 20px auto; padding: 25px; background: white; border-radius: 16px; border: 1px solid #e2e8f0; display: none; }
+        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
+        .btn-accion { width: 100%; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+
+        /* GRID */
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
+        .tarjeta-anuncio { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+        .foto-articulo { width: 100%; height: 200px; object-fit: cover; }
+        .cuerpo-anuncio { padding: 20px; }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="index.html" class="header-logo-link">
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo">
+        <h1>infoespinar.com</h1>
+    </a>
+</header>
+
+<h2 style="text-align: center; padding: 40px 20px 10px; font-size: 28px; text-transform: uppercase;">Tablón de Particulares</h2>
+
+<div style="text-align: center; margin-bottom: 20px;">
+    <button onclick="toggleForm()" style="padding: 12px 25px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer;">
         ➕ PUBLICAR NUEVO ANUNCIO
     </button>
 </div>
 
-<div id="contenedor-formulario" class="formulario-publicar" style="display: none; margin-bottom: 30px;">
-    <h3 style="margin-bottom: 15px; color: var(--menta);">Completa tu anuncio</h3>
+<div id="contenedor-formulario" class="formulario-publicar">
     <form id="formPublicar" onsubmit="enviar(event)">
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="text" id="estado" placeholder="Estado (ej: Nuevo, Usado)" required>
@@ -14,18 +58,71 @@
         <input type="text" id="recogida" placeholder="Lugar de recogida" required>
         <input type="tel" id="contacto" placeholder="Teléfono" required pattern="[0-9]{9}">
         <input type="file" id="foto" accept="image/*" style="border:none;">
-        <button type="submit" id="btnPublicar" class="btn-accion">PUBLICAR ANUNCIO</button>
+        <button type="submit" id="btnPublicar" class="btn-accion">ENVIAR ANUNCIO</button>
     </form>
     <div id="status" style="margin-top:10px; text-align:center;"></div>
 </div>
 
-<script>
-    // Función para mostrar/ocultar
-    function toggleForm() {
-        const form = document.getElementById('contenedor-formulario');
-        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
-    }
+<div id="tablon" class="grid-anuncios">
+    <div id="loading" style="text-align:center; padding:50px; grid-column: 1/-1;">Cargando anuncios...</div>
+</div>
 
-    // La función enviar, cargar y resto del script que ya tienes...
-    // (Asegúrate de mantener el resto de funciones que te pasé en el mensaje anterior)
+<script>
+const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
+
+function toggleForm() {
+    const f = document.getElementById('contenedor-formulario');
+    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+}
+
+async function cargar() {
+    const cont = document.getElementById("tablon");
+    try {
+        const res = await fetch(urlScript);
+        const data = await res.json();
+        document.getElementById("loading").style.display = "none";
+        cont.innerHTML = data.map(a => `
+            <div class="tarjeta-anuncio">
+                ${a.imagen ? `<img src="${a.imagen}" class="foto-articulo">` : ''}
+                <div class="cuerpo-anuncio">
+                    <h3 style="color:var(--menta); margin-bottom:10px;">${a.titulo.toUpperCase()}</h3>
+                    <p style="font-size:13px; margin-bottom:15px;">${a.descripcion}</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:900;">${a.precio}€</span>
+                        <a href="tel:${a.contacto}" style="background:var(--menta); color:white; padding:8px 12px; text-decoration:none; border-radius:6px; font-size:12px;">LLAMAR</a>
+                    </div>
+                </div>
+            </div>`).join('');
+    } catch(err) { document.getElementById("loading").innerHTML = "Error al cargar."; }
+}
+
+async function enviar(e) {
+    e.preventDefault();
+    const btn = document.getElementById("btnPublicar");
+    btn.innerText = "Publicando...";
+    btn.disabled = true;
+
+    const file = document.getElementById("foto").files[0];
+    let imgBase64 = file ? await new Promise(r => { let rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(file); }) : "";
+
+    const datos = new URLSearchParams({
+        titulo: document.getElementById("titulo").value.toUpperCase(),
+        estado: document.getElementById("estado").value,
+        descripcion: document.getElementById("descripcion").value,
+        precio: document.getElementById("precio").value,
+        recogida: document.getElementById("recogida").value,
+        contacto: document.getElementById("contacto").value,
+        imagenBase64: imgBase64
+    });
+
+    try {
+        await fetch(urlScript, { method: "POST", body: datos });
+        alert("¡Anuncio publicado!");
+        location.reload();
+    } catch(err) { alert("Error al enviar."); btn.disabled = false; }
+}
+
+cargar();
 </script>
+</body>
+</html>
