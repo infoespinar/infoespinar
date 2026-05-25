@@ -1,94 +1,36 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+  /* ESTILOS DEL HEADER CORPORATIVO + TITULO PARTICULARES */
+  .header-total { background: linear-gradient(135deg, #16a34a 0%, #b45309 100%); color: white; padding: 20px; text-align: center; }
   
-  html, body { margin:0; padding:0; background:transparent; font-family:'Lato', sans-serif; width:100%; overflow-x:hidden; }
-
-  /* TU HEADER */
-  .header {
-      background: linear-gradient(135deg, #16a34a 0%, #b45309 100%);
-      color: white;
-      text-align: center;
-      padding: 25px 20px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  }
   .header-logo-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      text-decoration: none;
-      color: white;
-      background: rgba(255, 255, 255, 0.08);
-      padding: 8px 16px;
-      border-radius: 30px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      transition: background 0.2s, transform 0.2s;
+      display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white;
+      background: rgba(255, 255, 255, 0.15); padding: 8px 16px; border-radius: 30px; margin-bottom: 15px;
   }
-  .header-bandera {
-      width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1 / 1;
-  }
-  .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; margin: 0; }
-
-  /* TÍTULO COMPRA-VENTA */
-  .sub-header { background: #fff; padding: 15px; text-align: center; font-weight: 900; color: #16a34a; border-bottom: 1px solid #e2e8f0; letter-spacing: 1px; }
-
-  /* CONTENIDO */
-  .contenedor-app { padding: 20px 15px; max-width: 1000px; margin: 0 auto; }
-  .navegacion { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-  .btn-pestana { background: #f1f5f9; border: none; padding: 10px 20px; font-weight: 700; border-radius: 8px; cursor: pointer; color: #475569; flex: 1; }
-  .btn-pestana.activa { background: #16a34a; color: #fff; }
-  .seccion-app { display: none; }
-  .seccion-app.activa { display: block; }
+  .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
+  .header-total h1 { font-size: 20px; font-weight: 900; text-transform: uppercase; margin: 0; }
   
-  /* Grid y Tarjetas */
-  .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .tarjeta-anuncio { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-  .cabecera-anuncio { padding: 12px 15px; color: white; font-weight: 700; text-transform: uppercase; font-size: 13px; }
-  .cuerpo-anuncio { padding: 15px; }
-  .precio-anuncio { font-weight: 900; font-size: 18px; color: #b45309; }
-  .btn-contacto { padding: 8px 12px; border-radius: 6px; text-decoration: none; color: #fff; font-size: 12px; font-weight: 700; display: inline-block; margin-top: 10px; }
-  .btn-whatsapp { background: #25d366; }
-  .btn-llamar { background: #3b82f6; }
-  
-  /* Formulario */
-  .formulario-publicar { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; }
-  .btn-enviar { width: 100%; padding: 14px; background: #16a34a; color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
+  .titulo-seccion-especial { font-size: 24px; font-weight: 900; margin: 10px 0 5px 0; text-transform: uppercase; }
+  .subtitulo-seccion { font-size: 13px; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.4; }
+
+  /* RESTO DE TU ESTILO (Sección, Tablón, etc) */
+  /* ... (Mantén aquí el resto de tus estilos CSS que ya tenías) ... */
 </style>
-</head>
-<body>
 
-<header class="header">
+<!-- HEADER INTEGRADO -->
+<header class="header-total">
     <a href="https://www.infoespinar.com" class="header-logo-link">
         <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo">
-        <h1>infoespinar.com</h1>
+        <span>infoespinar.com</span>
     </a>
+    <div class="titulo-seccion-especial">PARTICULARES</div>
+    <div class="subtitulo-seccion">USA ESTE ESPACIO COMO TABLÓN DE COMPRA-VENTA Y ANUNCIOS PARTICULARES. LOS ANUNCIOS SERÁN VISIBLES 20 DÍAS.</div>
 </header>
-<div class="sub-header">COMPRA - VENTA</div>
 
 <div class="contenedor-app" id="wrapper">
+  <!-- Aquí tu contenido de navegación, tablón y formulario -->
   <div class="navegacion">
-    <button class="btn-pestana activa" onclick="cambiar('tablon-sec',event)">📌 Ver Tablón</button>
-    <button class="btn-pestana" onclick="cambiar('form-sec',event)">➕ Publicar</button>
+    <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Ver Tablón</button>
+    <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar Anuncio</button>
   </div>
-
-  <div id="tablon-sec" class="seccion-app activa">
-    <div id="loading" class="cargando">Cargando anuncios...</div>
-    <div id="tablon" class="grid-anuncios"></div>
-  </div>
-  
-  <div id="form-sec" class="seccion-app">
-     </div>
+  <!-- ... (El resto de tu HTML) ... -->
 </div>
-
-<script>
-// (Mantén aquí tu misma lógica de cargar() y enviar())
-function actualizarAltura(){ 
-    const wrapper = document.getElementById("wrapper"); 
-    if(window.parent){ window.parent.postMessage({type:"resize", height:wrapper.offsetHeight + 250}, "*"); } 
-}
-</script>
-</body>
-</html>
