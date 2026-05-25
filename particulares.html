@@ -16,25 +16,27 @@
         .header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
         .contenedor-app { max-width: 900px; margin: 0 auto; padding: 20px; }
-        h2.titulo-seccion { text-align: center; margin: 30px 0; font-size: 24px; text-transform: uppercase; color: #1e293b; }
+        h2.titulo-seccion { text-align: center; margin: 20px 0 5px; font-size: 24px; text-transform: uppercase; color: #1e293b; }
+        .aviso { text-align: center; color: #64748b; font-size: 12px; margin-bottom: 20px; }
 
-        /* BOTONES */
-        .btn-publicar { display: block; width: 250px; margin: 0 auto 30px; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        
-        /* FORMULARIO */
-        #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; }
+        /* BOTONES Y FORM */
+        .btn-publicar { display: block; width: 250px; margin: 0 auto 30px; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; }
+        #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; display: none; }
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 8px; }
         
-        /* TARJETAS */
-        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .tarjeta { background: white; border-radius: 16px; overflow: hidden; border: 1px solid #e2e8f0; position: relative; }
-        .cont-img { position: relative; height: 180px; }
-        .foto-articulo { width: 100%; height: 100%; object-fit: cover; }
-        .titulo-sobre-img { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.7)); color: white; padding: 20px 15px 10px; font-size: 18px; font-weight: 900; }
-        .burbujas { padding: 15px; display: flex; gap: 8px; flex-wrap: wrap; }
+        /* TARJETAS ESTILO WALLAPOP */
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+        .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
+        .foto-articulo { width: 100%; height: 200px; object-fit: cover; cursor: pointer; }
+        .titulo-tarjeta { font-weight: 900; font-size: 16px; padding: 15px 15px 5px; color: #1e293b; }
+        .precio { font-weight: 900; font-size: 20px; padding: 0 15px 10px; }
+        .burbujas { padding: 0 15px 15px; display: flex; gap: 8px; flex-wrap: wrap; }
         .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
-        .precio { font-weight: 900; font-size: 20px; padding: 0 15px 15px; }
         .btn-llamar { display: block; margin: 0 15px 15px; background: #000; color: white; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; }
+
+        /* MODAL */
+        #modal { display:none; position:fixed; z-index:999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; }
+        #modal img { max-width: 90%; max-height: 80%; border-radius: 8px; }
     </style>
 </head>
 <body>
@@ -48,9 +50,10 @@
 
 <div class="contenedor-app">
     <h2 class="titulo-seccion">Anuncios Particulares</h2>
+    <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
     <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">➕ PUBLICAR ANUNCIO</button>
   
-    <div id="form" style="display:none;">
+    <div id="form">
         <form id="publicarForm" onsubmit="enviar(event)">
             <input type="text" id="titulo" placeholder="TÍTULO EN MAYÚSCULAS" required oninput="this.value=this.value.toUpperCase()">
             <select id="estado" required>
@@ -72,35 +75,38 @@
     <div id="tablon" class="grid-anuncios"></div>
 </div>
 
+<div id="modal" onclick="this.style.display='none'"><img id="imgGrande" src=""></div>
+
 <script>
 const url = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
 
 async function cargar() {
   const res = await fetch(url);
   const data = await res.json();
-  data.sort(() => Math.random() - 0.5); // Aleatorio
+  data.sort(() => Math.random() - 0.5); 
   
   document.getElementById('tablon').innerHTML = data.map(a => `
     <div class="tarjeta">
-      <div class="cont-img">
-        <img src="${a.imagen}" class="foto-articulo">
-        <div class="titulo-sobre-img">${a.titulo}</div>
-      </div>
+      <img src="${a.imagen}" class="foto-articulo" onclick="ampliar('${a.imagen}')">
+      <div class="titulo-tarjeta">${a.titulo}</div>
+      <div class="precio">${a.precio}€</div>
       <div class="burbujas">
         <span class="tag">📍 ${a.recogida}</span>
         <span class="tag">📦 ${a.estado}</span>
       </div>
-      <p style="padding:0 15px 15px; font-size:14px; color:#64748b;">${a.descripcion}</p>
-      <div class="precio">${a.precio}€</div>
       <a href="tel:${a.contacto}" class="btn-llamar">LLAMAR AL PROPIETARIO</a>
     </div>`).join('');
+}
+
+function ampliar(src) {
+    document.getElementById('imgGrande').src = src;
+    document.getElementById('modal').style.display = 'flex';
 }
 
 async function enviar(e) {
   e.preventDefault();
   const btn = document.getElementById('btn');
   btn.disabled = true; btn.innerText = "Publicando...";
-  
   const reader = new FileReader();
   reader.readAsDataURL(document.getElementById('imagen').files[0]);
   reader.onload = async () => {
@@ -115,7 +121,7 @@ async function enviar(e) {
     });
     const res = await fetch(url, {method: 'POST', body: params});
     if(await res.text() === "OK") { alert("¡Publicado!"); location.reload(); }
-    else { alert("Espera 5 minutos entre publicaciones."); btn.disabled = false; btn.innerText = "ENVIAR"; }
+    else { alert("Error o Antiflood (Espera 5 min)."); btn.disabled = false; btn.innerText = "ENVIAR"; }
   };
 }
 cargar();
