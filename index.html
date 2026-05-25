@@ -687,28 +687,60 @@
 
         const ITEM_ANCHO = 150; // 140px imagen + 10px margen
         let posicion = 0;
-        let pausado = false;
+        let arrastrando = false;
+        let inicioX = 0;
+        let posicionAlArrastrar = 0;
         const anchoOriginal = itemsOriginales.length * ITEM_ANCHO;
 
+        function clamp(pos) {
+            // Mantiene la posición dentro del rango del bucle infinito
+            return ((pos % anchoOriginal) + anchoOriginal) % anchoOriginal;
+        }
+
         function moverCarrusel() {
-            if (pausado) return;
-
-            posicion += 0.5; // Velocidad: aumenta este valor para ir más rápido
-
-            // Cuando llegamos al final del bloque original, volvemos al inicio sin salto visible
-            if (posicion >= anchoOriginal) {
-                posicion = 0;
+            if (!arrastrando) {
+                posicion = clamp(posicion + 0.5);
+                inner.style.transform = `translateX(-${posicion}px)`;
             }
-
-            inner.style.transform = `translateX(-${posicion}px)`;
             requestAnimationFrame(moverCarrusel);
         }
 
-        // Pausar al pasar el ratón o tocar la pantalla
-        inner.addEventListener('mouseenter', () => pausado = true);
-        inner.addEventListener('mouseleave', () => pausado = false);
-        inner.addEventListener('touchstart', () => pausado = true, { passive: true });
-        inner.addEventListener('touchend', () => setTimeout(() => pausado = false, 1500));
+        // --- Soporte RATÓN (escritorio) ---
+        inner.addEventListener('mousedown', (e) => {
+            arrastrando = true;
+            inicioX = e.clientX;
+            posicionAlArrastrar = posicion;
+            inner.style.cursor = 'grabbing';
+        });
+        window.addEventListener('mousemove', (e) => {
+            if (!arrastrando) return;
+            const delta = inicioX - e.clientX;
+            posicion = clamp(posicionAlArrastrar + delta);
+            inner.style.transform = `translateX(-${posicion}px)`;
+        });
+        window.addEventListener('mouseup', () => {
+            arrastrando = false;
+            inner.style.cursor = 'grab';
+        });
+
+        // --- Soporte TÁCTIL (móvil) ---
+        inner.addEventListener('touchstart', (e) => {
+            arrastrando = true;
+            inicioX = e.touches[0].clientX;
+            posicionAlArrastrar = posicion;
+        }, { passive: true });
+        inner.addEventListener('touchmove', (e) => {
+            if (!arrastrando) return;
+            const delta = inicioX - e.touches[0].clientX;
+            posicion = clamp(posicionAlArrastrar + delta);
+            inner.style.transform = `translateX(-${posicion}px)`;
+        }, { passive: true });
+        inner.addEventListener('touchend', () => {
+            arrastrando = false;
+        });
+
+        // Cursor grab por defecto en escritorio
+        inner.style.cursor = 'grab';
 
         requestAnimationFrame(moverCarrusel);
     })();
