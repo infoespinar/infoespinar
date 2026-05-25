@@ -23,7 +23,7 @@
             min-height: 100vh;
         }
 
-        /* 📋 ENCABEZADO RESPONSIVO CON LOGO/BOTÓN DE INICIO */
+        /* 📋 ENCABEZADO */
         .header {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             color: white;
@@ -51,18 +51,13 @@
             transform: translateY(-1px);
         }
 
-        /* Bandera formato 1:1 */
         .header-bandera {
             width: 32px;
             height: 32px;
             object-fit: cover;
-            border-radius: 6px; /* Aspecto pulido */
+            border-radius: 6px;
             aspect-ratio: 1 / 1;
-            background-color: rgba(255, 255, 255, 0.2); /* Fondo temporal por si no carga */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
+            background-color: rgba(255, 255, 255, 0.2);
         }
 
         .header h1 {
@@ -93,7 +88,7 @@
             outline: none;
         }
 
-        /* 🏛️ CONTENEDOR PRINCIPAL RESTRINGIDO EN PC */
+        /* 🏛️ CONTENEDOR PRINCIPAL */
         .main-container {
             max-width: 1200px;
             width: 100%;
@@ -111,25 +106,24 @@
             font-weight: 700;
         }
 
-        /* 🎪 1. SECCIÓN: CARRUSEL DE ANUNCIOS */
+        /* 🎪 1. CARRUSEL INFINITO */
         .contenedor-ofertas {
             width: 100%;
-            overflow: hidden; 
+            overflow: hidden;
             position: relative;
         }
 
         .carrusel-track {
             display: flex;
             width: 100%;
-            overflow-x: auto; 
-            scroll-behavior: smooth;
-            scroll-snap-type: x mandatory; 
-            -webkit-overflow-scrolling: touch; 
-            padding-bottom: 10px;
+            overflow: hidden; /* Ocultamos el scroll nativo; el infinito lo maneja JS */
         }
 
-        .carrusel-track::-webkit-scrollbar { display: none; }
-        .carrusel-track { -ms-overflow-style: none; scrollbar-width: none; }
+        /* La pista interior que se mueve con translate */
+        .carrusel-inner {
+            display: flex;
+            will-change: transform;
+        }
 
         .oferta-item {
             width: 140px;
@@ -138,7 +132,6 @@
             flex-shrink: 0;
             display: block;
             text-decoration: none;
-            scroll-snap-align: start; 
         }
 
         .imagen-oferta {
@@ -149,7 +142,7 @@
             border: 1px solid #e2e8f0;
             box-shadow: 0 4px 8px rgba(0,0,0,0.06);
             user-select: none;
-            -webkit-user-drag: none; 
+            -webkit-user-drag: none;
         }
 
         .nombre-comercio {
@@ -161,7 +154,7 @@
             font-weight: 700;
         }
 
-        /* ⚡ 2. SECCIÓN: INFORMACIÓN DE INTERÉS */
+        /* ⚡ 2. INFORMACIÓN DE INTERÉS */
         .grid-utilidades {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -299,7 +292,7 @@
         .clima-nocturno .tiempo-dinamico { color: #f8fafc !important; }
         .clima-nocturno .icono-wrap { background-color: #1e293b !important; color: #f1f5f9 !important; }
 
-        /* 🏷️ 3. SECCIÓN: BOTONES DE CATEGORÍAS (MÓVIL VS PC) */
+        /* 🏷️ 3. CATEGORÍAS */
         .grid-servicios {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -313,9 +306,9 @@
             padding: 16px 10px;
             display: flex;
             flex-direction: column;
-            align-items: center;    
-            justify-content: center; 
-            text-align: center;     
+            align-items: center;
+            justify-content: center;
+            text-align: center;
             text-decoration: none;
             color: #1e293b;
             box-shadow: 0 2px 4px rgba(0,0,0,0.02);
@@ -331,15 +324,10 @@
         }
 
         .servicio-icono {
-            background-color: transparent; 
-            border-radius: 0;
-            border: none;
+            font-size: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 30px; 
-            margin-bottom: 0;
-            flex-shrink: 0;
         }
 
         .servicio-texto {
@@ -348,7 +336,7 @@
             color: #334155;
         }
 
-        /* 🚨 4. SECCIÓN: EMERGENCIAS */
+        /* 🚨 4. EMERGENCIAS */
         .grid-telefonos {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -391,10 +379,9 @@
         .nombre-servicio { font-size: 13.5px; font-weight: 700; }
         .numero-telf { font-size: 13.5px; font-weight: 700; color: #dc2626; }
 
-        /* 💻 RESPONSIVE AJUSTES PARA PANTALLAS GRANDES (PC) */
+        /* 💻 RESPONSIVE */
         @media screen and (min-width: 768px) {
             .header { padding: 45px 20px; }
-            
             .grid-servicios {
                 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
                 gap: 16px;
@@ -408,7 +395,7 @@
             text-align: center;
             padding: 25px 20px;
             margin-top: 40px;
-            margin-bottom: 70px; /* Espacio extra abajo para que el banner flotante no tape el footer */
+            margin-bottom: 70px;
             font-size: 13px;
             line-height: 1.6;
             border-top: 3px solid #3b82f6;
@@ -420,10 +407,10 @@
             font-weight: 700;
         }
 
-        /* 🚀 5. ESTILOS DEL NUEVO MENSAJE EMERGENTE (BANNER FLOATING) */
+        /* 🚀 5. BANNER FLOTANTE */
         .banner-emergente {
             position: fixed;
-            bottom: -100px; /* Empieza oculto para la animación */
+            bottom: -100px;
             left: 50%;
             transform: translateX(-50%);
             width: 92%;
@@ -442,9 +429,7 @@
             transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .banner-emergente.activo {
-            bottom: 16px; /* Sube elegantemente */
-        }
+        .banner-emergente.activo { bottom: 16px; }
 
         .banner-texto {
             font-size: 14.5px;
@@ -503,7 +488,6 @@
             color: #334155;
         }
 
-        /* Cambio a diseño horizontal en pantallas medianas/grandes */
         @media (min-width: 580px) {
             .banner-emergente {
                 flex-direction: row;
@@ -511,13 +495,8 @@
                 padding: 14px 24px;
                 gap: 20px;
             }
-            .banner-texto {
-                text-align: left;
-            }
-            .banner-acciones {
-                width: auto;
-                flex-shrink: 0;
-            }
+            .banner-texto { text-align: left; }
+            .banner-acciones { width: auto; flex-shrink: 0; }
         }
     </style>
 </head>
@@ -536,51 +515,57 @@
 
     <main class="main-container">
 
+        <!-- 🎪 CARRUSEL -->
         <div class="titulo-seccion">Ofertas destacadas</div>
         <div class="contenedor-ofertas">
-            <div class="carrusel-track" id="track">
-                <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item">
-                    <img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">El Taller de Boli</span>
-                </a>
-                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">Cafetería</span>
-                </a>
-                <a href="https://andrearuibal.com" class="oferta-item">
-                    <img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">Andrea Comesaña</span>
-                </a>
-                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">Limpiezas</span>
-                </a>
-                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">Floristería</span>
-                </a>
-                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">Panadería</span>
-                </a>
-                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">Cafetería</span>
-                </a>
-                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
-                    <span class="nombre-comercio">Reformas</span>
-                </a>
+            <div class="carrusel-track">
+                <div class="carrusel-inner" id="carruselInner">
+                    <!-- Los items se duplican por JS para el efecto infinito -->
+                    <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item">
+                        <img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta" alt="El Taller de Boli">
+                        <span class="nombre-comercio">El Taller de Boli</span>
+                    </a>
+                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Cafetería">
+                        <span class="nombre-comercio">Cafetería</span>
+                    </a>
+                    <a href="https://andrearuibal.com" class="oferta-item">
+                        <img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta" alt="Andrea Comesaña">
+                        <span class="nombre-comercio">Andrea Comesaña</span>
+                    </a>
+                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Limpiezas">
+                        <span class="nombre-comercio">Limpiezas</span>
+                    </a>
+                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Floristería">
+                        <span class="nombre-comercio">Floristería</span>
+                    </a>
+                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Panadería">
+                        <span class="nombre-comercio">Panadería</span>
+                    </a>
+                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Cafetería">
+                        <span class="nombre-comercio">Cafetería</span>
+                    </a>
+                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Reformas">
+                        <span class="nombre-comercio">Reformas</span>
+                    </a>
+                </div>
             </div>
         </div>
 
+        <!-- ⚡ INFORMACIÓN DE INTERÉS -->
         <div class="titulo-seccion">Información de interés</div>
         <div class="grid-utilidades">
+
             <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" rel="noopener" class="enlace-util" id="botonTiempo">
                 <div class="icono-wrap bg-azul" id="tiempoIcono">🌤️</div>
                 <div>
                     <span class="titulo-boton" id="tiempoTitulo">EL TIEMPO</span>
-                    <span id="tiempoTexto" class="tiempo-dinamico">Consultar Previsión</span>
+                    <span id="tiempoTexto" class="tiempo-dinamico">Cargando...</span>
                 </div>
             </a>
 
@@ -588,7 +573,7 @@
                 <div class="icono-wrap bg-rojo">🏥</div>
                 <div>
                     <span class="titulo-boton">FARMACIA DE GUARDIA</span>
-                    <span id="txtFarmaciaNombre" class="nombre-farmacia-viva">Ver Farmacia de Guardia</span>
+                    <span id="txtFarmaciaNombre" class="nombre-farmacia-viva">Cargando...</span>
                 </div>
             </button>
 
@@ -613,8 +598,10 @@
                     <span style="font-size: 11px; font-weight: 900; color: #a16207; letter-spacing: 0.5px;">AZAR</span>
                 </button>
             </div>
+
         </div>
 
+        <!-- 🏷️ CATEGORÍAS -->
         <div class="titulo-seccion">Categorías profesionales</div>
         <div class="grid-servicios">
             <a href="jardineria.html" class="card-servicio"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
@@ -638,6 +625,7 @@
             <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
         </div>
 
+        <!-- 🚨 EMERGENCIAS -->
         <div class="titulo-seccion" style="color: #dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
         <div class="grid-telefonos">
             <a href="tel:112" class="telf-item telf-112">
@@ -664,12 +652,12 @@
 
     </main>
 
-    <!-- 🚀 ELEMENTO HTML DEL MENSAJE EMERGENTE -->
+    <!-- 🚀 BANNER FLOTANTE -->
     <div id="popupAnuncio" class="banner-emergente">
         <p class="banner-texto">¿Tienes un negocio? Aparecer en esta web es <strong>GRATIS</strong>, solo tienes que rellenar el formulario.</p>
         <div class="banner-acciones">
             <a href="/inscripcion" class="btn-formulario">Inscribirme ya</a>
-            <button class="btn-cerrar-banner" onclick="cerrarPopup()">X</button>
+            <button class="btn-cerrar-banner" onclick="cerrarPopup()">✕</button>
         </div>
     </div>
 
@@ -680,42 +668,207 @@
     </footer>
 
     <script>
-    const telefonosTaxis = ["628826577", "666154968", "649553180", "639752456", "722501122", "697920835", "662958026", "690840809"];
+    /* ============================================================
+       🎠 CARRUSEL INFINITO
+       Técnica: duplicamos los items en el DOM y cuando el scroll
+       llega a la mitad (fin del bloque original) lo reiniciamos
+       al inicio sin que el usuario lo note.
+    ============================================================ */
+    (function () {
+        const inner = document.getElementById('carruselInner');
+        if (!inner) return;
+
+        // Duplicamos los items para crear el efecto infinito
+        const itemsOriginales = Array.from(inner.children);
+        itemsOriginales.forEach(item => {
+            const clon = item.cloneNode(true);
+            inner.appendChild(clon);
+        });
+
+        const ITEM_ANCHO = 150; // 140px imagen + 10px margen
+        let posicion = 0;
+        let pausado = false;
+        const anchoOriginal = itemsOriginales.length * ITEM_ANCHO;
+
+        function moverCarrusel() {
+            if (pausado) return;
+
+            posicion += 0.5; // Velocidad: aumenta este valor para ir más rápido
+
+            // Cuando llegamos al final del bloque original, volvemos al inicio sin salto visible
+            if (posicion >= anchoOriginal) {
+                posicion = 0;
+            }
+
+            inner.style.transform = `translateX(-${posicion}px)`;
+            requestAnimationFrame(moverCarrusel);
+        }
+
+        // Pausar al pasar el ratón o tocar la pantalla
+        inner.addEventListener('mouseenter', () => pausado = true);
+        inner.addEventListener('mouseleave', () => pausado = false);
+        inner.addEventListener('touchstart', () => pausado = true, { passive: true });
+        inner.addEventListener('touchend', () => setTimeout(() => pausado = false, 1500));
+
+        requestAnimationFrame(moverCarrusel);
+    })();
+
+
+    /* ============================================================
+       🌤️ TIEMPO, 🏥 FARMACIA y 📅 AGENDA
+    ============================================================ */
+
+    // --- Taxis ---
+    const telefonosTaxis = [
+        "628826577", "666154968", "649553180", "639752456",
+        "722501122", "697920835", "662958026", "690840809"
+    ];
 
     function llamarTaxiAzar() {
         if (telefonosTaxis.length === 0) return;
-        const indiceAzar = Math.floor(Math.random() * telefonosTaxis.length);
-        window.location.href = `tel:${telefonosTaxis[indiceAzar]}`;
+        const indice = Math.floor(Math.random() * telefonosTaxis.length);
+        window.location.href = `tel:${telefonosTaxis[indice]}`;
     }
 
-    /* 🔄 LÓGICA DE MOVIMIENTO AUTOMÁTICO DEL CARRUSEL */
-    const track = document.getElementById('track');
-    let intervaloCarrusel;
+    // --- Farmacia de guardia ---
+    const MAPS_SR        = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+San+Rafael+Travesia+Alto+del+Leon+19+San+Rafael";
+    const MAPS_HONTANILLA = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+Aparicio+Av+Hontanilla+18+El+Espinar";
+    const MAPS_PERALES   = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+El+Espinar+Calle+Marques+de+Perales+2+El+Espinar";
+    const MAPS_GENERICO  = "https://elespinar.es/farmacias/";
 
-    function iniciarAutoplayCarrusel() {
-        intervaloCarrusel = setInterval(() => {
-            const paso = 150; // Ancho del elemento (140px) + margen (10px)
-            const posicionMaxima = track.scrollWidth - track.clientWidth;
-            
-            // Si llega al final, vuelve al principio de forma suave. Si no, avanza un paso.
-            if (track.scrollLeft >= posicionMaxima - 5) {
-                track.scrollTo({ left: 0, behavior: 'smooth' });
-            } else {
-                track.scrollBy({ left: paso, behavior: 'smooth' });
+    const calendarioGuardias = [
+        { inicio: "2026-01-01", fin: "2026-01-04", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-01-05", fin: "2026-01-11", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-01-12", fin: "2026-01-18", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-01-19", fin: "2026-01-25", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-01-26", fin: "2026-02-01", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-02-02", fin: "2026-02-08", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-02-09", fin: "2026-02-15", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-02-16", fin: "2026-02-22", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-02-23", fin: "2026-03-01", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-03-02", fin: "2026-03-08", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-03-09", fin: "2026-03-15", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-03-16", fin: "2026-03-22", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-03-23", fin: "2026-03-29", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-03-30", fin: "2026-04-05", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-04-06", fin: "2026-04-12", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-04-13", fin: "2026-04-19", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-04-20", fin: "2026-04-26", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-04-27", fin: "2026-05-03", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-05-04", fin: "2026-05-10", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-05-11", fin: "2026-05-17", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-05-18", fin: "2026-05-24", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-05-25", fin: "2026-05-31", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-06-01", fin: "2026-06-07", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-06-08", fin: "2026-06-14", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-06-15", fin: "2026-06-21", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-06-22", fin: "2026-06-28", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-06-29", fin: "2026-07-05", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-07-06", fin: "2026-07-12", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-07-13", fin: "2026-07-19", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-07-20", fin: "2026-07-26", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-07-27", fin: "2026-08-02", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-08-03", fin: "2026-08-09", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-08-10", fin: "2026-08-16", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
+        { inicio: "2026-08-17", fin: "2026-08-23", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
+        { inicio: "2026-08-24", fin: "2026-08-30", farmacia: MAPS_SR,         nombre: "San Rafael" },
+        { inicio: "2026-08-31", fin: "2026-09-06", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" }
+    ];
+
+    // --- Agenda ---
+    const listaEventos = [
+        { fecha: "2026-05-22", texto: "22 May: Jornadas KuPfunana" },
+        { fecha: "2026-05-23", texto: "23 May: Teatro 'El último que apague la luz'" },
+        { fecha: "2026-05-29", texto: "29 May: Prevención y Salud Mental" },
+        { fecha: "2026-05-29", texto: "29 May: Titirimundi en El Espinar" },
+        { fecha: "2026-05-30", texto: "30 May: Carga Leña Fest II Edición" },
+        { fecha: "2026-06-06", texto: "06 Jun: Música para Hitler (Teatro)" },
+        { fecha: "2026-06-07", texto: "07 Jun: Torneo Ajedrez Diputación" },
+        { fecha: "2026-06-19", texto: "19 Jun: Una Noche de Película (Orquesta)" },
+        { fecha: "2026-07-04", texto: "04 Jul: Gala Mundial de la Magia" },
+        { fecha: "2026-07-11", texto: "11 Jul: Monólogo de J.J. Vaquero" },
+        { fecha: "2026-07-25", texto: "25 Jul: Concierto Piano y Candelas Trío" }
+    ];
+
+    // --- Utilidades ---
+    function obtenerFechaLocal() {
+        const ahora = new Date();
+        const offset = ahora.getTimezoneOffset() * 60000;
+        const local = new Date(ahora.getTime() - offset);
+        return local.toISOString().split('T')[0];
+    }
+
+    function obtenerTurnoHoy() {
+        try {
+            const hoy = obtenerFechaLocal();
+            for (let i = 0; i < calendarioGuardias.length; i++) {
+                const r = calendarioGuardias[i];
+                if (hoy >= r.inicio && hoy <= r.fin) return r;
             }
-        }, 3000); // Se mueve cada 3 segundos (puedes cambiar los 3000 por el tiempo que quieras)
+        } catch(e) { console.error(e); }
+        return null;
     }
 
-    // Pausar el carrusel cuando el usuario interactúa (hace scroll manual o toca la pantalla)
-    track.addEventListener('pointerdown', () => clearInterval(intervaloCarrusel));
-    
-    // Iniciar al cargar la página
-    document.addEventListener('DOMContentLoaded', iniciarAutoplayCarrusel);
+    function irAFarmaciaGuardiaHoy() {
+        const turno = obtenerTurnoHoy();
+        window.open(turno ? turno.farmacia : MAPS_GENERICO, "_blank", "noopener");
+    }
 
+    // --- Carga del tiempo (Open-Meteo, gratuita, sin API key) ---
+    function cargarTiempoReal() {
+        const url = "https://api.open-meteo.com/v1/forecast?latitude=40.7183&longitude=-4.2415&current=temperature_2m,weather_code,is_day";
+        const btn = document.getElementById("botonTiempo");
 
-    /* 🔔 LÓGICA DEL POPUP EMERGENTE */
+        fetch(url)
+            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+            .then(data => {
+                const temp  = Math.round(data.current.temperature_2m);
+                const code  = data.current.weather_code;
+                const esDia = data.current.is_day === 1;
+
+                let icono = "☀️", estado = "Despejado", clase = "clima-soleado";
+
+                if (code === 0) {
+                    icono = esDia ? "☀️" : "🌙"; estado = "Despejado"; clase = esDia ? "clima-soleado" : "clima-nocturno";
+                } else if (code >= 1 && code <= 3) {
+                    icono = esDia ? "⛅" : "☁️"; estado = "Intervalos"; clase = esDia ? "clima-nublado" : "clima-nocturno";
+                } else if (code >= 45 && code <= 48) {
+                    icono = "🌫️"; estado = "Niebla"; clase = esDia ? "clima-nublado" : "clima-nocturno";
+                } else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
+                    icono = "🌧️"; estado = "Lluvia"; clase = esDia ? "clima-lluvia" : "clima-nocturno";
+                } else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
+                    icono = "❄️"; estado = "Nieve"; clase = esDia ? "clima-nieve" : "clima-nocturno";
+                } else if (code >= 95) {
+                    icono = "⛈️"; estado = "Tormenta"; clase = esDia ? "clima-lluvia" : "clima-nocturno";
+                }
+
+                document.getElementById("tiempoIcono").innerText = icono;
+                document.getElementById("tiempoTexto").innerText = `${temp}°C · ${estado}`;
+                btn.className = `enlace-util ${clase}`;
+            })
+            .catch(() => {
+                document.getElementById("tiempoIcono").innerText = "🌤️";
+                document.getElementById("tiempoTexto").innerText = "Ver previsión";
+            });
+    }
+
+    // --- Carga de la agenda ---
+    function cargarAgendaLocal() {
+        const txt   = document.getElementById("agendaTexto");
+        const hoy   = obtenerFechaLocal();
+        const prox  = listaEventos.find(e => e.fecha >= hoy);
+        txt.innerText = prox ? prox.texto : "Ver Agenda Completa";
+    }
+
+    // --- Farmacia en el botón ---
+    function cargarFarmacia() {
+        const txt   = document.getElementById("txtFarmaciaNombre");
+        const turno = obtenerTurnoHoy();
+        txt.innerText = turno ? turno.nombre : "Consultar Guardia";
+    }
+
+    // --- Popup banner ---
     function mostrarPopup() {
-        // Añade la clase que activa la animación para subir el banner despues de 1.5 segundos
         setTimeout(() => {
             document.getElementById('popupAnuncio').classList.add('activo');
         }, 1500);
@@ -725,8 +878,14 @@
         document.getElementById('popupAnuncio').classList.remove('activo');
     }
 
-    // Ejecutar la aparición al cargar la web
-    document.addEventListener('DOMContentLoaded', mostrarPopup);
+    // --- Arranque ---
+    document.addEventListener('DOMContentLoaded', function () {
+        cargarFarmacia();
+        cargarTiempoReal();
+        cargarAgendaLocal();
+        mostrarPopup();
+    });
     </script>
+
 </body>
 </html>
