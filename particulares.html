@@ -19,6 +19,7 @@
         /* HEADER MENTA */
         .header { background: var(--menta); color: white; text-align: center; padding: 30px 20px; }
         .header-logo-link { text-decoration: none; color: white; display: inline-flex; align-items: center; gap: 12px; }
+        .header-logo-link:hover {background: rgba(255, 255, 255, 0.15);transform: translateY(-1px); }
         .header-bandera { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,255,255,0.2); }
 
         /* BANNER MENTA */
@@ -51,6 +52,9 @@
     </a>
 </header>
 
+<h2 class="titulo-seccion">Tablón de Particulares</h2>
+<p class="subtitulo-seccion">USA ESTE ESPACIO COMO TABLÓN DE COMPRA-VENTA Y ANUNCIOS PARTICULARES. LOS ANUNCIOS SERÁN VISIBLES 20 DÍAS.</p>
+
 <div class="contenedor-banner">
     <a href="mailto:info@infoespinar.com" class="banner-comercio">
         <div class="banner-img"></div>
@@ -61,10 +65,7 @@
         </div>
     </a>
 </div>
-
-<h2 class="titulo-seccion">Tablón de Particulares</h2>
-<p class="subtitulo-seccion">USA ESTE ESPACIO COMO TABLÓN DE COMPRA-VENTA Y ANUNCIOS PARTICULARES. LOS ANUNCIOS SERÁN VISIBLES 20 DÍAS.</p>
-
+    
 <div id="tablon" class="grid-anuncios">
     <div id="loading" style="text-align:center; padding:50px; grid-column: 1/-1;">Cargando anuncios...</div>
 </div>
