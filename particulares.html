@@ -3,9 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+  
   html, body{ margin:0; padding:0; background:transparent; font-family:'Lato',sans-serif; width:100%; overflow-x:hidden; }
-  .contenedor-app{ padding:15px; max-width:1200px; margin:0 auto; }
+  
+  /* NUEVO HEADER ESTILO MARKETPLACE */
+  .header-app { 
+      background: linear-gradient(135deg, #00bd9d 0%, #009980 100%); 
+      color: white; 
+      padding: 30px 20px; 
+      text-align: center; 
+      border-radius: 0 0 25px 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .header-app h1 { font-size: 28px; font-weight: 900; text-transform: uppercase; margin: 0; letter-spacing: 1px; }
+
+  .contenedor-app{ padding:0 15px 30px 15px; max-width:1200px; margin:0 auto; }
+  
+  /* Resto de estilos */
   .navegacion{ display:flex; gap:10px; margin-bottom:20px; border-bottom:2px solid #e2e8f0; padding-bottom:10px; }
   .btn-pestana{ background:#f1f5f9; border:none; padding:10px 20px; font-weight:700; border-radius:8px; cursor:pointer; color:#475569; }
   .btn-pestana.activa{ background:#1e293b; color:#fff; }
@@ -44,6 +60,10 @@
 </style>
 </head>
 <body>
+
+<div class="header-app">
+    <h1>Compra Venta</h1>
+</div>
 
 <div class="contenedor-app" id="wrapper">
   <div class="navegacion">
@@ -85,7 +105,7 @@
 </div>
 
 <script>
-const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec"; // <--- Pega aquí tu URL
+const urlScript = "TU_URL_GOOGLE_SCRIPT"; // Recuerda poner aquí tu URL
 
 function escaparHTML(texto){ const div = document.createElement("div"); div.textContent = texto || ""; return div.innerHTML; }
 function validarCheck(){ const check = document.getElementById("checkPrivacidad"); document.getElementById("btnPublicar").disabled = !check.checked; }
@@ -173,7 +193,7 @@ async function enviar(e){
   }catch(err){ status.innerHTML = "<div class='cargando' style='color:red'>"+err.message+"</div>"; btn.disabled = false; }
 }
 
-function actualizarAltura(){ const wrapper = document.getElementById("wrapper"); if(window.parent){ window.parent.postMessage({type:"resize", height:wrapper.offsetHeight + 50}, "*"); } }
+function actualizarAltura(){ const wrapper = document.getElementById("wrapper"); if(window.parent){ window.parent.postMessage({type:"resize", height:wrapper.offsetHeight + 150}, "*"); } }
 window.addEventListener("resize",actualizarAltura);
 cargar();
 </script>
