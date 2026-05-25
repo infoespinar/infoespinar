@@ -19,12 +19,10 @@
         h2.titulo-seccion { text-align: center; margin: 20px 0 5px; font-size: 24px; text-transform: uppercase; color: #1e293b; }
         .aviso { text-align: center; color: #64748b; font-size: 12px; margin-bottom: 20px; }
 
-        /* BOTONES Y FORM */
         .btn-publicar { display: block; width: 250px; margin: 0 auto 30px; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; }
         #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; display: none; }
         input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 8px; }
         
-        /* TARJETAS ESTILO WALLAPOP */
         .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
         .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
         .foto-articulo { width: 100%; height: 200px; object-fit: cover; cursor: pointer; }
@@ -32,9 +30,12 @@
         .precio { font-weight: 900; font-size: 20px; padding: 0 15px 10px; }
         .burbujas { padding: 0 15px 15px; display: flex; gap: 8px; flex-wrap: wrap; }
         .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
-        .btn-llamar { display: block; margin: 0 15px 15px; background: #000; color: white; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; }
+        
+        .botones-contacto { display: flex; gap: 10px; padding: 0 15px 15px; }
+        .btn-contacto { flex: 1; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; color: white; }
+        .btn-llamar { background: #000; }
+        .btn-wa { background: #25d366; }
 
-        /* MODAL */
         #modal { display:none; position:fixed; z-index:999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; }
         #modal img { max-width: 90%; max-height: 80%; border-radius: 8px; }
     </style>
@@ -72,6 +73,7 @@
         </form>
     </div>
 
+    <div id="loading" style="text-align:center; padding:40px; font-weight:700; color:#888;">Cargando anuncios...</div>
     <div id="tablon" class="grid-anuncios"></div>
 </div>
 
@@ -83,6 +85,7 @@ const url = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOl
 async function cargar() {
   const res = await fetch(url);
   const data = await res.json();
+  document.getElementById('loading').style.display = 'none'; // Ocultar carga
   data.sort(() => Math.random() - 0.5); 
   
   document.getElementById('tablon').innerHTML = data.map(a => `
@@ -94,7 +97,10 @@ async function cargar() {
         <span class="tag">📍 ${a.recogida}</span>
         <span class="tag">📦 ${a.estado}</span>
       </div>
-      <a href="tel:${a.contacto}" class="btn-llamar">LLAMAR AL PROPIETARIO</a>
+      <div class="botones-contacto">
+        <a href="tel:${a.contacto}" class="btn-contacto btn-llamar">LLAMAR</a>
+        <a href="https://wa.me/34${a.contacto}" class="btn-contacto btn-wa" target="_blank">WHATSAPP</a>
+      </div>
     </div>`).join('');
 }
 
