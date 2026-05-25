@@ -5,133 +5,728 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>infoespinar.com | El portal de El Espinar</title>
     <style>
+        /* 🎨 VARIABLES Y ESTILOS GENERALES */
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; display: flex; flex-direction: column; min-height: 100vh; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-        /* Franja superior */
-        .aviso-superior { background-color: #fef08a; border-bottom: 1px solid #fde047; color: #854d0e; padding: 10px 40px 10px 20px; font-size: 14px; font-weight: 700; text-align: center; position: relative; display: none; align-items: center; justify-content: center; gap: 12px; z-index: 10000; }
-        .aviso-superior.activo { display: flex; animation: fadeInDown 0.4s ease-out; }
-        .aviso-superior a { color: #ffffff; background-color: #a16207; text-decoration: none; padding: 4px 12px; border-radius: 20px; font-size: 12px; text-transform: uppercase; font-weight: 900; }
-        .btn-cerrar-aviso { position: absolute; right: 15px; background: none; border: none; color: #a16207; font-size: 16px; cursor: pointer; }
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        /* 📋 ENCABEZADO RESPONSIVO CON LOGO/BOTÓN DE INICIO */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
 
-        /* Header y Layout */
-        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 30px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; margin-bottom: 12px; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; }
-        .header-bandera { width: 32px; height: 32px; border-radius: 6px; background-color: rgba(255, 255, 255, 0.2); }
-        .main-container { max-width: 1200px; width: 100%; margin: 0 auto; padding: 15px 12px; flex-grow: 1; }
-        .titulo-seccion { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 20px 0 12px 4px; font-weight: 700; }
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
 
-        /* Componentes */
-        .contenedor-ofertas { width: 100%; overflow: hidden; position: relative; }
-        .carrusel-track { display: flex; overflow-x: auto; scroll-behavior: smooth; gap: 10px; padding-bottom: 10px; }
+        .header-logo-link:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        /* Bandera formato 1:1 */
+        .header-bandera {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 6px; /* Aspecto pulido */
+            aspect-ratio: 1 / 1;
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo temporal por si no carga */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.9;
+            margin-bottom: 18px;
+        }
+
+        .buscador-container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .buscador-container input {
+            width: 100%;
+            padding: 12px 20px;
+            border-radius: 30px;
+            border: none;
+            font-size: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            outline: none;
+        }
+
+        /* 🏛️ CONTENEDOR PRINCIPAL RESTRINGIDO EN PC */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
+        }
+
+        .titulo-seccion {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 20px 0 12px 4px;
+            font-weight: 700;
+        }
+
+        /* 🎪 1. SECCIÓN: CARRUSEL DE ANUNCIOS */
+        .contenedor-ofertas {
+            width: 100%;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        .carrusel-track {
+            display: flex;
+            width: 100%;
+            overflow-x: auto; 
+            scroll-behavior: smooth;
+            scroll-snap-type: x mandatory; 
+            -webkit-overflow-scrolling: touch; 
+            padding-bottom: 10px;
+        }
+
         .carrusel-track::-webkit-scrollbar { display: none; }
-        .oferta-item { width: 140px; text-align: center; flex-shrink: 0; text-decoration: none; }
-        .imagen-oferta { width: 140px; height: 140px; border-radius: 18px; object-fit: cover; }
+        .carrusel-track { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .oferta-item {
+            width: 140px;
+            margin: 0 10px 0 0;
+            text-align: center;
+            flex-shrink: 0;
+            display: block;
+            text-decoration: none;
+            scroll-snap-align: start; 
+        }
+
+        .imagen-oferta {
+            width: 140px;
+            height: 140px;
+            border-radius: 18px;
+            object-fit: cover;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+            user-select: none;
+            -webkit-user-drag: none; 
+        }
+
+        .nombre-comercio {
+            display: block;
+            font-size: 10px;
+            color: #334155;
+            margin-top: 8px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        /* ⚡ 2. SECCIÓN: INFORMACIÓN DE INTERÉS */
+        .grid-utilidades {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 12px;
+            width: 100%;
+        }
+
+        .enlace-util, .boton-util-guardia {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background-color: #ffffff;
+            border: 2px solid #cbd5e1;
+            border-radius: 16px;
+            text-decoration: none;
+            color: #1e293b;
+            font-size: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .enlace-util:hover, .boton-util-guardia:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        .contenedor-split-taxi {
+            display: flex;
+            background-color: #fefce8;
+            border: 2px solid #fef08a;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s ease;
+            width: 100%;
+            overflow: hidden;
+        }
+        .contenedor-split-taxi:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.08);
+            border-color: #eab308;
+        }
+        .taxi-mitad-web {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 14px 14px 18px;
+            text-decoration: none;
+            flex-grow: 1;
+            color: #1e293b;
+        }
+        .taxi-mitad-web:hover { background-color: #fef9c3; }
         
-        .grid-utilidades { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
-        .enlace-util, .boton-util-guardia { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background-color: #ffffff; border: 2px solid #cbd5e1; border-radius: 16px; text-decoration: none; color: #1e293b; font-size: 14px; transition: all 0.2s; cursor: pointer; }
+        .taxi-mitad-azar {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 0 15px;
+            background-color: transparent;
+            border: none;
+            border-left: 2px dashed #fde047;
+            cursor: pointer;
+            min-width: 85px;
+        }
+        .taxi-mitad-azar:hover { background-color: #fef9c3; }
+        
+        .taxi-color-texto { color: #a16207 !important; }
+        .taxi-color-secundario { color: #854d0e !important; font-weight: 700; }
+        .bg-amarillo { background-color: #fef08a; color: #a16207; }
         .boton-util-guardia { background-color: #e6fbd0; border-color: #a7f3d0; }
-        .icono-wrap { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 12px; font-size: 20px; flex-shrink: 0; }
+        .boton-util-guardia:hover { border-color: #10b981; }
+
+        .icono-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
         .bg-azul { background-color: #7dd3fc; color: #0369a1; }
         .bg-rojo { background-color: #fecdd3; color: #be123c; }
         .bg-morado { background-color: #f5d0fe; color: #a21caf; }
-        .titulo-boton { display: block; font-weight: 900; font-size: 12px; color: #475569; margin-bottom: 2px; }
-        .nombre-farmacia-viva, .tiempo-dinamico { font-size: 15px; font-weight: 700; }
-        
-        /* Grid Categorías */
-        .grid-servicios { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
-        .card-servicio { background-color: #ffffff; border-radius: 14px; padding: 16px 10px; display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #1e293b; border: 1px solid #e2e8f0; }
-        
-        @media screen and (min-width: 768px) { .grid-servicios { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); } }
+
+        .titulo-boton {
+            display: block;
+            font-weight: 900;
+            font-size: 12px;
+            letter-spacing: 0.5px;
+            color: #475569;
+            margin-bottom: 2px;
+        }
+
+        .nombre-farmacia-viva, .tiempo-dinamico {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .nombre-farmacia-viva { color: #065f46; }
+        .texto-secundario { display: block; font-size: 12px; color: #64748b; }
+        .agenda-color { background-color: #fae8ff; border-color: #f5d0fe; }
+        .agenda-color:hover { border-color: #d946ef; }
+        .agenda-color .titulo-boton { color: #a21caf; }
+        .agenda-color .texto-secundario { color: #701a75; font-weight: 700; }
+
+        /* Climas */
+        .clima-soleado { background-color: #fef9c3 !important; border-color: #fde047 !important; }
+        .clima-soleado .titulo-boton { color: #854d0e !important; }
+        .clima-soleado .tiempo-dinamico { color: #713f12 !important; }
+        .clima-soleado .icono-wrap { background-color: #fde047 !important; color: #854d0e !important; }
+        .clima-nublado { background-color: #f1f5f9 !important; border-color: #cbd5e1 !important; }
+        .clima-nublado .titulo-boton { color: #334155 !important; }
+        .clima-nublado .tiempo-dinamico { color: #0f172a !important; }
+        .clima-nublado .icono-wrap { background-color: #cbd5e1 !important; color: #334155 !important; }
+        .clima-lluvia { background-color: #e0f2fe !important; border-color: #7dd3fc !important; }
+        .clima-lluvia .titulo-boton { color: #0369a1 !important; }
+        .clima-lluvia .tiempo-dinamico { color: #1e3a8a !important; }
+        .clima-lluvia .icono-wrap { background-color: #7dd3fc !important; color: #0369a1 !important; }
+        .clima-nieve { background-color: #e0e7ff !important; border-color: #c7d2fe !important; }
+        .clima-nieve .titulo-boton { color: #3730a3 !important; }
+        .clima-nieve .tiempo-dinamico { color: #1e1b4b !important; }
+        .clima-nieve .icono-wrap { background-color: #c7d2fe !important; color: #3730a3 !important; }
+        .clima-nocturno { background-color: #0f172a !important; border-color: #334155 !important; }
+        .clima-nocturno .titulo-boton { color: #94a3b8 !important; }
+        .clima-nocturno .tiempo-dinamico { color: #f8fafc !important; }
+        .clima-nocturno .icono-wrap { background-color: #1e293b !important; color: #f1f5f9 !important; }
+
+        /* 🏷️ 3. SECCIÓN: BOTONES DE CATEGORÍAS (MÓVIL VS PC) */
+        .grid-servicios {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            width: 100%;
+        }
+
+        .card-servicio {
+            background-color: #ffffff;
+            border-radius: 14px;
+            padding: 16px 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;    
+            justify-content: center; 
+            text-align: center;     
+            text-decoration: none;
+            color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            gap: 8px;
+        }
+
+        .card-servicio:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.06);
+            background-color: #f8fafc;
+        }
+
+        .servicio-icono {
+            background-color: transparent; 
+            border-radius: 0;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px; 
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .servicio-texto {
+            font-size: 15px;
+            font-weight: 700;
+            color: #334155;
+        }
+
+        /* 🚨 4. SECCIÓN: EMERGENCIAS */
+        .grid-telefonos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 10px;
+            width: 100%;
+        }
+
+        .telf-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background-color: #ffffff;
+            border: 1px solid #fee2e2;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        .telf-item:hover {
+            background-color: #fef2f2;
+            transform: translateY(-1px);
+        }
+
+        .telf-112 {
+            background-color: #dc2626;
+            border-color: #dc2626;
+            color: #ffffff;
+        }
+        .telf-112:hover { background-color: #b91c1c; }
+        .telf-112 .numero-telf {
+            color: #ffffff;
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 6px;
+        }
+
+        .nombre-servicio { font-size: 13.5px; font-weight: 700; }
+        .numero-telf { font-size: 13.5px; font-weight: 700; color: #dc2626; }
+
+        /* 💻 RESPONSIVE AJUSTES PARA PANTALLAS GRANDES (PC) */
+        @media screen and (min-width: 768px) {
+            .header { padding: 45px 20px; }
+            
+            .grid-servicios {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+                gap: 16px;
+            }
+        }
+
+        /* 👣 FOOTER */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 40px;
+            margin-bottom: 70px; /* Espacio extra abajo para que el banner flotante no tape el footer */
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #3b82f6;
+        }
+
+        .footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* 🚀 5. ESTILOS DEL NUEVO MENSAJE EMERGENTE (BANNER FLOATING) */
+        .banner-emergente {
+            position: fixed;
+            bottom: -100px; /* Empieza oculto para la animación */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            max-width: 700px;
+            background: #ffffff;
+            border: 2px solid #3b82f6;
+            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.2);
+            border-radius: 20px;
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            z-index: 9999;
+            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .banner-emergente.activo {
+            bottom: 16px; /* Sube elegantemente */
+        }
+
+        .banner-texto {
+            font-size: 14.5px;
+            color: #1e293b;
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .banner-texto strong {
+            color: #2563eb;
+            background-color: #eff6ff;
+            padding: 2px 6px;
+            border-radius: 6px;
+        }
+
+        .banner-acciones {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-formulario {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13.5px;
+            padding: 10px 18px;
+            border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-align: center;
+        }
+
+        .btn-formulario:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-cerrar-banner {
+            background: #f1f5f9;
+            color: #64748b;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-cerrar-banner:hover {
+            background: #e2e8f0;
+            color: #334155;
+        }
+
+        /* Cambio a diseño horizontal en pantallas medianas/grandes */
+        @media (min-width: 580px) {
+            .banner-emergente {
+                flex-direction: row;
+                text-align: left;
+                padding: 14px 24px;
+                gap: 20px;
+            }
+            .banner-texto {
+                text-align: left;
+            }
+            .banner-acciones {
+                width: auto;
+                flex-shrink: 0;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <div id="avisoAnuncio" class="aviso-superior">
-        <span>📢 ¿Tienes un negocio local? Aparecer es <strong>GRATIS</strong>.</span>
-        <a href="/inscripcion.html">Formulario</a>
-        <button class="btn-cerrar-aviso" onclick="document.getElementById('avisoAnuncio').classList.remove('activo')">×</button>
-    </div>
-
     <header class="header">
         <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar"> 
             <h1>infoespinar.com</h1>
         </a>
         <p>Tu guía local de comercios, servicios y teléfonos de interés</p>
+        <div class="buscador-container">
+            <input type="text" placeholder="¿Qué estás buscando? (Ej: kebab, fontanero...)">
+        </div>
     </header>
 
     <main class="main-container">
+
         <div class="titulo-seccion">Ofertas destacadas</div>
         <div class="contenedor-ofertas">
             <div class="carrusel-track" id="track">
-                <!-- Items de ejemplo -->
-                <a href="#" class="oferta-item"><img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta"><span class="nombre-comercio">El Taller de Boli</span></a>
+                <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item">
+                    <img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">El Taller de Boli</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Cafetería</span>
+                </a>
+                <a href="https://andrearuibal.com" class="oferta-item">
+                    <img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Andrea Comesaña</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Limpiezas</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Floristería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Panadería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Cafetería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta">
+                    <span class="nombre-comercio">Reformas</span>
+                </a>
             </div>
         </div>
 
         <div class="titulo-seccion">Información de interés</div>
         <div class="grid-utilidades">
-            <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" class="enlace-util">
-                <div class="icono-wrap bg-azul">🌤️</div>
-                <div><span class="titulo-boton">EL TIEMPO</span><span id="tiempoTexto" class="tiempo-dinamico">Cargando...</span></div>
+            <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" rel="noopener" class="enlace-util" id="botonTiempo">
+                <div class="icono-wrap bg-azul" id="tiempoIcono">🌤️</div>
+                <div>
+                    <span class="titulo-boton" id="tiempoTitulo">EL TIEMPO</span>
+                    <span id="tiempoTexto" class="tiempo-dinamico">Consultar Previsión</span>
+                </div>
             </a>
+
             <button onclick="irAFarmaciaGuardiaHoy()" class="boton-util-guardia">
                 <div class="icono-wrap bg-rojo">🏥</div>
-                <div><span class="titulo-boton">FARMACIA DE GUARDIA</span><span id="txtFarmaciaNombre" class="nombre-farmacia-viva">Cargando...</span></div>
+                <div>
+                    <span class="titulo-boton">FARMACIA DE GUARDIA</span>
+                    <span id="txtFarmaciaNombre" class="nombre-farmacia-viva">Ver Farmacia de Guardia</span>
+                </div>
             </button>
-            <a href="https://elespinar.es/agenda/" target="_blank" class="enlace-util" style="background-color: #fae8ff;">
+
+            <a href="https://elespinar.es/agenda/" target="_blank" rel="noopener" class="enlace-util agenda-color">
                 <div class="icono-wrap bg-morado">📅</div>
-                <div><span class="titulo-boton">AGENDA</span><span id="agendaTexto" class="tiempo-dinamico">Cargando...</span></div>
+                <div>
+                    <span class="titulo-boton">AGENDA CULTURAL</span>
+                    <span id="agendaTexto" class="texto-secundario">Cargando eventos...</span>
+                </div>
+            </a>
+
+            <div class="contenedor-split-taxi">
+                <a href="taxi.html" class="taxi-mitad-web">
+                    <div class="icono-wrap bg-amarillo">🚖</div>
+                    <div>
+                        <span class="titulo-boton taxi-color-texto">TAXIS</span>
+                        <span class="texto-secundario taxi-color-secundario">Teléfonos</span>
+                    </div>
+                </a>
+                <button onclick="llamarTaxiAzar()" class="taxi-mitad-azar" title="Llamar a un taxi aleatorio">
+                    <span style="font-size: 24px; margin-bottom: 4px;">🎲</span>
+                    <span style="font-size: 11px; font-weight: 900; color: #a16207; letter-spacing: 0.5px;">AZAR</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="titulo-seccion">Categorías profesionales</div>
+        <div class="grid-servicios">
+            <a href="jardineria.html" class="card-servicio"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
+            <a href="limpieza.html" class="card-servicio"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza</span></a>    
+            <a href="reformas.html" class="card-servicio"><div class="servicio-icono">🏗️</div><span class="servicio-texto">Reformas - Mantenimiento</span></a>
+            <a href="fontaneria.html" class="card-servicio"><div class="servicio-icono">🔧</div><span class="servicio-texto">Fontanería - Climatización</span></a>
+            <a href="talleres.html" class="card-servicio"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
+            <a href="ferreteria.html" class="card-servicio"><div class="servicio-icono">🔨</div><span class="servicio-texto">Ferretería - Materiales</span></a>
+            <a href="panaderia.html" class="card-servicio"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
+            <a href="restaurantes.html" class="card-servicio"><div class="servicio-icono">🍴</div><span class="servicio-texto">A Comer</span></a>
+            <a href="salud.html" class="card-servicio"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
+            <a href="bienestar.html" class="card-servicio"><div class="servicio-icono">💆</div><span class="servicio-texto">Bienestar</span></a>
+            <a href="formacion.html" class="card-servicio"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
+            <a href="ocio.html" class="card-servicio"><div class="servicio-icono">🚵‍♀️</div><span class="servicio-texto">Ocio - Deporte</span></a>
+            <a href="artesania.html" class="card-servicio"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
+            <a href="eventos.html" class="card-servicio"><div class="servicio-icono">🎉</div><span class="servicio-texto">Eventos</span></a>
+            <a href="otros-servicios.html" class="card-servicio"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
+            <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
+            <a href="empleo.html" class="card-servicio"><div class="servicio-icono">💼</div><span class="servicio-texto">Empleo</span></a>
+            <a href="particulares.html" class="card-servicio"><div class="servicio-icono">🤝</div><span class="servicio-texto">Particulares</span></a>
+            <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
+        </div>
+
+        <div class="titulo-seccion" style="color: #dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
+        <div class="grid-telefonos">
+            <a href="tel:112" class="telf-item telf-112">
+                <span class="nombre-servicio">Emergencias General</span>
+                <span class="numero-telf">112</span>
+            </a>
+            <a href="tel:921182323" class="telf-item">
+                <span class="nombre-servicio">Policía Municipal (Fijo)</span>
+                <span class="numero-telf">921 182 323</span>
+            </a>
+            <a href="tel:600400880" class="telf-item">
+                <span class="nombre-servicio">Policía Municipal (Móvil)</span>
+                <span class="numero-telf">600 400 880</span>
+            </a>
+            <a href="tel:921181029" class="telf-item">
+                <span class="nombre-servicio">Guardia Civil El Espinar</span>
+                <span class="numero-telf">921 181 029</span>
+            </a>
+            <a href="tel:921422222" class="telf-item">
+                <span class="nombre-servicio">Bomberos (Provincia)</span>
+                <span class="numero-telf">921 422 222</span>
             </a>
         </div>
+
     </main>
 
+    <!-- 🚀 ELEMENTO HTML DEL MENSAJE EMERGENTE -->
+    <div id="popupAnuncio" class="banner-emergente">
+        <p class="banner-texto">¿Tienes un negocio? Aparecer en esta web es <strong>GRATIS</strong>, solo tienes que rellenar el formulario.</p>
+        <div class="banner-acciones">
+            <a href="/inscripcion" class="btn-formulario">Inscribirme ya</a>
+            <button class="btn-cerrar-banner" onclick="cerrarPopup()">X</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
     <script>
-        // --- 1. Lógica de Datos Dinámicos ---
-        const calendarioGuardias = [
-            { inicio: "2026-05-18", fin: "2026-05-24", nombre: "Av. Hontanilla 18" },
-            { inicio: "2026-05-25", fin: "2026-05-31", nombre: "C/ Marqués de Perales" }
-        ];
+    const telefonosTaxis = ["628826577", "666154968", "649553180", "639752456", "722501122", "697920835", "662958026", "690840809"];
 
-        function obtenerFechaLocal() { return new Date().toISOString().split('T')[0]; }
+    function llamarTaxiAzar() {
+        if (telefonosTaxis.length === 0) return;
+        const indiceAzar = Math.floor(Math.random() * telefonosTaxis.length);
+        window.location.href = `tel:${telefonosTaxis[indiceAzar]}`;
+    }
 
-        function cargarDatos() {
-            // Tiempo (Open-Meteo)
-            fetch("https://api.open-meteo.com/v1/forecast?latitude=40.7183&longitude=-4.2415&current=temperature_2m")
-                .then(r => r.json())
-                .then(data => document.getElementById("tiempoTexto").innerText = Math.round(data.current.temperature_2m) + "°C Actual")
-                .catch(() => document.getElementById("tiempoTexto").innerText = "Ver previsión");
+    /* 🔄 LÓGICA DE MOVIMIENTO AUTOMÁTICO DEL CARRUSEL */
+    const track = document.getElementById('track');
+    let intervaloCarrusel;
 
-            // Farmacia
-            const hoy = obtenerFechaLocal();
-            const guardia = calendarioGuardias.find(g => hoy >= g.inicio && hoy <= g.fin);
-            document.getElementById("txtFarmaciaNombre").innerText = guardia ? guardia.nombre : "Consultar guardia";
+    function iniciarAutoplayCarrusel() {
+        intervaloCarrusel = setInterval(() => {
+            const paso = 150; // Ancho del elemento (140px) + margen (10px)
+            const posicionMaxima = track.scrollWidth - track.clientWidth;
             
-            // Agenda
-            document.getElementById("agendaTexto").innerText = "Ver eventos culturales";
-        }
+            // Si llega al final, vuelve al principio de forma suave. Si no, avanza un paso.
+            if (track.scrollLeft >= posicionMaxima - 5) {
+                track.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                track.scrollBy({ left: paso, behavior: 'smooth' });
+            }
+        }, 3000); // Se mueve cada 3 segundos (puedes cambiar los 3000 por el tiempo que quieras)
+    }
 
-        function irAFarmaciaGuardiaHoy() { window.open('https://www.google.com/search?q=farmacia+de+guardia+el+espinar', '_blank'); }
+    // Pausar el carrusel cuando el usuario interactúa (hace scroll manual o toca la pantalla)
+    track.addEventListener('pointerdown', () => clearInterval(intervaloCarrusel));
+    
+    // Iniciar al cargar la página
+    document.addEventListener('DOMContentLoaded', iniciarAutoplayCarrusel);
 
-        // --- 2. Carrusel y UI ---
-        const track = document.getElementById('track');
-        function iniciarAutoplay() {
-            setInterval(() => {
-                if (track.scrollLeft >= (track.scrollWidth - track.clientWidth)) track.scrollTo({left: 0, behavior: 'smooth'});
-                else track.scrollBy({left: 150, behavior: 'smooth'});
-            }, 3000);
-        }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            cargarDatos();
-            iniciarAutoplay();
-            document.getElementById('avisoAnuncio').classList.add('activo');
-        });
+    /* 🔔 LÓGICA DEL POPUP EMERGENTE */
+    function mostrarPopup() {
+        // Añade la clase que activa la animación para subir el banner despues de 1.5 segundos
+        setTimeout(() => {
+            document.getElementById('popupAnuncio').classList.add('activo');
+        }, 1500);
+    }
+
+    function cerrarPopup() {
+        document.getElementById('popupAnuncio').classList.remove('activo');
+    }
+
+    // Ejecutar la aparición al cargar la web
+    document.addEventListener('DOMContentLoaded', mostrarPopup);
     </script>
 </body>
 </html>
