@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Particulares | infoespinar.com</title>
 
 <style>
@@ -17,7 +16,6 @@
 
 :root{
     --menta:#20a088;
-    --menta-dark:#19826d;
     --fondo:#f4f6f9;
 }
 
@@ -27,14 +25,11 @@ body{
     color:#334155;
 }
 
-/* HEADER */
-
 .header{
     background:var(--menta);
     color:white;
     text-align:center;
     padding:30px 20px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);
 }
 
 .header-logo-link{
@@ -43,7 +38,7 @@ body{
     gap:12px;
     text-decoration:none;
     color:white;
-    background:rgba(255,255,255,0.08);
+    background:rgba(255,255,255,.08);
     padding:8px 16px;
     border-radius:30px;
 }
@@ -55,69 +50,38 @@ body{
     border-radius:6px;
 }
 
-.header h1{
-    font-size:24px;
-    font-weight:900;
-    text-transform:uppercase;
-}
-
-/* BOTÓN PUBLICAR */
-
-.contenedor-btn{
-    text-align:center;
-    margin:20px;
-}
-
-.btn-accion{
-    background:var(--menta);
-    color:white;
-    border:none;
-    padding:14px 18px;
-    border-radius:10px;
-    font-weight:700;
-    cursor:pointer;
-    transition:0.2s;
-}
-
-.btn-accion:hover{
-    background:var(--menta-dark);
-}
-
-/* FORMULARIO */
-
 .formulario-publicar{
     max-width:600px;
     margin:20px auto;
     padding:25px;
     background:white;
     border-radius:16px;
-    border:1px solid #e2e8f0;
     display:none;
-    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+    border:1px solid #e2e8f0;
 }
 
-input,
-select,
-textarea{
+input,select,textarea{
     width:100%;
     padding:12px;
-    margin-bottom:12px;
+    margin-bottom:10px;
     border:1px solid #cbd5e1;
     border-radius:8px;
-    font-family:inherit;
 }
 
 #titulo{
     text-transform:uppercase;
 }
 
-#status{
-    margin-top:10px;
-    text-align:center;
+.btn-accion{
+    width:100%;
+    padding:14px;
+    background:var(--menta);
+    color:white;
+    border:none;
+    border-radius:8px;
     font-weight:700;
+    cursor:pointer;
 }
-
-/* GRID */
 
 .grid-anuncios{
     display:grid;
@@ -128,88 +92,26 @@ textarea{
     margin:0 auto;
 }
 
-.tarjeta-anuncio{
+.tarjeta{
     background:white;
-    border-radius:16px;
+    border-radius:14px;
     overflow:hidden;
-    box-shadow:0 4px 10px rgba(0,0,0,0.06);
+    box-shadow:0 4px 10px rgba(0,0,0,.05);
 }
 
-.foto-articulo{
+.tarjeta img{
     width:100%;
     height:220px;
     object-fit:cover;
-    background:#e5e7eb;
 }
 
-.cuerpo-anuncio{
-    padding:20px;
-}
-
-.meta-anuncio{
-    display:flex;
-    gap:8px;
-    flex-wrap:wrap;
-    margin-bottom:12px;
-}
-
-.badge{
-    font-size:10px;
-    font-weight:700;
-    padding:4px 8px;
-    border-radius:6px;
-    text-transform:uppercase;
-}
-
-.badge-estado{
-    background:#f1f5f9;
-    color:#475569;
-}
-
-.badge-recogida{
-    background:#dcfce7;
-    color:#166534;
-}
-
-.titulo-anuncio{
-    color:var(--menta);
-    margin-bottom:10px;
-    font-size:20px;
-    font-weight:900;
-}
-
-.desc-anuncio{
-    font-size:14px;
-    color:#475569;
-    margin-bottom:18px;
-    line-height:1.5;
-}
-
-.footer-anuncio{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-.precio{
-    font-size:20px;
-    font-weight:900;
-}
-
-.btn-llamar{
-    background:var(--menta);
-    color:white;
-    text-decoration:none;
-    padding:10px 14px;
-    border-radius:8px;
-    font-size:13px;
-    font-weight:700;
+.tarjeta-body{
+    padding:18px;
 }
 
 .loading{
     text-align:center;
     padding:40px;
-    grid-column:1/-1;
 }
 </style>
 </head>
@@ -223,102 +125,86 @@ textarea{
     </a>
 </header>
 
-<div class="contenedor-btn">
-    <button onclick="toggleForm()" class="btn-accion">
+<div style="text-align:center;margin:20px;">
+    <button onclick="toggleForm()" class="btn-accion" style="max-width:300px;">
         ➕ PUBLICAR NUEVO ANUNCIO
     </button>
 </div>
 
-<!-- FORMULARIO -->
-
 <div id="contenedor-formulario" class="formulario-publicar">
 
-    <form id="formPublicar" onsubmit="enviar(event)">
+<form id="formPublicar">
 
-        <input
-            type="text"
-            id="titulo"
-            placeholder="TÍTULO DEL ANUNCIO"
-            required
-            oninput="this.value=this.value.toUpperCase()"
-        >
+<input
+type="text"
+id="titulo"
+placeholder="TÍTULO"
+required
+oninput="this.value=this.value.toUpperCase()"
+>
 
-        <select id="estado" required>
-            <option value="" disabled selected>
-                Estado del artículo...
-            </option>
+<select id="estado" required>
+<option value="">Estado del artículo...</option>
+<option>NUEVO</option>
+<option>BUEN ESTADO</option>
+<option>MUY USADO</option>
+<option>PARA RESTAURAR</option>
+</select>
 
-            <option>NUEVO</option>
-            <option>BUEN ESTADO</option>
-            <option>MUY USADO</option>
-            <option>PARA RESTAURAR</option>
-        </select>
+<textarea
+id="descripcion"
+placeholder="Descripción"
+required
+rows="4"
+></textarea>
 
-        <textarea
-            id="descripcion"
-            placeholder="Descripción"
-            rows="4"
-            required
-        ></textarea>
+<input
+type="number"
+id="precio"
+placeholder="Precio (€)"
+required
+>
 
-        <input
-            type="number"
-            id="precio"
-            placeholder="Precio (€)"
-            required
-        >
+<select id="recogida" required>
+<option value="">Lugar de recogida...</option>
+<option>EL ESPINAR</option>
+<option>SAN RAFAEL</option>
+<option>LASR</option>
+<option>LA ESTACIÓN</option>
+</select>
 
-        <select id="recogida" required>
+<input
+type="tel"
+id="contacto"
+placeholder="Teléfono"
+required
+pattern="[0-9]{9}"
+maxlength="9"
+>
 
-            <option value="" disabled selected>
-                Lugar de recogida...
-            </option>
+<input
+type="file"
+id="foto"
+accept="image/*"
+style="border:none;"
+>
 
-            <option>EL ESPINAR</option>
-            <option>SAN RAFAEL</option>
-            <option>LASR</option>
-            <option>LA ESTACIÓN</option>
+<button
+type="submit"
+id="btnPublicar"
+class="btn-accion"
+>
+PUBLICAR ANUNCIO
+</button>
 
-        </select>
+</form>
 
-        <input
-            type="tel"
-            id="contacto"
-            placeholder="Teléfono (9 dígitos)"
-            required
-            pattern="[0-9]{9}"
-            maxlength="9"
-        >
-
-        <input
-            type="file"
-            id="foto"
-            accept="image/*"
-            style="border:none;"
-        >
-
-        <button
-            type="submit"
-            id="btnPublicar"
-            class="btn-accion"
-        >
-            PUBLICAR ANUNCIO
-        </button>
-
-    </form>
-
-    <div id="status"></div>
+<div id="status" style="margin-top:10px;text-align:center;"></div>
 
 </div>
 
-<!-- TABLÓN -->
-
 <div id="tablon" class="grid-anuncios">
-
-    <div id="loading" class="loading">
-        Cargando anuncios...
-    </div>
-
+<div class="loading">Cargando anuncios...</div>
 </div>
 
 <script>
@@ -326,20 +212,114 @@ textarea{
 const urlScript =
 "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
 
-/* MOSTRAR / OCULTAR FORM */
-
 function toggleForm(){
+    const f=document.getElementById("contenedor-formulario");
 
-    const f =
-    document.getElementById('contenedor-formulario');
-
-    f.style.display =
-    (f.style.display === 'block')
-    ? 'none'
-    : 'block';
+    f.style.display=
+    f.style.display==="block"
+    ?"none"
+    :"block";
 }
 
-/* CONVERTIR FOTO A BASE64 */
+document
+.getElementById("formPublicar")
+.addEventListener("submit",enviar);
+
+async function enviar(e){
+
+    e.preventDefault();
+
+    const btn=document.getElementById("btnPublicar");
+    const status=document.getElementById("status");
+
+    btn.disabled=true;
+    btn.innerText="PUBLICANDO...";
+
+    status.innerHTML="Subiendo anuncio...";
+
+    try{
+
+        const imagenBase64=
+        await getBase64(
+            document.getElementById("foto").files[0]
+        );
+
+        const datos=new URLSearchParams();
+
+        datos.append(
+            "titulo",
+            document.getElementById("titulo").value
+        );
+
+        datos.append(
+            "estado",
+            document.getElementById("estado").value
+        );
+
+        datos.append(
+            "descripcion",
+            document.getElementById("descripcion").value
+        );
+
+        datos.append(
+            "precio",
+            document.getElementById("precio").value
+        );
+
+        datos.append(
+            "recogida",
+            document.getElementById("recogida").value
+        );
+
+        datos.append(
+            "contacto",
+            document.getElementById("contacto").value
+        );
+
+        datos.append(
+            "imagenBase64",
+            imagenBase64
+        );
+
+        const res=await fetch(urlScript,{
+            method:"POST",
+            body:datos
+        });
+
+        const texto=await res.text();
+
+        console.log(texto);
+
+        if(texto.includes("ok")){
+
+            status.innerHTML=
+            "<span style='color:green;font-weight:700;'>Anuncio publicado correctamente</span>";
+
+            cargar();
+
+            document
+            .getElementById("formPublicar")
+            .reset();
+
+        }else{
+
+            status.innerHTML=
+            "<span style='color:red;font-weight:700;'>Error real del servidor</span>";
+
+        }
+
+    }catch(err){
+
+        console.error(err);
+
+        status.innerHTML=
+        "<span style='color:red;font-weight:700;'>Error al publicar</span>";
+
+    }
+
+    btn.disabled=false;
+    btn.innerText="PUBLICAR ANUNCIO";
+}
 
 async function getBase64(file){
 
@@ -347,239 +327,74 @@ async function getBase64(file){
 
     return new Promise(resolve=>{
 
-        const reader = new FileReader();
+        const reader=new FileReader();
 
-        reader.onload = () => resolve(reader.result);
+        reader.onload=()=>{
+            resolve(reader.result);
+        };
 
         reader.readAsDataURL(file);
 
     });
 }
 
-/* PUBLICAR */
-
-async function enviar(e){
-
-    e.preventDefault();
-
-    const btn =
-    document.getElementById("btnPublicar");
-
-    const status =
-    document.getElementById("status");
-
-    const tel =
-    document.getElementById("contacto").value;
-
-    /* ANTIFLOOD */
-
-    const ultimoEnvio =
-    localStorage.getItem('last_post_' + tel);
-
-    if(
-        ultimoEnvio &&
-        (Date.now() - ultimoEnvio < 300000)
-    ){
-        alert("Espera 5 minutos antes de publicar otro anuncio.");
-        return;
-    }
-
-    btn.disabled = true;
-    btn.innerText = "PUBLICANDO...";
-
-    status.innerHTML = "Subiendo anuncio...";
-
-    try{
-
-        const imagenBase64 =
-        await getBase64(
-            document.getElementById("foto").files[0]
-        );
-
-        const datos = new URLSearchParams({
-
-            titulo:
-            document.getElementById("titulo").value,
-
-            estado:
-            document.getElementById("estado").value,
-
-            descripcion:
-            document.getElementById("descripcion").value,
-
-            precio:
-            document.getElementById("precio").value,
-
-            recogida:
-            document.getElementById("recogida").value,
-
-            contacto:
-            tel,
-
-            imagenBase64:
-            imagenBase64
-
-        });
-
-        const res = await fetch(urlScript,{
-            method:"POST",
-            body:datos
-        });
-
-        const texto = await res.text();
-
-        console.log(texto);
-
-        localStorage.setItem(
-            'last_post_' + tel,
-            Date.now()
-        );
-
-        status.innerHTML =
-        "✅ Anuncio publicado correctamente";
-
-        document
-        .getElementById("formPublicar")
-        .reset();
-
-        cargar();
-
-    }catch(err){
-
-        console.error(err);
-
-        status.innerHTML =
-        "❌ Error al publicar";
-
-    }finally{
-
-        btn.disabled = false;
-
-        btn.innerText =
-        "PUBLICAR ANUNCIO";
-    }
-}
-
-/* CARGAR ANUNCIOS */
-
 async function cargar(){
 
-    const cont =
-    document.getElementById("tablon");
+    const tablon=document.getElementById("tablon");
 
     try{
 
-        const res =
-        await fetch(urlScript);
+        const res=await fetch(urlScript);
 
-        const data =
-        await res.json();
+        const data=await res.json();
 
-        cont.innerHTML = "";
-
-        if(!data.length){
-
-            cont.innerHTML = `
-            <div class="loading">
-                No hay anuncios publicados.
-            </div>
-            `;
-
-            return;
-        }
+        tablon.innerHTML="";
 
         data.forEach(a=>{
 
-            cont.innerHTML += `
+            tablon.innerHTML+=`
 
-            <div class="tarjeta-anuncio">
+            <div class="tarjeta">
 
                 ${
                     a.imagen
-                    ?
-                    `<img src="${a.imagen}" class="foto-articulo">`
-                    :
-                    ``
+                    ?`<img src="${a.imagen}">`
+                    :""
                 }
 
-                <div class="cuerpo-anuncio">
+                <div class="tarjeta-body">
 
-                    <div class="meta-anuncio">
-
-                        ${
-                            a.recogida
-                            ?
-                            `<span class="badge badge-recogida">
-                                📍 ${a.recogida}
-                            </span>`
-                            :
-                            ``
-                        }
-
-                        ${
-                            a.estado
-                            ?
-                            `<span class="badge badge-estado">
-                                ${a.estado}
-                            </span>`
-                            :
-                            ``
-                        }
-
-                    </div>
-
-                    <h3 class="titulo-anuncio">
-                        ${(a.titulo || "").toUpperCase()}
+                    <h3 style="color:#20a088;margin-bottom:10px;">
+                        ${a.titulo || ""}
                     </h3>
 
-                    <p class="desc-anuncio">
+                    <p style="margin-bottom:10px;">
                         ${a.descripcion || ""}
                     </p>
 
-                    <div class="footer-anuncio">
-
-                        <span class="precio">
-                            ${
-                                a.precio
-                                ?
-                                a.precio + "€"
-                                :
-                                "Gratis"
-                            }
-                        </span>
-
-                        <a
-                            href="tel:${a.contacto}"
-                            class="btn-llamar"
-                        >
-                            LLAMAR
-                        </a>
-
-                    </div>
+                    <p>
+                        <strong>${a.precio || "0"}€</strong>
+                    </p>
 
                 </div>
 
             </div>
+
             `;
+
         });
 
     }catch(err){
 
         console.error(err);
 
-        cont.innerHTML = `
-        <div class="loading">
-            ❌ Error al cargar anuncios
-        </div>
-        `;
+        tablon.innerHTML=
+        "<div class='loading'>Error al cargar anuncios</div>";
     }
 }
-
-/* INICIO */
 
 cargar();
 
 </script>
-
 </body>
 </html>
