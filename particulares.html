@@ -1,118 +1,31 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Particulares | infoespinar.com</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --menta: #20a088; --menta-dark: #19826d; --fondo: #f4f6f9; }
-        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; }
-        .header { background: var(--menta); color: white; text-align: center; padding: 30px 20px; }
-        .titulo-seccion { padding: 40px 20px 10px; font-size: 28px; font-weight: 900; text-transform: uppercase; text-align: center; }
-        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 20px; max-width: 1200px; margin: 0 auto; }
-        .tarjeta-anuncio { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
-        .cuerpo-anuncio { padding: 20px; }
-        .formulario-publicar { max-width: 600px; margin: 20px auto; padding: 25px; background: white; border-radius: 16px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        input, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
-        .btn-accion { width: 100%; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
-        .cargando { text-align: center; padding: 50px; font-weight: bold; }
-    </style>
-</head>
-<body>
+<div style="text-align: center; margin: 20px;">
+    <button onclick="toggleForm()" style="background: var(--menta); color: white; border: none; padding: 15px 30px; border-radius: 30px; font-weight: 700; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+        ➕ PUBLICAR NUEVO ANUNCIO
+    </button>
+</div>
 
-<header class="header">
-    <h1>infoespinar.com</h1>
-</header>
-
-<h2 class="titulo-seccion">Tablón de Particulares</h2>
-
-<div class="formulario-publicar">
-    <h3 style="margin-bottom: 15px; color: var(--menta);">➕ Publicar anuncio</h3>
+<div id="contenedor-formulario" class="formulario-publicar" style="display: none; margin-bottom: 30px;">
+    <h3 style="margin-bottom: 15px; color: var(--menta);">Completa tu anuncio</h3>
     <form id="formPublicar" onsubmit="enviar(event)">
         <input type="text" id="titulo" placeholder="Título" required>
         <input type="text" id="estado" placeholder="Estado (ej: Nuevo, Usado)" required>
         <textarea id="descripcion" placeholder="Descripción" required rows="3"></textarea>
         <input type="number" id="precio" placeholder="Precio (€)" required>
         <input type="text" id="recogida" placeholder="Lugar de recogida" required>
-        <input type="tel" id="contacto" placeholder="Teléfono (9 dígitos)" required pattern="[0-9]{9}">
+        <input type="tel" id="contacto" placeholder="Teléfono" required pattern="[0-9]{9}">
         <input type="file" id="foto" accept="image/*" style="border:none;">
-        <button type="submit" id="btnPublicar" class="btn-accion">ENVIAR ANUNCIO</button>
+        <button type="submit" id="btnPublicar" class="btn-accion">PUBLICAR ANUNCIO</button>
     </form>
     <div id="status" style="margin-top:10px; text-align:center;"></div>
 </div>
 
-<div id="tablon" class="grid-anuncios">
-    <div id="loading" class="cargando">Cargando anuncios...</div>
-</div>
-
 <script>
-const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
-
-async function cargar() {
-    const cont = document.getElementById("tablon");
-    try {
-        const res = await fetch(urlScript);
-        const data = await res.json();
-        document.getElementById("loading").style.display = "none";
-        cont.innerHTML = data.map(a => `
-            <div class="tarjeta-anuncio">
-                ${a.imagen ? `<img src="${a.imagen}" style="width:100%; height:200px; object-fit:cover;">` : ''}
-                <div class="cuerpo-anuncio">
-                    <div style="margin-bottom:10px;">
-                        <span style="background:#e0f2f1; padding:3px 8px; font-size:10px; font-weight:bold; color:#19826d;">📍 ${a.recogida}</span>
-                        <span style="background:#f1f5f9; padding:3px 8px; font-size:10px; font-weight:bold;">📦 ${a.estado}</span>
-                    </div>
-                    <h3 style="color:var(--menta);">${a.titulo.toUpperCase()}</h3>
-                    <p style="margin:10px 0; font-size:13px;">${a.descripcion}</p>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="font-weight:900; font-size:17px;">${a.precio}€</span>
-                        <a href="tel:${a.contacto}" style="background:var(--menta); color:white; padding:8px 12px; text-decoration:none; border-radius:6px; font-size:12px;">LLAMAR</a>
-                    </div>
-                </div>
-            </div>`).join('');
-    } catch(err) { document.getElementById("loading").innerHTML = "Error al cargar."; }
-}
-
-async function enviar(e) {
-    e.preventDefault();
-    const btn = document.getElementById("btnPublicar");
-    const status = document.getElementById("status");
-    btn.disabled = true;
-    status.innerText = "Publicando...";
-
-    const file = document.getElementById("foto").files[0];
-    let imagenBase64 = "";
-    if (file) {
-        imagenBase64 = await new Promise((resolve) => {
-            const reader = new FileReader();
-            reader.onload = () => resolve(reader.result);
-            reader.readAsDataURL(file);
-        });
+    // Función para mostrar/ocultar
+    function toggleForm() {
+        const form = document.getElementById('contenedor-formulario');
+        form.style.display = (form.style.display === 'none' || form.style.display === '') ? 'block' : 'none';
     }
 
-    const datos = new URLSearchParams({
-        titulo: document.getElementById("titulo").value.toUpperCase(),
-        estado: document.getElementById("estado").value,
-        descripcion: document.getElementById("descripcion").value,
-        precio: document.getElementById("precio").value,
-        recogida: document.getElementById("recogida").value,
-        contacto: document.getElementById("contacto").value,
-        imagenBase64: imagenBase64
-    });
-
-    try {
-        await fetch(urlScript, { method: "POST", body: datos });
-        alert("¡Anuncio publicado!");
-        location.reload();
-    } catch(err) {
-        status.innerText = "Error al enviar.";
-        btn.disabled = false;
-    }
-}
-
-cargar();
+    // La función enviar, cargar y resto del script que ya tienes...
+    // (Asegúrate de mantener el resto de funciones que te pasé en el mensaje anterior)
 </script>
-</body>
-</html>
