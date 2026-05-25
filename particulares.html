@@ -3,24 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compra - Venta | infoespinar.com</title>
+    <title>Particulares | infoespinar.com</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
         
         :root {
-            --azul-inicio:#1e3a8a;
-            --azul-fin:#3b82f6;
-            --fondo:#f4f6f9;
+            --azul-inicio: #1e3a8a;
+            --azul-fin: #3b82f6;
+            --fondo: #f4f6f9;
         }
 
-        * { box-sizing:border-box; margin:0; padding:0; }
-
-        body {
-            font-family:'Lato',sans-serif;
-            background:var(--fondo);
-            color:#334155;
-            overflow-x:hidden;
-        }
+        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; margin: 0; }
 
         /* HEADER */
         .header {
@@ -28,401 +21,90 @@
             color: white;
             text-align: center;
             padding: 30px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .header-logo-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .header-bandera { width: 32px; height: 32px; border-radius: 6px; background-color: rgba(255, 255, 255, 0.2); }
-        .header h1 { font-size: 24px; font-weight: 900; text-transform: uppercase; }
-
-        /* TÍTULO CORREGIDO */
-        .titulo-seccion {
-            max-width: 1200px;
-            margin: 20px auto 0 auto;
-            padding: 0 15px;
-            font-size: 22px;
-            color: var(--azul-inicio);
-            border-left: 4px solid var(--azul-fin);
-            padding-left: 15px;
-        }
-
-        .contenedor-app { padding:25px 15px; max-width:1200px; margin:0 auto; }
+        .header-logo-link { text-decoration: none; color: white; display: inline-flex; align-items: center; gap: 12px; }
+        .header-bandera { width: 32px; height: 32px; border-radius: 6px; background: rgba(255,255,255,0.2); }
         
-        /* ... (resto de tus estilos igual) ... */
-        .grid-anuncios { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:20px; }
-        .tarjeta-anuncio { background:#fff; border:1px solid #e2e8f0; border-radius:16px; overflow:hidden; box-shadow:0 4px 10px -1px rgba(0,0,0,.06); }
-        .cargando { text-align:center; padding:30px; color:#64748b; }
-        .seccion-app { display:none; }
-        .seccion-app.activa { display:block; }
-        .btn-pestana { background:#f1f5f9; border:none; padding:10px 20px; font-weight:700; border-radius:8px; cursor:pointer; }
-        .btn-pestana.activa { background:var(--azul-inicio); color:#fff; }
+        /* TITULAR CENTRADO ESTILO WEB */
+        .titulo-seccion {
+            text-align: center;
+            padding: 40px 20px 20px;
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--azul-inicio);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contenedor-app { padding: 0 15px 50px; max-width: 1200px; margin: 0 auto; }
+        
+        /* Grid y tarjetas igual que tenías */
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .tarjeta-anuncio { background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+        .cabecera-anuncio { padding: 14px 20px; }
+        .titulo-anuncio { font-size: 15px; font-weight: 700; color: white; margin: 0; }
+        .cargando { text-align: center; padding: 50px; font-weight: 700; color: var(--azul-inicio); }
     </style>
 </head>
 <body>
 
 <header class="header">
     <a href="index.html" class="header-logo-link">
-        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="El Espinar">
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo">
         <h1>infoespinar.com</h1>
     </a>
 </header>
 
-<!-- TÍTULO BIEN UBICADO -->
-<h2 class="titulo-seccion">PARTICULARES</h2>
+<h2 class="titulo-seccion">Tablón de Particulares</h2>
 
-<div class="contenedor-app" id="wrapper">
-    <div class="navegacion">
-        <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Ver Tablón</button>
-        <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar Anuncio</button>
-    </div>
-
+<div class="contenedor-app">
     <div id="tablon-sec" class="seccion-app activa">
         <div id="loading" class="cargando">Cargando anuncios...</div>
         <div id="tablon" class="grid-anuncios"></div>
     </div>
-
-    <!-- Sección formulario aquí igual que antes -->
-</div>
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght=400;700&display=swap');
-
-  html, body {
-    margin: 0; padding: 0; background: transparent;
-    font-family: 'Lato', sans-serif; width: 100%; overflow: hidden;
-  }
-  .contenedor-app { padding: 15px; max-width: 1200px; margin: 0 auto; }
-  .navegacion { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
-  .btn-pestana { background: #f1f5f9; border: none; padding: 10px 20px; font-weight: 700; border-radius: 8px; cursor: pointer; color: #475569; }
-  .btn-pestana.activa { background: #1e293b; color: #fff; }
-  .seccion-app { display: none; }
-  .seccion-app.activa { display: block; }
-    
-  .contenedor-buscador { margin-bottom: 20px; display: none; }
-  .contenedor-buscador.activo { display: block; }
-  .input-buscador { width: 100%; padding: 12px 16px; border: 2px solid #cbd5e1; border-radius: 10px; font-family: inherit; font-size: 14px; box-sizing: border-box; outline: none; transition: border-color 0.2s; }
-  .input-buscador:focus { border-color: #1e293b; }
-
-  .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-  .tarjeta-anuncio { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 4px 10px -1px rgba(0,0,0,0.06); }
-  .tarjeta-anuncio.oculta { display: none !important; }
-  
-  /* CAMBIO 1: Forzamos la transformación visual a mayúsculas en el tablón */
-  .cabecera-anuncio { padding: 14px 20px; text-transform: uppercase; }
-  .titulo-anuncio { font-size: 15px; font-weight: 700; color: #fff; margin: 0; }
-  
-  .contenedor-foto { width: 100%; height: 200px; background: #f8fafc; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #f1f5f9; }
-  .foto-articulo { width: 100%; height: 100%; object-fit: cover; }
-  .cuerpo-anuncio { padding: 16px 20px; display: flex; flex-direction: column; flex-grow: 1; }
-  .meta-anuncio { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; align-items: center; }
-  .recogida-anuncio { font-size: 11.5px; color: #0284c7; font-weight: 700; }
-  .estado-anuncio { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border: 1px solid #cbd5e1; border-radius: 6px; background: #f8fafc; color: #475569; }
-  .desc-anuncio { font-size: 13.5px; color: #475569; margin-bottom: 16px; flex-grow: 1; }
-  
-  /* Botones del pie alineados */
-  .footer-tarjeta { display: flex; gap: 8px; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 12px; justify-content: space-between; }
-  .precio-anuncio { font-size: 17px; font-weight: 700; color: #0f172a; white-space: nowrap; }
-  .bloque-botones { display: flex; gap: 6px; }
-  .btn-contacto { padding: 8px 10px; border-radius: 6px; text-decoration: none; color: #fff; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; }
-  .btn-whatsapp { background: #25d366; }
-  .btn-llamar { background: #3b82f6; }
-  
-  .cargando { text-align: center; padding: 30px; color: #64748b; font-size: 14px; }
-  
-  .formulario-publicar { background: #fff; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; max-width: 600px; margin: 0 auto; }
-  .grupo-campo { margin-bottom: 16px; }
-  .grupo-campo label { display: block; font-size: 13.5px; font-weight: 700; color: #334155; margin-bottom: 6px; }
-  .grupo-campo input, .grupo-campo select, .grupo-campo textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; box-sizing: border-box; }
-  
-  /* CAMBIO 2: Forzamos la escritura en mayúsculas dentro del input del formulario */
-  #titulo { text-transform: uppercase; }
-  
-  /* Estilos específicos para el checkbox de Privacidad */
-  .grupo-privacidad { display: flex; align-items: flex-start; gap: 10px; margin: 20px 0; padding: 5px 0; }
-  .grupo-privacidad input[type="checkbox"] { width: auto; margin-top: 3px; cursor: pointer; transform: scale(1.1); }
-  .grupo-privacidad label { font-size: 13px; color: #475569; font-weight: 400; line-height: 1.4; cursor: pointer; }
-  .grupo-privacidad a { color: #1e293b; font-weight: 700; text-decoration: underline; }
-
-  .btn-enviar { width: 100%; padding: 12px; background: #059669; color: #fff; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
-  .btn-enviar:disabled { background: #94a3b8; cursor: not-allowed; }
-  .mensaje-exito { text-align: center; color: #059669; font-weight: 700; padding: 15px 0; }
-  
-  /* Bloque de aviso fijo rojo clarito */
-  .contenedor-aviso-prev { margin-top: 20px; padding: 12px; background: #fef2f2; border: 1px dashed #f87171; border-radius: 8px; margin-bottom: 16px; }
-  .titulo-previsualizacion { font-size: 13px; font-weight: 700; color: #991b1b; margin-bottom: 2px; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
-  .alerta-previsualizacion { font-size: 12.5px; color: #7f1d1d; font-style: italic; display: block; line-height: 1.4; }
-</style>
-
-<div class="contenedor-app" id="wrapper">
-  <div class="navegacion">
-    <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Ver Tablón</button>
-    <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar Anuncio</button>
-  </div>
-
-  <div id="buscador-cont" class="contenedor-buscador activo">
-    <input type="text" id="txtBuscador" class="input-buscador" placeholder="🔍 Buscar por artículo, descripción o zona (ej: San Rafael, mesa...)" oninput="filtrarAnuncios()">
-  </div>
-
-  <div id="tablon-sec" class="seccion-app activa">
-    <div id="loading" class="cargando">Cargando tablón de anuncios...</div>
-    <div id="tablon" class="grid-anuncios"></div>
-  </div>
-
-  <div id="form-sec" class="seccion-app">
-    <div class="formulario-publicar">
-      <form id="formAnuncio" onsubmit="enviar(event)">
-        <div class="grupo-campo">
-          <label>¿Qué vendes o regalas? *</label>
-          <input id="titulo" required placeholder="Ej: BICICLETA, MESA...">
-        </div>
-        <div class="grupo-campo">
-          <label>Estado del artículo *</label>
-          <select id="estado">
-            <option>Nuevo</option>
-            <option>Buen estado</option>
-            <option>Usado</option>
-            <option>Para restaurar</option>
-          </select>
-        </div>
-        <div class="grupo-campo">
-          <label>Descripción / Detalles</label>
-          <textarea id="desc" placeholder="Detalles, horarios de recogida..."></textarea>
-        </div>
-        <div class="grupo-campo">
-          <label>Precio (€) *</label>
-          <input id="precio" type="number" min="0" required placeholder="Ej: 20 (Pon 0 si lo regalas)">
-        </div>
-        <div class="grupo-campo">
-          <label>Teléfono de contacto *</label>
-          <input id="contacto" type="tel" required pattern="[0-9]{9}" maxlength="9" title="Introduce un número de 9 dígitos" placeholder="Ej: 600123456">
-        </div>
-        <div class="grupo-campo">
-          <label>Ubicación / Punto de recogida *</label>
-          <select id="recogida" required>
-            <option value="" disabled selected>Selecciona núcleo...</option>
-            <option value="El Espinar">El Espinar</option>
-            <option value="San Rafael">San Rafael</option>
-            <option value="LASR">LASR</option>
-            <option value="La Estación">La Estación</option>
-          </select>
-        </div>
-        
-        <div class="grupo-campo">
-          <label>Foto del artículo (Opcional)</label>
-          <input type="file" id="foto" accept="image/*">
-        </div>
-
-        <div class="contenedor-aviso-prev">
-          <span class="titulo-previsualizacion">👀 REVISA TU ANUNCIO</span>
-          <span class="alerta-previsualizacion">Por favor, asegúrate de que todos los datos introducidos sean correctos antes de publicar.</span>
-        </div>
-
-        <div class="grupo-privacidad">
-          <input type="checkbox" id="checkPrivacidad" required onchange="validarCheck()">
-          <label for="checkPrivacidad">He leído y acepto la <a href="https://www.infoespinar.com/privacidad" target="_blank">Política de Privacidad</a> y consiento que mi número de teléfono sea publicado en la web para que otros vecinos contacten conmigo.</label>
-        </div>
-
-        <button type="submit" class="btn-enviar" id="btnPublicar" disabled>🚀 Publicar Anuncio</button>
-      </form>
-      <div id="status"></div>
-    </div>
-  </div>
 </div>
 
 <script>
 const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
 
-function validarCheck() {
-  const checkbox = document.getElementById("checkPrivacidad");
-  const btn = document.getElementById("btnPublicar");
-  btn.disabled = !checkbox.checked;
-}
-
-function cambiar(id, e){
-  document.querySelectorAll('.seccion-app').forEach(s=>s.classList.remove('activa'));
-  document.getElementById(id).classList.add('activa');
-  document.querySelectorAll('.btn-pestana').forEach(b=>b.classList.remove('activa'));
-  
-  if (e && e.target) {
-    e.target.classList.add('activa');
-  } else {
-    document.querySelector('.btn-pestana').classList.add('activa');
-  }
-
-  const bCont = document.getElementById("buscador-cont");
-  if(id === "tablon-sec") {
-    bCont.classList.add('activo');
-    document.getElementById("txtBuscador").value = "";
-    cargar();
-  } else {
-    bCont.classList.remove('activo');
-    setTimeout(actualizarAltura, 100);
-  }
-}
-
-function filtrarAnuncios() {
-  const termino = document.getElementById("txtBuscador").value.toLowerCase().trim();
-  const tarjetas = document.querySelectorAll(".tarjeta-anuncio");
-
-  tarjetas.forEach(tarjeta => {
-    const textoTarjeta = tarjeta.getAttribute("data-search").toLowerCase();
-    if (textoTarjeta.includes(termino)) {
-      tarjeta.classList.remove("oculta");
-    } else {
-      tarjeta.classList.add("oculta");
-    }
-  });
-  actualizarAltura();
-}
-
-async function cargar(){
-  try {
-    document.getElementById("loading").style.display = "block";
-    const res = await fetch(urlScript);
-    const data = await res.json();
+async function cargar() {
     const cont = document.getElementById("tablon");
-    cont.innerHTML = "";
-    document.getElementById("loading").style.display = "none";
-
-    const colores = ["#2563eb","#059669","#7c3aed","#ea580c"];
-    const anunciosValidos = data.filter(a => a.titulo && a.titulo.toString().trim() !== "");
-
-    if(anunciosValidos.length === 0){
-      cont.innerHTML = '<div class="cargando">No hay anuncios disponibles.</div>';
-      actualizarAltura();
-      return;
-    }
-
-    anunciosValidos.forEach((a,i)=>{
-      let precio = "Gratis";
-      if(a.precio && a.precio.toString().trim() !== "0" && a.precio.toString().toLowerCase() !== "gratis"){
-        let p = a.precio.toString().trim();
-        precio = p.includes("€") ? p : p+"€";
-      }
-
-      let bloqueFoto = "";
-      if(a.imagen && (a.imagen.startsWith('http') || a.imagen.startsWith('data:image'))) {
-        bloqueFoto = `
-          <div class="contenedor-foto">
-            <img class="foto-articulo" src="${a.imagen}" loading="lazy">
-          </div>`;
-      }
-
-      let tlfLimpio = a.contacto ? a.contacto.toString().replace(/\s+/g, '') : "";
-      
-      // CAMBIO 3: Aseguramos el paso a mayúsculas en las variables de renderizado y textos de WhatsApp
-      const tituloEnMayusculas = a.titulo.toString().toUpperCase();
-      const metadatosBusqueda = `${tituloEnMayusculas} ${a.descripcion||''} ${a.recogida||''}`;
-      const textoWhatsapp = `¡Hola! Te escribo por el anuncio de ${tituloEnMayusculas} que has puesto en el tablón de InfoEspinar`;
-      let linkWa = tlfLimpio.startsWith('34') || tlfLimpio.startsWith('+34') ? tlfLimpio : '34' + tlfLimpio;
-
-      cont.innerHTML += `
-        <div class="tarjeta-anuncio" data-search="${metadatosBusqueda.replace(/"/g, '"')}">
-          <div class="cabecera-anuncio" style="background:${colores[i%4]}">
-            <h3 class="titulo-anuncio">${tituloEnMayusculas}</h3>
-          </div>
-          ${bloqueFoto}
-          <div class="cuerpo-anuncio">
-            <div class="meta-anuncio">
-              ${a.recogida ? `<span class="recogida-anuncio">📍 ${a.recogida}</span>` : ""}
-              ${a.estado ? `<span class="estado-anuncio">${a.estado}</span>` : ""}
-            </div>
-            <p class="desc-anuncio">${a.descripcion||""}</p>
-            <div class="footer-tarjeta">
-              <span class="precio-anuncio">${precio}</span>
-              <div class="bloque-botones">
-                <a class="btn-contacto btn-llamar" href="tel:${tlfLimpio}">📞 Llamar</a>
-                <a class="btn-contacto btn-whatsapp" href="https://wa.me/${linkWa}?text=${encodeURIComponent(textoWhatsapp)}" target="_blank">💬 Whatsapp</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-    });
-    setTimeout(actualizarAltura, 300);
-  } catch(err) {
-    document.getElementById("loading").innerText = "Error al cargar los anuncios.";
-  }
-}
-
-async function enviar(e){
-  e.preventDefault(); 
-  
-  const btn = document.getElementById("btnPublicar");
-  const status = document.getElementById("status");
-  
-  btn.disabled = true;
-  status.innerHTML = "<div class='cargando'>Procesando y publicando anuncio...</div>";
-
-  const file = document.getElementById("foto").files[0];
-  let imagenDataURL = "";
-
-  try {
-    if (file) {
-      imagenDataURL = await new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = error => reject(error);
-        reader.readAsDataURL(file);
-      });
-    }
-
-    // CAMBIO 4: Forzamos la extracción de datos convirtiendo el string del input a mayúsculas antes del payload
-    const tituloMayusculasBackend = document.getElementById("titulo").value.trim().toUpperCase();
-
-    const datosFormulario = new URLSearchParams();
-    datosFormulario.append("titulo", tituloMayusculasBackend);
-    datosFormulario.append("estado", document.getElementById("estado").value);
-    datosFormulario.append("descripcion", document.getElementById("desc").value);
-    datosFormulario.append("precio", document.getElementById("precio").value);
-    datosFormulario.append("contacto", document.getElementById("contacto").value.replace(/\s+/g, ''));
-    datosFormulario.append("recogida", document.getElementById("recogida").value);
-    datosFormulario.append("imagenBase64", imagenDataURL);
-
-    await fetch(urlScript, {
-      method: "POST",
-      mode: "no-cors", 
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: datosFormulario.toString()
-    });
-
-    status.innerHTML = "<div class='mensaje-exito'>¡Anuncio procesado! Redirigiendo al tablón...</div>";
-    document.getElementById("formAnuncio").reset();
-    document.getElementById("checkPrivacidad").checked = false; // Resetea el check
+    const loader = document.getElementById("loading");
     
-    setTimeout(() => { 
-      status.innerHTML = ""; 
-      cambiar('tablon-sec', null); 
-    }, 2000);
+    try {
+        const res = await fetch(urlScript);
+        const data = await res.json();
+        
+        loader.style.display = "none";
+        cont.innerHTML = "";
 
-  } catch(error) {
-    console.error("Error:", error);
-    status.innerHTML = "<div class='cargando' style='color:red;'>Error local al procesar la imagen.</div>";
-    btn.disabled = false; // Solo se reactiva si falla
-  } finally {
-    setTimeout(actualizarAltura, 100);
-  }
+        const colores = ["#1e3a8a", "#059669", "#7c3aed", "#ea580c"];
+
+        data.forEach((a, i) => {
+            cont.innerHTML += `
+            <div class="tarjeta-anuncio">
+                <div class="cabecera-anuncio" style="background:${colores[i % 4]}">
+                    <h3 class="titulo-anuncio">${(a.titulo || "").toUpperCase()}</h3>
+                </div>
+                ${a.imagen ? `<div style="height:200px"><img src="${a.imagen}" style="width:100%; height:100%; object-fit:cover;"></div>` : ''}
+                <div style="padding:20px;">
+                    <p style="font-size:13px; color:#475569; margin-bottom:15px;">${a.descripcion || ""}</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:900; font-size:17px;">${a.precio ? a.precio + "€" : "Gratis"}</span>
+                        <a href="tel:${a.contacto}" style="background:var(--azul-fin); color:white; padding:8px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:700;">LLAMAR</a>
+                    </div>
+                </div>
+            </div>`;
+        });
+    } catch(err) {
+        loader.innerHTML = "Error al cargar los anuncios. Revisa los permisos del Script.";
+    }
 }
 
-function actualizarAltura() {
-  const wrapper = document.getElementById('wrapper');
-  if(wrapper && window.parent && window.parent.postMessage) {
-    window.parent.postMessage({type: 'resize', height: wrapper.offsetHeight + 50}, '*');
-  }
-}
-window.addEventListener('resize', actualizarAltura);
-cargar();
+// Ejecutar al cargar
+document.addEventListener('DOMContentLoaded', cargar);
 </script>
+
 </body>
 </html>
