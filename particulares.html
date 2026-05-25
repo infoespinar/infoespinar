@@ -1,45 +1,90 @@
-<style>
-    /* Estilo del Header estilo Wallapop/Marketplace */
-    .header-seccion { 
-        background: linear-gradient(135deg, #00bd9d 0%, #009980 100%); 
-        color: white; 
-        padding: 20px; 
-        text-align: center; 
-        border-radius: 0 0 20px 20px;
-        margin-bottom: 20px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
-    .header-seccion h1 { font-size: 22px; font-weight: 900; text-transform: uppercase; margin: 0; }
-</style>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compra-Venta | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: #f8fafc; }
 
-<div class="header-seccion">
-    <h1>Compra-Venta</h1>
-</div>
+        /* Header estilo "Segunda Mano" (Verde Menta elegante) */
+        .header { background: linear-gradient(135deg, #00bd9d 0%, #009980 100%); color: white; text-align: center; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
+        .header-bandera { width: 30px; height: 30px; border-radius: 6px; }
+        .header h1 { font-size: 18px; font-weight: 900; text-transform: uppercase; }
 
-<div class="contenedor-app" id="wrapper">
+        .contenedor-app { padding: 20px; max-width: 1000px; margin: 0 auto; }
+        .navegacion { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px; }
+        .btn-pestana { background: #f1f5f9; border: none; padding: 10px 20px; font-weight: 700; border-radius: 8px; cursor: pointer; color: #475569; }
+        .btn-pestana.activa { background: #00bd9d; color: #fff; }
+        .seccion-app { display: none; }
+        .seccion-app.activa { display: block; }
+        
+        .contenedor-buscador { margin-bottom: 20px; display: none; }
+        .contenedor-buscador.activo { display: block; }
+        .input-buscador { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 10px; }
+        
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .tarjeta-anuncio { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .cabecera-anuncio { padding: 12px; background: #00bd9d; color: white; text-transform: uppercase; font-weight: 700; font-size: 14px; }
+        .cuerpo-anuncio { padding: 15px; }
+        .precio-anuncio { font-size: 18px; font-weight: 900; color: #000; margin-bottom: 10px; display: block; }
+        .btn-contacto { display: inline-block; padding: 8px 12px; border-radius: 6px; text-decoration: none; color: white; font-size: 12px; font-weight: 700; margin-top: 5px; }
+        .btn-whatsapp { background: #25d366; }
+        
+        .formulario-publicar { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; max-width: 500px; margin: 0 auto; }
+        .grupo-campo { margin-bottom: 15px; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; }
+        .btn-enviar { width: 100%; padding: 12px; background: #00bd9d; color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera"> 
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <div class="contenedor-app" id="wrapper">
+        <div class="navegacion">
+            <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Ver Tablón</button>
+            <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar</button>
+        </div>
+
+        <div id="buscador-cont" class="contenedor-buscador activo">
+            <input type="text" id="txtBuscador" class="input-buscador" placeholder="🔍 Buscar..." oninput="filtrarAnuncios()">
+        </div>
+
+        <div id="tablon-sec" class="seccion-app activa">
+            <div id="tablon" class="grid-anuncios"></div>
+        </div>
+
+        <div id="form-sec" class="seccion-app">
+            <div class="formulario-publicar">
+                <form id="formAnuncio" onsubmit="enviar(event)">
+                    <!-- Tus campos aquí... -->
+                </form>
+            </div>
+        </div>
     </div>
 
-<script>
-    // CAMBIO CRÍTICO: He añadido un console.log para ver si llega algo
-    async function cargar(){
-        console.log("Intentando conectar con el servidor...");
-        try {
-            document.getElementById("loading").style.display = "block";
-            const res = await fetch(urlScript);
-            
-            if (!res.ok) throw new Error("Respuesta del servidor no OK");
-            
-            const data = await res.json();
-            console.log("Datos recibidos:", data); // Mira esto en la consola F12
-            
-            const cont = document.getElementById("tablon");
-            cont.innerHTML = "";
-            document.getElementById("loading").style.display = "none";
-            
-            // ... (resto de tu lógica)
-        } catch(err) {
-            console.error("DETALLE DEL ERROR:", err);
-            document.getElementById("loading").innerText = "Error: " + err.message;
+    <script>
+        // Asegúrate de que este script esté al final.
+        // Si no cargan los anuncios, revisa si el fetch a tu urlScript devuelve datos válidos.
+        async function cargar(){
+            const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec"; // RELLENA TU URL
+            try {
+                const res = await fetch(urlScript);
+                const data = await res.json();
+                const cont = document.getElementById("tablon");
+                // ... lógica de renderizado ...
+            } catch(err) { console.error("Error al cargar:", err); }
         }
-    }
-</script>
+        cargar();
+    </script>
+</body>
+</html>
