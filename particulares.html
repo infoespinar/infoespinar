@@ -1,25 +1,219 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Particulares | infoespinar.com</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --menta: #20a088; --fondo: #f4f6f9; }
-        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        .header { background: var(--menta); color: white; text-align: center; padding: 30px 20px; }
-        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; }
-        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
-        
-        .formulario-publicar { max-width: 600px; margin: 20px auto; padding: 25px; background: white; border-radius: 16px; display: none; border: 1px solid #e2e8f0; }
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 8px; }
-        #titulo { text-transform: uppercase; }
-        .btn-accion { width: 100%; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; }
-    </style>
+<title>Particulares | infoespinar.com</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+:root{
+    --menta:#20a088;
+    --menta-dark:#19826d;
+    --fondo:#f4f6f9;
+}
+
+body{
+    font-family:'Lato',sans-serif;
+    background:var(--fondo);
+    color:#334155;
+}
+
+/* HEADER */
+
+.header{
+    background:var(--menta);
+    color:white;
+    text-align:center;
+    padding:30px 20px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+}
+
+.header-logo-link{
+    display:inline-flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:white;
+    background:rgba(255,255,255,0.08);
+    padding:8px 16px;
+    border-radius:30px;
+}
+
+.header-bandera{
+    width:32px;
+    height:32px;
+    object-fit:cover;
+    border-radius:6px;
+}
+
+.header h1{
+    font-size:24px;
+    font-weight:900;
+    text-transform:uppercase;
+}
+
+/* BOTÓN PUBLICAR */
+
+.contenedor-btn{
+    text-align:center;
+    margin:20px;
+}
+
+.btn-accion{
+    background:var(--menta);
+    color:white;
+    border:none;
+    padding:14px 18px;
+    border-radius:10px;
+    font-weight:700;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.btn-accion:hover{
+    background:var(--menta-dark);
+}
+
+/* FORMULARIO */
+
+.formulario-publicar{
+    max-width:600px;
+    margin:20px auto;
+    padding:25px;
+    background:white;
+    border-radius:16px;
+    border:1px solid #e2e8f0;
+    display:none;
+    box-shadow:0 4px 10px rgba(0,0,0,0.05);
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-family:inherit;
+}
+
+#titulo{
+    text-transform:uppercase;
+}
+
+#status{
+    margin-top:10px;
+    text-align:center;
+    font-weight:700;
+}
+
+/* GRID */
+
+.grid-anuncios{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:20px;
+    padding:20px;
+    max-width:1200px;
+    margin:0 auto;
+}
+
+.tarjeta-anuncio{
+    background:white;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 4px 10px rgba(0,0,0,0.06);
+}
+
+.foto-articulo{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+    background:#e5e7eb;
+}
+
+.cuerpo-anuncio{
+    padding:20px;
+}
+
+.meta-anuncio{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:12px;
+}
+
+.badge{
+    font-size:10px;
+    font-weight:700;
+    padding:4px 8px;
+    border-radius:6px;
+    text-transform:uppercase;
+}
+
+.badge-estado{
+    background:#f1f5f9;
+    color:#475569;
+}
+
+.badge-recogida{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.titulo-anuncio{
+    color:var(--menta);
+    margin-bottom:10px;
+    font-size:20px;
+    font-weight:900;
+}
+
+.desc-anuncio{
+    font-size:14px;
+    color:#475569;
+    margin-bottom:18px;
+    line-height:1.5;
+}
+
+.footer-anuncio{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.precio{
+    font-size:20px;
+    font-weight:900;
+}
+
+.btn-llamar{
+    background:var(--menta);
+    color:white;
+    text-decoration:none;
+    padding:10px 14px;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+}
+
+.loading{
+    text-align:center;
+    padding:40px;
+    grid-column:1/-1;
+}
+</style>
 </head>
+
 <body>
 
 <header class="header">
@@ -29,91 +223,363 @@
     </a>
 </header>
 
-<div style="text-align: center; margin: 20px;">
-    <button onclick="toggleForm()" class="btn-accion" style="max-width: 300px;">➕ PUBLICAR NUEVO ANUNCIO</button>
+<div class="contenedor-btn">
+    <button onclick="toggleForm()" class="btn-accion">
+        ➕ PUBLICAR NUEVO ANUNCIO
+    </button>
 </div>
 
+<!-- FORMULARIO -->
+
 <div id="contenedor-formulario" class="formulario-publicar">
+
     <form id="formPublicar" onsubmit="enviar(event)">
-        <input type="text" id="titulo" placeholder="TÍTULO (SOLO MAYÚSCULAS)" required oninput="this.value = this.value.toUpperCase()">
-        
+
+        <input
+            type="text"
+            id="titulo"
+            placeholder="TÍTULO DEL ANUNCIO"
+            required
+            oninput="this.value=this.value.toUpperCase()"
+        >
+
         <select id="estado" required>
-            <option value="" disabled selected>Estado del artículo...</option>
+            <option value="" disabled selected>
+                Estado del artículo...
+            </option>
+
             <option>NUEVO</option>
             <option>BUEN ESTADO</option>
             <option>MUY USADO</option>
             <option>PARA RESTAURAR</option>
         </select>
 
-        <textarea id="descripcion" placeholder="Descripción" required rows="3"></textarea>
-        <input type="number" id="precio" placeholder="Precio (€)" required>
-        
+        <textarea
+            id="descripcion"
+            placeholder="Descripción"
+            rows="4"
+            required
+        ></textarea>
+
+        <input
+            type="number"
+            id="precio"
+            placeholder="Precio (€)"
+            required
+        >
+
         <select id="recogida" required>
-            <option value="" disabled selected>Lugar de recogida...</option>
+
+            <option value="" disabled selected>
+                Lugar de recogida...
+            </option>
+
             <option>EL ESPINAR</option>
             <option>SAN RAFAEL</option>
             <option>LASR</option>
             <option>LA ESTACIÓN</option>
+
         </select>
 
-        <input type="tel" id="contacto" placeholder="Teléfono (9 dígitos)" required pattern="[0-9]{9}" maxlength="9">
-        <input type="file" id="foto" accept="image/*" style="border:none;">
-        <button type="submit" id="btnPublicar" class="btn-accion">PUBLICAR ANUNCIO</button>
+        <input
+            type="tel"
+            id="contacto"
+            placeholder="Teléfono (9 dígitos)"
+            required
+            pattern="[0-9]{9}"
+            maxlength="9"
+        >
+
+        <input
+            type="file"
+            id="foto"
+            accept="image/*"
+            style="border:none;"
+        >
+
+        <button
+            type="submit"
+            id="btnPublicar"
+            class="btn-accion"
+        >
+            PUBLICAR ANUNCIO
+        </button>
+
     </form>
-    <div id="status" style="margin-top:10px; text-align:center;"></div>
+
+    <div id="status"></div>
+
 </div>
 
-<div id="tablon" class="grid-anuncios" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:20px; padding:20px; max-width:1200px; margin:0 auto;">
-    <div id="loading" style="text-align:center; padding:50px;">Cargando anuncios...</div>
+<!-- TABLÓN -->
+
+<div id="tablon" class="grid-anuncios">
+
+    <div id="loading" class="loading">
+        Cargando anuncios...
+    </div>
+
 </div>
 
 <script>
-const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
 
-function toggleForm() {
-    const f = document.getElementById('contenedor-formulario');
-    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
+const urlScript =
+"https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
+
+/* MOSTRAR / OCULTAR FORM */
+
+function toggleForm(){
+
+    const f =
+    document.getElementById('contenedor-formulario');
+
+    f.style.display =
+    (f.style.display === 'block')
+    ? 'none'
+    : 'block';
 }
 
-async function enviar(e) {
+/* CONVERTIR FOTO A BASE64 */
+
+async function getBase64(file){
+
+    if(!file) return "";
+
+    return new Promise(resolve=>{
+
+        const reader = new FileReader();
+
+        reader.onload = () => resolve(reader.result);
+
+        reader.readAsDataURL(file);
+
+    });
+}
+
+/* PUBLICAR */
+
+async function enviar(e){
+
     e.preventDefault();
-    const btn = document.getElementById("btnPublicar");
-    const tel = document.getElementById("contacto").value;
-    
-    // Antiflood simple local (El servidor debe validar esto también)
-    const ultimoEnvio = localStorage.getItem('last_post_' + tel);
-    if (ultimoEnvio && (Date.now() - ultimoEnvio < 300000)) {
-        alert("¡Espera 5 minutos antes de volver a publicar con este número!");
+
+    const btn =
+    document.getElementById("btnPublicar");
+
+    const status =
+    document.getElementById("status");
+
+    const tel =
+    document.getElementById("contacto").value;
+
+    /* ANTIFLOOD */
+
+    const ultimoEnvio =
+    localStorage.getItem('last_post_' + tel);
+
+    if(
+        ultimoEnvio &&
+        (Date.now() - ultimoEnvio < 300000)
+    ){
+        alert("Espera 5 minutos antes de publicar otro anuncio.");
         return;
     }
 
     btn.disabled = true;
-    btn.innerText = "Publicando...";
+    btn.innerText = "PUBLICANDO...";
 
-    const datos = new URLSearchParams({
-        titulo: document.getElementById("titulo").value,
-        estado: document.getElementById("estado").value,
-        descripcion: document.getElementById("descripcion").value,
-        precio: document.getElementById("precio").value,
-        recogida: document.getElementById("recogida").value,
-        contacto: tel,
-        imagenBase64: await getBase64(document.getElementById("foto").files[0])
-    });
+    status.innerHTML = "Subiendo anuncio...";
 
-    try {
-        await fetch(urlScript, { method: "POST", body: datos });
-        localStorage.setItem('last_post_' + tel, Date.now());
-        alert("Anuncio publicado.");
-        location.reload();
-    } catch(err) { alert("Error."); btn.disabled = false; }
+    try{
+
+        const imagenBase64 =
+        await getBase64(
+            document.getElementById("foto").files[0]
+        );
+
+        const datos = new URLSearchParams({
+
+            titulo:
+            document.getElementById("titulo").value,
+
+            estado:
+            document.getElementById("estado").value,
+
+            descripcion:
+            document.getElementById("descripcion").value,
+
+            precio:
+            document.getElementById("precio").value,
+
+            recogida:
+            document.getElementById("recogida").value,
+
+            contacto:
+            tel,
+
+            imagenBase64:
+            imagenBase64
+
+        });
+
+        const res = await fetch(urlScript,{
+            method:"POST",
+            body:datos
+        });
+
+        const texto = await res.text();
+
+        console.log(texto);
+
+        localStorage.setItem(
+            'last_post_' + tel,
+            Date.now()
+        );
+
+        status.innerHTML =
+        "✅ Anuncio publicado correctamente";
+
+        document
+        .getElementById("formPublicar")
+        .reset();
+
+        cargar();
+
+    }catch(err){
+
+        console.error(err);
+
+        status.innerHTML =
+        "❌ Error al publicar";
+
+    }finally{
+
+        btn.disabled = false;
+
+        btn.innerText =
+        "PUBLICAR ANUNCIO";
+    }
 }
 
-async function getBase64(file) {
-    if (!file) return "";
-    return new Promise(r => { let rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(file); });
+/* CARGAR ANUNCIOS */
+
+async function cargar(){
+
+    const cont =
+    document.getElementById("tablon");
+
+    try{
+
+        const res =
+        await fetch(urlScript);
+
+        const data =
+        await res.json();
+
+        cont.innerHTML = "";
+
+        if(!data.length){
+
+            cont.innerHTML = `
+            <div class="loading">
+                No hay anuncios publicados.
+            </div>
+            `;
+
+            return;
+        }
+
+        data.forEach(a=>{
+
+            cont.innerHTML += `
+
+            <div class="tarjeta-anuncio">
+
+                ${
+                    a.imagen
+                    ?
+                    `<img src="${a.imagen}" class="foto-articulo">`
+                    :
+                    ``
+                }
+
+                <div class="cuerpo-anuncio">
+
+                    <div class="meta-anuncio">
+
+                        ${
+                            a.recogida
+                            ?
+                            `<span class="badge badge-recogida">
+                                📍 ${a.recogida}
+                            </span>`
+                            :
+                            ``
+                        }
+
+                        ${
+                            a.estado
+                            ?
+                            `<span class="badge badge-estado">
+                                ${a.estado}
+                            </span>`
+                            :
+                            ``
+                        }
+
+                    </div>
+
+                    <h3 class="titulo-anuncio">
+                        ${(a.titulo || "").toUpperCase()}
+                    </h3>
+
+                    <p class="desc-anuncio">
+                        ${a.descripcion || ""}
+                    </p>
+
+                    <div class="footer-anuncio">
+
+                        <span class="precio">
+                            ${
+                                a.precio
+                                ?
+                                a.precio + "€"
+                                :
+                                "Gratis"
+                            }
+                        </span>
+
+                        <a
+                            href="tel:${a.contacto}"
+                            class="btn-llamar"
+                        >
+                            LLAMAR
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+            `;
+        });
+
+    }catch(err){
+
+        console.error(err);
+
+        cont.innerHTML = `
+        <div class="loading">
+            ❌ Error al cargar anuncios
+        </div>
+        `;
+    }
 }
 
-// Cargar anuncios... (puedes copiar la lógica que ya tienes aquí)
+/* INICIO */
+
+cargar();
+
 </script>
+
 </body>
 </html>
