@@ -1,178 +1,839 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jardinería y Leña | infoespinar.com</title>
-    <style>
-        /* 🎨 VARIABLES Y ESTILOS GENERALES (Paleta Menta/Wallapop) */
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
-        
-        :root {
-            --menta: #25b399; /* Verde característico */
-            --menta-oscuro: #1e9982;
-            --gris-fondo: #f5f6f7;
-            --texto: #2a2a2a;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+<title>Compra - Venta | infoespinar.com</title>
 
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--gris-fondo);
-            color: var(--texto);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-        /* 📋 ENCABEZADO NEUTRO */
-        .header {
-            background: #ffffff;
-            text-align: center;
-            padding: 20px;
-            border-bottom: 1px solid #e0e0e0;
-        }
+:root{
+  --azul-inicio:#1e3a8a;
+  --azul-fin:#3b82f6;
+  --fondo:#f4f6f9;
+}
 
-        .header-logo-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: var(--texto);
-        }
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
-        .header h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.5px; }
+body{
+  font-family:'Lato',sans-serif;
+  background:var(--fondo);
+  color:#334155;
+  overflow-x:hidden;
+}
 
-        /* 🏛️ CONTENEDOR PRINCIPAL */
-        .main-container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px 15px;
-        }
+/* HEADER */
 
-        /* 🎪 TÍTULO FUERA DEL HEADER */
-        .titulo-principal {
-            font-size: 24px;
-            font-weight: 700;
-            margin: 10px 0 20px 0;
-        }
+.header{
+  background:linear-gradient(
+    135deg,
+    var(--azul-inicio) 0%,
+    var(--azul-fin) 100%
+  );
 
-        .titulo-bloque {
-            font-size: 14px;
-            font-weight: 700;
-            margin: 20px 0 15px 0;
-            color: #757575;
-        }
+  color:#fff;
+  padding:25px 20px;
+  text-align:center;
+  box-shadow:0 4px 12px rgba(0,0,0,.1);
+}
 
-        /* 🏷️ BANNER ESTILO MENTA */
-        .banner-comercio {
-            background-color: var(--menta);
-            color: white;
-            padding: 20px;
-            border-radius: 8px;
-            text-decoration: none;
-            display: block;
-            margin-bottom: 25px;
-        }
-        .banner-nombre { font-size: 18px; font-weight: 700; margin-bottom: 5px; }
+.header-logo-link{
+  text-decoration:none;
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+}
 
-        /* 🔍 BUSCADOR MENTA */
-        .input-buscador {
-            width: 100%;
-            padding: 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .input-buscador:focus { border-color: var(--menta); outline: none; }
+.header-bandera{
+  width:42px;
+  height:42px;
+  border-radius:8px;
+}
 
-        /* 📇 TARJETAS */
-        .grid-comercios {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-            visibility: hidden;
-        }
+.header h1{
+  font-size:22px;
+  font-weight:900;
+  text-transform:uppercase;
+}
 
-        .tarjeta-comercio {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 16px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
+/* APP */
 
-        .nombre-comercio { font-size: 17px; font-weight: 700; margin-bottom: 8px; }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            border-radius: 6px;
-            text-align: center;
-            text-decoration: none;
-            font-weight: 700;
-            margin-top: 8px;
-            border: none;
-            cursor: pointer;
-        }
+.contenedor-app{
+  padding:25px 15px;
+  max-width:1200px;
+  margin:0 auto;
+}
 
-        .btn-menta { background-color: var(--menta); color: white; }
-        .btn-outline { border: 1px solid #ddd; color: #555; }
+.navegacion{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+  border-bottom:2px solid #e2e8f0;
+  padding-bottom:10px;
+}
 
-        /* 👣 FOOTER */
-        .footer { text-align: center; padding: 40px; color: #888; font-size: 12px; }
+.btn-pestana{
+  background:#f1f5f9;
+  border:none;
+  padding:10px 20px;
+  font-weight:700;
+  border-radius:8px;
+  cursor:pointer;
+  color:#475569;
+}
 
-    </style>
+.btn-pestana.activa{
+  background:#1e293b;
+  color:#fff;
+}
+
+.seccion-app{
+  display:none;
+}
+
+.seccion-app.activa{
+  display:block;
+}
+
+.contenedor-buscador{
+  margin-bottom:20px;
+  display:none;
+}
+
+.contenedor-buscador.activo{
+  display:block;
+}
+
+.input-buscador{
+  width:100%;
+  padding:12px 16px;
+  border:2px solid #cbd5e1;
+  border-radius:10px;
+  font-family:inherit;
+  font-size:14px;
+  outline:none;
+}
+
+.input-buscador:focus{
+  border-color:#1e293b;
+}
+
+.grid-anuncios{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:20px;
+}
+
+.tarjeta-anuncio{
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:16px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 4px 10px -1px rgba(0,0,0,.06);
+}
+
+.tarjeta-anuncio.oculta{
+  display:none !important;
+}
+
+.cabecera-anuncio{
+  padding:14px 20px;
+  text-transform:uppercase;
+}
+
+.titulo-anuncio{
+  font-size:15px;
+  font-weight:700;
+  color:#fff;
+}
+
+.contenedor-foto{
+  width:100%;
+  height:200px;
+  background:#f8fafc;
+}
+
+.foto-articulo{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.cuerpo-anuncio{
+  padding:16px 20px;
+  display:flex;
+  flex-direction:column;
+  flex-grow:1;
+}
+
+.meta-anuncio{
+  display:flex;
+  gap:8px;
+  margin-bottom:10px;
+  flex-wrap:wrap;
+}
+
+.recogida-anuncio{
+  font-size:11px;
+  color:#0284c7;
+  font-weight:700;
+}
+
+.estado-anuncio{
+  font-size:10px;
+  font-weight:700;
+  padding:2px 8px;
+  border:1px solid #cbd5e1;
+  border-radius:6px;
+  background:#f8fafc;
+}
+
+.desc-anuncio{
+  font-size:13px;
+  color:#475569;
+  margin-bottom:16px;
+  flex-grow:1;
+}
+
+.footer-tarjeta{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  border-top:1px solid #f1f5f9;
+  padding-top:12px;
+}
+
+.precio-anuncio{
+  font-size:17px;
+  font-weight:700;
+  color:#0f172a;
+}
+
+.bloque-botones{
+  display:flex;
+  gap:6px;
+}
+
+.btn-contacto{
+  padding:8px 10px;
+  border-radius:6px;
+  text-decoration:none;
+  color:#fff;
+  font-size:11px;
+  font-weight:700;
+}
+
+.btn-whatsapp{
+  background:#25d366;
+}
+
+.btn-llamar{
+  background:#3b82f6;
+}
+
+.cargando{
+  text-align:center;
+  padding:30px;
+  color:#64748b;
+}
+
+/* FORMULARIO */
+
+.formulario-publicar{
+  background:#fff;
+  padding:25px;
+  border-radius:16px;
+  border:1px solid #e2e8f0;
+  max-width:650px;
+  margin:0 auto;
+}
+
+.grupo-campo{
+  margin-bottom:16px;
+}
+
+.grupo-campo label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:6px;
+}
+
+.grupo-campo input,
+.grupo-campo select,
+.grupo-campo textarea{
+  width:100%;
+  padding:10px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
+  font-family:inherit;
+}
+
+#titulo{
+  text-transform:uppercase;
+}
+
+.grupo-privacidad{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin:20px 0;
+}
+
+.grupo-privacidad input{
+  width:auto;
+  margin-top:4px;
+}
+
+.grupo-privacidad label{
+  font-size:13px;
+  line-height:1.5;
+}
+
+.grupo-privacidad a{
+  color:#1e293b;
+  font-weight:700;
+}
+
+.btn-enviar{
+  width:100%;
+  padding:12px;
+  background:#059669;
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.btn-enviar:disabled{
+  background:#94a3b8;
+  cursor:not-allowed;
+}
+
+.mensaje-exito{
+  text-align:center;
+  color:#059669;
+  font-weight:700;
+  padding:15px 0;
+}
+</style>
 </head>
+
 <body>
 
-    <header class="header">
-        <a href="index.html" class="header-logo-link">
-            <h1>infoespinar.com</h1>
-        </a>
-    </header>
+<header class="header">
+  <a href="index.html" class="header-logo-link">
+    <img
+      src="https://i.imgur.com/di5CaLV.png"
+      class="header-bandera"
+      alt="Bandera El Espinar"
+    >
 
-    <main class="main-container">
-        
-        <!-- Título fuera del header -->
-        <h2 class="titulo-principal">Jardinería y Leña</h2>
+    <h1>infoespinar.com</h1>
+  </a>
+</header>
 
-        <div class="titulo-bloque">Listado de profesionales</div>
-        
-        <input type="text" id="buscadorJardin" class="input-buscador" placeholder="Buscar servicios...">
+<div class="contenedor-app" id="wrapper">
 
-        <div class="grid-comercios" id="gridComercios">
-            <!-- Ejemplo de tarjeta -->
-            <div class="tarjeta-comercio" data-search="vivero la estacion">
-                <div class="nombre-comercio">Vivero La Estación</div>
-                <div style="font-size: 13px; color: #666; margin-bottom: 15px;">C. Madrid, 2, La Estación</div>
-                <a href="tel:+34921188205" class="btn btn-menta">Llamar</a>
-                <a href="https://wa.me/34615413703" class="btn btn-outline">WhatsApp</a>
-            </div>
-            <!-- Añadir más tarjetas aquí -->
+  <div class="navegacion">
+    <button
+      class="btn-pestana activa"
+      onclick="cambiar('tablon-sec',event)"
+    >
+      📌 Ver Tablón
+    </button>
+
+    <button
+      class="btn-pestana"
+      onclick="cambiar('form-sec',event)"
+    >
+      ➕ Publicar Anuncio
+    </button>
+  </div>
+
+  <div id="buscador-cont" class="contenedor-buscador activo">
+    <input
+      type="text"
+      id="txtBuscador"
+      class="input-buscador"
+      placeholder="🔍 Buscar..."
+      oninput="filtrarAnuncios()"
+    >
+  </div>
+
+  <div id="tablon-sec" class="seccion-app activa">
+
+    <div id="loading" class="cargando">
+      Cargando anuncios...
+    </div>
+
+    <div id="tablon" class="grid-anuncios"></div>
+
+  </div>
+
+  <div id="form-sec" class="seccion-app">
+
+    <div class="formulario-publicar">
+
+      <form id="formAnuncio" onsubmit="enviar(event)">
+
+        <div class="grupo-campo">
+          <label>¿Qué vendes o regalas? *</label>
+          <input
+            id="titulo"
+            required
+            placeholder="Ej: BICICLETA"
+          >
         </div>
-    </main>
 
-    <footer class="footer">
-        © 2026 InfoEspinar
-    </footer>
+        <div class="grupo-campo">
+          <label>Estado *</label>
 
-    <script>
-        // Lógica simplificada de filtrado y altura
-        document.addEventListener("DOMContentLoaded", function() {
-            const grid = document.getElementById("gridComercios");
-            grid.style.visibility = "visible";
-            
-            document.getElementById("buscadorJardin").addEventListener("input", function(e) {
-                const term = e.target.value.toLowerCase();
-                document.querySelectorAll(".tarjeta-comercio").forEach(card => {
-                    card.style.display = card.dataset.search.includes(term) ? "block" : "none";
-                });
-            });
-        });
-    </script>
+          <select id="estado">
+            <option>Nuevo</option>
+            <option>Buen estado</option>
+            <option>Usado</option>
+            <option>Para restaurar</option>
+          </select>
+        </div>
+
+        <div class="grupo-campo">
+          <label>Descripción</label>
+
+          <textarea
+            id="desc"
+            placeholder="Detalles..."
+          ></textarea>
+        </div>
+
+        <div class="grupo-campo">
+          <label>Precio (€) *</label>
+
+          <input
+            id="precio"
+            type="number"
+            min="0"
+            required
+          >
+        </div>
+
+        <div class="grupo-campo">
+          <label>Teléfono *</label>
+
+          <input
+            id="contacto"
+            type="tel"
+            required
+            maxlength="9"
+            pattern="[0-9]{9}"
+          >
+        </div>
+
+        <div class="grupo-campo">
+          <label>Ubicación *</label>
+
+          <select id="recogida" required>
+            <option value="">Selecciona zona</option>
+            <option>El Espinar</option>
+            <option>San Rafael</option>
+            <option>La Estación</option>
+            <option>LASR</option>
+          </select>
+        </div>
+
+        <div class="grupo-campo">
+          <label>Foto</label>
+
+          <input
+            type="file"
+            id="foto"
+            accept="image/*"
+          >
+        </div>
+
+        <div class="grupo-privacidad">
+
+          <input
+            type="checkbox"
+            id="checkPrivacidad"
+            onchange="validarCheck()"
+          >
+
+          <label for="checkPrivacidad">
+            He leído y acepto la
+            <a href="privacidad.html">
+              Política de Privacidad
+            </a>
+          </label>
+
+        </div>
+
+        <button
+          type="submit"
+          class="btn-enviar"
+          id="btnPublicar"
+          disabled
+        >
+          🚀 Publicar Anuncio
+        </button>
+
+      </form>
+
+      <div id="status"></div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+const urlScript =
+"https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
+
+function escaparHTML(texto){
+  const div=document.createElement("div");
+  div.textContent=texto||"";
+  return div.innerHTML;
+}
+
+function validarCheck(){
+  document.getElementById("btnPublicar").disabled =
+  !document.getElementById("checkPrivacidad").checked;
+}
+
+function cambiar(id,e){
+
+  document.querySelectorAll(".seccion-app")
+    .forEach(s=>s.classList.remove("activa"));
+
+  document.getElementById(id)
+    .classList.add("activa");
+
+  document.querySelectorAll(".btn-pestana")
+    .forEach(b=>b.classList.remove("activa"));
+
+  if(e && e.target){
+    e.target.classList.add("activa");
+  }
+
+  const buscador =
+    document.getElementById("buscador-cont");
+
+  if(id==="tablon-sec"){
+    buscador.classList.add("activo");
+    cargar();
+  }else{
+    buscador.classList.remove("activo");
+  }
+}
+
+function filtrarAnuncios(){
+
+  const termino =
+    document.getElementById("txtBuscador")
+    .value
+    .toLowerCase();
+
+  document.querySelectorAll(".tarjeta-anuncio")
+    .forEach(t=>{
+
+      const texto =
+        t.dataset.search.toLowerCase();
+
+      if(texto.includes(termino)){
+        t.classList.remove("oculta");
+      }else{
+        t.classList.add("oculta");
+      }
+
+    });
+}
+
+async function cargar(){
+
+  try{
+
+    const res = await fetch(urlScript);
+
+    const data = await res.json();
+
+    const cont =
+      document.getElementById("tablon");
+
+    document.getElementById("loading")
+      .style.display="none";
+
+    cont.innerHTML="";
+
+    const colores=[
+      "#2563eb",
+      "#059669",
+      "#7c3aed",
+      "#ea580c"
+    ];
+
+    data.forEach((a,i)=>{
+
+      const titulo =
+        escaparHTML(
+          (a.titulo||"").toUpperCase()
+        );
+
+      const descripcion =
+        escaparHTML(a.descripcion||"");
+
+      const recogida =
+        escaparHTML(a.recogida||"");
+
+      const estado =
+        escaparHTML(a.estado||"");
+
+      let precio="Gratis";
+
+      if(a.precio && a.precio!="0"){
+        precio=a.precio+"€";
+      }
+
+      let foto="";
+
+      if(a.imagen){
+
+        foto=`
+        <div class="contenedor-foto">
+          <img
+            class="foto-articulo"
+            src="${a.imagen}"
+            alt="${titulo}"
+            loading="lazy"
+          >
+        </div>`;
+      }
+
+      const tel =
+        (a.contacto||"")
+        .replace(/\s+/g,'');
+
+      const wa =
+        tel.startsWith("34")
+        ? tel
+        : "34"+tel;
+
+      const busqueda =
+        `${titulo} ${descripcion} ${recogida}`;
+
+      cont.innerHTML += `
+      <div
+        class="tarjeta-anuncio"
+        data-search="${busqueda.replace(/"/g,'&quot;')}"
+      >
+
+        <div
+          class="cabecera-anuncio"
+          style="background:${colores[i%4]}"
+        >
+          <h3 class="titulo-anuncio">
+            ${titulo}
+          </h3>
+        </div>
+
+        ${foto}
+
+        <div class="cuerpo-anuncio">
+
+          <div class="meta-anuncio">
+
+            <span class="recogida-anuncio">
+              📍 ${recogida}
+            </span>
+
+            <span class="estado-anuncio">
+              ${estado}
+            </span>
+
+          </div>
+
+          <p class="desc-anuncio">
+            ${descripcion}
+          </p>
+
+          <div class="footer-tarjeta">
+
+            <span class="precio-anuncio">
+              ${precio}
+            </span>
+
+            <div class="bloque-botones">
+
+              <a
+                class="btn-contacto btn-llamar"
+                href="tel:${tel}"
+              >
+                📞 Llamar
+              </a>
+
+              <a
+                class="btn-contacto btn-whatsapp"
+                href="https://wa.me/${wa}"
+                target="_blank"
+              >
+                💬 WhatsApp
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>`;
+    });
+
+  }catch(err){
+
+    console.error(err);
+
+    document.getElementById("loading")
+      .innerText =
+      "Error cargando anuncios";
+  }
+}
+
+async function enviar(e){
+
+  e.preventDefault();
+
+  const btn =
+    document.getElementById("btnPublicar");
+
+  const status =
+    document.getElementById("status");
+
+  btn.disabled=true;
+
+  status.innerHTML =
+  "<div class='cargando'>Publicando...</div>";
+
+  try{
+
+    const file =
+      document.getElementById("foto").files[0];
+
+    let imagenBase64="";
+
+    if(file){
+
+      if(file.size > 800000){
+        throw new Error(
+          "Imagen demasiado grande"
+        );
+      }
+
+      imagenBase64 =
+      await new Promise((resolve,reject)=>{
+
+        const reader = new FileReader();
+
+        reader.onload =
+          ()=>resolve(reader.result);
+
+        reader.onerror = reject;
+
+        reader.readAsDataURL(file);
+
+      });
+    }
+
+    const datos =
+      new URLSearchParams();
+
+    datos.append(
+      "titulo",
+      document.getElementById("titulo")
+      .value
+      .trim()
+      .toUpperCase()
+    );
+
+    datos.append(
+      "estado",
+      document.getElementById("estado").value
+    );
+
+    datos.append(
+      "descripcion",
+      document.getElementById("desc").value
+    );
+
+    datos.append(
+      "precio",
+      document.getElementById("precio").value
+    );
+
+    datos.append(
+      "contacto",
+      document.getElementById("contacto").value
+    );
+
+    datos.append(
+      "recogida",
+      document.getElementById("recogida").value
+    );
+
+    datos.append(
+      "imagenBase64",
+      imagenBase64
+    );
+
+    await fetch(urlScript,{
+      method:"POST",
+      headers:{
+        "Content-Type":
+        "application/x-www-form-urlencoded"
+      },
+      body:datos.toString()
+    });
+
+    status.innerHTML =
+    "<div class='mensaje-exito'>¡Anuncio publicado!</div>";
+
+    document.getElementById("formAnuncio")
+      .reset();
+
+    document.getElementById("btnPublicar")
+      .disabled=true;
+
+    setTimeout(()=>{
+      status.innerHTML="";
+      cambiar("tablon-sec");
+    },1500);
+
+  }catch(err){
+
+    console.error(err);
+
+    status.innerHTML =
+    "<div class='cargando' style='color:red'>"+
+    err.message+
+    "</div>";
+
+    btn.disabled=false;
+  }
+}
+
+cargar();
+</script>
+
 </body>
 </html>
