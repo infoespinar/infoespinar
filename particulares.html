@@ -1,400 +1,131 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Particulares | infoespinar.com</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Particulares | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --menta: #20a088; --fondo: #f4f6f9; }
+        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; }
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        /* HEADER COMPACTO Y LIMPIO */
+        .header { background: var(--menta); padding: 15px 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
+        .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; }
+        .header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
-
-:root{
-    --menta:#20a088;
-    --fondo:#f4f6f9;
-}
-
-body{
-    font-family:'Lato',sans-serif;
-    background:var(--fondo);
-    color:#334155;
-}
-
-.header{
-    background:var(--menta);
-    color:white;
-    text-align:center;
-    padding:30px 20px;
-}
-
-.header-logo-link{
-    display:inline-flex;
-    align-items:center;
-    gap:12px;
-    text-decoration:none;
-    color:white;
-    background:rgba(255,255,255,.08);
-    padding:8px 16px;
-    border-radius:30px;
-}
-
-.header-bandera{
-    width:32px;
-    height:32px;
-    object-fit:cover;
-    border-radius:6px;
-}
-
-.formulario-publicar{
-    max-width:600px;
-    margin:20px auto;
-    padding:25px;
-    background:white;
-    border-radius:16px;
-    display:none;
-    border:1px solid #e2e8f0;
-}
-
-input,select,textarea{
-    width:100%;
-    padding:12px;
-    margin-bottom:10px;
-    border:1px solid #cbd5e1;
-    border-radius:8px;
-}
-
-#titulo{
-    text-transform:uppercase;
-}
-
-.btn-accion{
-    width:100%;
-    padding:14px;
-    background:var(--menta);
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-weight:700;
-    cursor:pointer;
-}
-
-.grid-anuncios{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-    gap:20px;
-    padding:20px;
-    max-width:1200px;
-    margin:0 auto;
-}
-
-.tarjeta{
-    background:white;
-    border-radius:14px;
-    overflow:hidden;
-    box-shadow:0 4px 10px rgba(0,0,0,.05);
-}
-
-.tarjeta img{
-    width:100%;
-    height:220px;
-    object-fit:cover;
-}
-
-.tarjeta-body{
-    padding:18px;
-}
-
-.loading{
-    text-align:center;
-    padding:40px;
-}
-</style>
+        /* FORMULARIO Y TABLÓN */
+        .contenedor-app { max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .formulario-publicar { background: white; padding: 20px; border-radius: 12px; border: 1px solid #e2e8f0; display: none; margin-bottom: 20px; }
+        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-family: inherit; }
+        .btn-accion { width: 100%; padding: 12px; background: var(--menta); color: white; border: none; border-radius: 6px; font-weight: 700; cursor: pointer; }
+        
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px; }
+        .tarjeta-anuncio { background: white; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .foto-articulo { width: 100%; height: 160px; object-fit: cover; }
+        .cuerpo-anuncio { padding: 15px; }
+    </style>
 </head>
-
 <body>
 
 <header class="header">
-    <a href="index.html" class="header-logo-link">
+    <a href="index.html" class="header-logo">
         <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
         <h1>INFOESPINAR.COM</h1>
     </a>
 </header>
 
-<div style="text-align:center;margin:20px;">
-    <button onclick="toggleForm()" class="btn-accion" style="max-width:300px;">
-        ➕ PUBLICAR NUEVO ANUNCIO
-    </button>
-</div>
+<div class="contenedor-app">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <button onclick="toggleForm()" class="btn-accion" style="max-width: 250px;">➕ PUBLICAR ANUNCIO</button>
+    </div>
 
-<div id="contenedor-formulario" class="formulario-publicar">
+    <div id="contenedor-formulario" class="formulario-publicar">
+        <form id="formPublicar" onsubmit="enviar(event)">
+            <input type="text" id="titulo" placeholder="TÍTULO (SOLO MAYÚSCULAS)" required oninput="this.value = this.value.toUpperCase()">
+            <select id="estado" required>
+                <option value="" disabled selected>Estado del artículo...</option>
+                <option>NUEVO</option><option>BUEN ESTADO</option><option>MUY USADO</option><option>PARA RESTAURAR</option>
+            </select>
+            <textarea id="descripcion" placeholder="Descripción" required rows="2"></textarea>
+            <input type="number" id="precio" placeholder="Precio (€)" required>
+            <select id="recogida" required>
+                <option value="" disabled selected>Lugar de recogida...</option>
+                <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
+            </select>
+            <input type="tel" id="contacto" placeholder="Teléfono (9 dígitos)" required pattern="[0-9]{9}" maxlength="9">
+            <input type="file" id="foto" accept="image/*" style="border:none;">
+            <button type="submit" id="btnPublicar" class="btn-accion">PUBLICAR</button>
+        </form>
+    </div>
 
-<form id="formPublicar">
-
-<input
-type="text"
-id="titulo"
-placeholder="TÍTULO"
-required
-oninput="this.value=this.value.toUpperCase()"
->
-
-<select id="estado" required>
-<option value="">Estado del artículo...</option>
-<option>NUEVO</option>
-<option>BUEN ESTADO</option>
-<option>MUY USADO</option>
-<option>PARA RESTAURAR</option>
-</select>
-
-<textarea
-id="descripcion"
-placeholder="Descripción"
-required
-rows="4"
-></textarea>
-
-<input
-type="number"
-id="precio"
-placeholder="Precio (€)"
-required
->
-
-<select id="recogida" required>
-<option value="">Lugar de recogida...</option>
-<option>EL ESPINAR</option>
-<option>SAN RAFAEL</option>
-<option>LASR</option>
-<option>LA ESTACIÓN</option>
-</select>
-
-<input
-type="tel"
-id="contacto"
-placeholder="Teléfono"
-required
-pattern="[0-9]{9}"
-maxlength="9"
->
-
-<input
-type="file"
-id="foto"
-accept="image/*"
-style="border:none;"
->
-
-<button
-type="submit"
-id="btnPublicar"
-class="btn-accion"
->
-PUBLICAR ANUNCIO
-</button>
-
-</form>
-
-<div id="status" style="margin-top:10px;text-align:center;"></div>
-
-</div>
-
-<div id="tablon" class="grid-anuncios">
-<div class="loading">Cargando anuncios...</div>
+    <div id="tablon" class="grid-anuncios">
+        <div id="loading" style="text-align:center; padding:40px; grid-column: 1/-1;">Cargando anuncios...</div>
+    </div>
 </div>
 
 <script>
+const urlScript = "https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
 
-const urlScript =
-"https://script.google.com/macros/s/AKfycbzPmN9-GeOe9EfKUSvCZR0rpUlJ6ebJ3lo0_q8WHwQLVGjiYIaQSGJuvglXmJrQC6CP/exec";
-
-function toggleForm(){
-    const f=document.getElementById("contenedor-formulario");
-
-    f.style.display=
-    f.style.display==="block"
-    ?"none"
-    :"block";
+function toggleForm() {
+    const f = document.getElementById('contenedor-formulario');
+    f.style.display = (f.style.display === 'block') ? 'none' : 'block';
 }
 
-document
-.getElementById("formPublicar")
-.addEventListener("submit",enviar);
-
-async function enviar(e){
-
-    e.preventDefault();
-
-    const btn=document.getElementById("btnPublicar");
-    const status=document.getElementById("status");
-
-    btn.disabled=true;
-    btn.innerText="PUBLICANDO...";
-
-    status.innerHTML="Subiendo anuncio...";
-
-    try{
-
-        const imagenBase64=
-        await getBase64(
-            document.getElementById("foto").files[0]
-        );
-
-        const datos=new URLSearchParams();
-
-        datos.append(
-            "titulo",
-            document.getElementById("titulo").value
-        );
-
-        datos.append(
-            "estado",
-            document.getElementById("estado").value
-        );
-
-        datos.append(
-            "descripcion",
-            document.getElementById("descripcion").value
-        );
-
-        datos.append(
-            "precio",
-            document.getElementById("precio").value
-        );
-
-        datos.append(
-            "recogida",
-            document.getElementById("recogida").value
-        );
-
-        datos.append(
-            "contacto",
-            document.getElementById("contacto").value
-        );
-
-        datos.append(
-            "imagenBase64",
-            imagenBase64
-        );
-
-        const res=await fetch(urlScript,{
-            method:"POST",
-            body:datos
-        });
-
-        const texto=await res.text();
-
-        console.log(texto);
-
-        if(texto.includes("ok")){
-
-            status.innerHTML=
-            "<span style='color:green;font-weight:700;'>Anuncio publicado correctamente</span>";
-
-            cargar();
-
-            document
-            .getElementById("formPublicar")
-            .reset();
-
-        }else{
-
-            status.innerHTML=
-            "<span style='color:red;font-weight:700;'>Error real del servidor</span>";
-
-        }
-
-    }catch(err){
-
-        console.error(err);
-
-        status.innerHTML=
-        "<span style='color:red;font-weight:700;'>Error al publicar</span>";
-
-    }
-
-    btn.disabled=false;
-    btn.innerText="PUBLICAR ANUNCIO";
-}
-
-async function getBase64(file){
-
-    if(!file) return "";
-
-    return new Promise(resolve=>{
-
-        const reader=new FileReader();
-
-        reader.onload=()=>{
-            resolve(reader.result);
-        };
-
-        reader.readAsDataURL(file);
-
-    });
-}
-
-async function cargar(){
-
-    const tablon=document.getElementById("tablon");
-
-    try{
-
-        const res=await fetch(urlScript);
-
-        const data=await res.json();
-
-        tablon.innerHTML="";
-
-        data.forEach(a=>{
-
-            tablon.innerHTML+=`
-
-            <div class="tarjeta">
-
-                ${
-                    a.imagen
-                    ?`<img src="${a.imagen}">`
-                    :""
-                }
-
-                <div class="tarjeta-body">
-
-                    <h3 style="color:#20a088;margin-bottom:10px;">
-                        ${a.titulo || ""}
-                    </h3>
-
-                    <p style="margin-bottom:10px;">
-                        ${a.descripcion || ""}
-                    </p>
-
-                    <p>
-                        <strong>${a.precio || "0"}€</strong>
-                    </p>
-
+async function cargar() {
+    const cont = document.getElementById("tablon");
+    try {
+        const res = await fetch(urlScript);
+        const data = await res.json();
+        document.getElementById("loading").style.display = "none";
+        cont.innerHTML = data.map(a => `
+            <div class="tarjeta-anuncio">
+                ${a.imagen ? `<img src="${a.imagen}" class="foto-articulo">` : ''}
+                <div class="cuerpo-anuncio">
+                    <h3 style="color:var(--menta); font-size:16px; margin-bottom:8px;">${(a.titulo||"").toUpperCase()}</h3>
+                    <p style="font-size:13px; color:#64748b; margin-bottom:10px;">${a.descripcion}</p>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="font-weight:900;">${a.precio}€</span>
+                        <a href="tel:${a.contacto}" style="background:var(--menta); color:white; padding:6px 10px; text-decoration:none; border-radius:4px; font-size:11px;">LLAMAR</a>
+                    </div>
                 </div>
+            </div>`).join('');
+    } catch(err) { cont.innerHTML = "Error al cargar anuncios."; }
+}
 
-            </div>
-
-            `;
-
-        });
-
-    }catch(err){
-
-        console.error(err);
-
-        tablon.innerHTML=
-        "<div class='loading'>Error al cargar anuncios</div>";
+async function enviar(e) {
+    e.preventDefault();
+    const btn = document.getElementById("btnPublicar");
+    btn.disabled = true; btn.innerText = "Publicando...";
+    const tel = document.getElementById("contacto").value;
+    
+    // Antiflood
+    if (localStorage.getItem('last_post_' + tel)) {
+        alert("¡Espera 5 minutos entre publicaciones!");
+        btn.disabled = false; btn.innerText = "PUBLICAR"; return;
     }
+
+    const file = document.getElementById("foto").files[0];
+    const datos = new URLSearchParams({
+        titulo: document.getElementById("titulo").value,
+        estado: document.getElementById("estado").value,
+        descripcion: document.getElementById("descripcion").value,
+        precio: document.getElementById("precio").value,
+        recogida: document.getElementById("recogida").value,
+        contacto: tel,
+        imagenBase64: file ? await new Promise(r => { let rd = new FileReader(); rd.onload = () => r(rd.result); rd.readAsDataURL(file); }) : ""
+    });
+
+    try {
+        await fetch(urlScript, { method: "POST", body: datos });
+        localStorage.setItem('last_post_' + tel, Date.now());
+        alert("Publicado con éxito."); location.reload();
+    } catch(err) { alert("Error."); btn.disabled = false; }
 }
 
 cargar();
-
 </script>
 </body>
 </html>
