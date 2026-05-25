@@ -1,101 +1,132 @@
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ocio | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Lato', sans-serif; background-color: transparent; padding: 8px 4px; overflow-y: auto; overflow-x: hidden; }
+        /* Header Estilo unificado */
+        .header { background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); transition: background 0.2s, transform 0.2s; }
+        .header-logo-link:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
+        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1 / 1; }
+        .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
-  /* Header Unificado */
-  .header-seccion { padding: 15px; border-bottom: 2px solid #e2e8f0; margin-bottom: 20px; text-align: center; }
-  .header-titulo { font-size: 22px; font-weight: 900; color: #1e3a8a; margin: 0; text-transform: uppercase; }
-  .header-titulo span { color: #15803d; }
-  .header-sub { font-size: 12px; color: #64748b; margin-top: 5px; }
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 20px 12px; }
+        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; color: #7c3aed; }
+        .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
 
-  /* Mapa */
-  .map-wrapper { width: 100%; height: 350px; overflow: hidden; border-radius: 12px; border: 1px solid #e0e0e0; position: relative; margin-bottom: 25px; }
-  .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
+        .contenedor-mapa-fijo { width: 100%; height: 300px; margin-bottom: 25px; }
+        .map-wrapper { width: 100%; height: 100%; overflow: hidden; border-radius: 14px; border: 1px solid #cbd5e1; position: relative; }
+        .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
+        
+        .banner-comercio { width: 100%; height: 120px; border-radius: 14px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 25px; }
+        .banner-info { padding: 15px 20px; z-index: 2; }
+        .banner-label { display: inline-block; background: #7c3aed; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
+        .banner-nombre { color: white; font-size: 19px; font-weight: 700; margin: 0; }
 
-  /* Buscador */
-  .contenedor-buscador { margin-bottom: 20px; width: 100%; }
-  .input-buscador { width: 100%; padding: 14px 16px; font-size: 15px; border: 2px solid #cbd5e1; border-radius: 12px; outline: none; transition: border-color 0.2s; }
-  .input-buscador:focus { border-color: #1e3932; }
+        .input-buscador { width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 14px; margin-bottom: 25px; font-size: 16px; outline: none; }
 
-  /* Tarjetas */
-  .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; width: 100%; padding-bottom: 25px; visibility: hidden; }
-  .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #1e3932; border-radius: 14px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); display: flex; flex-direction: column; transition: all 0.15s ease-in-out; }
-  .info-comercio { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-  .nombre-comercio { font-size: 19px; font-weight: 700; color: #1e3932; margin-bottom: 4px; line-height: 1.3; }
-  .enlace-web { display: inline-block; font-size: 14px; color: #334155; text-decoration: none; margin-bottom: 8px; }
-  .burbuja-nucleo { display: inline-block; background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; border: 1px solid #e2e8f0; }
-  .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 20px; line-height: 1.4; }
-  
-  .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
-  .fila-contacto { display: flex; gap: 10px; }
-  .btn { text-decoration: none; font-size: 14px; font-weight: 700; padding: 12px 14px; border-radius: 10px; text-align: center; display: inline-flex; align-items: center; justify-content: center; gap: 6px; color: #ffffff; transition: background-color 0.2s ease; }
-  .btn-llamar { background-color: #000000; flex: 1; }
-  .btn-whatsapp { background-color: #10b981; flex: 1; }
-  .btn-maps { background-color: #1a73e8; width: 100%; }
-  .btn-email { background-color: #facc15; color: #000000; width: 100%; }
-</style>
+        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; }
+        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #7c3aed; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; }
+        .nombre-comercio { font-size: 18px; font-weight: 700; color: #7c3aed; margin-bottom: 8px; }
+        .enlace-web { display: block; font-size: 13px; color: #475569; text-decoration: none; margin-bottom: 10px; }
+        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 15px; }
+        
+        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; color: white; }
+        .btn-llamar { background-color: #0f172a; }
+        .btn-whatsapp { background-color: #10b981; }
+        .btn-email { background-color: #f59e0b; color: #fff; }
 
-<div class="header-seccion">
-    <h1 class="header-titulo">Info<span>Espinar</span></h1>
-    <p class="header-sub">Directorio de servicios locales</p>
-</div>
+        .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
+        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
+    </style>
+</head>
+<body>
 
-<div class="map-wrapper">
-  <iframe src="https://www.google.com/maps/d/embed?mid=1c4Kx6ivp7VSdTVbo0quvDvtzNGZEsrA&ehbc=2E312F&noprof=1"></iframe>
-</div>
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera"> 
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
 
-<div class="contenedor-buscador">
-  <input type="text" id="buscadorOcio" class="input-buscador" placeholder="🔍 Buscar deporte, danza, piscina, naturaleza...">
-</div>
+    <main class="main-container">
+        <h2 class="titulo-seccion-principal">Ocio</h2>
+        <div class="titulo-bloque">Localización de servicios</div>
+        <div class="contenedor-mapa-fijo"><div class="map-wrapper"><iframe src="https://www.google.com/maps/d/embed?mid=1c4Kx6ivp7VSdTVbo0quvDvtzNGZEsrA&ehbc=2E312F&noprof=1"></iframe></div></div>
 
-<div class="grid-comercios" id="gridOcio">
-  <div class="tarjeta-comercio" data-search="escuela de danza laura sanchez el espinar">
-    <div class="info-comercio">
-      <div class="nombre-comercio">Escuela de Danza Laura Sánchez</div>
-      <a href="http://www.escueladedanzalaurasanchez.es/" target="_blank" class="enlace-web">🌐 escueladedanzalaurasanchez.es</a>
-      <span class="burbuja-nucleo">El Espinar</span>
-      <div class="direccion-comercio">📍 P.º de las Peñitas, 9, El Espinar</div>
-      <div class="bloque-botones">
-        <div class="fila-contacto">
-          <a href="tel:+34653428069" class="btn btn-llamar">📞 Llamar</a>
-          <a href="https://wa.me/34653428069" class="btn btn-whatsapp">💬 WhatsApp</a>
+        <a href="mailto:info@infoespinar.com" class="banner-comercio">
+            <div class="banner-info"><span class="banner-label">¿Eres comerciante?</span><h3 class="banner-nombre">¡Anuncia tu negocio aquí!</h3></div>
+        </a>
+
+        <input type="text" id="buscador" class="input-buscador" placeholder="🔍 Buscar actividades, deporte o cultura...">
+
+        <div class="grid-comercios" id="gridComercios">
+            <div class="tarjeta-comercio" data-nombre="Escuela de Danza Laura Sánchez">
+                <div class="nombre-comercio">Escuela de Danza Laura Sánchez</div>
+                <div class="direccion-comercio">📍 P.º de las Peñitas, 9, El Espinar</div>
+                <div class="btn-group"><a href="tel:+34653428069" class="btn btn-llamar">📞 653 428 069</a><a href="https://wa.me/34653428069" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+            </div>
+            <div class="tarjeta-comercio" data-nombre="Danzartes Artes Escénicas">
+                <div class="nombre-comercio">Danzartes Artes Escénicas</div>
+                <a href="https://espaciodanzartes.com/" class="enlace-web">🌐 espaciodanzartes.com</a>
+                <div class="direccion-comercio">📍 Carr. de La Garganta, La Estación</div>
+                <div class="btn-group"><a href="tel:+34648040374" class="btn btn-llamar">📞 648 040 374</a><a href="https://wa.me/34648040374" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+            </div>
+            <div class="tarjeta-comercio" data-nombre="Taller Bicicletas Golpe de Pedal">
+                <div class="nombre-comercio">Taller Bicicletas Golpe de Pedal</div>
+                <div class="direccion-comercio">📍 Tr.ª Alto del León, 12, San Rafael</div>
+                <div class="btn-group"><a href="tel:+34611816066" class="btn btn-llamar">📞 611 816 066</a><a href="https://wa.me/34611816066" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+            </div>
+            <div class="tarjeta-comercio" data-nombre="Beone Fitness & Sport">
+                <div class="nombre-comercio">Beone Fitness & Sport</div>
+                <a href="https://beone.es/" class="enlace-web">🌐 beone.es</a>
+                <div class="direccion-comercio">📍 Ctra. San Rafael - El Espinar, Km 2,5</div>
+                <div class="btn-group"><a href="tel:+34921126552" class="btn btn-llamar">📞 921 126 552</a><a href="mailto:info@beone.es" class="btn btn-email">📧 Email</a></div>
+            </div>
+            <div class="tarjeta-comercio" data-nombre="Ebizing">
+                <div class="nombre-comercio">Ebizing</div>
+                <a href="http://www.ebizing.es/" class="enlace-web">🌐 ebizing.es</a>
+                <div class="direccion-comercio">📍 P.º de las Peñitas, 15, El Espinar</div>
+                <div class="btn-group"><a href="tel:+34639642271" class="btn btn-llamar">📞 639 642 271</a></div>
+            </div>
+            <div class="tarjeta-comercio" data-nombre="De Pino a Pino San Rafael">
+                <div class="nombre-comercio">De Pino a Pino</div>
+                <a href="http://www.depinoapino.com/" class="enlace-web">🌐 depinoapino.com</a>
+                <div class="direccion-comercio">📍 P.º Quintana, 50, San Rafael</div>
+                <div class="btn-group"><a href="tel:+34659454568" class="btn btn-llamar">📞 659 454 568</a><a href="https://wa.me/34659454568" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+            </div>
         </div>
-        <a href="https://www.google.com/maps/dir/?api=1&destination=Farmacia+Calle+Marques+de+Perales+El+Espinar+Segovia46" class="btn btn-maps">📍 Ver en Maps</a>
-      </div>
-    </div>
-  </div>
-</div>
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const contenedor = document.getElementById("gridOcio");
-  const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
-  const buscador = document.getElementById("buscadorOcio");
-  
-  // Mezcla aleatoria
-  for (let i = tarjetas.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
-  }
-  tarjetas.forEach(t => contenedor.appendChild(t));
-  contenedor.style.visibility = "visible";
-  
-  buscador.addEventListener("input", function() {
-    const term = this.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-    tarjetas.forEach(t => {
-      t.style.display = (t.dataset.search.includes(term)) ? "flex" : "none";
-    });
-    actualizarAltura();
-  });
-  actualizarAltura();
-});
+        <div class="disclaimer-box">
+            <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas. Si observa algún error o desea actualizar su información, por favor póngase en contacto con nosotros.
+        </div>
+    </main>
 
-function actualizarAltura() {
-  if(window.parent && window.parent.postMessage) {
-    window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
-  }
-}
-window.addEventListener('resize', actualizarAltura);
-</script>
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        const grid = document.getElementById("gridComercios");
+        const cards = Array.from(grid.children);
+        cards.sort(() => Math.random() - 0.5);
+        cards.forEach(card => grid.appendChild(card));
+
+        document.getElementById("buscador").addEventListener("input", function() {
+            const term = this.value.toLowerCase();
+            cards.forEach(card => {
+                const name = card.getAttribute("data-nombre").toLowerCase();
+                card.style.display = name.includes(term) ? "flex" : "none";
+            });
+        });
+    </script>
+</body>
+</html>
