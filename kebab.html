@@ -25,7 +25,7 @@
             color: white;
             text-align: center;
             padding: 25px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: none;
         }
         .header-logo-link {
             display: inline-flex;
@@ -57,9 +57,10 @@
             background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);
             color: white;
             text-align: center;
-            padding: 30px 20px 25px;
+            padding: 20px 20px 25px;
             position: relative;
             overflow: hidden;
+            margin-top: -1px;
         }
         .hero-restaurante::before {
             content: '';
@@ -566,7 +567,7 @@
         <!-- RULETA -->
         <div class="bloque-ruleta">
             <div class="ruleta-titulo">🎲 ¿No sabes qué elegir? ¡Ruleta Rusa JJJ!</div>
-            <button class="btn-ruleta" onclick="ruletaDelHambre()">🎯 Girar la brocheta</button>
+            <button class="btn-ruleta" onclick="ruletaDelHambre()">🎯 SUERTE</button>
             <div class="pantalla-ruleta" id="pantalla-ruleta"></div>
             <div class="controles-ruleta" id="controles-ruleta">
                 <button class="btn-ruleta-si" id="btnConfirmarRuleta">👍 ¡Me lo pido!</button>
@@ -992,16 +993,16 @@
         msg += zona === "Recoger en Local"
             ? `📦 *MODALIDAD:* Recoger en tienda\n`
             : `📍 *ZONA:* ${zona}\n🏠 *DIRECCIÓN:* ${dir}\n`;
-        msg += `📞 *TELÉFONO CLIENTE:* ${tlf}\n`;
+        msg += `📞 *TELÉFONO:* ${tlf}\n`;
         msg += `🛍️ *Subtotal:* ${subtotal.toFixed(2)}€\n`;
         msg += `🛵 *Envío:* ${envio === 0 ? "✨ GRATIS" : envio.toFixed(2)+"€"}\n`;
         msg += `💰 *TOTAL:* ${total.toFixed(2)}€\n`;
         msg += `---------\n`;
         msg += `💳 *PAGO:* ${pago}\n\n`;
         if (pago === "Efectivo") msg += `💵 *Cambio:* ${cambio || "No necesita cambio"}\n`;
-        if (pago === "Bizum") msg += `Envía un pantallazo del pago por Bizum lo antes posible'\n`;
+        if (pago === "Bizum") msg += `Envía un pantallazo del pago por Bizum para poder comprobarlo.\n`;
         msg += `---------\n`;
-        msg += 'Conffirmaremos tu pedido lo antes posible respondiendo a este mensaje'
+        msg += 'Confirmaremos tu pedido lo antes posible respondiendo a este mensaje.'
         window.open(`https://api.whatsapp.com/send?phone=34619546566&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
