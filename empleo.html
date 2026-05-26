@@ -473,8 +473,8 @@
                     <div class="grupo-campo">
                         <label>¿Qué necesitas? *</label>
                         <select id="buscasUOfreces" required>
-                            <option value="BUSCO">Busco empleo / Me ofrezco</option>
-                            <option value="OFREZCO">Ofrezco empleo / Busco personal</option>
+                            <option value="BUSCO">Busco empleo</option>
+                            <option value="OFREZCO">Busco personal</option>
                         </select>
                     </div>
 
@@ -502,6 +502,7 @@
                             <option value="Jornada Parcial">Jornada Parcial</option>
                             <option value="Fines de Semana">Fines de Semana</option>
                             <option value="Por Horas / Temporal">Por Horas / Temporal</option>
+                            <option value="Por Horas / Temporal">A Convenir</option>
                         </select>
                     </div>
 
@@ -612,9 +613,8 @@
                 }
 
                 const titulo = a.titulo.toString().toUpperCase();
-                const tipoBadge = a.buscasUOfreces === "OFREZCO" ? "🏢 OFERTA DE EMPLEO" : "🙋 SE OFRECE";
                 const color = coloresTarjeta[i % coloresTarjeta.length];
-                const metaBusqueda = `${titulo} ${a.descripcion || ''} ${a.recogida || ''} ${a.estado || ''}`;
+                const metaBusqueda = `${titulo} ${a.descripcion || ''} ${a.lugar || ''} ${a.jornada || ''}`;
                 const textoWA = `Hola, te escribo por el anuncio "${titulo.replace(/\[.*?\]/g, '').trim()}" que vi en InfoEspinar.`;
 
                 cont.innerHTML += `
@@ -625,8 +625,8 @@
                         </div>
                         <div class="cuerpo-anuncio">
                             <div class="meta-anuncio">
-                                ${a.recogida ? `<span class="recogida-anuncio">📍 ${a.recogida}</span>` : ""}
-                                ${a.estado   ? `<span class="estado-anuncio">${a.estado}</span>` : ""}
+                                ${a.lugar   ? `<span class="recogida-anuncio">📍 ${a.lugar}</span>` : ""}
+                                ${a.jornada ? `<span class="estado-anuncio">⏱️ ${a.jornada}</span>` : ""}
                             </div>
                             <p class="desc-anuncio">${a.descripcion || ""}</p>
                             <div class="footer-tarjeta">
