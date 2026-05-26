@@ -507,7 +507,7 @@
         <div class="paso-titulo">Paso 1 — Datos de entrega</div>
         <div class="bloque-config">
             <label>📞 Tu teléfono móvil</label>
-            <input type="tel" id="txtTelefono" placeholder="Ej: 600 123 456" maxlength="12">
+            <input type="tel" id="txtTelefono" placeholder="Ej: 600123456" maxlength="9" pattern="[0-9]{9}"inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0,9)"> 
         </div>
         <div class="bloque-config">
             <label>🛵 Tipo de entrega / Zona</label>
