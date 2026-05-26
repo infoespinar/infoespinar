@@ -1,1 +1,670 @@
-a
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alojamiento y Vivienda | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        /* ── ENCABEZADO ── */
+        .header {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2d6a8f 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .header-logo-link:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+        .header-bandera {
+            width: 32px; height: 32px;
+            object-fit: cover; border-radius: 6px;
+            aspect-ratio: 1 / 1;
+        }
+        .header h1 {
+            font-size: 20px; font-weight: 900;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+
+        /* ── CONTENEDOR PRINCIPAL ── */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
+        }
+
+        /* ── TÍTULO DE SECCIÓN ── */
+        .titulo-seccion-principal {
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .txt-azul-oscuro { color: #1e3a5f; }
+        .txt-azul-claro  { color: #2d6a8f; }
+
+        .subtitulo-seccion {
+            text-align: center;
+            font-size: 14px;
+            color: #64748b;
+            font-style: italic;
+            font-weight: 300;
+            margin-top: -12px;
+            margin-bottom: 20px;
+        }
+
+        .titulo-bloque {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 25px 0 12px 4px;
+            font-weight: 700;
+        }
+
+        /* ── MAPA ── */
+        .contenedor-mapa-fijo {
+            width: 100%;
+            height: 350px;
+            margin-bottom: 25px;
+        }
+        .map-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            position: relative;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+        }
+        .map-wrapper iframe {
+            position: absolute;
+            top: -60px; left: 0;
+            width: 100%;
+            height: calc(100% + 60px);
+            border: 0;
+        }
+
+        /* ── BANNER PUBLICITARIO ── */
+        .banner-comercio {
+            width: 100%;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .banner-img {
+            position: absolute;
+            width: 100%; height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            transition: transform 0.3s ease;
+        }
+        .banner-comercio:hover .banner-img { transform: scale(1.02); }
+        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-label {
+            display: inline-block;
+            background: #2d6a8f;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .banner-nombre {
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        .banner-sub {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            margin-top: 3px;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
+
+        /* ── BUSCADOR ── */
+        .contenedor-buscador { margin-bottom: 20px; width: 100%; }
+        .input-buscador {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-buscador:focus { border-color: #2d6a8f; }
+
+        /* ── GRID DE TARJETAS ── */
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            width: 100%;
+            padding-bottom: 25px;
+            visibility: hidden;
+        }
+
+        .tarjeta-comercio {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-top: 4px solid #2d6a8f;
+            border-radius: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .tarjeta-comercio:active {
+            transform: scale(0.99);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .info-comercio {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .nombre-comercio {
+            font-size: 19px;
+            font-weight: 700;
+            color: #1e3a5f;
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+
+        .burbuja-nucleo {
+            display: inline-block;
+            background-color: #e0f0ff;
+            color: #1e3a5f;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            margin: 6px 0 8px;
+            border: 1px solid #bfdbfe;
+        }
+
+        .enlace-web {
+            display: inline-block;
+            font-size: 13.5px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 400;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .enlace-web:hover { text-decoration: underline; color: #2d6a8f; }
+
+        .direccion-comercio {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        /* ── BOTONES ── */
+        .bloque-botones { margin-top: auto; display: flex; flex-direction: column; gap: 10px; }
+        .fila-contacto  { display: flex; gap: 10px; }
+        .btn {
+            text-decoration: none;
+            font-size: 13.5px;
+            font-weight: 700;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            color: #ffffff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            transition: opacity 0.2s;
+        }
+        .btn:hover { opacity: 0.9; }
+        .btn-llamar   { background-color: #0f172a; flex: 1; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps     { background-color: #1a73e8; width: 100%; }
+        .btn-email    { background-color: #facc15; color: #000000; width: 100%; }
+
+        /* ── AVISO ── */
+        .disclaimer-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #64748b;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 30px 4px 15px 4px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #475569;
+            text-align: justify;
+        }
+
+        /* ── RESPONSIVE ── */
+        @media screen and (min-width: 768px) {
+            .grid-comercios { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #2d6a8f;
+        }
+        .footer a { color: #7dd3fc; text-decoration: none; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <main class="main-container">
+
+        <h2 class="titulo-seccion-principal">
+            <span class="txt-azul-oscuro">Alojamiento</span> y <span class="txt-azul-claro">Vivienda</span>
+        </h2>
+        <p class="subtitulo-seccion">Ven y quédate una noche, como Napoleón, o algo más.</p>
+
+        <div class="titulo-bloque">Localización de alojamientos</div>
+        <div class="contenedor-mapa-fijo">
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/d/embed?mid=1gxhUnqgsvcu_v9kpnQ0gRDCr4XLVAhE&ehbc=2E312F&noprof=1"></iframe>
+            </div>
+        </div>
+
+        <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Tienes alojamiento?</span>
+                <h3 class="banner-nombre">¡Anuncia tu hotel, casa o inmobiliaria aquí!</h3>
+                <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
+            </div>
+        </a>
+
+        <div class="titulo-bloque">Listado de alojamientos y vivienda</div>
+        <div class="contenedor-buscador">
+            <input type="text" id="buscadorAlojamientos" class="input-buscador" placeholder="🔍 Buscar hotel, hostal, casa rural, albergue, inmobiliaria o por núcleo...">
+        </div>
+
+        <div class="grid-comercios" id="gridComercios">
+
+            <div class="tarjeta-comercio" data-search="aude real estate san rafael gutierrez mellado inmobiliaria idealista alquiler venta compra pisos chalet alojamiento vivienda casas propiedades">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Aude Real Estate</div>
+                    <a href="https://www.idealista.com/pro/aude-real-estate/" target="_blank" rel="noopener" class="enlace-web">🌐 Catálogo en Idealista</a>
+                    <span class="burbuja-nucleo">San Rafael · Inmobiliaria</span>
+                    <div class="direccion-comercio">📍 C. Gutiérrez Mellado, 1, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34626847869" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34626847869" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="casa rural buenavista la estacion molino del bosque habitaciones turismo alojamiento vacacional">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Casa Rural Buenavista</div>
+                    <a href="http://www.casaruralelespinar.com/" target="_blank" rel="noopener" class="enlace-web">🌐 casaruralelespinar.com</a>
+                    <span class="burbuja-nucleo">La Estación</span>
+                    <div class="direccion-comercio">📍 C. Molino del Bosque, 2, La Estación</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34636316588" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34636316588" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Casa+Rural+Buenavista+Calle+Molino+del+Bosque+2+La+Estacion" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="albergue juvenil san rafael paseo de san juan campamentos grupos excursion juventud">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Albergue Juvenil San Rafael</div>
+                    <a href="http://campamentosyalbergues.com/albergue" target="_blank" rel="noopener" class="enlace-web">🌐 campamentosyalbergues.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 P.º de San Juan, 20, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34675604197" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34675604197" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Albergue+Juvenil+San+Rafael+Paseo+de+San+Juan+20" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:campa@arcinature.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="casa honorato chalet san rafael calle arroyo mayor alojamiento rural turismo">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Casa Honorato</div>
+                    <a href="http://www.chaletcasahonorato.com/" target="_blank" rel="noopener" class="enlace-web">🌐 chaletcasahonorato.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 C. Arroyo Mayor, 10, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34639286389" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34639286389" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Casa+Honorato+Calle+Arroyo+Mayor+10+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:honoratotito@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hotel rural las farolas san rafael paseo apeadero habitaciones restaurante alojamiento">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hotel Rural Las Farolas</div>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 P.º Apeadero, 1, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921702667" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Rural+Las+Farolas+Paseo+Apeadero+1+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hotel lucia san rafael travesia alto del leon habitaciones reserva hospedaje">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hotel Lucía</div>
+                    <a href="http://www.hotellucia.es/contacto.html" target="_blank" rel="noopener" class="enlace-web">🌐 hotellucia.es</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 5, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171002" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34687668176" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Lucia+Travesia+Alto+del+Leon+5+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@hotellucia.es" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hotel rural la vina san rafael carretera segovia habitaciones descanso rural">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hotel Rural La Viña</div>
+                    <a href="https://www.lavinahotelrural.com/" target="_blank" rel="noopener" class="enlace-web">🌐 lavinahotelrural.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Ctra. Segovia, 10, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171794" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34921171794" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Rural+La+Vina+Carretera+Segovia+10+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@lavinahotelrural.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="plaza restaurante hostal san rafael travesia alto del leon habitaciones comida menu">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Plaza Restaurante Hostal</div>
+                    <a href="https://www.restauranteplazahostal.com/" target="_blank" rel="noopener" class="enlace-web">🌐 restauranteplazahostal.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 6, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921172031" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Plaza+Restaurante+Hostal+Travesia+Alto+del+Leon+6" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:info@restauranteplazahostal.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hotel la casona del pinar san rafael finca calle calzada piscina eventos grupos">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hotel La Casona del Pinar</div>
+                    <a href="http://www.fincalacasonadelpinar.com/" target="_blank" rel="noopener" class="enlace-web">🌐 fincalacasonadelpinar.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 C. Calzada, 4, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171412" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hotel+La+Casona+del+Pinar+Calle+Calzada+4" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="casa rural la rosa de pedro san rafael calle menendez pidal encanto reservas">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Casa Rural La Rosa de Pedro</div>
+                    <a href="http://www.larosadepedro.com/" target="_blank" rel="noopener" class="enlace-web">🌐 larosadepedro.com</a>
+                    <span class="burbuja-nucleo">San Rafael</span>
+                    <div class="direccion-comercio">📍 C. Menéndez Pidal, 31, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34685500681" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34685500681" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Casa+Rural+La+Rosa+de+Pedro+Calle+Menendez+Pidal+31" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:reservas@larosadepedro.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hostal siete picos el espinar paseo doctor marti estevez hosteleria habitaciones">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hostal Siete Picos</div>
+                    <a href="https://hostalsietepicos.com/reservas-hostal-7picos/" target="_blank" rel="noopener" class="enlace-web">🌐 hostalsietepicos.com</a>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 Paseo Dr. Martí Estévez, 10, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921181084" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34608230414" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hostal+Siete+Picos+Paseo+Doctor+Marti+Estevez+10" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:hostalsietepicos@hostalsietepicos.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="los rosales el espinar calle rosa alojamiento pension hostal">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Los Rosales</div>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 C. Rosa, 1, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921524930" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Los+Rosales+Calle+Rosa+1+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hostal la ciguena el espinar calle antonio machado habitaciones hospedaje">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hostal La Cigüeña</div>
+                    <a href="http://www.hostallaciguena.com/" target="_blank" rel="noopener" class="enlace-web">🌐 hostallaciguena.com</a>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 C. Antonio Machado, 3, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921182388" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hostal+La+Ciguena+Calle+Antonio+Machado+3" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hotel alda el espinar carretera espinar km 66 moderno habitaciones cadena">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hotel Alda El Espinar</div>
+                    <a href="https://www.aldahotels.es/hoteles/castilla-y-leon/segovia/el-espinar-segovia/hotel-alda-el-espinar" target="_blank" rel="noopener" class="enlace-web">🌐 aldahotels.es</a>
+                    <span class="burbuja-nucleo">El Espinar</span>
+                    <div class="direccion-comercio">📍 Ctra. El Espinar, Km. 66,6, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921920289" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34881092929" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Alda+El+Espinar+Carretera+Espinar+Km+66" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:reservas@aldahotels.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hotel segovia sierra de guadarrama lasr los angeles de san rafael calle rio tajo airclub resort complejo piscina golf">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hotel Segovia Sierra de Guadarrama</div>
+                    <a href="https://www.airclubreservas.es/es/" target="_blank" rel="noopener" class="enlace-web">🌐 airclubreservas.es</a>
+                    <span class="burbuja-nucleo">LASR</span>
+                    <div class="direccion-comercio">📍 C. Río Tajo s/n, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921195800" class="btn btn-llamar">📞 Llamar</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Segovia+Sierra+de+Guadarrama+Calle+Rio+Tajo" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="casa puente albor lasr los angeles de san rafael calle bolonia chalet villa rural alquiler">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Casa Puente Albor</div>
+                    <span class="burbuja-nucleo">LASR</span>
+                    <div class="direccion-comercio">📍 C. Bolonia, 454, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34637908505" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34637908505" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Casa+Puente+Albor+Calle+Bolonia+454" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tarjeta-comercio" data-search="hotel nayade lasr los angeles de san rafael avenida del nautico lago spa eventos restaurante">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Hotel Náyade</div>
+                    <a href="https://www.hotelnayade.es/" target="_blank" rel="noopener" class="enlace-web">🌐 hotelnayade.es</a>
+                    <span class="burbuja-nucleo">LASR</span>
+                    <div class="direccion-comercio">📍 Avda. del Náutico, s/n, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921311208" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34689019776" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Hotel+Nayade+Avenida+del+Nautico+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:recepcion@hotelnayade.es" class="btn btn-email">📧 Enviar Email</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="disclaimer-box">
+            <strong>Nota informativa:</strong> Los datos de este directorio se recopilan de forma voluntaria para ayudar a los vecinos. La información podría contener algún error o no estar completamente actualizada, por lo que te recomendamos verificar los detalles directamente con cada establecimiento.
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const contenedor = document.getElementById("gridComercios");
+        const tarjetas   = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+        const buscador   = document.getElementById("buscadorAlojamientos");
+
+        // Mezcla aleatoria Fisher-Yates
+        for (let i = tarjetas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+        }
+        tarjetas.forEach(t => contenedor.appendChild(t));
+        contenedor.style.visibility = "visible";
+
+        // Buscador en tiempo real
+        buscador.addEventListener("input", function () {
+            const term = buscador.value.toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+            tarjetas.forEach(t => {
+                const texto = t.getAttribute("data-search")
+                    .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                t.style.display = texto.includes(term) ? "flex" : "none";
+            });
+        });
+    });
+    </script>
+
+</body>
+</html>
