@@ -856,7 +856,10 @@
     /* ── ENVIAR WHATSAPP ── */
     function enviarPedidoWhatsApp() {
         const tlf = document.getElementById("txtTelefono").value.trim();
-        if (!tlf) { alert("Por favor, introduce tu teléfono móvil."); return; }
+       if (!/^[0-9]{9}$/.test(tlf)) {
+    alert("⚠️ Introduce un número de teléfono válido de 9 cifras.");
+    return;
+}
 
         const zona = document.getElementById("zona_envio").value;
         const dir  = document.getElementById("txtDireccion").value.trim();
