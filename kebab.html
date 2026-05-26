@@ -1,1 +1,913 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kebab y Pizza J.J.J. | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── HEADER INFOESPINAR ── */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .header-logo-link:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+        .header-bandera {
+            width: 32px; height: 32px;
+            object-fit: cover; border-radius: 6px;
+        }
+        .header h1 {
+            font-size: 20px; font-weight: 900;
+            letter-spacing: 0.5px; text-transform: uppercase;
+        }
+
+        /* ── HERO DEL RESTAURANTE ── */
+        .hero-restaurante {
+            background: linear-gradient(135deg, #7f1d1d 0%, #b91c1c 50%, #dc2626 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-restaurante::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 70%, rgba(255,255,255,0.05) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 30%, rgba(255,200,0,0.08) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-nombre {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            margin-bottom: 6px;
+        }
+        .hero-direccion {
+            font-size: 13px;
+            opacity: 0.9;
+            margin-bottom: 4px;
+        }
+        .hero-horario {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-top: 8px;
+        }
+
+        /* ── CONTENEDOR PRINCIPAL ── */
+        .main-container {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px 40px;
+            flex-grow: 1;
+        }
+
+        /* ── PASO A PASO ── */
+        .paso-titulo {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 20px 0 10px 2px;
+            font-weight: 700;
+        }
+
+        /* ── ZONA Y TELÉFONO ── */
+        .bloque-config {
+            background: #fff;
+            border-radius: 14px;
+            padding: 18px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            margin-bottom: 16px;
+        }
+        .bloque-config label {
+            display: block;
+            font-size: 13px;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 7px;
+        }
+        .bloque-config input,
+        .bloque-config select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            color: #1e293b;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #f8fafc;
+        }
+        .bloque-config input:focus,
+        .bloque-config select:focus { border-color: #b91c1c; background: #fff; }
+
+        .info-zona {
+            margin-top: 8px;
+            padding: 8px 12px;
+            background: #fef2f2;
+            border-radius: 8px;
+            font-size: 12.5px;
+            color: #991b1b;
+            font-weight: 700;
+            display: none;
+        }
+        .info-zona.visible { display: block; }
+
+        /* ── RULETA ── */
+        .bloque-ruleta {
+            background: linear-gradient(135deg, #fff7ed 0%, #fff1f2 100%);
+            border: 2px dashed #fca5a5;
+            border-radius: 14px;
+            padding: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        .ruleta-titulo {
+            font-size: 14px;
+            font-weight: 900;
+            color: #991b1b;
+            margin-bottom: 10px;
+        }
+        .btn-ruleta {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn-ruleta:hover { background: #b91c1c; transform: scale(1.03); }
+        .pantalla-ruleta {
+            margin-top: 10px;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: #374151;
+            min-height: 22px;
+            font-style: italic;
+        }
+        .controles-ruleta {
+            display: none;
+            gap: 8px;
+            justify-content: center;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        .btn-ruleta-si {
+            background: #16a34a; color: white; border: none;
+            padding: 8px 16px; border-radius: 8px; font-weight: 700;
+            font-size: 13px; cursor: pointer; font-family: 'Lato', sans-serif;
+        }
+        .btn-ruleta-no {
+            background: #dc2626; color: white; border: none;
+            padding: 8px 16px; border-radius: 8px; font-weight: 700;
+            font-size: 13px; cursor: pointer; font-family: 'Lato', sans-serif;
+        }
+
+        /* ── MENÚ ── */
+        .categoria-titulo {
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #fff;
+            background: #b91c1c;
+            padding: 7px 14px;
+            border-radius: 8px;
+            margin: 18px 0 10px;
+        }
+
+        .producto-item {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 14px;
+            margin-bottom: 10px;
+            transition: box-shadow 0.2s;
+        }
+        .producto-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+        .producto-fila {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .producto-info { flex: 1; }
+        .producto-nombre {
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.3;
+        }
+        .producto-precio {
+            font-size: 13px;
+            font-weight: 900;
+            color: #b91c1c;
+            margin-top: 2px;
+        }
+        .producto-desc {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+            line-height: 1.4;
+        }
+
+        /* Contador */
+        .contador {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 3px;
+            flex-shrink: 0;
+        }
+        .btn-cnt {
+            border: none;
+            width: 30px; height: 30px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+        .btn-cnt-menos { background: #fee2e2; color: #b91c1c; }
+        .btn-cnt-menos:hover { background: #fecaca; }
+        .btn-cnt-mas { background: #b91c1c; color: white; }
+        .btn-cnt-mas:hover { background: #991b1b; }
+        .cnt-valor {
+            min-width: 24px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        /* Bebidas y extras */
+        .bloque-bebidas {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #eff6ff;
+            border-left: 3px solid #3b82f6;
+            border-radius: 0 8px 8px 0;
+            font-size: 12.5px;
+        }
+        .bloque-bebidas label { font-weight: 700; color: #1d4ed8; margin-bottom: 5px; display: block; }
+        .bebida-fila { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .bebida-fila span { font-size: 12px; color: #475569; min-width: 60px; }
+        .bebida-fila select {
+            flex: 1;
+            padding: 5px 8px;
+            border: 1px solid #bfdbfe;
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 12px;
+            background: #fff;
+        }
+
+        .bloque-extras {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 12px;
+            background: #fffbeb;
+            border-left: 3px solid #f59e0b;
+            border-radius: 0 8px 8px 0;
+            font-size: 12.5px;
+        }
+        .bloque-extras label.extra-titulo { font-weight: 700; color: #92400e; margin-bottom: 6px; display: block; }
+        .opcion-extra {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-right: 12px;
+            margin-bottom: 4px;
+            font-size: 12.5px;
+            color: #374151;
+            cursor: pointer;
+        }
+        .opcion-extra input { cursor: pointer; }
+
+        /* ── CESTA Y RESUMEN ── */
+        .bloque-cesta {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            margin-top: 20px;
+            display: none;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .cesta-titulo {
+            font-size: 14px;
+            font-weight: 900;
+            color: #1e293b;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+        }
+        .cesta-linea {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            color: #475569;
+            margin-bottom: 6px;
+            padding-bottom: 6px;
+            border-bottom: 1px dashed #f1f5f9;
+        }
+        .cesta-linea:last-child { border-bottom: none; }
+        .cesta-detalle { font-size: 11.5px; color: #94a3b8; margin-top: 2px; }
+
+        /* Totales */
+        .bloque-totales {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .total-fila {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13.5px;
+            color: #475569;
+            margin-bottom: 8px;
+        }
+        .total-fila.grande {
+            font-size: 20px;
+            font-weight: 900;
+            color: #b91c1c;
+            border-top: 2px dashed #fee2e2;
+            padding-top: 10px;
+            margin-top: 6px;
+        }
+
+        /* Aviso mínimo */
+        .aviso-minimo {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin-top: 12px;
+            font-size: 13.5px;
+            color: #991b1b;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* ── PAGO ── */
+        .bloque-pago {
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .pago-titulo {
+            font-size: 13px;
+            font-weight: 900;
+            color: #1e293b;
+            margin-bottom: 12px;
+        }
+        .pago-opcion {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #374151;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .pago-opcion input { cursor: pointer; width: 16px; height: 16px; }
+        .campo-cambio {
+            margin-left: 26px;
+            margin-bottom: 10px;
+        }
+        .campo-cambio input {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+        }
+
+        /* ── BOTÓN WHATSAPP ── */
+        .btn-whatsapp {
+            width: 100%;
+            margin-top: 16px;
+            padding: 16px;
+            background: #25d366;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            box-shadow: 0 4px 12px rgba(37,211,102,0.35);
+            transition: background 0.2s, transform 0.1s, opacity 0.2s;
+            letter-spacing: 0.3px;
+        }
+        .btn-whatsapp:hover { background: #128c7e; transform: translateY(-1px); }
+        .btn-whatsapp:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+
+        /* ── FOOTER ── */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #3b82f6;
+        }
+        .footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+
+        @media (min-width: 600px) {
+            .hero-nombre { font-size: 34px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER INFOESPINAR -->
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
+
+    <!-- HERO KEBAB -->
+    <div class="hero-restaurante">
+        <div class="hero-nombre">🌯 Kebab y Pizza J.J.J. 🍕</div>
+        <div class="hero-direccion">📍 C/ La Villa, 15 — El Espinar &nbsp;|&nbsp; 📞 921 640 345</div>
+        <div class="hero-horario">⏰ Domicilio: 13:00–17:00 y 19:00–00:30</div>
+    </div>
+
+    <main class="main-container">
+
+        <!-- PASO 1: DATOS ENTREGA -->
+        <div class="paso-titulo">Paso 1 — Datos de entrega</div>
+        <div class="bloque-config">
+            <label>📞 Tu teléfono móvil</label>
+            <input type="tel" id="txtTelefono" placeholder="Ej: 600 123 456" maxlength="12">
+        </div>
+        <div class="bloque-config">
+            <label>🛵 Tipo de entrega / Zona</label>
+            <select id="zona_envio" onchange="actualizarZona()">
+                <option value="Recoger en Local">🛍️ Recoger en el Local (C/ La Villa, 15)</option>
+                <option value="El Espinar">El Espinar — Envío: Gratis | Mínimo: 12€</option>
+                <option value="San Rafael">San Rafael — Envío: 1.00€ | Mínimo: 15€</option>
+                <option value="La Estación">Estación El Espinar — Envío: 1.50€ | Mínimo: 15€</option>
+                <option value="Los Angeles">Los Ángeles (LASR) — Envío: 1.50€ | Mínimo: 20€</option>
+                <option value="Navas de San Antonio">Navas de San Antonio — Envío: 2.00€ | Mínimo: 30€</option>
+            </select>
+            <div class="info-zona" id="infoZona"></div>
+            <div id="bloque-direccion" style="display:none; margin-top:12px;">
+                <label>🏠 Dirección exacta de entrega</label>
+                <input type="text" id="txtDireccion" placeholder="Ej: Calle Real Nº 4, 2ºB...">
+            </div>
+        </div>
+
+        <!-- RULETA -->
+        <div class="bloque-ruleta">
+            <div class="ruleta-titulo">🎲 ¿No sabes qué elegir? ¡Ruleta Rusa JJJ!</div>
+            <button class="btn-ruleta" onclick="ruletaDelHambre()">🎯 Girar la brocheta</button>
+            <div class="pantalla-ruleta" id="pantalla-ruleta"></div>
+            <div class="controles-ruleta" id="controles-ruleta">
+                <button class="btn-ruleta-si" id="btnConfirmarRuleta">👍 ¡Me lo pido!</button>
+                <button class="btn-ruleta-no" onclick="ruletaDelHambre()">🔄 Otra vez</button>
+            </div>
+        </div>
+
+        <!-- PASO 2: MENÚ -->
+        <div class="paso-titulo">Paso 2 — Elige tu pedido</div>
+        <div id="contenedor-menu"></div>
+
+        <!-- CESTA -->
+        <div class="bloque-cesta" id="bloque-cesta">
+            <div class="cesta-titulo">🛒 Tu cesta</div>
+            <div id="lista-cesta"></div>
+        </div>
+
+        <!-- TOTALES -->
+        <div class="bloque-totales">
+            <div class="total-fila"><span>Subtotal productos:</span><span><span id="precio-subtotal">0.00</span>€</span></div>
+            <div class="total-fila"><span>Gastos de envío:</span><span><span id="precio-envio">0.00</span>€</span></div>
+            <div class="total-fila grande"><span>Total pedido:</span><span><span id="precio-total">0.00</span>€</span></div>
+        </div>
+
+        <div class="aviso-minimo" id="aviso-minimo"></div>
+
+        <!-- PAGO -->
+        <div class="paso-titulo">Paso 3 — Método de pago</div>
+        <div class="bloque-pago">
+            <div class="pago-titulo">💳 ¿Cómo vas a pagar?</div>
+            <label class="pago-opcion">
+                <input type="radio" name="metodo_pago" value="Efectivo" checked onchange="evaluarMetodoPago(this.value)">
+                💵 Efectivo (en casa o en local)
+            </label>
+            <div class="campo-cambio" id="contenedor-cambio">
+                <input type="text" id="txtCambio" placeholder="¿Necesitas cambio? Ej: Llevar cambio de 20€">
+            </div>
+            <label class="pago-opcion">
+                <input type="radio" name="metodo_pago" value="Tarjeta (Datáfono)" onchange="evaluarMetodoPago(this.value)">
+                💳 Tarjeta (datáfono con el mensajero)
+            </label>
+            <label class="pago-opcion">
+                <input type="radio" name="metodo_pago" value="Bizum" onchange="evaluarMetodoPago(this.value)">
+                📱 Bizum (al número del local)
+            </label>
+        </div>
+
+        <button class="btn-whatsapp" id="btnEnviarWhatsApp" onclick="enviarPedidoWhatsApp()" disabled>
+            💬 Enviar Pedido por WhatsApp
+        </button>
+
+    </main>
+
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+
+    <script>
+    const configuracionZonas = {
+        "Recoger en Local":       { envio: 0.00, minimo: 0.00 },
+        "El Espinar":             { envio: 0.00, minimo: 12.00 },
+        "San Rafael":             { envio: 1.00, minimo: 15.00 },
+        "La Estación":            { envio: 1.50, minimo: 15.00 },
+        "Los Angeles":            { envio: 1.50, minimo: 20.00 },
+        "Navas de San Antonio":   { envio: 2.00, minimo: 30.00 }
+    };
+
+    const opcionesRefrescos = ["Coca-Cola","Coca-Cola Zero","Fanta Naranja","Fanta Limón","Nestea","Aquarius","Agua"];
+
+    const productosKebab = [
+        { id:"o1",  nombre:"Oferta 1 — 4 Dürüm + Patatas + 1L Refresco",           precio:19.50, cat:"📦 Ofertas Familiares", icono:"📦", desc:"4 Rollos Dürüm gigantes, ración familiar de patatas y botella de 1L.", incluyeBebida:true, numBebidas:1 },
+        { id:"o2",  nombre:"Oferta 2 — 4 Kebab + Patatas + 1L Refresco",            precio:17.50, cat:"📦 Ofertas Familiares", icono:"📦", desc:"4 Kebabs en pita, ración familiar de patatas y botella de 1L.", incluyeBebida:true, numBebidas:1 },
+        { id:"o3",  nombre:"Oferta 3 — 3 Platos + 1L Refresco",                     precio:22.50, cat:"📦 Ofertas Familiares", icono:"📦", desc:"3 Platos completos de carne, patatas, ensalada, salsas y 1L.", incluyeBebida:true, numBebidas:1 },
+        { id:"o4",  nombre:"Oferta 4 — 2 Dürüm + 2 Kebab + Patatas + 1L Refresco", precio:18.50, cat:"📦 Ofertas Familiares", icono:"📦", desc:"2 Dürüm + 2 Kebab + patatas grandes + refresco 1L.", incluyeBebida:true, numBebidas:1 },
+        { id:"o5",  nombre:"Oferta 5 — 3 Dürüm + Patatas + 1L Refresco",            precio:15.00, cat:"📦 Ofertas Familiares", icono:"📦", desc:"3 Dürüm con carne, patatas crujientes y refresco 1L.", incluyeBebida:true, numBebidas:1 },
+        { id:"o6",  nombre:"Oferta 6 — 3 Kebab + Patatas + 1L Refresco",             precio:14.00, cat:"📦 Ofertas Familiares", icono:"📦", desc:"3 Kebabs en pita, ración de patatas y refresco 1L.", incluyeBebida:true, numBebidas:1 },
+
+        { id:"m1",  nombre:"Menú 1 — Kebab + Patatas + Bebida",                      precio:6.50,  cat:"✨ Menús Individuales", icono:"✨", desc:"Pan pita con carne, lechuga, tomate, cebolla, salsas + patatas + lata.", incluyeBebida:true, numBebidas:1, admiteExtras:true },
+        { id:"m2",  nombre:"Menú 2 — Dürüm + Patatas + Bebida",                      precio:7.00,  cat:"✨ Menús Individuales", icono:"✨", desc:"Pan plano enrollado con carne, vegetales y salsas + patatas + lata.", incluyeBebida:true, numBebidas:1, admiteExtras:true },
+        { id:"m3",  nombre:"Menú 3 — Plato + Patatas + Ensalada + Bebida",           precio:8.50,  cat:"✨ Menús Individuales", icono:"✨", desc:"Bandeja de carne, patatas, ensalada, pan y refresco.", incluyeBebida:true, numBebidas:1, admiteExtras:true },
+        { id:"m4",  nombre:"Menú 4 — Pizza Turca + Patatas + Bebida",                precio:7.50,  cat:"✨ Menús Individuales", icono:"🍕", desc:"Lahmacun con carne picada, enrollado con vegetales + patatas + bebida.", incluyeBebida:true, numBebidas:1, admiteExtras:true },
+        { id:"m5t", nombre:"Menú 5 — Hamburguesa Ternera + Patatas + Bebida",        precio:7.00,  cat:"✨ Menús Individuales", icono:"🍔", desc:"Carne de vacuno, queso, lechuga, tomate, salsas + patatas + bebida.", incluyeBebida:true, numBebidas:1 },
+        { id:"m5p", nombre:"Menú 5 — Hamburguesa Pollo + Patatas + Bebida",          precio:6.50,  cat:"✨ Menús Individuales", icono:"🍔", desc:"Burger de pollo crujiente, lechuga, mayonesa + patatas + bebida.", incluyeBebida:true, numBebidas:1 },
+        { id:"m6a", nombre:"Menú 6 — Alitas de Pollo (6uds) + Patatas + Bebida",    precio:7.00,  cat:"✨ Menús Individuales", icono:"🍗", desc:"6 Alitas marinadas + patatas + lata.", incluyeBebida:true, numBebidas:1 },
+        { id:"m6b", nombre:"Menú 6 — Alitas de Pollo (9uds) + Patatas + Bebida",    precio:8.50,  cat:"✨ Menús Individuales", icono:"🍗", desc:"9 Alitas crujientes + patatas + bebida.", incluyeBebida:true, numBebidas:1 },
+        { id:"m7",  nombre:"Menú 7 — Nuggets (6uds) + Patatas + Bebida",             precio:6.00,  cat:"✨ Menús Individuales", icono:"🧆", desc:"6 Nuggets de pollo + patatas + lata.", incluyeBebida:true, numBebidas:1 },
+        { id:"m8",  nombre:"Menú 8 — Menú Infantil + Bebida",                        precio:5.50,  cat:"✨ Menús Individuales", icono:"🧸", desc:"Porción infantil (kebab o nuggets) + patatas pequeñas + zumo/agua.", incluyeBebida:true, numBebidas:1 },
+        { id:"m9",  nombre:"Menú 9 — Kebab Falafel + Patatas + Bebida",              precio:6.00,  cat:"✨ Menús Individuales", icono:"🌱", desc:"Pita con falafel, ensalada, salsa + patatas + lata.", incluyeBebida:true, numBebidas:1 },
+        { id:"m11", nombre:"Menú 11 — Dürüm Falafel + Patatas + Bebida",             precio:6.50,  cat:"✨ Menús Individuales", icono:"🌱", desc:"Rollo de pan con falafel, vegetales, salsas + patatas + lata.", incluyeBebida:true, numBebidas:1 },
+        { id:"m12", nombre:"Menú 12 — Plato Falafel + Patatas + Ensalada + Bebida",  precio:6.50,  cat:"✨ Menús Individuales", icono:"🌱", desc:"Bandeja con falafel, ensalada, patatas, pan, salsa yogur + bebida.", incluyeBebida:true, numBebidas:1 },
+        { id:"m13", nombre:"Menú 13 — Popcorn + Patatas + Bebida",                   precio:6.50,  cat:"✨ Menús Individuales", icono:"🍿", desc:"Bocaditos de pollo frito, patatas y bebida.", incluyeBebida:true, numBebidas:1 },
+
+        { id:"k19", nombre:"19. Kebab normal (Ternera o Pollo)",  precio:4.00, cat:"🥙 Kebabs sueltos", icono:"🥙", desc:"Pita con carne, lechuga, tomate, cebolla y salsa.", admiteExtras:true },
+        { id:"k20", nombre:"20. Kebab Doble Carne",               precio:5.00, cat:"🥙 Kebabs sueltos", icono:"🥙", desc:"Doble capa de carne con ensalada y mucha salsa.", admiteExtras:true },
+        { id:"k21", nombre:"21. Kebab Solo Carne",                precio:5.00, cat:"🥙 Kebabs sueltos", icono:"🥙", desc:"Pan pita sólo con carne asada y salsas.", admiteExtras:true },
+        { id:"k22", nombre:"22. Kebab Vegetal",                   precio:3.50, cat:"🥙 Kebabs sueltos", icono:"🥗", desc:"Lechuga, tomate, cebolla, maíz, aceitunas, queso y salsa yogur." },
+        { id:"k23", nombre:"23. Kebab Falafel",                   precio:4.00, cat:"🥙 Kebabs sueltos", icono:"🌱", desc:"Pita con falafel, ensalada fresca y salsas." },
+
+        { id:"d14", nombre:"14. Dürüm normal (Ternera o Pollo)", precio:4.50, cat:"🌯 Dürüms sueltos", icono:"🌯", desc:"Lavash enrollado con carne, lechuga, tomate, cebolla y salsas.", admiteExtras:true },
+        { id:"d15", nombre:"15. Dürüm Solo Carne",               precio:5.50, cat:"🌯 Dürüms sueltos", icono:"🌯", desc:"Rollo gigante sólo con carne bañada en salsa.", admiteExtras:true },
+        { id:"d16", nombre:"16. Dürüm Vegetal",                  precio:4.00, cat:"🌯 Dürüms sueltos", icono:"🥗", desc:"Pan plano con ensalada completa, maíz y salsa yogur." },
+        { id:"d17", nombre:"17. Dürüm Falafel",                  precio:4.50, cat:"🌯 Dürüms sueltos", icono:"🌱", desc:"Falafel enrollado con hortalizas frescas y salsa blanca." },
+        { id:"d18", nombre:"18. Dürüm Doble Carne",              precio:5.50, cat:"🌯 Dürüms sueltos", icono:"🌯", desc:"Rollo XXL con doble porción de carne y verdura ligera.", admiteExtras:true },
+
+        { id:"p24",  nombre:"24. Plato Kebab normal",         precio:7.50, cat:"🍽️ Platos y Pizzas", icono:"🍽️", desc:"Carne, patatas fritas, ensalada y salsas.", admiteExtras:true },
+        { id:"p24a", nombre:"24a. Plato Mix Completo",        precio:7.50, cat:"🍽️ Platos y Pizzas", icono:"🍽️", desc:"Mezcla pollo+ternera, vegetales, patatas y salsas.", admiteExtras:true },
+        { id:"p24b", nombre:"24b. Plato Mix Sin Vegetal",     precio:9.00, cat:"🍽️ Platos y Pizzas", icono:"🍽️", desc:"Montaña de carne mixta con patatas abundantes.", admiteExtras:true },
+        { id:"p25",  nombre:"25. Pizza Turca suelta",         precio:5.50, cat:"🍽️ Platos y Pizzas", icono:"🍕", desc:"Masa fina con carne especiada picada.", admiteExtras:true },
+        { id:"h26",  nombre:"26. Hamburguesa de Pollo suelta",precio:5.00, cat:"🍽️ Platos y Pizzas", icono:"🍔", desc:"Medallón de pollo empanado en pan brioche." },
+        { id:"h27",  nombre:"27. Hamburguesa de Ternera suelta",precio:5.00,cat:"🍽️ Platos y Pizzas", icono:"🍔", desc:"Carne de vacuno, queso fundido, vegetales y salsas." },
+
+        { id:"r28",  nombre:"28. Popcorn de Pollo",           precio:4.50, cat:"🍟 Raciones y Postres", icono:"🍿", desc:"Bolitas de pechuga rebozadas súper crujientes." },
+        { id:"r29a", nombre:"29. Alitas de Pollo (6uds)",     precio:4.50, cat:"🍟 Raciones y Postres", icono:"🍗", desc:"6 Alitas fritas bien doradas." },
+        { id:"r29b", nombre:"29. Alitas de Pollo (9uds)",     precio:6.00, cat:"🍟 Raciones y Postres", icono:"🍗", desc:"9 Alitas perfectas para compartir." },
+        { id:"r30a", nombre:"30. Nuggets de Pollo (6uds)",    precio:3.00, cat:"🍟 Raciones y Postres", icono:"🧆", desc:"6 Clásicos bocados de pollo frito." },
+        { id:"r30b", nombre:"30. Nuggets de Pollo (9uds)",    precio:4.00, cat:"🍟 Raciones y Postres", icono:"🧆", desc:"9 Nuggets crujientes con salsas." },
+        { id:"r31",  nombre:"31. Aros de Cebolla (6uds)",     precio:3.00, cat:"🍟 Raciones y Postres", icono:"🧅", desc:"6 Aros de cebolla dulce rebozados y fritos." },
+        { id:"r32",  nombre:"32. Patatas Bravas",              precio:3.00, cat:"🍟 Raciones y Postres", icono:"🍟", desc:"Dados de patata frita con salsa picante." },
+        { id:"r33",  nombre:"33. Patatas Deluxe",              precio:3.50, cat:"🍟 Raciones y Postres", icono:"🍟", desc:"Patatas gajo con salsa cremosa de cebollino." },
+        { id:"r34a", nombre:"34. Patatas Fritas Normales",     precio:2.00, cat:"🍟 Raciones y Postres", icono:"🍟", desc:"Clásicas patatas bastón en su punto de sal." },
+        { id:"r34b", nombre:"34. Patatas Fritas Grandes",      precio:4.00, cat:"🍟 Raciones y Postres", icono:"🍟", desc:"Formato gigante para calmar el antojo de todos." },
+        { id:"r35",  nombre:"35. Arroz Basmati",               precio:3.00, cat:"🍟 Raciones y Postres", icono:"🍚", desc:"Arroz aromático al vapor con especias suaves." },
+        { id:"r36",  nombre:"36. Falafel (6uds)",              precio:3.00, cat:"🍟 Raciones y Postres", icono:"🌱", desc:"6 Croquetas de garbanzo con perejil y especias árabes." },
+        { id:"r37",  nombre:"37. Dulce Baklava (1und)",        precio:1.20, cat:"🍟 Raciones y Postres", icono:"🥮", desc:"Hojaldre relleno de frutos secos y almíbar de miel." }
+    ];
+
+    const listaExtras = [
+        { clave:"ext_carne", nombre:"Extra Carne",         precio:1.00 },
+        { clave:"ext_queso", nombre:"Extra Queso de Cabra",precio:0.50 },
+        { clave:"ext_salsa", nombre:"Extra Salsa",         precio:0.50 }
+    ];
+
+    let carrito = {};
+
+    /* ── RENDER MENÚ ── */
+    function renderizarMenu() {
+        const contenedor = document.getElementById("contenedor-menu");
+        const cats = [...new Set(productosKebab.map(p => p.cat))];
+        let html = "";
+
+        cats.forEach(cat => {
+            html += `<div class="categoria-titulo">${cat}</div>`;
+            productosKebab.filter(p => p.cat === cat).forEach(p => {
+                html += `
+                <div class="producto-item" id="item-${p.id}">
+                    <div class="producto-fila">
+                        <div class="producto-info">
+                            <div class="producto-nombre">${p.icono} ${p.nombre}</div>
+                            <div class="producto-precio">${p.precio.toFixed(2)}€</div>
+                            <div class="producto-desc">${p.desc || ''}</div>
+                        </div>
+                        <div class="contador">
+                            <button class="btn-cnt btn-cnt-menos" onclick="cambiarCantidad('${p.id}',${p.precio},-1)">−</button>
+                            <span class="cnt-valor" id="cant-${p.id}">0</span>
+                            <button class="btn-cnt btn-cnt-mas" onclick="cambiarCantidad('${p.id}',${p.precio},1)">+</button>
+                        </div>
+                    </div>
+                    <div class="bloque-bebidas" id="bebidas-${p.id}"></div>
+                    ${p.admiteExtras ? `
+                    <div class="bloque-extras" id="extras-${p.id}">
+                        <label class="extra-titulo">➕ ¿Añadir extras?</label>
+                        ${listaExtras.map(ex => `
+                        <label class="opcion-extra">
+                            <input type="checkbox" id="chk-${p.id}-${ex.clave}" onchange="alternarExtra('${p.id}','${ex.clave}','${ex.nombre}',${ex.precio})">
+                            ${ex.nombre} (+${ex.precio.toFixed(2)}€)
+                        </label>`).join('')}
+                    </div>` : ''}
+                </div>`;
+            });
+        });
+        contenedor.innerHTML = html;
+    }
+
+    /* ── CANTIDAD ── */
+    function cambiarCantidad(id, precio, cambio) {
+        const prod = productosKebab.find(p => p.id === id);
+        if (!carrito[id]) carrito[id] = { nombre:prod.nombre, precio, cantidad:0, extras:{}, refrescos:[] };
+        carrito[id].cantidad = Math.max(0, carrito[id].cantidad + cambio);
+
+        const divExtras  = document.getElementById(`extras-${id}`);
+        const divBebidas = document.getElementById(`bebidas-${id}`);
+
+        if (carrito[id].cantidad <= 0) {
+            delete carrito[id];
+            document.getElementById(`cant-${id}`).innerText = 0;
+            if (divExtras)  { divExtras.style.display = "none"; listaExtras.forEach(ex => { const el = document.getElementById(`chk-${id}-${ex.clave}`); if(el) el.checked = false; }); }
+            if (divBebidas) { divBebidas.style.display = "none"; divBebidas.innerHTML = ""; }
+        } else {
+            document.getElementById(`cant-${id}`).innerText = carrito[id].cantidad;
+            if (divExtras)  divExtras.style.display = "block";
+            if (prod.incluyeBebida && divBebidas) {
+                divBebidas.style.display = "block";
+                while (carrito[id].refrescos.length < carrito[id].cantidad) carrito[id].refrescos.push(opcionesRefrescos[0]);
+                while (carrito[id].refrescos.length > carrito[id].cantidad) carrito[id].refrescos.pop();
+                let hb = `<label>🥤 Elige tu refresco:</label>`;
+                carrito[id].refrescos.forEach((ref, i) => {
+                    hb += `<div class="bebida-fila"><span>Bebida ${i+1}:</span>
+                    <select onchange="actualizarRefresco('${id}',${i},this.value)">
+                    ${opcionesRefrescos.map(r => `<option value="${r}" ${r===ref?'selected':''}>${r}</option>`).join('')}
+                    </select></div>`;
+                });
+                divBebidas.innerHTML = hb;
+            }
+        }
+        actualizarInterfaz();
+    }
+
+    function actualizarRefresco(id, i, val) {
+        if (carrito[id]) carrito[id].refrescos[i] = val;
+    }
+
+    function alternarExtra(prodId, clave, nombre, precio) {
+        if (!carrito[prodId]) return;
+        const chk = document.getElementById(`chk-${prodId}-${clave}`);
+        if (chk?.checked) carrito[prodId].extras[clave] = { nombre, precio };
+        else delete carrito[prodId].extras[clave];
+        actualizarInterfaz();
+    }
+
+    /* ── RULETA ── */
+    function ruletaDelHambre() {
+        const pantalla = document.getElementById("pantalla-ruleta");
+        const controles = document.getElementById("controles-ruleta");
+        controles.style.display = "none";
+        pantalla.textContent = "🔄 Girando la brocheta...";
+        let n = 0;
+        const iv = setInterval(() => {
+            const p = productosKebab[Math.floor(Math.random() * productosKebab.length)];
+            pantalla.textContent = `🎰 ¿Te apetece... ${p.icono} ${p.nombre}?`;
+            if (++n > 10) {
+                clearInterval(iv);
+                const pf = productosKebab[Math.floor(Math.random() * productosKebab.length)];
+                pantalla.innerHTML = `🎉 ¡Ha salido: <strong>${pf.icono} ${pf.nombre}</strong> (${pf.precio.toFixed(2)}€)!`;
+                controles.style.display = "flex";
+                document.getElementById("btnConfirmarRuleta").onclick = () => {
+                    cambiarCantidad(pf.id, pf.precio, 1);
+                    pantalla.textContent = `✅ Añadido: ${pf.nombre}. ¡Buen provecho!`;
+                    controles.style.display = "none";
+                };
+            }
+        }, 100);
+    }
+
+    /* ── ZONA ── */
+    function actualizarZona() {
+        const zona = document.getElementById("zona_envio").value;
+        const cfg  = configuracionZonas[zona];
+        const info = document.getElementById("infoZona");
+        const dir  = document.getElementById("bloque-direccion");
+        if (zona === "Recoger en Local") {
+            info.classList.remove("visible");
+            dir.style.display = "none";
+        } else {
+            info.textContent = `🛵 Envío: ${cfg.envio === 0 ? "Gratis" : cfg.envio.toFixed(2)+"€"} | Pedido mínimo: ${cfg.minimo.toFixed(2)}€`;
+            info.classList.add("visible");
+            dir.style.display = "block";
+        }
+        actualizarInterfaz();
+    }
+
+    /* ── PAGO ── */
+    function evaluarMetodoPago(val) {
+        document.getElementById("contenedor-cambio").style.display = val === "Efectivo" ? "block" : "none";
+        if (val !== "Efectivo") document.getElementById("txtCambio").value = "";
+    }
+
+    /* ── INTERFAZ / TOTALES ── */
+    function actualizarInterfaz() {
+        let subtotal = 0;
+        let htmlCesta = "";
+        let hayItems = false;
+
+        for (const id in carrito) {
+            const item = carrito[id];
+            const prod = productosKebab.find(p => p.id === id);
+            let coste = item.precio * item.cantidad;
+            let extNombres = [];
+            for (const ex of Object.values(item.extras)) {
+                coste += ex.precio * item.cantidad;
+                extNombres.push(ex.nombre);
+            }
+            subtotal += coste;
+            hayItems = true;
+            htmlCesta += `<div class="cesta-linea">
+                <div>
+                    <strong>${item.cantidad}x</strong> ${prod.icono} ${item.nombre}
+                    ${item.refrescos?.length ? `<div class="cesta-detalle">🥤 ${item.refrescos.join(", ")}</div>` : ""}
+                    ${extNombres.length ? `<div class="cesta-detalle">➕ ${extNombres.join(", ")}</div>` : ""}
+                </div>
+                <span style="font-weight:700; color:#b91c1c;">${coste.toFixed(2)}€</span>
+            </div>`;
+        }
+
+        const cesta = document.getElementById("bloque-cesta");
+        cesta.style.display = hayItems ? "block" : "none";
+        document.getElementById("lista-cesta").innerHTML = htmlCesta;
+
+        const zona = document.getElementById("zona_envio").value;
+        const cfg  = configuracionZonas[zona];
+        const envio = cfg.envio;
+        const total = subtotal + envio;
+
+        document.getElementById("precio-subtotal").textContent = subtotal.toFixed(2);
+        document.getElementById("precio-envio").textContent    = envio.toFixed(2);
+        document.getElementById("precio-total").textContent    = total.toFixed(2);
+
+        const aviso = document.getElementById("aviso-minimo");
+        const btn   = document.getElementById("btnEnviarWhatsApp");
+
+        if (subtotal === 0) {
+            aviso.style.display = "none";
+            btn.disabled = true;
+        } else if (subtotal < cfg.minimo) {
+            aviso.style.display = "block";
+            aviso.innerHTML = `❌ Pedido mínimo para <strong>${zona}</strong>: ${cfg.minimo.toFixed(2)}€ — Te faltan <strong>${(cfg.minimo - subtotal).toFixed(2)}€</strong>.`;
+            btn.disabled = true;
+        } else {
+            aviso.style.display = "none";
+            btn.disabled = false;
+        }
+    }
+
+    /* ── ENVIAR WHATSAPP ── */
+    function enviarPedidoWhatsApp() {
+        const tlf = document.getElementById("txtTelefono").value.trim();
+        if (!tlf) { alert("Por favor, introduce tu teléfono móvil."); return; }
+
+        const zona = document.getElementById("zona_envio").value;
+        const dir  = document.getElementById("txtDireccion").value.trim();
+        if (zona !== "Recoger en Local" && !dir) { alert("⚠️ Por favor, introduce tu dirección exacta de entrega."); return; }
+
+        let subtotal = 0;
+        let lineas = [];
+
+        for (const id in carrito) {
+            const item = carrito[id];
+            const prod = productosKebab.find(p => p.id === id);
+            let coste = item.precio * item.cantidad;
+            let extNombres = [];
+            for (const ex of Object.values(item.extras)) { coste += ex.precio * item.cantidad; extNombres.push(ex.nombre); }
+            subtotal += coste;
+            let detalle = "";
+            if (item.refrescos?.length) detalle += `\n   └ 🥤 Bebidas: ${item.refrescos.join(", ")}`;
+            if (extNombres.length)       detalle += `\n   └ ➕ Extras: ${extNombres.join(", ")}`;
+            lineas.push(`${prod.icono} *${item.cantidad}x ${item.nombre}* (${coste.toFixed(2)}€)${detalle}`);
+        }
+
+        const cfg   = configuracionZonas[zona];
+        const envio = cfg.envio;
+        const total = subtotal + envio;
+        const pago  = document.querySelector('input[name="metodo_pago"]:checked').value;
+        const cambio = document.getElementById("txtCambio").value.trim();
+
+        let msg = `🚨 *NUEVO PEDIDO — KEBAB Y PIZZA JJJ* 🚨\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+        msg += lineas.join("\n\n") + `\n\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        msg += zona === "Recoger en Local"
+            ? `📦 *MODALIDAD:* Recoger en tienda\n`
+            : `📍 *ZONA:* ${zona}\n🏠 *DIRECCIÓN:* ${dir}\n`;
+        msg += `📞 *TELÉFONO CLIENTE:* ${tlf}\n`;
+        msg += `🛍️ *Subtotal:* ${subtotal.toFixed(2)}€\n`;
+        msg += `🛵 *Envío:* ${envio === 0 ? "✨ GRATIS" : envio.toFixed(2)+"€"}\n`;
+        msg += `💰 *TOTAL:* ${total.toFixed(2)}€\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        msg += `💳 *PAGO:* ${pago}\n`;
+        if (pago === "Efectivo") msg += `💵 *Cambio:* ${cambio || "No necesita cambio"}\n`;
+        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━`;
+
+        window.open(`https://api.whatsapp.com/send?phone=34619546566&text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // Arranque
+    renderizarMenu();
+    actualizarInterfaz();
+    actualizarZona();
+    </script>
+
+</body>
+</html>
