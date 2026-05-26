@@ -20,17 +20,7 @@
         }
 
         /* ── HEADER INFOESPINAR ── */
-        .header {
-              background: linear-gradient(180deg, #7f1d1d 0%, #b91c1c 55%, #dc2626 100%);
-    color: white;
-    text-align: center;
-    padding: 25px 20px;
-    box-shadow: none;
-    border: none;
-    margin: 0;
-    position: relative;
-    z-index: 2;
-        }
+       
         .header-logo-link {
             display: inline-flex;
             align-items: center;
@@ -57,21 +47,7 @@
         }
 
         /* ── HERO DEL RESTAURANTE ── */
-        .hero-restaurante {
-    background: linear-gradient(180deg, #7f1d1d 0%, #b91c1c 55%, #dc2626 100%);
-    color: white;
-    text-align: center;
-    padding: 20px 20px 25px;
-    position: relative;
-    overflow: hidden;
-    margin-top: -2px;
-    box-shadow: none;
-    border: none;
-        }
-        .hero-restaurante::before {
-            display: none;
-        }
-        .hero-nombre {
+           .hero-nombre {
             font-size: 28px;
             font-weight: 900;
             letter-spacing: 1px;
@@ -523,12 +499,27 @@
 <body>
 
     <!-- HEADER INFOESPINAR -->
-    <header class="header">
-        <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
-            <h1>infoespinar.com</h1>
-        </a>
-    </header>
+    <header class="header header-kebab">
+
+    <a href="index.html" class="header-logo-link">
+        <img src="https://i.imgur.com/di5CaLV.png"
+             class="header-bandera"
+             alt="Bandera El Espinar">
+
+        <h1>infoespinar.com</h1>
+    </a>
+
+    <div class="hero-nombre">🌯 Kebab y Pizza J.J.J. 🍕</div>
+
+    <div class="hero-direccion">
+        📍 C/ La Villa, 15 — El Espinar &nbsp;|&nbsp; 📞 921 640 345
+    </div>
+
+    <div class="hero-horario">
+        ⏰ Domicilio: 13:00–17:00 y 19:00–00:30
+    </div>
+
+</header>
 
     <!-- HERO KEBAB -->
     <div class="hero-restaurante">
