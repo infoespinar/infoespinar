@@ -1,648 +1,711 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleo Local | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
-<title>Empleo | infoespinar.com</title>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: #f4f6f9;
+            color: #334155;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
 
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+        /* ── ENCABEZADO ── */
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+            color: white;
+            text-align: center;
+            padding: 25px 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.08);
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .header-logo-link:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
+        }
+        .header-bandera {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 6px;
+            aspect-ratio: 1 / 1;
+        }
+        .header h1 {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
 
-:root{
-  --naranja:#f97316;
-  --fondo:#f8fafc;
-}
+        /* ── CONTENEDOR PRINCIPAL ── */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px 40px;
+            flex-grow: 1;
+        }
 
-body{
-  background:var(--fondo);
-  font-family:'Lato',sans-serif;
-  color:#334155;
-}
+        /* ── TITULAR Y SUBTÍTULO ── */
+        .titulo-seccion-principal {
+            font-size: 26px;
+            font-weight: 900;
+            text-align: center;
+            margin: 20px 0 6px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #1e293b;
+        }
+        .subtitulo-seccion {
+            text-align: center;
+            font-size: 15px;
+            color: #64748b;
+            margin-bottom: 24px;
+            font-weight: 300;
+        }
 
-/* HEADER */
+        .titulo-bloque {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 25px 0 12px 4px;
+            font-weight: 700;
+        }
 
-.header{
-  background:linear-gradient(135deg,#ff8a00 0%,#ff5e62 50%,#ff9966 100%);
-  color:white;
-  text-align:center;
-  padding:30px 20px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.05);
-}
+        /* ── BANNER ── */
+        .banner-comercio {
+            width: 100%;
+            height: 120px;
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            background-color: #1e293b;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+        .banner-img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?q=80&w=1000&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.35;
+            transition: transform 0.3s ease;
+        }
+        .banner-comercio:hover .banner-img { transform: scale(1.02); }
+        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-label {
+            display: inline-block;
+            background: #475569;
+            color: #fff;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        .banner-nombre {
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+        }
+        .banner-sub {
+            color: rgba(255,255,255,0.95);
+            font-size: 12px;
+            margin-top: 3px;
+            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+            line-height: 1.3;
+        }
 
-.header-logo-link{
-  display:inline-flex;
-  align-items:center;
-  gap:12px;
-  text-decoration:none;
-  color:white;
-  background:rgba(255,255,255,0.08);
-  padding:8px 16px;
-  border-radius:30px;
-  border:1px solid rgba(255,255,255,0.15);
-}
+        /* ── PESTAÑAS ── */
+        .navegacion {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+        }
+        .btn-pestana {
+            background: #f1f5f9;
+            border: none;
+            padding: 10px 20px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            color: #475569;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .btn-pestana.activa { background: #1e293b; color: #fff; }
+        .seccion-app { display: none; }
+        .seccion-app.activa { display: block; }
 
-.header-bandera{
-  width:32px;
-  height:32px;
-  object-fit:cover;
-  border-radius:6px;
-}
+        /* ── BUSCADOR ── */
+        .contenedor-buscador { margin-bottom: 20px; display: none; }
+        .contenedor-buscador.activo { display: block; }
+        .input-buscador {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .input-buscador:focus { border-color: #1e293b; }
 
-.header h1{
-  font-size:24px;
-  font-weight:900;
-  text-transform:uppercase;
-}
+        /* ── GRID DE ANUNCIOS ── */
+        .grid-anuncios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
 
-/* BANNER */
+        .tarjeta-anuncio {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 10px -1px rgba(0,0,0,0.06);
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        .tarjeta-anuncio:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px -4px rgba(0,0,0,0.1);
+        }
+        .tarjeta-anuncio.oculta { display: none !important; }
 
-.contenedor-banner{
-  padding:15px;
-}
+        .cabecera-anuncio {
+            padding: 16px 20px;
+            text-transform: uppercase;
+        }
+        .badge-tipo {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 4px;
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .titulo-anuncio {
+            font-size: 15px;
+            font-weight: 900;
+            color: #fff;
+            margin: 0;
+            line-height: 1.3;
+        }
 
-.banner-comercio{
-  width:100%;
-  height:100px;
-  border-radius:14px;
-  display:flex;
-  align-items:center;
-  overflow:hidden;
-  background:linear-gradient(135deg,#ff8a00 0%,#ff5e62 50%,#ff9966 100%);
-  box-shadow:0 4px 10px rgba(0,0,0,0.08);
-}
+        .cuerpo-anuncio {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .meta-anuncio {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .recogida-anuncio { font-size: 12px; color: #475569; font-weight: 700; }
+        .estado-anuncio {
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 2px 8px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            background: #f8fafc;
+            color: #475569;
+        }
+        .desc-anuncio {
+            font-size: 13.5px;
+            color: #475569;
+            margin-bottom: 16px;
+            flex-grow: 1;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+        .footer-tarjeta {
+            border-top: 1px solid #f1f5f9;
+            padding-top: 12px;
+        }
+        .btn-contacto {
+            display: block;
+            background: #25d366;
+            padding: 10px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 13.5px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(37,211,102,0.3);
+            transition: opacity 0.2s;
+        }
+        .btn-contacto:hover { opacity: 0.9; }
 
-.banner-info{
-  padding:20px;
-  color:white;
-}
+        .cargando { text-align: center; padding: 30px; color: #64748b; font-size: 14px; }
 
-.banner-label{
-  background:rgba(255,255,255,0.2);
-  padding:4px 8px;
-  border-radius:6px;
-  font-size:10px;
-  font-weight:700;
-  text-transform:uppercase;
-}
+        /* ── FORMULARIO ── */
+        .formulario-publicar {
+            background: #fff;
+            padding: 26px;
+            border-radius: 14px;
+            border: 1px solid #cbd5e1;
+            max-width: 660px;
+            margin: 0 auto;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.04);
+        }
+        .grupo-campo { margin-bottom: 20px; }
+        .grupo-campo label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 7px;
+        }
+        .grupo-campo input,
+        .grupo-campo select,
+        .grupo-campo textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1px solid #94a3b8;
+            border-radius: 8px;
+            font-family: inherit;
+            box-sizing: border-box;
+            font-size: 15px;
+            color: #334155;
+        }
+        .grupo-campo input:focus,
+        .grupo-campo select:focus,
+        .grupo-campo textarea:focus {
+            border-color: #475569;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(71,85,105,0.15);
+        }
+        #titulo { text-transform: uppercase; }
 
-/* CONTENIDO */
+        .contenedor-checkboxes { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+        .opcion-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            color: #334155;
+            cursor: pointer;
+            user-select: none;
+        }
+        .opcion-checkbox input { width: 18px; height: 18px; margin: 0; cursor: pointer; }
 
-.contenedor-app{
-  padding:15px;
-  max-width:1200px;
-  margin:auto;
-}
+        .campo-otro-oculto { margin-top: 10px; display: none; }
 
-.navegacion{
-  display:flex;
-  gap:10px;
-  margin-bottom:20px;
-}
+        .grupo-privacidad {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-size: 13.5px;
+            color: #475569;
+            line-height: 1.5;
+        }
+        .grupo-privacidad input { width: 18px; height: 18px; margin-top: 2px; cursor: pointer; flex-shrink: 0; }
+        .grupo-privacidad label { cursor: pointer; }
+        .grupo-privacidad a { color: #475569; font-weight: 700; text-decoration: none; }
+        .grupo-privacidad a:hover { text-decoration: underline; }
 
-.btn-pestana{
-  flex:1;
-  border:none;
-  background:#e2e8f0;
-  padding:12px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-}
+        .btn-enviar {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 16px;
+            transition: opacity 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-family: 'Lato', sans-serif;
+        }
+        .btn-enviar:hover { opacity: 0.9; }
+        .btn-enviar:disabled { opacity: 0.6; cursor: not-allowed; }
 
-.btn-pestana.activa{
-  background:var(--naranja);
-  color:white;
-}
+        .mensaje-exito {
+            text-align: center;
+            color: #16a34a;
+            font-weight: 700;
+            padding: 15px 0;
+        }
 
-/* BUSCADOR */
+        /* ── AVISO CADUCIDAD ── */
+        .aviso-caducidad {
+            background: #fef9c3;
+            border-left: 4px solid #eab308;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #854d0e;
+            line-height: 1.5;
+        }
 
-.contenedor-buscador{
-  margin-bottom:20px;
-}
+        /* ── DISCLAIMER ── */
+        .disclaimer-box {
+            background-color: #f1f5f9;
+            border-left: 4px solid #64748b;
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin: 30px 4px 15px 4px;
+            font-size: 13px;
+            line-height: 1.5;
+            color: #475569;
+            text-align: justify;
+        }
 
-.input-buscador{
-  width:100%;
-  padding:14px;
-  border-radius:10px;
-  border:1px solid #cbd5e1;
-  font-size:14px;
-}
+        /* ── RESPONSIVE ── */
+        @media screen and (min-width: 768px) {
+            .grid-anuncios { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        }
 
-/* GRID */
-
-.grid-anuncios{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:20px;
-}
-
-.tarjeta-anuncio{
-  background:white;
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 4px 10px rgba(0,0,0,0.06);
-}
-
-.cabecera-anuncio{
-  padding:16px 20px;
-  text-transform:uppercase;
-}
-
-.titulo-anuncio{
-  color:white;
-  font-size:14px;
-  font-weight:700;
-}
-
-.cuerpo-anuncio{
-  padding:20px;
-}
-
-.meta-anuncio{
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-bottom:14px;
-}
-
-.recogida-anuncio{
-  font-size:12px;
-  font-weight:700;
-  color:#0284c7;
-}
-
-.estado-anuncio{
-  font-size:11px;
-  font-weight:700;
-  background:#f1f5f9;
-  border:1px solid #cbd5e1;
-  padding:3px 8px;
-  border-radius:6px;
-}
-
-.desc-anuncio{
-  font-size:14px;
-  color:#475569;
-  line-height:1.5;
-  margin-bottom:18px;
-  white-space:pre-line;
-}
-
-.btn-contacto{
-  display:block;
-  width:100%;
-  text-align:center;
-  background:#25d366;
-  color:white;
-  padding:12px;
-  border-radius:8px;
-  text-decoration:none;
-  font-weight:700;
-}
-
-.cargando{
-  text-align:center;
-  padding:40px;
-  color:#64748b;
-}
-
-/* FORMULARIO */
-
-.formulario-publicar{
-  background:white;
-  padding:25px;
-  border-radius:16px;
-  border:1px solid #e2e8f0;
-  max-width:700px;
-  margin:auto;
-}
-
-.grupo-campo{
-  margin-bottom:18px;
-}
-
-.grupo-campo label{
-  display:block;
-  margin-bottom:6px;
-  font-size:14px;
-  font-weight:700;
-}
-
-.grupo-campo input,
-.grupo-campo select,
-.grupo-campo textarea{
-  width:100%;
-  padding:12px;
-  border-radius:8px;
-  border:1px solid #cbd5e1;
-  font-family:inherit;
-}
-
-#titulo{
-  text-transform:uppercase;
-}
-
-.btn-enviar{
-  width:100%;
-  background:var(--naranja);
-  color:white;
-  border:none;
-  padding:14px;
-  border-radius:10px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.mensaje-exito{
-  text-align:center;
-  color:#059669;
-  font-weight:700;
-  padding-top:15px;
-}
-
-.oculta{
-  display:none!important;
-}
-</style>
+        /* ── FOOTER ── */
+        .footer {
+            background-color: #1e293b;
+            color: #94a3b8;
+            text-align: center;
+            padding: 25px 20px;
+            margin-top: 30px;
+            font-size: 13px;
+            line-height: 1.6;
+            border-top: 3px solid #475569;
+        }
+        .footer a { color: #94a3b8; text-decoration: none; font-weight: 700; }
+        .footer a:hover { color: #fff; }
+    </style>
 </head>
-
 <body>
 
-<header class="header">
-  <a href="index.html" class="header-logo-link">
-    <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
-    <h1>infoespinar.com</h1>
-  </a>
-</header>
+    <header class="header">
+        <a href="index.html" class="header-logo-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
+            <h1>infoespinar.com</h1>
+        </a>
+    </header>
 
-<div class="contenedor-banner">
-  <div class="banner-comercio">
-    <div class="banner-info">
-      <span class="banner-label">Bolsa de empleo</span>
-      <h3 style="margin-top:8px;">Ofertas y demandas en la zona</h3>
-    </div>
-  </div>
-</div>
+    <main class="main-container">
 
-<div class="contenedor-app">
+        <h2 class="titulo-seccion-principal">💼 Empleo Local</h2>
+        <p class="subtitulo-seccion">En este espacio puedes buscar u ofrecer empleo. ¡Ánimo!</p>
 
-  <div class="navegacion">
-    <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">
-      📌 Ver Tablón
-    </button>
+        <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+            <div class="banner-img"></div>
+            <div class="banner-info">
+                <span class="banner-label">¿Tienes una empresa?</span>
+                <h3 class="banner-nombre">¡Publica una oferta de empleo gratis!</h3>
+                <div class="banner-sub">Llega a todos los vecinos de la zona. Pulsa para informarte.</div>
+            </div>
+        </a>
 
-    <button class="btn-pestana" onclick="cambiar('form-sec', event)">
-      ➕ Publicar
-    </button>
-  </div>
-
-  <div class="contenedor-buscador">
-    <input
-      type="text"
-      id="txtBuscador"
-      class="input-buscador"
-      placeholder="🔍 Buscar empleo..."
-      oninput="filtrarAnuncios()"
-    >
-  </div>
-
-  <!-- TABLÓN -->
-
-  <div id="tablon-sec" class="seccion-app">
-    <div id="loading" class="cargando">
-      Cargando ofertas...
-    </div>
-
-    <div id="tablon" class="grid-anuncios"></div>
-  </div>
-
-  <!-- FORMULARIO -->
-
-  <div id="form-sec" class="seccion-app" style="display:none;">
-
-    <div class="formulario-publicar">
-
-      <form id="formAnuncio" onsubmit="enviar(event)">
-
-        <div class="grupo-campo">
-          <label>¿Qué buscas?</label>
-
-          <select id="buscasUOfreces" required>
-            <option value="BUSCO">Busco empleo</option>
-            <option value="OFREZCO">Ofrezco empleo</option>
-          </select>
+        <div class="aviso-caducidad">
+            ⏳ <strong>Los anuncios se eliminan automáticamente a los 20 días</strong> de su publicación para mantener el tablón actualizado.
         </div>
 
-        <div class="grupo-campo">
-          <label>Título</label>
-
-          <input
-            id="titulo"
-            required
-            placeholder="Ej: CAMARERO"
-          >
+        <div class="navegacion">
+            <button class="btn-pestana activa" onclick="cambiar('tablon-sec', event)">📌 Ver Tablón</button>
+            <button class="btn-pestana" onclick="cambiar('form-sec', event)">➕ Publicar Anuncio</button>
         </div>
 
-        <div class="grupo-campo">
-          <label>Zona</label>
-
-          <input
-            id="lugar"
-            required
-            placeholder="Ej: San Rafael"
-          >
+        <div id="buscador-cont" class="contenedor-buscador activo">
+            <input type="text" id="txtBuscador" class="input-buscador" placeholder="🔍 Buscar por puesto, requisitos, jornada o núcleo (ej: San Rafael, camarero, limpieza...)" oninput="filtrarAnuncios()">
         </div>
 
-        <div class="grupo-campo">
-          <label>Jornada</label>
-
-          <select id="jornada">
-            <option>Jornada Completa</option>
-            <option>Jornada Parcial</option>
-            <option>Fines de Semana</option>
-            <option>Por Horas</option>
-          </select>
+        <div id="tablon-sec" class="seccion-app activa">
+            <div id="loading" class="cargando">Cargando bolsa de empleo...</div>
+            <div id="tablon" class="grid-anuncios"></div>
         </div>
 
-        <div class="grupo-campo">
-          <label>Descripción</label>
+        <div id="form-sec" class="seccion-app">
+            <div class="formulario-publicar">
+                <form id="formAnuncio" onsubmit="enviar(event)">
 
-          <textarea
-            id="descripcion"
-            rows="5"
-            required
-          ></textarea>
+                    <div class="grupo-campo">
+                        <label>¿Qué necesitas? *</label>
+                        <select id="buscasUOfreces" required>
+                            <option value="BUSCO">Busco empleo / Me ofrezco</option>
+                            <option value="OFREZCO">Ofrezco empleo / Busco personal</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label>Título del puesto o servicio *</label>
+                        <input id="titulo" required placeholder="Ej: CAMARERO/A, CUIDADO DE NIÑOS, PINTOR..." oninput="this.value = this.value.toUpperCase()">
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label>¿Dónde se desarrollaría el trabajo? (Selecciona una o varias) *</label>
+                        <div class="contenedor-checkboxes">
+                            <label class="opcion-checkbox"><input type="checkbox" name="lugar_opc" value="El Espinar"> El Espinar</label>
+                            <label class="opcion-checkbox"><input type="checkbox" name="lugar_opc" value="San Rafael"> San Rafael</label>
+                            <label class="opcion-checkbox"><input type="checkbox" name="lugar_opc" value="La Estación"> La Estación</label>
+                            <label class="opcion-checkbox"><input type="checkbox" name="lugar_opc" value="LASR"> Los Ángeles de San Rafael (LASR)</label>
+                            <label class="opcion-checkbox"><input type="checkbox" name="lugar_opc" value="Otro" id="chkOtro" onchange="alternarOtro(this)"> Otro (Especificar zona)</label>
+                        </div>
+                        <input type="text" id="txtOtroLugar" class="campo-otro-oculto" placeholder="Escribe el municipio o zona (ej: Villacastín, Segovia...)">
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label>Tipo de Jornada *</label>
+                        <select id="jornada" required>
+                            <option value="Jornada Completa">Jornada Completa</option>
+                            <option value="Jornada Parcial">Jornada Parcial</option>
+                            <option value="Fines de Semana">Fines de Semana</option>
+                            <option value="Por Horas / Temporal">Por Horas / Temporal</option>
+                        </select>
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label>Descripción detallada y requisitos *</label>
+                        <textarea id="descripcion" required rows="5" placeholder="Describe las funciones, requisitos o tus habilidades con detalle..."></textarea>
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label>Teléfono de contacto (9 dígitos) *</label>
+                        <input id="telefono" type="tel" required pattern="[0-9]{9}" maxlength="9" placeholder="Ej: 600123456">
+                    </div>
+
+                    <div class="grupo-campo">
+                        <label>Email de contacto (Opcional)</label>
+                        <input id="email" type="email" placeholder="Ej: nombre@correo.com">
+                    </div>
+
+                    <div class="grupo-privacidad">
+                        <input type="checkbox" id="checkPrivacidad" required>
+                        <label for="checkPrivacidad">He leído y acepto la <a href="https://www.infoespinar.com/privacidad" target="_blank">Política de Privacidad</a> y consiento que mi número de teléfono sea publicado en la web para que otros vecinos contacten conmigo.</label>
+                    </div>
+
+                    <button class="btn-enviar" id="btnPublicar">🚀 Publicar Anuncio de Empleo</button>
+                </form>
+                <div id="status"></div>
+            </div>
         </div>
 
-        <div class="grupo-campo">
-          <label>Teléfono</label>
-
-          <input
-            id="telefono"
-            required
-            maxlength="9"
-            placeholder="600123456"
-          >
+        <div class="disclaimer-box">
+            <strong>Nota informativa:</strong> InfoEspinar actúa como tablón de anuncios y no se responsabiliza de la veracidad de las ofertas publicadas. Te recomendamos verificar la información directamente con el anunciante.
         </div>
 
-        <button class="btn-enviar">
-          🚀 Publicar anuncio
-        </button>
+    </main>
 
-      </form>
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
 
-      <div id="status"></div>
+    <script>
+    const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
 
-    </div>
+    const coloresTarjeta = ["#1e293b", "#0f4c81", "#3730a3", "#065f46", "#7c2d12"];
 
-  </div>
-
-</div>
-
-<script>
-
-const urlScript = "TU_URL_DE_APPS_SCRIPT_AQUI";
-
-/* CAMBIAR PESTAÑAS */
-
-function cambiar(id,e){
-
-  document.querySelectorAll('.seccion-app')
-  .forEach(s=>s.style.display='none');
-
-  document.getElementById(id).style.display='block';
-
-  document.querySelectorAll('.btn-pestana')
-  .forEach(b=>b.classList.remove('activa'));
-
-  e.currentTarget.classList.add('activa');
-}
-
-/* BUSCADOR */
-
-function filtrarAnuncios(){
-
-  const texto = document
-  .getElementById("txtBuscador")
-  .value
-  .toLowerCase();
-
-  document
-  .querySelectorAll(".tarjeta-anuncio")
-  .forEach(t=>{
-
-    const contenido = t
-    .getAttribute("data-search")
-    .toLowerCase();
-
-    t.classList.toggle(
-      "oculta",
-      !contenido.includes(texto)
-    );
-  });
-}
-
-/* CARGAR OFERTAS */
-
-async function cargar(){
-
-  try{
-
-    console.log("Cargando empleo...");
-
-    const res = await fetch(urlScript);
-
-    const data = await res.json();
-
-    const cont = document.getElementById("tablon");
-
-    document.getElementById("loading").style.display="none";
-
-    cont.innerHTML="";
-
-    if(!data.length){
-
-      cont.innerHTML=`
-      <div class="cargando">
-      No hay ofertas publicadas.
-      </div>
-      `;
-
-      return;
+    function alternarOtro(checkbox) {
+        const txtOtro = document.getElementById("txtOtroLugar");
+        txtOtro.style.display = checkbox.checked ? "block" : "none";
+        txtOtro.required = checkbox.checked;
+        if (!checkbox.checked) txtOtro.value = "";
     }
 
-    const colores=[
-      "#1e3a8a",
-      "#065f46",
-      "#5b21b6",
-      "#a21caf"
-    ];
+    function cambiar(id, e) {
+        document.querySelectorAll('.seccion-app').forEach(s => s.classList.remove('activa'));
+        document.getElementById(id).classList.add('activa');
+        document.querySelectorAll('.btn-pestana').forEach(b => b.classList.remove('activa'));
+        if (e && e.target) e.target.classList.add('activa');
 
-    data.forEach((a,i)=>{
-
-      const titulo = (a.titulo || "").toUpperCase();
-
-      const textoWhatsapp =
-      `Hola, te escribo por el anuncio "${titulo}" publicado en InfoEspinar`;
-
-      const telefono =
-      (a.contacto || "").replace(/\s+/g,'');
-
-      cont.innerHTML += `
-
-      <div class="tarjeta-anuncio"
-      data-search="${titulo} ${a.descripcion || ''} ${a.recogida || ''}">
-
-        <div
-        class="cabecera-anuncio"
-        style="background:${colores[i%4]}">
-
-          <h3 class="titulo-anuncio">
-            ${titulo}
-          </h3>
-
-        </div>
-
-        <div class="cuerpo-anuncio">
-
-          <div class="meta-anuncio">
-
-            ${
-              a.recogida
-              ?
-              `<span class="recogida-anuncio">
-              📍 ${a.recogida}
-              </span>`
-              :
-              ''
-            }
-
-            ${
-              a.estado
-              ?
-              `<span class="estado-anuncio">
-              ${a.estado}
-              </span>`
-              :
-              ''
-            }
-
-          </div>
-
-          <p class="desc-anuncio">
-            ${a.descripcion || ''}
-          </p>
-
-          <a
-          class="btn-contacto"
-          target="_blank"
-          href="https://wa.me/34${telefono}?text=${encodeURIComponent(textoWhatsapp)}">
-
-            💬 WhatsApp
-
-          </a>
-
-        </div>
-
-      </div>
-      `;
-    });
-
-  }catch(err){
-
-    console.error(err);
-
-    document.getElementById("loading").innerHTML =
-    "❌ Error al cargar las ofertas.";
-  }
-}
-
-/* ENVIAR */
-
-async function enviar(e){
-
-  e.preventDefault();
-
-  const status =
-  document.getElementById("status");
-
-  status.innerHTML =
-  "<div class='cargando'>Publicando...</div>";
-
-  const payload = {
-
-    estado:
-    document.getElementById("buscasUOfreces").value,
-
-    titulo:
-    document.getElementById("titulo")
-    .value
-    .trim()
-    .toUpperCase(),
-
-    recogida:
-    document.getElementById("lugar").value,
-
-    jornada:
-    document.getElementById("jornada").value,
-
-    descripcion:
-    document.getElementById("descripcion").value,
-
-    contacto:
-    document.getElementById("telefono")
-    .value
-    .replace(/\s+/g,'')
-
-  };
-
-  try{
-
-    const res = await fetch(urlScript,{
-      method:"POST",
-      body:JSON.stringify(payload)
-    });
-
-    const r = await res.json();
-
-    if(r.resultado==="ok"){
-
-      status.innerHTML=
-      "<div class='mensaje-exito'>✅ Publicado correctamente</div>";
-
-      document.getElementById("formAnuncio").reset();
-
-      cargar();
-
-    }else{
-
-      status.innerHTML=
-      "<div class='cargando'>❌ Error al guardar</div>";
+        const bCont = document.getElementById("buscador-cont");
+        if (id === "tablon-sec") {
+            bCont.classList.add('activo');
+            document.getElementById("txtBuscador").value = "";
+            cargar();
+        } else {
+            bCont.classList.remove('activo');
+        }
     }
 
-  }catch(err){
+    function filtrarAnuncios() {
+        const termino = document.getElementById("txtBuscador").value
+            .toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+        document.querySelectorAll(".tarjeta-anuncio").forEach(t => {
+            const texto = t.getAttribute("data-search")
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            t.classList.toggle("oculta", !texto.includes(termino));
+        });
+    }
 
-    console.error(err);
+    async function cargar() {
+        const loading = document.getElementById("loading");
+        const cont = document.getElementById("tablon");
+        loading.style.display = "block";
+        cont.innerHTML = "";
 
-    status.innerHTML=
-    "<div class='cargando'>❌ Error de conexión</div>";
-  }
-}
+        try {
+            const res = await fetch(urlScript);
+            const data = await res.json();
+            loading.style.display = "none";
 
-/* INICIO */
+            const anuncios = data.filter(a => a.titulo && a.titulo.toString().trim() !== "");
 
-document.getElementById("tablon-sec").style.display="block";
+            if (anuncios.length === 0) {
+                cont.innerHTML = '<div class="cargando">No hay ofertas ni demandas de empleo publicadas recientemente.</div>';
+                return;
+            }
 
-cargar();
+            // Mezcla aleatoria Fisher-Yates
+            for (let i = anuncios.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [anuncios[i], anuncios[j]] = [anuncios[j], anuncios[i]];
+            }
 
-</script>
+            anuncios.forEach((a, i) => {
+                let tlfLimpio = a.contacto ? a.contacto.toString().replace(/\s+/g, '') : "";
+                if (tlfLimpio && !tlfLimpio.startsWith('34') && !tlfLimpio.startsWith('+34')) {
+                    tlfLimpio = '34' + tlfLimpio;
+                }
+
+                const titulo = a.titulo.toString().toUpperCase();
+                const tipoBadge = a.buscasUOfreces === "OFREZCO" ? "🏢 OFERTA DE EMPLEO" : "🙋 SE OFRECE";
+                const color = coloresTarjeta[i % coloresTarjeta.length];
+                const metaBusqueda = `${titulo} ${a.descripcion || ''} ${a.recogida || ''} ${a.estado || ''}`;
+                const textoWA = `Hola, te escribo por el anuncio "${titulo.replace(/\[.*?\]/g, '').trim()}" que vi en InfoEspinar.`;
+
+                cont.innerHTML += `
+                    <div class="tarjeta-anuncio" data-search="${metaBusqueda.replace(/"/g, '&quot;').toLowerCase()}">
+                        <div class="cabecera-anuncio" style="background:${color}">
+                            <span class="badge-tipo">${tipoBadge}</span>
+                            <h3 class="titulo-anuncio">${titulo}</h3>
+                        </div>
+                        <div class="cuerpo-anuncio">
+                            <div class="meta-anuncio">
+                                ${a.recogida ? `<span class="recogida-anuncio">📍 ${a.recogida}</span>` : ""}
+                                ${a.estado   ? `<span class="estado-anuncio">${a.estado}</span>` : ""}
+                            </div>
+                            <p class="desc-anuncio">${a.descripcion || ""}</p>
+                            <div class="footer-tarjeta">
+                                <a class="btn-contacto" href="https://wa.me/${tlfLimpio}?text=${encodeURIComponent(textoWA)}" target="_blank" rel="noopener">💬 Contactar por WhatsApp</a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+        } catch (err) {
+            loading.innerText = "Error al conectar con el tablón de empleo.";
+        }
+    }
+
+    async function enviar(e) {
+        e.preventDefault();
+
+        const checkboxes = document.querySelectorAll('input[name="lugar_opc"]:checked');
+        if (checkboxes.length === 0) {
+            alert("Por favor, selecciona al menos una ubicación para el puesto.");
+            return;
+        }
+
+        let ubicaciones = [];
+        checkboxes.forEach(cb => {
+            if (cb.value === "Otro") {
+                const val = document.getElementById("txtOtroLugar").value.trim();
+                if (val) ubicaciones.push(val);
+            } else {
+                ubicaciones.push(cb.value);
+            }
+        });
+
+        const tieneWebRadio = document.querySelector('input[name="tiene_web"]:checked');
+        const btn    = document.getElementById("btnPublicar");
+        const status = document.getElementById("status");
+        btn.disabled = true;
+        status.innerHTML = "<div class='cargando'>Guardando anuncio en el tablón...</div>";
+
+        const payload = {
+            buscasUOfreces: document.getElementById("buscasUOfreces").value,
+            titulo:         document.getElementById("titulo").value.trim().toUpperCase(),
+            lugar:          ubicaciones.join(", "),
+            jornada:        document.getElementById("jornada").value,
+            descripcion:    document.getElementById("descripcion").value,
+            telefono:       document.getElementById("telefono").value.replace(/\s+/g, ''),
+            email:          document.getElementById("email").value
+        };
+
+        try {
+            const res = await fetch(urlScript, { method: "POST", body: JSON.stringify(payload) });
+            const r   = await res.json();
+
+            if (r.resultado === "ok") {
+                status.innerHTML = "<div class='mensaje-exito'>¡Anuncio publicado correctamente! Aparecerá en el tablón en breve.</div>";
+                document.getElementById("formAnuncio").reset();
+                document.getElementById("txtOtroLugar").style.display = "none";
+                document.getElementById("txtOtroLugar").required = false;
+                setTimeout(() => {
+                    status.innerHTML = "";
+                    cambiar('tablon-sec', null);
+                    document.querySelector('.btn-pestana').classList.add('activa');
+                }, 2500);
+            } else if (r.mensaje && r.mensaje.includes("Antiflood")) {
+                status.innerHTML = `<div class='cargando' style='color:#dc2626; font-weight:700;'>${r.mensaje}</div>`;
+            } else {
+                status.innerHTML = "<div class='cargando' style='color:#dc2626;'>Error al guardar el anuncio. Inténtalo de nuevo.</div>";
+            }
+        } catch (error) {
+            status.innerHTML = "<div class='cargando' style='color:#dc2626;'>Error de red al procesar el envío.</div>";
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    // Carga inicial del tablón
+    cargar();
+    </script>
 
 </body>
 </html>
