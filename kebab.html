@@ -887,10 +887,10 @@
         const pago  = document.querySelector('input[name="metodo_pago"]:checked').value;
         const cambio = document.getElementById("txtCambio").value.trim();
 
-        let msg = `🚨 *NUEVO PEDIDO DESDE INFOESPINAR* 🚨\n`;
-        msg += `━━━━━━━━━━━━━━━━\n\n`;
+        let msg = `🥙 *NUEVO PEDIDO DESDE INFOESPINAR*\n`;
+        msg += `---------\n\n`;
         msg += lineas.join("\n\n") + `\n\n`;
-        msg += `━━━━━━━━━━━━━━━━\n`;
+        msg += `---------\n`;
         msg += zona === "Recoger en Local"
             ? `📦 *MODALIDAD:* Recoger en tienda\n`
             : `📍 *ZONA:* ${zona}\n🏠 *DIRECCIÓN:* ${dir}\n`;
@@ -898,12 +898,12 @@
         msg += `🛍️ *Subtotal:* ${subtotal.toFixed(2)}€\n`;
         msg += `🛵 *Envío:* ${envio === 0 ? "✨ GRATIS" : envio.toFixed(2)+"€"}\n`;
         msg += `💰 *TOTAL:* ${total.toFixed(2)}€\n`;
-        msg += `━━━━━━━━━━━━━━━━\n`;
-        msg += `💳 *PAGO:* ${pago}\n`;
+        msg += `---------\n`;
+        msg += `💳 *PAGO:* ${pago}\n\n`;
         if (pago === "Efectivo") msg += `💵 *Cambio:* ${cambio || "No necesita cambio"}\n`;
-        if (pago === "Bizum") msg += `ENVÍA PANTALLAZO DEL BIZUM LO ANTES POSIBLE'\n`;
-        msg += `━━━━━━━━━━━━━━━━`;
-        msg += 'CONFIRMAREMOS TU PEDIDO LO ANTES POSIBLE RESPONDIENDO A ESTE MENSAJE'
+        if (pago === "Bizum") msg += `Envía un pantallazo del pago por Bizum lo antes posible'\n`;
+        msg += `---------\n`;
+        msg += 'Conffirmaremos tu pedido lo antes posible respondiendo a este mensaje'
         window.open(`https://api.whatsapp.com/send?phone=34619546566&text=${encodeURIComponent(msg)}`, '_blank');
     }
 
