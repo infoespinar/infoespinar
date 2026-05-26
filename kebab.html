@@ -225,8 +225,45 @@
             border-radius: 8px;
             margin: 18px 0 10px;
         }
+        .categoria-plegable {
+    margin-bottom: 14px;
+}
 
-        .producto-item {
+.categoria-plegable summary {
+    list-style: none;
+    cursor: pointer;
+}
+
+.categoria-plegable summary::-webkit-details-marker {
+    display: none;
+}
+
+.categoria-titulo {
+    font-size: 12px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    background: #b91c1c;
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin: 18px 0 10px;
+    position: relative;
+    user-select: none;
+}
+
+/* Flecha */
+.categoria-titulo::after {
+    content: "＋";
+    position: absolute;
+    right: 14px;
+    transition: transform 0.2s;
+}
+
+.categoria-plegable[open] .categoria-titulo::after {
+    content: "−";
+}
+            .producto-item {
             background: #fff;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
