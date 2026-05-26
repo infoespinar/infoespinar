@@ -14,6 +14,11 @@
         }
 
         body {
+
+            :root {
+    --azul-inicio: #1e3a8a;
+    --azul-fin: #3b82f6;
+}
             font-family: 'Lato', sans-serif;
             background-color: #f4f6f9;
             color: #334155;
@@ -37,10 +42,19 @@
             transition: background 0.2s, transform 0.2s;
         }
 
-        .header-logo-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-1px);
-        }
+        .header-logo-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    text-decoration: none;
+    color: white;
+    background: rgba(255,255,255,0.08);
+    padding: 8px 16px;
+    border-radius: 30px;
+    border: 1px solid rgba(255,255,255,0.15);
+    transition: background 0.2s, transform 0.2s;
+}
 
         .header-bandera {
             width: 32px;
@@ -52,12 +66,13 @@
         }
 
         .header h1 {
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin: 0;
+    line-height: 1;
+}
         .header p {
             font-size: 15px;
             opacity: 0.9;
@@ -75,8 +90,8 @@
         }
 
         h1 { margin-bottom: 25px; color: var(--azul-inicio); }
-        h2 { color: var(--azul-fin); margin: 30px 0 15px 0; font-size: 19px; text-transform: uppercase; }
-        p { margin-bottom: 15px; font-size: 15px; text-align: justify; }
+        h2 {   color: #1e3a8a;   margin: 30px 0 15px 0;   font-size: 19px;   font-weight: 900;   line-height: 1.4;
+}        p { margin-bottom: 15px; font-size: 15px; text-align: justify; }
         ul { margin: 10px 0 20px 25px; }
         li { margin-bottom: 8px; font-size: 15px; }
 
