@@ -500,8 +500,7 @@
         </a>
         <p>Tu guía local de comercios, servicios y teléfonos de interés</p>
         <div class="buscador-container">
-            <input type="text" placeholder="¿Qué estás buscando? (Ej: kebab, fontanero...)">
-        </div>
+        <input type="text" placeholder="¿Qué estás buscando? (Ej: kebab, fontanero...)" onkeydown="if(event.key==='Enter') window.open('https://www.google.com/search?q=site:infoespinar.github.io/infoespinar/+'+encodeURIComponent(this.value), '_blank')">
     </header>
 
     <main class="main-container">
