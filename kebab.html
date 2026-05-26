@@ -704,58 +704,103 @@
 
     /* ── RENDER MENÚ ── */
     function renderizarMenu() {
-        const contenedor = document.getElementById("contenedor-menu");
-        const cats = [...new Set(productosKebab.map(p => p.cat))];
-        let html = "";
+    const contenedor = document.getElementById("contenedor-menu");
+    const cats = [...new Set(productosKebab.map(p => p.cat))];
+    let html = "";
 
-        cats.forEach(cat => {
-
-    html += `
-    <details class="categoria-plegable" ${cat.includes("Ofertas") ? "open" : ""}>
-        <summary class="categoria-titulo">${cat}</summary>
-    `;
-
-    productosKebab
-        .filter(p => p.cat === cat)
-        .forEach(p => {
+    cats.forEach(cat => {
 
         html += `
-        <div class="producto-item" id="item-${p.id}">
-            ...
-        </div>
+        <details class="categoria-plegable" ${cat.includes("Ofertas") ? "open" : ""}>
+            <summary class="categoria-titulo">${cat}</summary>
+        `;
+
+        productosKebab
+            .filter(p => p.cat === cat)
+            .forEach(p => {
+
+                html += `
+                <div class="producto-item" id="item-${p.id}">
+
+                    <div class="producto-fila">
+
+                        <div class="producto-info">
+                            <div class="producto-nombre">
+                                ${p.icono} ${p.nombre}
+                            </div>
+
+                            <div class="producto-precio">
+                                ${p.precio.toFixed(2)}€
+                            </div>
+
+                            <div class="producto-desc">
+                                ${p.desc || ''}
+                            </div>
+                        </div>
+
+                        <div class="contador">
+
+                            <button
+                                class="btn-cnt btn-cnt-menos"
+                                onclick="cambiarCantidad('${p.id}',${p.precio},-1)">
+                                −
+                            </button>
+
+                            <span class="cnt-valor" id="cant-${p.id}">
+                                0
+                            </span>
+
+                            <button
+                                class="btn-cnt btn-cnt-mas"
+                                onclick="cambiarCantidad('${p.id}',${p.precio},1)">
+                                +
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="bloque-bebidas" id="bebidas-${p.id}"></div>
+
+                    ${p.admiteExtras ? `
+                    <div class="bloque-extras" id="extras-${p.id}">
+
+                        <label class="extra-titulo">
+                            ➕ ¿Añadir extras?
+                        </label>
+
+                        ${listaExtras.map(ex => `
+                            <label class="opcion-extra">
+
+                                <input
+                                    type="checkbox"
+                                    id="chk-${p.id}-${ex.clave}"
+                                    onchange="alternarExtra(
+                                        '${p.id}',
+                                        '${ex.clave}',
+                                        '${ex.nombre}',
+                                        ${ex.precio}
+                                    )">
+
+                                ${ex.nombre} (+${ex.precio.toFixed(2)}€)
+
+                            </label>
+                        `).join('')}
+
+                    </div>
+                    ` : ''}
+
+                </div>
+                `;
+            });
+
+        html += `
+        </details>
         `;
     });
 
-    html += `</details>`;
-});
-                <div class="producto-item" id="item-${p.id}">
-                    <div class="producto-fila">
-                        <div class="producto-info">
-                            <div class="producto-nombre">${p.icono} ${p.nombre}</div>
-                            <div class="producto-precio">${p.precio.toFixed(2)}€</div>
-                            <div class="producto-desc">${p.desc || ''}</div>
-                        </div>
-                        <div class="contador">
-                            <button class="btn-cnt btn-cnt-menos" onclick="cambiarCantidad('${p.id}',${p.precio},-1)">−</button>
-                            <span class="cnt-valor" id="cant-${p.id}">0</span>
-                            <button class="btn-cnt btn-cnt-mas" onclick="cambiarCantidad('${p.id}',${p.precio},1)">+</button>
-                        </div>
-                    </div>
-                    <div class="bloque-bebidas" id="bebidas-${p.id}"></div>
-                    ${p.admiteExtras ? `
-                    <div class="bloque-extras" id="extras-${p.id}">
-                        <label class="extra-titulo">➕ ¿Añadir extras?</label>
-                        ${listaExtras.map(ex => `
-                        <label class="opcion-extra">
-                            <input type="checkbox" id="chk-${p.id}-${ex.clave}" onchange="alternarExtra('${p.id}','${ex.clave}','${ex.nombre}',${ex.precio})">
-                            ${ex.nombre} (+${ex.precio.toFixed(2)}€)
-                        </label>`).join('')}
-                    </div>` : ''}
-                </div>`;
-            });
-        });
-        contenedor.innerHTML = html;
-    }
+    contenedor.innerHTML = html;
+}
 
     /* ── CANTIDAD ── */
     function cambiarCantidad(id, precio, cambio) {
