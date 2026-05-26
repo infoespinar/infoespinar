@@ -682,11 +682,7 @@ async function cargar() {
                 coloresTarjeta[i % coloresTarjeta.length];
 
             // ✅ CORREGIDO
-            const tipoBadge =
-                a.buscasUOfreces === "BUSCO"
-                    ? "BUSCO EMPLEO"
-                    : "BUSCO PERSONAL";
-
+            
             const metaBusqueda = `
                 ${titulo}
                 ${a.descripcion || ''}
