@@ -182,7 +182,7 @@ document.getElementById('formViaje').onsubmit = async (e) => {
         telefono: document.getElementById('telefono').value
     };
 
-    await fetch("TU_URL_AQUÍ", { method: "POST", body: JSON.stringify(p) });
+    await fetch("https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec", { method: "POST", body: JSON.stringify(p) });
     
     alert("¡Viaje publicado!");
     location.reload(); // Recarga para mostrar el nuevo viaje
