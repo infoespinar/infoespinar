@@ -8,9 +8,16 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-*{box-sizing:border-box;margin:0;padding:0;}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-:root{--menta:#20a088;--fondo:#f4f6f9;}
+:root{
+    --menta:#20a088;
+    --fondo:#f4f6f9;
+}
 
 body{
     font-family:'Lato',sans-serif;
@@ -57,6 +64,7 @@ body{
 h2.titulo-seccion{
     text-align:center;
     margin:20px 0 5px;
+    font-size:24px;
 }
 
 .subtitulo{
@@ -76,6 +84,7 @@ h2.titulo-seccion{
     border:none;
     border-radius:30px;
     font-weight:700;
+    cursor:pointer;
 }
 
 #form{
@@ -93,6 +102,7 @@ input,select{
     margin-bottom:12px;
     border:1px solid #cbd5e1;
     border-radius:8px;
+    font-family:inherit;
 }
 
 .grid-anuncios{
@@ -136,13 +146,26 @@ input,select{
     border-radius:8px;
     text-decoration:none;
 }
+
+.oculto{
+    display:none;
+}
+
+/* LOADING BIEN CENTRADO */
+#loading{
+    text-align:center;
+    padding:40px;
+    font-weight:700;
+    color:#64748b;
+    font-size:16px;
+}
 </style>
 </head>
 
 <body>
 
 <header class="header">
-    <a class="header-logo" href="#">
+    <a class="header-logo">
         <img class="header-bandera" src="https://i.imgur.com/di5CaLV.png">
         <h1>INFOESPINAR.COM</h1>
     </a>
@@ -151,7 +174,7 @@ input,select{
 <div class="contenedor-app">
 
 <h2 class="titulo-seccion">Viajes Compartidos</h2>
-<div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
+<div class="subtitulo">Últimos 7 días</div>
 
 <button class="btn-publicar" onclick="toggleFormulario()">➕ PUBLICAR VIAJE</button>
 
@@ -160,7 +183,7 @@ input,select{
 <form id="publicarForm" onsubmit="enviar(event)">
 
 <select id="tipo" required>
-<option value="">¿Qué buscas?</option>
+<option value="">Tipo de viaje</option>
 <option value="CONDUCTOR">🚗 Soy conductor</option>
 <option value="PASAJERO">🙋 Soy pasajero</option>
 </select>
@@ -196,6 +219,7 @@ input,select{
 </div>
 
 <input type="date" id="fecha" required>
+
 <select id="hora" required></select>
 
 <input id="nombre" placeholder="Nombre" required>
@@ -224,6 +248,20 @@ function toggleFormulario(){
     if(f.style.display==="block") f.scrollIntoView({behavior:"smooth"});
 }
 
+function controlarOtro(id){
+    const sel=document.getElementById(id);
+    const input=document.getElementById(id+"Otro");
+
+    if(sel.value==="Otro"){
+        input.classList.remove("oculto");
+        input.required=true;
+    }else{
+        input.classList.add("oculto");
+        input.required=false;
+        input.value="";
+    }
+}
+
 function generarHoras(){
     const h=document.getElementById("hora");
     for(let i=0;i<24;i++){
@@ -233,67 +271,41 @@ function generarHoras(){
     }
 }
 
-function controlarOtro(id){
-    const sel=document.getElementById(id);
-    const otro=document.getElementById(id+"Otro");
-    if(sel.value==="Otro"){otro.style.display="block";}
-    else{otro.style.display="none";}
-}
-
 function obtener(id){
     const v=document.getElementById(id).value;
     if(v==="Otro") return document.getElementById(id+"Otro").value;
     return v;
 }
 
-function esReciente(f){
-    const d=new Date(f);
-    if(isNaN(d)) return false;
-    const lim=new Date();
-    lim.setDate(lim.getDate()-7);
-    return d>=lim;
-}
-
-function horaMin(h){
-    const [a,b]=h.split(":").map(Number);
-    return a*60+b;
+function validar(){
+    return obtener("desde").toLowerCase() !== obtener("hasta").toLowerCase();
 }
 
 function construirMensaje(){
-    return `🚗 NUEVO VIAJE
+    return `🚗 VIAJE COMPARTIDO
 
 👤 ${document.getElementById("tipo").value}
 📍 ${obtener("desde")} → ${obtener("hasta")}
 📅 ${document.getElementById("fecha").value}
 ⏰ ${document.getElementById("hora").value}
-🙋 ${document.getElementById("nombre").value}`;
+🙋 ${document.getElementById("nombre").value}
+📞 ${document.getElementById("telefono").value}`;
 }
 
 function previsualizarWhatsapp(){
+    if(!validar()){ alert("Origen y destino no pueden coincidir"); return; }
     window.open(`https://wa.me/?text=${encodeURIComponent(construirMensaje())}`);
 }
 
 function cargar(){
-
 fetch(urlScript)
 .then(r=>r.json())
 .then(data=>{
 
 document.getElementById("loading").style.display="none";
 
-const filtrados=data
-.filter(a=>esReciente(a.fecha))
-.sort((a,b)=>{
-
-const da=new Date(a.fecha), db=new Date(b.fecha);
-if(da-db!==0) return da-db;
-
-return horaMin(a.hora)-horaMin(b.hora);
-
-});
-
 document.getElementById("tablon").innerHTML=
-filtrados.map(a=>`
+data.reverse().map(a=>`
 
 <div class="tarjeta">
 
@@ -310,14 +322,13 @@ ${a.tipo}
 
 <a class="btn-wa"
 href="https://wa.me/34${a.telefono}"
-target="_blank">WhatsApp</a>
+target="_blank">WHATSAPP</a>
 
 </div>
 
 `).join("");
 
 });
-
 }
 
 function enviar(e){
@@ -338,10 +349,13 @@ nombre:document.getElementById("nombre").value,
 telefono:document.getElementById("telefono").value
 })
 }).then(()=>{
-btn.disabled=false;
+
 document.getElementById("form").style.display="none";
 document.getElementById("publicarForm").reset();
+btn.disabled=false;
+
 cargar();
+
 });
 
 }
