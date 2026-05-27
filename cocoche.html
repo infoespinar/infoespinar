@@ -26,6 +26,7 @@ body{
     padding-bottom:50px;
 }
 
+/* HEADER */
 .header{
     background:var(--menta);
     padding:15px 20px;
@@ -46,25 +47,19 @@ body{
 .header-bandera{
     width:28px;
     height:28px;
-    object-fit:cover;
     border-radius:4px;
 }
 
-.header h1{
-    font-size:18px;
-    font-weight:900;
-}
-
+/* LAYOUT */
 .contenedor-app{
     max-width:900px;
     margin:0 auto;
     padding:20px;
 }
 
-h2.titulo-seccion{
+h2{
     text-align:center;
     margin:20px 0 5px;
-    font-size:24px;
 }
 
 .subtitulo{
@@ -74,6 +69,7 @@ h2.titulo-seccion{
     margin-bottom:20px;
 }
 
+/* BOTÓN */
 .btn-publicar{
     display:block;
     width:250px;
@@ -87,6 +83,7 @@ h2.titulo-seccion{
     cursor:pointer;
 }
 
+/* FORM */
 #form{
     background:white;
     padding:25px;
@@ -102,56 +99,88 @@ input,select{
     margin-bottom:12px;
     border:1px solid #cbd5e1;
     border-radius:8px;
-    font-family:inherit;
 }
 
+/* ANUNCIOS */
 .grid-anuncios{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:20px;
 }
 
+/* 🔥 TARJETA NUEVA */
 .tarjeta{
     background:white;
-    padding:15px;
-    border-radius:12px;
+    border-radius:18px;
     border:1px solid #e2e8f0;
+    padding:16px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.06);
+    transition:0.2s;
 }
 
+.tarjeta:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+/* TITULO */
 .titulo-tarjeta{
     font-weight:900;
-    font-size:18px;
+    font-size:13px;
+    letter-spacing:0.5px;
     margin-bottom:10px;
 }
 
-.descripcion{
-    font-size:14px;
-    white-space:pre-line;
-    margin-bottom:10px;
-}
-
-.tag{
+/* RUTA */
+.ruta{
     background:#f1f5f9;
-    padding:4px 10px;
-    border-radius:20px;
-    font-size:11px;
+    padding:10px 12px;
+    border-radius:12px;
+    font-weight:800;
+    margin-bottom:10px;
 }
 
+/* INFO GRID */
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-bottom:10px;
+}
+
+.info{
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    padding:8px 10px;
+    border-radius:10px;
+    font-size:12px;
+}
+
+/* PERSONA */
+.persona{
+    margin-bottom:12px;
+    font-size:13px;
+    font-weight:600;
+    color:#334155;
+}
+
+/* WHATSAPP */
 .btn-wa{
     display:block;
     text-align:center;
     padding:10px;
-    background:#25d366;
+    background:linear-gradient(135deg,#25d366,#1faa57);
     color:white;
-    border-radius:8px;
+    border-radius:12px;
     text-decoration:none;
+    font-weight:800;
+    font-size:13px;
 }
 
-.oculto{
-    display:none;
-}
+/* OCULTO */
+.oculto{display:none;}
 
-/* LOADING BIEN CENTRADO */
+/* LOADING */
 #loading{
     text-align:center;
     padding:40px;
@@ -173,8 +202,8 @@ input,select{
 
 <div class="contenedor-app">
 
-<h2 class="titulo-seccion">Viajes Compartidos</h2>
-<div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
+<h2>Viajes Compartidos</h2>
+<div class="subtitulo">Últimos 7 días</div>
 
 <button class="btn-publicar" onclick="toggleFormulario()">➕ PUBLICAR VIAJE</button>
 
@@ -184,13 +213,13 @@ input,select{
 
 <select id="tipo" required>
 <option value="">Tipo de viaje</option>
-<option value="CONDUCTOR">🚗 Soy conductor</option>
-<option value="PASAJERO">🙋 Soy pasajero</option>
+<option value="CONDUCTOR">🚗 Conductor</option>
+<option value="PASAJERO">🙋 Pasajero</option>
 </select>
 
 <div style="display:flex;gap:10px;">
 <div style="flex:1;">
-<select id="desde" required onchange="controlarOtro('desde')">
+<select id="desde" onchange="controlarOtro('desde')" required>
 <option value="">Desde</option>
 <option>El Espinar</option>
 <option>San Rafael</option>
@@ -204,7 +233,7 @@ input,select{
 </div>
 
 <div style="flex:1;">
-<select id="hasta" required onchange="controlarOtro('hasta')">
+<select id="hasta" onchange="controlarOtro('hasta')" required>
 <option value="">Hasta</option>
 <option>El Espinar</option>
 <option>San Rafael</option>
@@ -219,7 +248,6 @@ input,select{
 </div>
 
 <input type="date" id="fecha" required>
-
 <select id="hora" required></select>
 
 <input id="nombre" placeholder="Nombre" required>
@@ -245,20 +273,19 @@ const urlScript = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNl
 function toggleFormulario(){
     const f=document.getElementById("form");
     f.style.display=f.style.display==="block"?"none":"block";
-    if(f.style.display==="block") f.scrollIntoView({behavior:"smooth"});
 }
 
 function controlarOtro(id){
     const sel=document.getElementById(id);
-    const input=document.getElementById(id+"Otro");
+    const inp=document.getElementById(id+"Otro");
 
     if(sel.value==="Otro"){
-        input.classList.remove("oculto");
-        input.required=true;
+        inp.classList.remove("oculto");
+        inp.required=true;
     }else{
-        input.classList.add("oculto");
-        input.required=false;
-        input.value="";
+        inp.classList.add("oculto");
+        inp.required=false;
+        inp.value="";
     }
 }
 
@@ -277,10 +304,6 @@ function obtener(id){
     return v;
 }
 
-function validar(){
-    return obtener("desde").toLowerCase() !== obtener("hasta").toLowerCase();
-}
-
 function construirMensaje(){
     return `🚗 VIAJE COMPARTIDO
 
@@ -293,11 +316,11 @@ function construirMensaje(){
 }
 
 function previsualizarWhatsapp(){
-    if(!validar()){ alert("Origen y destino no pueden coincidir"); return; }
     window.open(`https://wa.me/?text=${encodeURIComponent(construirMensaje())}`);
 }
 
 function cargar(){
+
 fetch(urlScript)
 .then(r=>r.json())
 .then(data=>{
@@ -313,12 +336,16 @@ data.reverse().map(a=>`
 ${a.tipo}
 </div>
 
-<div class="descripcion">
+<div class="ruta">
 📍 ${a.desde} → ${a.hasta}
-📅 ${a.fecha}
-⏰ ${a.hora}
-🙋 ${a.nombre}
 </div>
+
+<div class="info-grid">
+<div class="info">📅 ${a.fecha}</div>
+<div class="info">⏰ ${a.hora}</div>
+</div>
+
+<div class="persona">🙋 ${a.nombre}</div>
 
 <a class="btn-wa"
 href="https://wa.me/34${a.telefono}"
@@ -329,13 +356,11 @@ target="_blank">WHATSAPP</a>
 `).join("");
 
 });
+
 }
 
 function enviar(e){
 e.preventDefault();
-
-const btn=document.getElementById("btn");
-btn.disabled=true;
 
 fetch(urlScript,{
 method:"POST",
@@ -349,13 +374,9 @@ nombre:document.getElementById("nombre").value,
 telefono:document.getElementById("telefono").value
 })
 }).then(()=>{
-
 document.getElementById("form").style.display="none";
 document.getElementById("publicarForm").reset();
-btn.disabled=false;
-
 cargar();
-
 });
 
 }
