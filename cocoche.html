@@ -8,261 +8,210 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-*{box-sizing:border-box;margin:0;padding:0;}
-
-:root{
-  --menta:#20a088;
-  --fondo:#f4f6f9;
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-  font-family:'Lato',sans-serif;
-  background:var(--fondo);
-  color:#334155;
-  padding-bottom:50px;
+    font-family:'Lato',sans-serif;
+    background:#f4f6f9;
+    color:#334155;
 }
 
+/* HEADER estilo consistente */
 .header{
-  background:var(--menta);
-  padding:15px 20px;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    background:#20a088;
+    padding:18px 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
-.header-logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  text-decoration:none;
-  color:white;
+.header a{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:white;
 }
 
-.header-bandera{
-  width:28px;
-  height:28px;
-  border-radius:4px;
+.header img{
+    width:30px;
+    height:30px;
+    border-radius:6px;
 }
 
+.header h1{
+    font-size:18px;
+    font-weight:900;
+}
+
+/* CONTENEDOR */
 .contenedor-app{
-  max-width:900px;
-  margin:0 auto;
-  padding:20px;
+    max-width:900px;
+    margin:0 auto;
+    padding:20px;
 }
 
 h2{
-  text-align:center;
-  margin:20px 0 10px;
+    text-align:center;
+    margin-top:15px;
 }
 
 .subtitulo{
-  text-align:center;
-  font-size:13px;
-  color:#64748b;
-  margin-bottom:20px;
+    text-align:center;
+    font-size:13px;
+    color:#64748b;
+    margin-bottom:20px;
 }
 
+/* BOTÓN */
 .btn-publicar{
-  display:block;
-  width:250px;
-  margin:0 auto 20px;
-  padding:14px;
-  background:var(--menta);
-  color:white;
-  border:none;
-  border-radius:30px;
-  font-weight:700;
-  cursor:pointer;
+    display:block;
+    margin:20px auto;
+    background:#20a088;
+    color:white;
+    border:none;
+    padding:12px 18px;
+    border-radius:30px;
+    font-weight:700;
+    cursor:pointer;
 }
 
+/* FORM */
 #form{
-  display:none;
-  background:white;
-  padding:20px;
-  border-radius:14px;
-  margin-bottom:30px;
+    display:none;
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
 }
 
-input,select{
-  width:100%;
-  padding:12px;
-  margin-bottom:10px;
-  border:1px solid #cbd5e1;
-  border-radius:8px;
+input, select{
+    width:100%;
+    padding:10px;
+    margin-bottom:10px;
 }
 
+/* TARJETAS */
 .grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:15px;
+    display:grid;
+    gap:12px;
 }
 
 .tarjeta{
     background:white;
-    border-radius:16px;
-    padding:16px;
+    padding:14px;
+    border-radius:14px;
     border:1px solid #e2e8f0;
-    box-shadow:0 4px 10px rgba(0,0,0,0.04);
-    transition:transform .15s ease;
+    box-shadow:0 3px 10px rgba(0,0,0,0.04);
 }
 
-.tarjeta:hover{
-    transform:translateY(-2px);
-}
-
-.titulo{
-  font-weight:900;
-  margin-bottom:8px;
-}
-
-.ruta{
-    font-size:18px;
-    font-weight:800;
-    color:#0f172a;
-    display:flex;
-    gap:8px;
-    align-items:center;
-    margin-bottom:8px;
-}
-
-.info{
-  font-size:13px;
-  margin-bottom:10px;
-  color:#475569;
-}
-
-.tag{
-  display:inline-block;
-  font-size:11px;
-  background:#f1f5f9;
-  padding:4px 8px;
-  border-radius:12px;
-  margin-right:5px;
-}
-
-.btn-wa{
-  display:block;
-  margin-top:10px;
-  text-align:center;
-  background:#25d366;
-  color:white;
-  padding:10px;
-  border-radius:8px;
-  text-decoration:none;
-}
-
-.filtros{
-  display:flex;
-  justify-content:center;
-  gap:10px;
-  margin-bottom:15px;
-}
-
-.cabecera-tarjeta{
+.top{
     display:flex;
     justify-content:space-between;
-    align-items:center;
-    margin-bottom:10px;
+    margin-bottom:8px;
 }
 
 .badge{
     font-size:11px;
-    padding:4px 10px;
+    padding:3px 8px;
     border-radius:20px;
     font-weight:700;
 }
 
-.badge.conductor{
-    background:#dcfce7;
-    color:#166534;
+.conductor{ background:#dcfce7; color:#166534; }
+.pasajero{ background:#dbeafe; color:#1e40af; }
+
+.ruta{
+    font-size:16px;
+    font-weight:800;
+    margin-bottom:6px;
 }
 
-.badge.pasajero{
-    background:#dbeafe;
-    color:#1e40af;
-}
-
-.fecha{
-    font-size:11px;
-    color:#64748b;
-}
-  
-.filtros button{
-  padding:8px 12px;
-  border:none;
-  border-radius:20px;
-  cursor:pointer;
-  background:#e2e8f0;
-  font-weight:700;
-}
-
-.filtros button.activo{
-  background:var(--menta);
-  color:white;
-}
-
-  .flecha{
-    color:#94a3b8;
-}
-
-.info-secundaria{
+.info{
     font-size:13px;
     color:#64748b;
-    margin-bottom:12px;
+    margin-bottom:10px;
 }
-  
+
+.btn-wa{
+    display:block;
+    text-align:center;
+    padding:10px;
+    border-radius:8px;
+    background:#25d366;
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+}
+
+/* OTRO INPUT */
+.oculto{ display:none; }
+
 </style>
 </head>
 
 <body>
 
 <header class="header">
-  <a class="header-logo">
-    <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
-    <h1>INFOESPINAR.COM</h1>
-  </a>
+    <a href="/index">
+        <img src="https://i.imgur.com/di5CaLV.png">
+        <h1>infoespinar.com</h1>
+    </a>
 </header>
 
 <div class="contenedor-app">
 
 <h2>Viajes Compartidos</h2>
- <div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
+<div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
 
-  <div class="filtros">
-  <button onclick="setFiltro('TODOS')" class="activo">Todos</button>
-  <button onclick="setFiltro('CONDUCTOR')">Conductores</button>
-  <button onclick="setFiltro('PASAJERO')">Pasajeros</button>
-</div>
-
-<button class="btn-publicar" onclick="toggleForm()">➕ PUBLICAR VIAJE</button>
+<button class="btn-publicar" onclick="toggleFormulario()">➕ PUBLICAR VIAJE</button>
 
 <div id="form">
-  <form onsubmit="enviar(event)">
+<form onsubmit="enviar(event)">
 
-    <select id="tipo" required>
-      <option value="">Tipo</option>
-      <option value="CONDUCTOR">Conductor</option>
-      <option value="PASAJERO">Pasajero</option>
-    </select>
+<select id="tipo">
+<option value="">Tipo</option>
+<option value="CONDUCTOR">Conductor</option>
+<option value="PASAJERO">Pasajero</option>
+</select>
 
-    <input id="desde" placeholder="Desde" required>
-    <input id="hasta" placeholder="Hasta" required>
-
-    <input type="date" id="fecha" required>
-
-    <select id="hora"></select>
-
-    <input id="nombre" placeholder="Nombre" required>
-
-    <input id="telefono" maxlength="9" placeholder="Teléfono" required>
-
-    <button class="btn-publicar" type="submit" style="width:100%;">PUBLICAR</button>
-
-  </form>
+<div class="fila">
+<select id="desde" onchange="otro('desde')">
+<option>Desde</option>
+<option>El Espinar</option>
+<option>San Rafael</option>
+<option>Madrid</option>
+<option value="Otro">Otro</option>
+</select>
+<input id="desdeOtro" class="oculto" placeholder="Otro origen">
 </div>
 
-<div id="loading" style="text-align:center;">Cargando viajes...</div>
+<div class="fila">
+<select id="hasta" onchange="otro('hasta')">
+<option>Hasta</option>
+<option>El Espinar</option>
+<option>San Rafael</option>
+<option>Madrid</option>
+<option value="Otro">Otro</option>
+</select>
+<input id="hastaOtro" class="oculto" placeholder="Otro destino">
+</div>
+
+<input type="date" id="fecha">
+<select id="hora"></select>
+<input id="nombre" placeholder="Nombre">
+<input id="telefono" placeholder="Teléfono">
+
+<button type="submit" class="btn-publicar">PUBLICAR</button>
+
+</form>
+</div>
+
+<div id="loading" style="text-align:center;padding:30px;">Cargando viajes...</div>
 
 <div id="tablon" class="grid"></div>
 
@@ -270,95 +219,114 @@ input,select{
 
 <script>
 
-const url = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
+const urlScript = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
 
-let filtro = "TODOS";
-
-function setFiltro(t){
-  filtro = t;
-  cargar();
+function toggleFormulario(){
+    const f = document.getElementById('form');
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
 }
 
-function toggleForm(){
-  const f = document.getElementById("form");
-  f.style.display = f.style.display === "block" ? "none" : "block";
-}
-
-function horas(){
-  const h = document.getElementById("hora");
-  for(let i=0;i<24;i++){
-    for(let m=0;m<60;m+=15){
-      h.innerHTML += `<option>${String(i).padStart(2,'0')}:${String(m).padStart(2,'0')}</option>`;
+function otro(id){
+    const sel = document.getElementById(id);
+    const inp = document.getElementById(id+'Otro');
+    if(sel.value === 'Otro'){
+        inp.classList.remove('oculto');
+    } else {
+        inp.classList.add('oculto');
     }
-  }
+}
+
+function generarHoras(){
+    const h = document.getElementById('hora');
+    for(let i=0;i<24;i++){
+        for(let j=0;j<60;j+=30){
+            const hh = String(i).padStart(2,'0');
+            const mm = String(j).padStart(2,'0');
+            h.innerHTML += `<option>${hh}:${mm}</option>`;
+        }
+    }
+}
+
+function obtener(id){
+    const v = document.getElementById(id).value;
+    if(v === 'Otro'){
+        return document.getElementById(id+'Otro').value;
+    }
+    return v;
+}
+
+function ordenar(data){
+    return data.sort((a,b)=>{
+        const da = new Date(a.fecha+' '+a.hora);
+        const db = new Date(b.fecha+' '+b.hora);
+        return db-da;
+    });
 }
 
 async function cargar(){
 
-  const res = await fetch(url);
-  let data = await res.json();
+    document.getElementById('loading').style.display='block';
 
-  document.getElementById("loading").style.display="none";
+    const res = await fetch(urlScript);
+    const data = await res.json();
 
-  if(filtro !== "TODOS"){
-    data = data.filter(v => v.tipo === filtro);
-  }
+    const ordenado = ordenar(data);
 
-  document.getElementById('tablon').innerHTML = data.reverse().map(a => `
+    document.getElementById('loading').style.display='none';
 
-<div class="tarjeta">
+    document.getElementById('tablon').innerHTML = ordenado.map(a=>`
 
-    <div class="cabecera-tarjeta">
-        <span class="badge ${a.tipo === 'CONDUCTOR' ? 'conductor' : 'pasajero'}">
-            ${a.tipo === 'CONDUCTOR' ? '🚘 Conductor' : '🧍 Pasajero'}
-        </span>
-        <span class="fecha">${a.fecha}</span>
+    <div class="tarjeta">
+
+        <div class="top">
+            <span class="badge ${a.tipo==='CONDUCTOR'?'conductor':'pasajero'}">
+                ${a.tipo}
+            </span>
+            <span style="font-size:11px;color:#64748b">${a.fecha}</span>
+        </div>
+
+        <div class="ruta">
+            ${a.desde} → ${a.hasta}
+        </div>
+
+        <div class="info">
+            ⏰ ${a.hora} · 🙋 ${a.nombre}
+        </div>
+
+        <a class="btn-wa" href="https://wa.me/34${a.telefono}">
+            WhatsApp
+        </a>
+
     </div>
 
-    <div class="ruta">
-        <span>${a.desde}</span>
-        <span class="flecha">→</span>
-        <span>${a.hasta}</span>
-    </div>
-
-    <div class="info-secundaria">
-        ⏰ ${a.hora} · 🙋 ${a.nombre}
-    </div>
-
-    <a class="btn-wa"
-       href="https://wa.me/34${a.telefono}?text=${encodeURIComponent('Hola, he visto tu viaje en infoespinar.com')}"
-       target="_blank">
-       WhatsApp
-    </a>
-
-</div>
-
-`).join('');
-
-async function enviar(e){
-  e.preventDefault();
-
-  const payload = {
-    tipo: tipo.value,
-    desde: desde.value,
-    hasta: hasta.value,
-    fecha: fecha.value,
-    hora: hora.value,
-    nombre: nombre.value,
-    telefono: telefono.value
-  };
-
-  await fetch(url,{
-    method:"POST",
-    body:JSON.stringify(payload)
-  });
-
-  document.getElementById("form").style.display="none";
-  cargar();
+    `).join('');
 }
 
-horas();
+async function enviar(e){
+    e.preventDefault();
+
+    const payload = {
+        tipo: document.getElementById('tipo').value,
+        desde: obtener('desde'),
+        hasta: obtener('hasta'),
+        fecha: document.getElementById('fecha').value,
+        hora: document.getElementById('hora').value,
+        nombre: document.getElementById('nombre').value,
+        telefono: document.getElementById('telefono').value
+    };
+
+    await fetch(urlScript,{
+        method:'POST',
+        body:JSON.stringify(payload)
+    });
+
+    cargar();
+}
+
+generarHoras();
 cargar();
+
+setInterval(()=>cargar(),60000);
 
 </script>
 
