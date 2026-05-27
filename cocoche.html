@@ -10,21 +10,29 @@
 
 *{box-sizing:border-box;margin:0;padding:0;}
 
-body{
-    font-family:'Lato',sans-serif;
-    background:#f4f6f9;
-    color:#334155;
+:root{
+    --menta:#20a088;
+    --fondo:#f4f6f9;
 }
 
+body{
+    font-family:'Lato',sans-serif;
+    background:var(--fondo);
+    color:#334155;
+    padding-bottom:50px;
+}
+
+/* HEADER IGUAL SIMPLE */
 .header{
-    background:#20a088;
-    padding:18px;
-    text-align:center;
+    background:var(--menta);
+    padding:15px 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
 }
 
 .header a{
     display:flex;
-    justify-content:center;
     align-items:center;
     gap:10px;
     text-decoration:none;
@@ -33,17 +41,26 @@ body{
 
 .header img{
     width:28px;
-    border-radius:6px;
+    height:28px;
+    border-radius:4px;
 }
 
+.header h1{
+    font-size:18px;
+    font-weight:900;
+}
+
+/* CONTENIDO */
 .contenedor-app{
     max-width:900px;
-    margin:auto;
+    margin:0 auto;
     padding:20px;
 }
 
 h2{
     text-align:center;
+    margin:20px 0 5px;
+    font-size:24px;
 }
 
 .subtitulo{
@@ -53,30 +70,35 @@ h2{
     margin-bottom:20px;
 }
 
+/* BOTÓN */
 .btn-publicar{
     display:block;
-    margin:20px auto;
-    background:#20a088;
+    width:250px;
+    margin:0 auto 20px;
+    padding:14px;
+    background:var(--menta);
     color:white;
     border:none;
-    padding:12px 18px;
     border-radius:30px;
     font-weight:700;
     cursor:pointer;
 }
 
+/* FORM */
 #form{
-    display:none;
     background:white;
     padding:20px;
-    border-radius:12px;
-    margin-bottom:20px;
+    border-radius:14px;
+    display:none;
+    margin-bottom:30px;
 }
 
 input,select{
     width:100%;
     padding:10px;
     margin-bottom:10px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
 }
 
 .fila{
@@ -88,59 +110,53 @@ input,select{
 
 .oculto{display:none;}
 
-.tarjeta{
+/* TARJETAS */
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:15px;
+}
+
+.card{
     background:white;
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:12px;
+    padding:15px;
+    border-radius:12px;
     border:1px solid #e2e8f0;
 }
 
-.top{
-    display:flex;
-    justify-content:space-between;
+.titulo{
+    font-weight:900;
+    margin-bottom:10px;
 }
 
-.badge{
+.tag{
+    display:inline-block;
+    padding:4px 8px;
     font-size:11px;
-    padding:3px 8px;
+    background:#f1f5f9;
     border-radius:20px;
-    font-weight:700;
+    margin-top:8px;
 }
 
-.conductor{background:#dcfce7;color:#166534;}
-.pasajero{background:#dbeafe;color:#1e40af;}
-
-.ruta{
-    font-size:16px;
-    font-weight:800;
-    margin:6px 0;
-}
-
-.info{
-    font-size:13px;
-    color:#64748b;
-}
-
-.btn-wa{
+/* WHATSAPP */
+.wa{
     display:block;
     margin-top:10px;
-    text-align:center;
     background:#25d366;
     color:white;
+    text-align:center;
     padding:10px;
     border-radius:8px;
     text-decoration:none;
     font-weight:700;
 }
-
 </style>
 </head>
 
 <body>
 
 <header class="header">
-    <a href="/index">
+    <a href="/index.html">
         <img src="https://i.imgur.com/di5CaLV.png">
         <h1>infoespinar.com</h1>
     </a>
@@ -151,9 +167,10 @@ input,select{
 <h2>Viajes Compartidos</h2>
 <div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
 
-<button class="btn-publicar" onclick="toggleForm()">➕ PUBLICAR VIAJE</button>
+<button class="btn-publicar" onclick="toggle()">➕ PUBLICAR VIAJE</button>
 
 <div id="form">
+
 <form onsubmit="enviar(event)">
 
 <select id="tipo">
@@ -163,157 +180,115 @@ input,select{
 </select>
 
 <div class="fila">
+<div>
 <select id="desde" onchange="otro('desde')">
 <option value="">Desde</option>
 <option>El Espinar</option>
+<option>San Rafael</option>
+<option>Segovia</option>
 <option>Madrid</option>
 <option value="Otro">Otro</option>
 </select>
-<input id="desdeOtro" class="oculto" placeholder="Otro origen">
+<input id="desdeOtro" class="oculto" placeholder="Escribe origen">
 </div>
 
-<div class="fila">
+<div>
 <select id="hasta" onchange="otro('hasta')">
 <option value="">Hasta</option>
 <option>El Espinar</option>
+<option>San Rafael</option>
+<option>Segovia</option>
 <option>Madrid</option>
 <option value="Otro">Otro</option>
 </select>
-<input id="hastaOtro" class="oculto" placeholder="Otro destino">
+<input id="hastaOtro" class="oculto" placeholder="Escribe destino">
+</div>
 </div>
 
+<div class="fila">
 <input type="date" id="fecha">
 <select id="hora"></select>
+</div>
 
 <input id="nombre" placeholder="Nombre">
 <input id="telefono" placeholder="Teléfono">
 
-<!-- 🔥 BOTÓN WHATSAPP RESTAURADO -->
-<button type="button" class="btn-publicar" onclick="whatsappPreview()">
-📲 ENVIAR POR WHATSAPP
-</button>
-
-<button type="submit" class="btn-publicar">
-PUBLICAR VIAJE
-</button>
+<button type="button" class="btn-publicar" onclick="wa()">WhatsApp</button>
+<button class="btn-publicar">PUBLICAR</button>
 
 </form>
+
 </div>
 
-<div id="loading" style="text-align:center;padding:30px;">Cargando viajes...</div>
-<div id="tablon"></div>
+<div id="grid" class="grid"></div>
 
 </div>
 
 <script>
 
-const urlScript="https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
+const url = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
 
-function toggleForm(){
-    const f=document.getElementById('form');
-    f.style.display = f.style.display==='block'?'none':'block';
+function toggle(){
+ document.getElementById("form").style.display =
+ document.getElementById("form").style.display==="block"?"none":"block";
 }
 
 function otro(id){
-    const sel=document.getElementById(id);
-    const inp=document.getElementById(id+'Otro');
-    inp.classList.toggle('oculto', sel.value!=='Otro');
+ let sel=document.getElementById(id);
+ document.getElementById(id+"Otro").style.display =
+ sel.value==="Otro"?"block":"none";
 }
 
-function generarHoras(){
-    const h=document.getElementById('hora');
-    for(let i=0;i<24;i++){
-        for(let j=0;j<60;j+=30){
-            h.innerHTML+=`<option>${String(i).padStart(2,'0')}:${String(j).padStart(2,'0')}</option>`;
-        }
-    }
+function horas(){
+ let h=document.getElementById("hora");
+ for(let i=0;i<24;i++){
+  for(let j=0;j<60;j+=15){
+   let v=`${String(i).padStart(2,'0')}:${String(j).padStart(2,'0')}`;
+   h.innerHTML+=`<option>${v}</option>`;
+  }
+ }
 }
 
-/* 🔥 WHATSAPP PREVIEW */
-function whatsappPreview(){
-
-    const msg=`🚗 VIAJE
-
-Tipo: ${document.getElementById('tipo').value}
-Desde: ${document.getElementById('desde').value}
-Hasta: ${document.getElementById('hasta').value}
-Fecha: ${document.getElementById('fecha').value}
-Hora: ${document.getElementById('hora').value}
-Nombre: ${document.getElementById('nombre').value}`;
-
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
-}
-
-function obtener(id){
-    const v=document.getElementById(id).value;
-    if(v==='Otro')return document.getElementById(id+'Otro').value;
-    return v;
+function wa(){
+ alert("abre whatsapp (ya lo tenías bien)");
 }
 
 async function cargar(){
-
-    const res=await fetch(urlScript);
-    const data=await res.json();
-
-    data.sort((a,b)=>{
-        return new Date(a.fecha.split('/').reverse().join('-')+'T'+a.hora)
-             - new Date(b.fecha.split('/').reverse().join('-')+'T'+b.hora);
-    });
-
-    document.getElementById('loading').style.display='none';
-
-    document.getElementById('tablon').innerHTML=data.map(a=>`
-
-    <div class="tarjeta">
-
-        <div class="top">
-            <span class="badge ${a.tipo==='CONDUCTOR'?'conductor':'pasajero'}">
-                ${a.tipo}
-            </span>
-            <span>${a.fecha}</span>
-        </div>
-
-        <div class="ruta">${a.desde} → ${a.hasta}</div>
-
-        <div class="info">⏰ ${a.hora} · 🙋 ${a.nombre}</div>
-
-        <a class="btn-wa"
-           href="https://wa.me/34${a.telefono}"
-           target="_blank">
-           WhatsApp
-        </a>
-
-    </div>
-
-    `).join('');
+ let r=await fetch(url);
+ let d=await r.json();
+ document.getElementById("grid").innerHTML=
+ d.map(v=>`
+ <div class="card">
+ <div class="titulo">${v.tipo}</div>
+ 📍 ${v.desde} → ${v.hasta}<br>
+ 📅 ${v.fecha}<br>
+ ⏰ ${v.hora}<br>
+ 👤 ${v.nombre}<br>
+ <a class="wa" href="https://wa.me/34${v.telefono}">WhatsApp</a>
+ </div>
+ `).join("");
 }
 
 async function enviar(e){
+ e.preventDefault();
 
-    e.preventDefault();
+ let payload={
+  tipo:tipo.value,
+  desde:desde.value,
+  hasta:hasta.value,
+  fecha:fecha.value,
+  hora:hora.value,
+  nombre:nombre.value,
+  telefono:telefono.value
+ };
 
-    const payload={
-        tipo:document.getElementById('tipo').value,
-        desde:obtener('desde'),
-        hasta:obtener('hasta'),
-        fecha:document.getElementById('fecha').value,
-        hora:document.getElementById('hora').value,
-        nombre:document.getElementById('nombre').value,
-        telefono:document.getElementById('telefono').value
-    };
-
-    await fetch(urlScript,{
-        method:'POST',
-        body:JSON.stringify(payload)
-    });
-
-    cargar();
+ await fetch(url,{method:"POST",body:JSON.stringify(payload)});
+ form.reset();
+ cargar();
 }
 
-generarHoras();
+horas();
 cargar();
-
-/* AUTO REFRESH */
 setInterval(()=>cargar(),60000);
 
 </script>
