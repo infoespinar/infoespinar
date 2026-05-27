@@ -220,7 +220,7 @@ select{
         <form id="publicarForm" onsubmit="enviar(event)">
 
             <select id="tipo" required>
-                <option value="">¿Qué buscas?</option>
+                <option value="">Tipo de Viaje</option>
                 <option value="CONDUCTOR">Soy conductor 🚗​​</option>
                 <option value="PASAJERO">Soy pasajero 🙋​</option>
             </select>
@@ -371,15 +371,14 @@ function esReciente(fechaStr){
 }
 
 function construirMensaje(){
-    return `🚗 VIAJE COMPARTIDO
+    return `🚗 NUEVO VIAJE
 
 👤 Tipo: ${document.getElementById("tipo").value}
-📍 Desde: ${obtenerValor("desde")}
-🏁 Hasta: ${obtenerValor("hasta")}
+📍 De: ${obtenerValor("desde")}
+🏁 A: ${obtenerValor("hasta")}
 📅 Fecha: ${document.getElementById("fecha").value}
 ⏰ Hora: ${document.getElementById("hora").value}
-🙋 Nombre: ${document.getElementById("nombre").value}
-📞 Teléfono: ${document.getElementById("telefono").value}`;
+🙋 Nombre: ${document.getElementById("nombre").value}';
 }
 
 function previsualizarWhatsapp(){
@@ -413,10 +412,8 @@ async function cargar(){
 
                 <div class="descripcion">
 📍 ${a.desde} → ${a.hasta}
-
 📅 ${a.fecha}
 ⏰ ${a.hora}
-
 🙋 ${a.nombre}
                 </div>
 
