@@ -54,14 +54,25 @@
                 <option value="OFREZCO">Busco personal</option>
             </select>
             <input type="text" id="titulo" placeholder="TÍTULO (EJ: CAMARERO/A)" required oninput="this.value=this.value.toUpperCase()">
-            <select id="lugar" onchange="checkLugar()" required>
-                <option value="">Lugar de trabajo...</option>
-                <option>El Espinar</option>
-                <option>San Rafael</option>
-                <option>LASR</option>
-                <option>La Estación</option>
-                <option value="Otro">Otro</option> </select>
-        <input id="lugarOtro" class="oculto" placeholder="Escribe el lugar">
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:12px;">
+    <p style="font-size:13px; color:#475569; margin-bottom:8px; font-weight:700;">Lugar de trabajo:</p>
+    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
+        <input type="checkbox" value="El Espinar" class="chk-lugar" style="width:auto; margin:0;"> El Espinar
+    </label>
+    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
+        <input type="checkbox" value="San Rafael" class="chk-lugar" style="width:auto; margin:0;"> San Rafael
+    </label>
+    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
+        <input type="checkbox" value="LASR" class="chk-lugar" style="width:auto; margin:0;"> LASR
+    </label>
+    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
+        <input type="checkbox" value="La Estación" class="chk-lugar" style="width:auto; margin:0;"> La Estación
+    </label>
+    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
+        <input type="checkbox" value="Otro" class="chk-lugar" onchange="checkLugar()" style="width:auto; margin:0;"> Otro
+    </label>
+    <input id="lugarOtro" class="oculto" placeholder="Escribe el lugar" style="margin-top:6px;">
+</div>
             <select id="jornada" required>
                 <option value="Jornada Completa">Jornada Completa</option>
                 <option value="Jornada Parcial">Jornada Parcial</option>
@@ -90,8 +101,8 @@
 const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
 
 function checkLugar() {
-    const s = document.getElementById('lugar');
-    document.getElementById('lugarOtro').classList.toggle('oculto', s.value !== 'Otro');
+    const otro = document.querySelector('.chk-lugar[value="Otro"]').checked;
+    document.getElementById('lugarOtro').classList.toggle('oculto', !otro);
 }
     
 async function cargar() {
@@ -118,7 +129,11 @@ async function enviar(e) {
     btn.disabled = true; btn.innerText = "Publicando...";
     const payload = {
         buscasUOfreces: document.getElementById("buscasUOfreces").value,
-        lugar: document.getElementById('lugar').value === 'Otro' ? document.getElementById('lugarOtro').value  : document.getElementById('lugar').value,
+    lugar: (() => {
+    const seleccionados = [...document.querySelectorAll('.chk-lugar:checked')]
+        .map(c => c.value === 'Otro' ? document.getElementById('lugarOtro').value : c.value);
+    return seleccionados.join(', ');
+})(),        
         titulo: document.getElementById("titulo").value,
         jornada: document.getElementById("jornada").value,
         descripcion: document.getElementById("descripcion").value,
