@@ -424,21 +424,17 @@
             <label>🕐 ¿Cuándo quieres recoger el pedido?</label>
             <select id="horaRecogida">
                 <option value="">— Elige una hora aproximada —</option>
-                <option value="Mañana (9:00–10:00)">Mañana (9:00–10:00)</option>
-                <option value="Mañana (10:00–11:00)">Mañana (10:00–11:00)</option>
-                <option value="Mañana (11:00–12:00)">Mañana (11:00–12:00)</option>
-                <option value="Mañana (12:00–13:00)">Mañana (12:00–13:00)</option>
-                <option value="Mañana (13:00–14:00)">Mañana (13:00–14:00)</option>
-                <option value="Tarde (17:00–18:00)">Tarde (17:00–18:00)</option>
-                <option value="Tarde (18:00–19:00)">Tarde (18:00–19:00)</option>
-                <option value="Tarde (19:00–20:00)">Tarde (19:00–20:00)</option>
-                <option value="Tarde (20:00–20:30)">Tarde (20:00–20:30)</option>
+                <option value="Hoy por la mañana (9:00–14:00)">Hoy por la mañana (9:00–14:00)</option>
+                <option value="Hoy por la tarde (17:00–20:00)">Hoy por la tarde (17:00–20:00)</option>
+                <option value="Mañana por la mañana (9:00–14:00)">Mañana por la mañana (9:00–14:00)</option>
+                <option value="Mañana por la tarde (17:00–20:00)">Mañana por la tarde (17:00–20:00)</option>
+          
             </select>
         </div>
 
         <div class="paso-titulo">Paso 2 — Elige tus productos</div>
 
-        <div id="contenedor-productos">Cargando catálogo desde Google Sheets...</div>
+        <div id="contenedor-productos">Cargando Catálogo...</div>
 
         <div class="bloque-cesta" id="bloque-cesta">
             <div class="cesta-titulo">🧺 Tu cesta</div>
@@ -742,15 +738,15 @@
         }
 
         let msg = `🛒 *NUEVO PEDIDO DESDE INFOESPINAR* 🛒\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+        msg += `-------\n\n`;
         msg += lineas.join("\n") + `\n\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        msg += `-------\n\n`;
         msg += `👤 *Cliente:* ${nombre}\n`;
         msg += `📞 *Teléfono:* ${tlf}\n`;
         msg += `🕐 *Hora recogida:* ${hora}\n`;
         msg += `💰 *Total estimado:* ~${total.toFixed(2)}€\n`;
         if (nota) msg += `📝 *Notas:* ${nota}\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+        msg += `-------\n\n`;
         msg += `_El pedido solo se considerará confirmado una vez reciba respuesta a este mensaje._`;
 
         const urlWA = `https://api.whatsapp.com/send?phone=34619546566&text=${encodeURIComponent(msg)}`;
