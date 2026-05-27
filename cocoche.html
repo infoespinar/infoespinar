@@ -206,8 +206,14 @@ input,select{
 </div>
 
 <input id="nombre" placeholder="Nombre">
-<input id="telefono" placeholder="Teléfono">
-
+<input 
+    id="telefono"
+    placeholder="Teléfono"
+    maxlength="9"
+    inputmode="numeric"
+    pattern="[0-9]{9}"
+    oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,9)"
+>
 <button type="button" class="btn-publicar" onclick="wa()">WhatsApp</button>
 <button class="btn-publicar">PUBLICAR</button>
 
@@ -244,13 +250,37 @@ function horas(){
  }
 }
 
+function formatearFecha(fechaISO){
+    if(!fechaISO) return "";
+
+    const [y, m, d] = fechaISO.split("-");
+    return `${d}/${m}/${y}`;
+}
+
+function validarFecha(){
+    const fecha = document.getElementById("fecha").value;
+    if(!fecha) return false;
+
+    const hoy = new Date();
+    hoy.setHours(0,0,0,0);
+
+    const f = new Date(fecha);
+
+    if(f < hoy){
+        alert("La fecha no puede ser anterior a hoy.");
+        return false;
+    }
+
+    return true;
+}
+
 function wa(){
 
     const tipo = document.getElementById("tipo").value;
     const nombre = document.getElementById("nombre").value;
     const desde = obtenerValor("desde");
     const hasta = obtenerValor("hasta");
-    const fecha = document.getElementById("fecha").value;
+    const fecha = formatearFecha(document.getElementById("fecha").value);
     const hora = document.getElementById("hora").value;
 
     let mensaje = "";
@@ -285,6 +315,7 @@ async function cargar(){
 
 async function enviar(e){
  e.preventDefault();
+if(!validarFecha()) return;
 
  let payload={
   tipo:document.getElementById("tipo").value,
