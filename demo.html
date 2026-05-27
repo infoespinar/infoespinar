@@ -3,708 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frutería La Huerta del Espinar | Pedidos Online</title>
+    <title>Formulario de Recogida</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Estilos base modernos y limpios */
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --bg-color: #f8fafc;
+            --form-bg: #ffffff;
+            --text-color: #1e293b;
+            --border-color: #cbd5e1;
+            --focus-color: #3b82f6;
+        }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #f4f6f9;
-            color: #334155;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* ── HEADER + HERO FUSIONADOS ── */
-        .header {
-            background: linear-gradient(160deg, #14532d 0%, #16a34a 55%, #4ade80 100%);
-            color: white;
-            text-align: center;
-            padding: 22px 20px 28px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-            position: relative;
-            overflow: hidden;
-        }
-        .header::before {
-            content: '';
-            position: absolute; inset: 0;
-            background: radial-gradient(ellipse at 10% 90%, rgba(255,255,255,0.06) 0%, transparent 55%),
-                        radial-gradient(ellipse at 90% 10%, rgba(255,220,0,0.07) 0%, transparent 55%);
-            pointer-events: none;
-        }
-        .header-separador {
-            width: 40px;
-            height: 2px;
-            background: rgba(255,255,255,0.25);
-            margin: 16px auto 18px;
-            border-radius: 2px;
-        }
-        .header-logo-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-            background: rgba(255,255,255,0.1);
-            padding: 7px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.2);
-            transition: background 0.2s, transform 0.2s;
-            position: relative;
-        }
-        .header-logo-link:hover { background: rgba(255,255,255,0.18); transform: translateY(-1px); }
-        .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 5px; }
-        .header h1 { font-size: 16px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; opacity: 0.9; }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.15);
-            border: 1px solid rgba(255,255,255,0.25);
-            padding: 4px 14px;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            margin-bottom: 10px;
-        }
-        .hero-nombre {
-            font-size: 28px;
-            font-weight: 900;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            margin-bottom: 8px;
-        }
-        .hero-datos {
-            font-size: 13px;
-            opacity: 0.88;
-            margin-bottom: 12px;
-            line-height: 1.7;
-        }
-        .hero-tags {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
             display: flex;
             justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-        .hero-tag {
-            background: rgba(255,255,255,0.13);
-            border: 1px solid rgba(255,255,255,0.22);
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
         }
 
-        /* ── AVISO DEMO ── */
-        .aviso-demo {
-            background: #fef9c3;
-            border: 2px dashed #eab308;
+        .form-container {
+            background-color: var(--form-bg);
+            padding: 30px;
             border-radius: 12px;
-            padding: 12px 16px;
-            margin: 15px 12px 0;
-            font-size: 13px;
-            color: #854d0e;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .form-title {
+            margin-top: 0;
+            margin-bottom: 24px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f172a;
             text-align: center;
-            line-height: 1.5;
-            max-width: 1200px;
-            width: calc(100% - 24px);
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .aviso-demo strong { font-weight: 900; }
-
-        /* ── CONTENEDOR PRINCIPAL ── */
-        .main-container {
-            max-width: 700px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 15px 12px 40px;
-            flex-grow: 1;
         }
 
-        .paso-titulo {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #475569;
-            margin: 20px 0 10px 2px;
-            font-weight: 700;
+        .form-group {
+            margin-bottom: 20px;
         }
 
-        /* ── DATOS CLIENTE ── */
-        .bloque-config {
-            background: #fff;
-            border-radius: 14px;
-            padding: 18px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-            margin-bottom: 12px;
-        }
-        .bloque-config label {
+        .form-group label {
             display: block;
-            font-size: 13px;
-            font-weight: 700;
-            color: #374151;
-            margin-bottom: 7px;
+            margin-bottom: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
-        .bloque-config input,
-        .bloque-config select,
-        .bloque-config textarea {
+
+        .form-group input, 
+        .form-group select {
             width: 100%;
-            padding: 11px 14px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-family: 'Lato', sans-serif;
-            font-size: 14px;
-            color: #1e293b;
-            outline: none;
-            transition: border-color 0.2s;
-            background: #f8fafc;
-        }
-        .bloque-config input:focus,
-        .bloque-config select:focus,
-        .bloque-config textarea:focus { border-color: #16a34a; background: #fff; }
-
-        .fila-doble { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-        /* ── CATEGORÍAS ── */
-        .cat-titulo {
-            font-size: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #fff;
-            background: #16a34a;
-            padding: 7px 14px;
-            border-radius: 8px;
-            margin: 18px 0 10px;
-        }
-
-        /* ── PRODUCTO ── */
-        .producto-item {
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-left: 4px solid #16a34a;
-            border-radius: 12px;
-            padding: 14px;
-            margin-bottom: 10px;
-            transition: box-shadow 0.2s;
-        }
-        .producto-item:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
-
-        .producto-cabecera {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-        .producto-info { flex: 1; }
-        .producto-nombre { font-size: 15px; font-weight: 700; color: #1e293b; }
-        .producto-desc { font-size: 12px; color: #64748b; margin-top: 3px; line-height: 1.4; }
-
-        /* ── DISTRIBUCIÓN DE CONTADORES DUALES ── */
-        .contadores-fila {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 12px;
-            background: #f8fafc;
-            padding: 10px 14px;
-            border-radius: 10px;
-            border: 1px solid #f1f5f9;
-        }
-        .modo-cnt {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex: 1;
-            min-width: 140px;
-            justify-content: space-between;
-        }
-        .modo-label {
-            font-size: 12px;
-            font-weight: 700;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .modo-precio {
-            font-size: 13px;
-            font-weight: 900;
-            color: #16a34a;
-            white-space: nowrap;
-        }
-        .separador-o {
-            font-size: 12px;
-            font-weight: 700;
-            color: #94a3b8;
-            text-transform: uppercase;
-            padding: 0 4px;
-        }
-
-        /* ── CONTADOR BOTONES ── */
-        .contador {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            background: #fff;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
-            padding: 3px;
-        }
-        .btn-cnt {
-            border: none;
-            width: 28px; height: 28px;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: background 0.15s;
-            line-height: 1;
-        }
-        .btn-cnt-menos { background: #dcfce7; color: #16a34a; }
-        .btn-cnt-menos:hover { background: #bbf7d0; }
-        .btn-cnt-mas { background: #16a34a; color: white; }
-        .btn-cnt-mas:hover { background: #15803d; }
-        .cnt-valor { min-width: 32px; text-align: center; font-weight: 900; font-size: 14px; color: #1e293b; }
-
-        /* RESUMEN LÍNEA TARJETA */
-        .resumen-linea {
-            margin-top: 10px;
-            font-size: 12.5px;
-            font-weight: 700;
-            color: #15803d;
-            background: #f0fdf4;
-            padding: 6px 12px;
+            padding: 10px 12px;
+            border: 1px solid var(--border-color);
             border-radius: 6px;
-            border: 1px dashed #bbf7d0;
+            font-size: 1rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            background-color: #fff;
         }
 
-        /* ── CESTA ── */
-        .bloque-cesta {
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #e2e8f0;
-            padding: 18px;
-            margin-top: 20px;
-            display: none;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-        .cesta-titulo { font-size: 14px; font-weight: 900; color: #1e293b; border-bottom: 2px solid #f1f5f9; padding-bottom: 8px; margin-bottom: 12px; }
-        .cesta-linea { display: flex; justify-content: space-between; font-size: 13.5px; color: #475569; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 1px dashed #f1f5f9; }
-        .cesta-linea:last-child { border-bottom: none; }
-        .cesta-detalle { font-size: 11.5px; color: #94a3b8; margin-top: 2px; }
-
-        /* ── TOTAL ── */
-        .bloque-total {
-            background: #f0fdf4;
-            border: 2px solid #bbf7d0;
-            border-radius: 14px;
-            padding: 18px;
-            margin-top: 12px;
-        }
-        .total-fila { display: flex; justify-content: space-between; font-size: 14px; color: #374151; margin-bottom: 6px; }
-        .total-fila.grande { font-size: 22px; font-weight: 900; color: #14532d; border-top: 2px dashed #bbf7d0; padding-top: 10px; margin-top: 6px; }
-
-        /* ── NOTA ── */
-        .bloque-nota {
-            background: #fff;
-            border-radius: 14px;
-            border: 1px solid #e2e8f0;
-            padding: 16px;
-            margin-top: 12px;
-        }
-        .bloque-nota label { font-size: 13px; font-weight: 700; color: #374151; margin-bottom: 8px; display: block; }
-        .bloque-nota textarea {
-            width: 100%;
-            padding: 10px 14px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            font-family: 'Lato', sans-serif;
-            font-size: 14px;
-            resize: vertical;
+        .form-group input:focus, 
+        .form-group select:focus {
             outline: none;
-            transition: border-color 0.2s;
-            background: #f8fafc;
-            min-height: 70px;
+            border-color: var(--focus-color);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
-        .bloque-nota textarea:focus { border-color: #16a34a; background: #fff; }
 
-        /* ── BOTÓN WHATSAPP ── */
-        .btn-whatsapp {
+        .form-group .help-text {
+            display: block;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            color: #64748b;
+        }
+
+        /* Estilo para los grupos del desplegable (Mañana / Tarde) */
+        optgroup {
+            font-weight: 700;
+            padding: 5px;
+            background-color: #f1f5f9;
+        }
+
+        optgroup option {
+            font-weight: normal;
+            background-color: #fff;
+            padding: 4px;
+        }
+
+        .btn-submit {
             width: 100%;
-            margin-top: 16px;
-            padding: 16px;
-            background: #25d366;
+            padding: 12px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 16px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-family: 'Lato', sans-serif;
-            box-shadow: 0 4px 14px rgba(37,211,102,0.35);
-            transition: background 0.2s, transform 0.1s, opacity 0.2s;
-            letter-spacing: 0.3px;
-        }
-        .btn-whatsapp:hover { background: #128c7e; transform: translateY(-1px); }
-        .btn-whatsapp:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-
-        /* ── AVISO CARRITO VACÍO ── */
-        .aviso-vacio {
-            display: none;
-            background: #fef2f2;
-            border: 1px solid #fecaca;
-            border-radius: 10px;
-            padding: 12px 16px;
-            margin-top: 12px;
-            font-size: 13.5px;
-            color: #991b1b;
-            font-weight: 700;
-            text-align: center;
+            transition: background-color 0.2s;
+            margin-top: 10px;
         }
 
-        /* ── FOOTER ── */
-        .footer {
-            background-color: #1e293b;
-            color: #94a3b8;
-            text-align: center;
-            padding: 25px 20px;
-            margin-top: 30px;
-            font-size: 13px;
-            line-height: 1.6;
-            border-top: 3px solid #3b82f6;
-        }
-        .footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
-
-        @media (max-width: 580px) {
-            .fila-doble { grid-template-columns: 1fr; }
-            .hero-nombre { font-size: 22px; }
-            .contadores-fila { flex-direction: column; align-items: stretch; gap: 8px; }
-            .separador-o { text-align: center; margin: 2px 0; }
-            .modo-cnt { width: 100%; }
+        .btn-submit:hover {
+            background-color: var(--primary-hover);
         }
     </style>
 </head>
 <body>
 
-    <header class="header">
-        <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
-            <h1>infoespinar.com</h1>
-        </a>
-        <div class="header-separador"></div>
-        <div class="hero-nombre">🍊 La Huerta del Espinar</div>
-        <div class="hero-datos">
-            📍 C/ Real, 8 — El Espinar &nbsp;|&nbsp; 📞 921 18 00 00<br>
-            ⏰ Lun–Sáb: 9:00–14:00 y 17:00–20:30
-        </div>
-        <div class="hero-tags">
-            <span class="hero-tag">🍅 Frutas y Verduras</span>
-            <span class="hero-tag">🥚 Huevos de corral</span>
-            <span class="hero-tag">🫒 Productos locales</span>
-        </div>
-    </header>
+    <div class="form-container">
+        <h2 class="form-title">Solicitud de Recogida</h2>
+        
+        <form id="recogidaForm" action="#" method="POST">
+            
+            <div class="form-group">
+                <label for="telefono">Teléfono de Contacto</label>
+                <input 
+                    type="tel" 
+                    id="telefono" 
+                    name="telefono" 
+                    pattern="[0-9]{9}" 
+                    maxlength="9" 
+                    minlength="9" 
+                    required 
+                    placeholder="Ej: 612345678"
+                    autocomplete="tel"
+                >
+                <span class="help-text">Introduce un número de 9 cifras sin espacios ni letras.</span>
+            </div>
 
-    <div class="aviso-demo">
-        🎯 <strong>PÁGINA DEMO</strong> — Esta es una demostración del sistema de pedidos online para negocios locales. El botón de WhatsApp genera un mensaje real pero está desactivado en esta demo.
+            <div class="form-group">
+                <label for="horario">Horario de Recogida</label>
+                <select id="horario" name="horario" required>
+                    <option value="" disabled selected>Selecciona una franja horaria...</option>
+                    
+                    <optgroup label="☀️ Turnos de Mañana">
+                        <option value="manana_primera">09:00 - 11:00</option>
+                        <option value="manana_media">11:00 - 13:00</option>
+                        <option value="manana_ultima">13:00 - 15:00</option>
+                    </optgroup>
+                    
+                    <optgroup label="🌙 Turnos de Tarde">
+                        <option value="tarde_primera">16:00 - 18:00</option>
+                        <option value="tarde_media">18:00 - 20:00</option>
+                        <option value="tarde_ultima">20:00 - 22:00</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <button type="submit" class="btn-submit">Confirmar Recogida</button>
+        </form>
     </div>
 
-    <main class="main-container">
-
-        <div class="paso-titulo">Paso 1 — ¿Quién hace el pedido?</div>
-        <div class="bloque-config">
-            <div class="fila-doble">
-                <div>
-                    <label>👤 Tu nombre</label>
-                    <input type="text" id="txtNombre" placeholder="Ej: María García">
-                </div>
-                <div>
-                    <label>📞 Tu teléfono</label>
-                    <input type="tel" id="txtTelefono" placeholder="Ej: 600 123 456">
-                </div>
-            </div>
-        </div>
-
-        <div class="bloque-config" style="margin-top:0;">
-            <label>🕐 ¿Cuándo quieres recoger el pedido?</label>
-            <select id="horaRecogida">
-                <option value="">— Elige una hora aproximada —</option>
-                <option value="Mañana (9:00–10:00)">Mañana (9:00–10:00)</option>
-                <option value="Mañana (10:00–11:00)">Mañana (10:00–11:00)</option>
-                <option value="Mañana (11:00–12:00)">Mañana (11:00–12:00)</option>
-                <option value="Mañana (12:00–13:00)">Mañana (12:00–13:00)</option>
-                <option value="Mañana (13:00–14:00)">Mañana (13:00–14:00)</option>
-                <option value="Tarde (17:00–18:00)">Tarde (17:00–18:00)</option>
-                <option value="Tarde (18:00–19:00)">Tarde (18:00–19:00)</option>
-                <option value="Tarde (19:00–20:00)">Tarde (19:00–20:00)</option>
-                <option value="Tarde (20:00–20:30)">Tarde (20:00–20:30)</option>
-            </select>
-        </div>
-
-        <div class="paso-titulo">Paso 2 — Elige tus productos</div>
-
-        <div id="contenedor-productos"></div>
-
-        <div class="bloque-cesta" id="bloque-cesta">
-            <div class="cesta-titulo">🧺 Tu cesta</div>
-            <div id="lista-cesta"></div>
-        </div>
-
-        <div class="bloque-total">
-            <div class="total-fila"><span>Productos seleccionados:</span><span id="num-productos">0 artículos</span></div>
-            <div class="total-fila grande"><span>Total estimado:</span><span>~<span id="precio-total">0.00</span>€</span></div>
-        </div>
-
-        <p style="font-size:11.5px; color:#94a3b8; margin-top:8px; text-align:center; line-height:1.5;">
-            * El precio final puede variar ligeramente según el peso exacto de cada pieza.
-        </p>
-
-        <div class="paso-titulo">Paso 3 — Alguna indicación especial?</div>
-        <div class="bloque-nota">
-            <label>📝 Notas para la frutera (opcional)</label>
-            <textarea id="txtNota" placeholder="Ej: Las manzanas que sean de las pequeñas, el aguacate que esté para hoy..."></textarea>
-        </div>
-
-        <div class="aviso-vacio" id="aviso-vacio">
-            🛒 Añade al menos un producto antes de enviar el pedido.
-        </div>
-
-        <button class="btn-whatsapp" id="btnEnviar" onclick="enviarPedido()">
-            💬 Enviar Pedido por WhatsApp
-        </button>
-
-    </main>
-
-    <footer class="footer">
-        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
-        <p>¿Quieres una página como esta para tu negocio? <a href="mailto:info@infoespinar.com">Contáctanos</a></p>
-    </footer>
-
     <script>
-    const productos = [
-        // ── FRUTAS ──
-        { id:"f1",  cat:"🍊 Frutas", icono:"🍊", nombre:"Naranjas de mesa",       precioKg:1.20, precioUd:null,  desc:"Naranjas valencianas de temporada, muy jugosas." },
-        { id:"f2",  cat:"🍊 Frutas", icono:"🍋", nombre:"Limones",                precioKg:1.50, precioUd:null,  desc:"Limones frescos de piel fina." },
-        { id:"f3",  cat:"🍊 Frutas", icono:"🍎", nombre:"Manzanas Fuji",          precioKg:2.20, precioUd:0.45,  desc:"Crujientes y dulces. Perfectas para los niños." },
-        { id:"f4",  cat:"🍊 Frutas", icono:"🍐", nombre:"Peras Conference",       precioKg:2.00, precioUd:0.40,  desc:"Suaves y muy maduras bajo pedido." },
-        { id:"f5",  cat:"🍊 Frutas", icono:"🍌", nombre:"Plátanos de Canarias",   precioKg:2.50, precioUd:null,  desc:"Plátanos pequeños y dulces de Canarias." },
-        { id:"f6",  cat:"🍊 Frutas", icono:"🍇", nombre:"Uvas blancas sin pepita",precioKg:3.00, precioUd:null,  desc:"Uvas crujientes y sin pepitas." },
-        { id:"f7",  cat:"🍊 Frutas", icono:"🥝", nombre:"Kiwis",                  precioKg:null, precioUd:0.35,  desc:"Kiwis de Nueva Zelanda, ricos en vitamina C." },
-        { id:"f8",  cat:"🍊 Frutas", icono:"🥭", nombre:"Mangos",                 precioKg:null, precioUd:1.80,  desc:"Mangos maduros listos para comer." },
-        { id:"f9",  cat:"🍊 Frutas", icono:"🥑", nombre:"Aguacates Hass",          precioKg:null, precioUd:1.20,  desc:"Avísanos en las notas el punto de madurez que prefieres." },
-        { id:"f10", cat:"🍊 Frutas", icono:"🍓", nombre:"Fresas de Huelva",       precioKg:3.00, precioUd:null,  desc:"De temporada, directas del productor." },
+        const telefonoInput = document.getElementById('telefono');
 
-        // ── VERDURAS ──
-        { id:"v1",  cat:"🥦 Verduras", icono:"🥦", nombre:"Brócoli",             precioKg:null, precioUd:1.80,  desc:"Brócoli fresco de temporada." },
-        { id:"v2",  cat:"🥦 Verduras", icono:"🥬", nombre:"Lechuga romana",      precioKg:null, precioUd:1.00,  desc:"Lechuga grande y crujiente." },
-        { id:"v3",  cat:"🥦 Verduras", icono:"🍅", nombre:"Tomates pera",        precioKg:2.20, precioUd:null,  desc:"Ideales para ensalada y salsa." },
-        { id:"v4",  cat:"🥦 Verduras", icono:"🫑", nombre:"Pimientos (mezcla)",  precioKg:2.50, precioUd:0.60,  desc:"Rojos, verdes y amarillos mezclados." },
-        { id:"v5",  cat:"🥦 Verduras", icono:"🥕", nombre:"Zanahorias",          precioKg:1.00, precioUd:null,  desc:"Zanahorias de Cádiz, muy dulces." },
-        { id:"v6",  cat:"🥦 Verduras", icono:"🧅", nombre:"Cebollas blancas",    precioKg:1.20, precioUd:0.30,  desc:"Cebollas tiernas para cocinar." },
-        { id:"v7",  cat:"🥦 Verduras", icono:"🧄", nombre:"Ajos",                precioKg:null, precioUd:0.80,  desc:"Ajos morados de Chinchón (precio por cabeza)." },
-        { id:"v8",  cat:"🥦 Verduras", icono:"🥒", nombre:"Pepinos",             precioKg:1.50, precioUd:0.50,  desc:"Pepinos crujientes para ensalada." },
-        { id:"v9",  cat:"🥦 Verduras", icono:"🫛", nombre:"Judías verdes",       precioKg:2.80, precioUd:null,  desc:"Frescas y tiernas para cocer o saltear." },
-        { id:"v10", cat:"🥦 Verduras", icono:"🥔", nombre:"Patatas",             precioKg:1.00, precioUd:null,  desc:"Patatas nuevas de Burgos." },
-
-        // ── OTROS ──
-        { id:"o1",  cat:"🥚 Otros productos", icono:"🥚", nombre:"Huevos de corral (L)",  precioKg:null, precioUd:0.30,  desc:"Huevos camperos de gallinas locales (precio por huevo)." },
-        { id:"o2",  cat:"🥚 Otros productos", icono:"🫒", nombre:"Aceitunas aliñadas",     precioKg:4.00, precioUd:null,  desc:"Manzanilla aliñada con ajo y hierbas (precio por kg)." },
-        { id:"o3",  cat:"🥚 Otros productos", icono:"🫙", nombre:"Mermelada casera",       precioKg:null, precioUd:4.50,  desc:"Elaborada artesanalmente. Indica el sabor en las notas (fresa, melocotón, naranja, higos)." },
-        { id:"o4",  cat:"🥚 Otros productos", icono:"🌿", nombre:"Hierbas aromáticas",     precioKg:null, precioUd:1.50,  desc:"Frescas, cortadas en el día. Indica la variedad en las notas." },
-    ];
-
-    let carrito = {};
-
-    function renderizarCatalogo() {
-        const cont = document.getElementById("contenedor-productos");
-        const cats = [...new Set(productos.map(p => p.cat))];
-        let html = "";
-
-        cats.forEach(cat => {
-            html += `<div class="cat-titulo">${cat}</div>`;
-            productos.filter(p => p.cat === cat).forEach(p => {
-                const tieneKg = p.precioKg !== null;
-                const tieneUd = p.precioUd !== null;
-
-                const btnKg = tieneKg ? `
-                    <div class="modo-cnt">
-                        <div class="modo-label">Kilos</div>
-                        <div class="contador">
-                            <button class="btn-cnt btn-cnt-menos" onclick="cambiarKg('${p.id}',-0.5)">−</button>
-                            <span class="cnt-valor" id="kg-${p.id}">0</span>
-                            <button class="btn-cnt btn-cnt-mas" onclick="cambiarKg('${p.id}',0.5)">+</button>
-                        </div>
-                        <div class="modo-precio">${p.precioKg.toFixed(2)}€/kg</div>
-                    </div>` : "";
-
-                const btnUd = tieneUd ? `
-                    <div class="modo-cnt">
-                        <div class="modo-label">Piezas</div>
-                        <div class="contador">
-                            <button class="btn-cnt btn-cnt-menos" onclick="cambiarUd('${p.id}',-1)">−</button>
-                            <span class="cnt-valor" id="ud-${p.id}">0</span>
-                            <button class="btn-cnt btn-cnt-mas" onclick="cambiarUd('${p.id}',1)">+</button>
-                        </div>
-                        <div class="modo-precio">${p.precioUd.toFixed(2)}€/ud</div>
-                    </div>` : "";
-
-                html += `
-                <div class="producto-item" id="item-${p.id}">
-                    <div class="producto-cabecera">
-                        <div class="producto-info">
-                            <div class="producto-nombre">${p.icono} ${p.nombre}</div>
-                            <div class="producto-desc">${p.desc}</div>
-                        </div>
-                    </div>
-                    <div class="contadores-fila">
-                        ${btnKg}
-                        ${tieneKg && tieneUd ? '<div class="separador-o">o</div>' : ""}
-                        ${btnUd}
-                    </div>
-                    <div class="resumen-linea" id="resumen-${p.id}" style="display:none;"></div>
-                </div>`;
-            });
+        // JavaScript para filtrar la entrada en tiempo real:
+        // Evita que se escriban letras, espacios o símbolos, dejando solo números.
+        telefonoInput.addEventListener('input', function (e) {
+            this.value = this.value.replace(/[^0-9]/g, '');
         });
-        cont.innerHTML = html;
-    }
 
-    function initProducto(id) {
-        const p = productos.find(x => x.id === id);
-        if (!carrito[id]) carrito[id] = {
-            nombre: p.nombre, icono: p.icono,
-            precioKg: p.precioKg, precioUd: p.precioUd,
-            kilos: 0, piezas: 0
-        };
-    }
-
-    function cambiarKg(id, delta) {
-        initProducto(id);
-        carrito[id].kilos = Math.max(0, Math.round((carrito[id].kilos + delta) * 10) / 10);
-        if (carrito[id].kilos === 0 && carrito[id].piezas === 0) delete carrito[id];
-        actualizarUI(id);
-        actualizarCesta();
-    }
-
-    function cambiarUd(id, delta) {
-        initProducto(id);
-        carrito[id].piezas = Math.max(0, carrito[id].piezas + delta);
-        if (carrito[id].kilos === 0 && carrito[id].piezas === 0) delete carrito[id];
-        actualizarUI(id);
-        actualizarCesta();
-    }
-
-    function actualizarUI(id) {
-        const item = carrito[id];
-
-        const elKg = document.getElementById(`kg-${id}`);
-        if (elKg) elKg.textContent = item ? item.kilos : 0;
-
-        const elUd = document.getElementById(`ud-${id}`);
-        if (elUd) elUd.textContent = item ? item.piezas : 0;
-
-        const resumen = document.getElementById(`resumen-${id}`);
-        if (!item || (item.kilos === 0 && item.piezas === 0)) {
-            resumen.style.display = "none";
-            return;
-        }
-        let partes = [];
-        if (item.kilos > 0)  partes.push(`${item.kilos} kg (~${(item.kilos * item.precioKg).toFixed(2)}€)`);
-        if (item.piezas > 0) partes.push(`${item.piezas} pieza${item.piezas > 1 ? 's' : ''} (~${(item.piezas * item.precioUd).toFixed(2)}€)`);
-        resumen.innerHTML = `✅ En cesta: ${partes.join(" + ")}`;
-        resumen.style.display = "block";
-    }
-
-    function actualizarCesta() {
-        const bloqueC = document.getElementById("bloque-cesta");
-        const listaCesta = document.getElementById("lista-cesta");
-        const keys = Object.keys(carrito);
-
-        if (keys.length === 0) { bloqueC.style.display = "none"; actualizarTotal(); return; }
-        bloqueC.style.display = "block";
-
-        let html = "";
-        keys.forEach(id => {
-            const item = carrito[id];
-            let coste = 0;
-            let partes = [];
-            if (item.kilos > 0)  { coste += item.kilos * item.precioKg;  partes.push(`${item.kilos} kg`); }
-            if (item.piezas > 0) { coste += item.piezas * item.precioUd; partes.push(`${item.piezas} pieza${item.piezas > 1 ? 's' : ''}`); }
-            html += `<div class="cesta-linea">
-                <div>
-                    ${item.icono} <strong>${item.nombre}</strong>
-                    <div class="cesta-detalle">${partes.join(" + ")}</div>
-                </div>
-                <span style="font-weight:700; color:#14532d; white-space:nowrap;">~${coste.toFixed(2)}€</span>
-            </div>`;
+        // Validación extra antes de enviar el formulario
+        document.getElementById('recogidaForm').addEventListener('submit', function (e) {
+            if (telefonoInput.value.length !== 9) {
+                e.preventDefault(); // Detiene el envío
+                alert('Por favor, introduce un número de teléfono válido de exactamente 9 dígitos.');
+                telefonoInput.focus();
+            }
         });
-        listaCesta.innerHTML = html;
-        actualizarTotal();
-    }
-
-    function actualizarTotal() {
-        const keys = Object.keys(carrito);
-        let total = 0;
-        let numArt = 0;
-        keys.forEach(id => {
-            const item = carrito[id];
-            if (item.kilos > 0)  { total += item.kilos * item.precioKg; numArt++; }
-            if (item.piezas > 0) { total += item.piezas * item.precioUd; numArt++; }
-        });
-        document.getElementById("precio-total").textContent = total.toFixed(2);
-        document.getElementById("num-productos").textContent = numArt === 0 ? "0 artículos" : `${Object.keys(carrito).length} producto${Object.keys(carrito).length !== 1 ? 's' : ''}`;
-    }
-
-    function enviarPedido() {
-        const nombre = document.getElementById("txtNombre").value.trim();
-        const tlf    = document.getElementById("txtTelefono").value.trim();
-        const hora   = document.getElementById("horaRecogida").value;
-        const nota   = document.getElementById("txtNota").value.trim();
-        const aviso  = document.getElementById("aviso-vacio");
-
-        if (Object.keys(carrito).length === 0) {
-            aviso.style.display = "block";
-            setTimeout(() => aviso.style.display = "none", 3000);
-            return;
-        }
-        if (!nombre) { alert("Por favor, escribe tu nombre."); return; }
-        if (!tlf)    { alert("Por favor, introduce tu teléfono."); return; }
-        if (!hora)   { alert("Por favor, elige una hora de recogida."); return; }
-
-        aviso.style.display = "none";
-
-        let lineas = [];
-        let total = 0;
-        for (const id in carrito) {
-            const item = carrito[id];
-            let partes = [];
-            if (item.kilos > 0)  { partes.push(`${item.kilos} kg`);  total += item.kilos * item.precioKg; }
-            if (item.piezas > 0) { partes.push(`${item.piezas} pieza${item.piezas > 1 ? 's' : ''}`); total += item.piezas * item.precioUd; }
-            lineas.push(`${item.icono} *${item.nombre}* — ${partes.join(" + ")}`);
-        }
-
-        let msg = `🛒 *NUEVO PEDIDO — LA HUERTA DEL ESPINAR* 🛒\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
-        msg += lineas.join("\n") + `\n\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-        msg += `👤 *Cliente:* ${nombre}\n`;
-        msg += `📞 *Teléfono:* ${tlf}\n`;
-        msg += `🕐 *Hora recogida:* ${hora}\n`;
-        msg += `💰 *Total estimado:* ~${total.toFixed(2)}€\n`;
-        if (nota) msg += `📝 *Notas:* ${nota}\n`;
-        msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-        msg += `_Pedido realizado desde infoespinar.com_`;
-
-        const urlWA = `https://api.whatsapp.com/send?phone=34616546566&text=${encodeURIComponent(msg)}`;
-        window.open(urlWA, '_blank');
-    }
-
-    renderizarCatalogo();
     </script>
 
 </body>
