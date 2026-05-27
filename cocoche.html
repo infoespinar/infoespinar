@@ -46,8 +46,6 @@ body{
 .header h1{
     font-size:18px;
     font-weight:900;
-    letter-spacing:0.5px;
-    text-transform:uppercase;
 }
 
 .contenedor-app{
@@ -59,9 +57,6 @@ body{
 h2.titulo-seccion{
     text-align:center;
     margin:20px 0 5px;
-    font-size:24px;
-    text-transform:uppercase;
-    color:#1e293b;
 }
 
 .subtitulo{
@@ -81,7 +76,6 @@ h2.titulo-seccion{
     border:none;
     border-radius:30px;
     font-weight:700;
-    cursor:pointer;
 }
 
 #form{
@@ -89,8 +83,8 @@ h2.titulo-seccion{
     padding:25px;
     border-radius:16px;
     border:1px solid #e2e8f0;
-    margin-bottom:40px;
     display:none;
+    margin-bottom:40px;
 }
 
 input,select{
@@ -109,9 +103,9 @@ input,select{
 
 .tarjeta{
     background:white;
+    padding:15px;
     border-radius:12px;
     border:1px solid #e2e8f0;
-    padding:15px;
 }
 
 .titulo-tarjeta{
@@ -122,9 +116,8 @@ input,select{
 
 .descripcion{
     font-size:14px;
-    color:#475569;
-    margin-bottom:15px;
     white-space:pre-line;
+    margin-bottom:10px;
 }
 
 .tag{
@@ -158,42 +151,62 @@ input,select{
 <div class="contenedor-app">
 
 <h2 class="titulo-seccion">Viajes Compartidos</h2>
-<div class="subtitulo">Los viajes tienen una caducidad de 7 días.</div>
+<div class="subtitulo">Últimos 7 días</div>
 
 <button class="btn-publicar" onclick="toggleFormulario()">➕ PUBLICAR VIAJE</button>
 
 <div id="form">
+
 <form id="publicarForm" onsubmit="enviar(event)">
 
 <select id="tipo" required>
-<option value="">Tipo</option>
-<option value="CONDUCTOR">Conductor</option>
-<option value="PASAJERO">Pasajero</option>
+<option value="">¿Qué buscas?</option>
+<option value="CONDUCTOR">🚗 Soy conductor</option>
+<option value="PASAJERO">🙋 Soy pasajero</option>
 </select>
 
-<select id="desde" required>
+<div style="display:flex;gap:10px;">
+<div style="flex:1;">
+<select id="desde" required onchange="controlarOtro('desde')">
 <option value="">Desde</option>
-<option>Madrid</option>
-<option>Segovia</option>
 <option>El Espinar</option>
+<option>San Rafael</option>
+<option>LASR</option>
+<option>La Estación</option>
+<option>Segovia</option>
+<option>Madrid</option>
+<option value="Otro">Otro</option>
 </select>
+<input id="desdeOtro" class="oculto" placeholder="Escribe origen">
+</div>
 
-<select id="hasta" required>
+<div style="flex:1;">
+<select id="hasta" required onchange="controlarOtro('hasta')">
 <option value="">Hasta</option>
-<option>Madrid</option>
-<option>Segovia</option>
 <option>El Espinar</option>
+<option>San Rafael</option>
+<option>LASR</option>
+<option>La Estación</option>
+<option>Segovia</option>
+<option>Madrid</option>
+<option value="Otro">Otro</option>
 </select>
+<input id="hastaOtro" class="oculto" placeholder="Escribe destino">
+</div>
+</div>
 
 <input type="date" id="fecha" required>
 <select id="hora" required></select>
 
 <input id="nombre" placeholder="Nombre" required>
-<input id="telefono" maxlength="9" pattern="[0-9]{9}" placeholder="Teléfono" required>
 
-<button type="submit" id="btn" class="btn-publicar">PUBLICAR</button>
+<input type="tel" id="telefono" maxlength="9" pattern="[0-9]{9}" placeholder="Teléfono" required>
+
+<button type="button" class="btn-publicar" onclick="previsualizarWhatsapp()">📲 WhatsApp</button>
+<button type="submit" class="btn-publicar" id="btn">PUBLICAR VIAJE</button>
 
 </form>
+
 </div>
 
 <div id="loading">Cargando viajes...</div>
@@ -206,42 +219,58 @@ input,select{
 const urlScript = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
 
 function toggleFormulario(){
-    const f = document.getElementById("form");
-    f.style.display = f.style.display==="block"?"none":"block";
+    const f=document.getElementById("form");
+    f.style.display=f.style.display==="block"?"none":"block";
     if(f.style.display==="block") f.scrollIntoView({behavior:"smooth"});
 }
 
 function generarHoras(){
-    const h = document.getElementById("hora");
+    const h=document.getElementById("hora");
     for(let i=0;i<24;i++){
         for(let m=0;m<60;m+=15){
-            h.innerHTML += `<option>${String(i).padStart(2,"0")}:${String(m).padStart(2,"0")}</option>`;
+            h.innerHTML+=`<option>${String(i).padStart(2,"0")}:${String(m).padStart(2,"0")}</option>`;
         }
     }
 }
 
-function esReciente(fechaStr){
-    const f = new Date(fechaStr);
-    if(isNaN(f)) return false;
-    const lim = new Date();
-    lim.setDate(lim.getDate()-7);
-    return f >= lim;
+function controlarOtro(id){
+    const sel=document.getElementById(id);
+    const otro=document.getElementById(id+"Otro");
+    if(sel.value==="Otro"){otro.style.display="block";}
+    else{otro.style.display="none";}
 }
 
-function horaToMin(h){
-    const [hh,mm]=h.split(":").map(Number);
-    return hh*60+mm;
+function obtener(id){
+    const v=document.getElementById(id).value;
+    if(v==="Otro") return document.getElementById(id+"Otro").value;
+    return v;
+}
+
+function esReciente(f){
+    const d=new Date(f);
+    if(isNaN(d)) return false;
+    const lim=new Date();
+    lim.setDate(lim.getDate()-7);
+    return d>=lim;
+}
+
+function horaMin(h){
+    const [a,b]=h.split(":").map(Number);
+    return a*60+b;
 }
 
 function construirMensaje(){
-    return `🚗 VIAJE
+    return `🚗 NUEVO VIAJE
 
-Tipo: ${document.getElementById("tipo").value}
-De: ${document.getElementById("desde").value}
-A: ${document.getElementById("hasta").value}
-Fecha: ${document.getElementById("fecha").value}
-Hora: ${document.getElementById("hora").value}
-Nombre: ${document.getElementById("nombre").value}`;
+👤 ${document.getElementById("tipo").value}
+📍 ${obtener("desde")} → ${obtener("hasta")}
+📅 ${document.getElementById("fecha").value}
+⏰ ${document.getElementById("hora").value}
+🙋 ${document.getElementById("nombre").value}`;
+}
+
+function previsualizarWhatsapp(){
+    window.open(`https://wa.me/?text=${encodeURIComponent(construirMensaje())}`);
 }
 
 function cargar(){
@@ -252,20 +281,18 @@ fetch(urlScript)
 
 document.getElementById("loading").style.display="none";
 
-const filtrados = data
-.filter(esReciente)
+const filtrados=data
+.filter(a=>esReciente(a.fecha))
 .sort((a,b)=>{
 
-    const fa = new Date(a.fecha);
-    const fb = new Date(b.fecha);
+const da=new Date(a.fecha), db=new Date(b.fecha);
+if(da-db!==0) return da-db;
 
-    if(fa - fb !== 0) return fa - fb;
-
-    return horaToMin(a.hora)-horaToMin(b.hora);
+return horaMin(a.hora)-horaMin(b.hora);
 
 });
 
-document.getElementById("tablon").innerHTML =
+document.getElementById("tablon").innerHTML=
 filtrados.map(a=>`
 
 <div class="tarjeta">
@@ -275,14 +302,15 @@ ${a.tipo}
 </div>
 
 <div class="descripcion">
-${a.desde} → ${a.hasta}
-${a.fecha} ${a.hora}
-${a.nombre}
+📍 ${a.desde} → ${a.hasta}
+📅 ${a.fecha}
+⏰ ${a.hora}
+🙋 ${a.nombre}
 </div>
 
-<a class="btn-wa" href="https://wa.me/34${a.telefono}" target="_blank">
-WhatsApp
-</a>
+<a class="btn-wa"
+href="https://wa.me/34${a.telefono}"
+target="_blank">WhatsApp</a>
 
 </div>
 
@@ -295,19 +323,26 @@ WhatsApp
 function enviar(e){
 e.preventDefault();
 
+const btn=document.getElementById("btn");
+btn.disabled=true;
+
 fetch(urlScript,{
 method:"POST",
 body:JSON.stringify({
-tipo:document.getElementById("tipo").value,
-desde:document.getElementById("desde").value,
-hasta:document.getElementById("hasta").value,
+tipo:obtener("tipo"),
+desde:obtener("desde"),
+hasta:obtener("hasta"),
 fecha:document.getElementById("fecha").value,
 hora:document.getElementById("hora").value,
 nombre:document.getElementById("nombre").value,
 telefono:document.getElementById("telefono").value
 })
-})
-.then(()=>location.reload());
+}).then(()=>{
+btn.disabled=false;
+document.getElementById("form").style.display="none";
+document.getElementById("publicarForm").reset();
+cargar();
+});
 
 }
 
