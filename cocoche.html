@@ -8,11 +8,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
 
 body{
     font-family:'Lato',sans-serif;
@@ -20,17 +16,15 @@ body{
     color:#334155;
 }
 
-/* HEADER estilo consistente */
 .header{
     background:#20a088;
-    padding:18px 20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    padding:18px;
+    text-align:center;
 }
 
 .header a{
     display:flex;
+    justify-content:center;
     align-items:center;
     gap:10px;
     text-decoration:none;
@@ -38,26 +32,18 @@ body{
 }
 
 .header img{
-    width:30px;
-    height:30px;
+    width:28px;
     border-radius:6px;
 }
 
-.header h1{
-    font-size:18px;
-    font-weight:900;
-}
-
-/* CONTENEDOR */
 .contenedor-app{
     max-width:900px;
-    margin:0 auto;
+    margin:auto;
     padding:20px;
 }
 
 h2{
     text-align:center;
-    margin-top:15px;
 }
 
 .subtitulo{
@@ -67,7 +53,6 @@ h2{
     margin-bottom:20px;
 }
 
-/* BOTÓN */
 .btn-publicar{
     display:block;
     margin:20px auto;
@@ -80,7 +65,6 @@ h2{
     cursor:pointer;
 }
 
-/* FORM */
 #form{
     display:none;
     background:white;
@@ -89,30 +73,32 @@ h2{
     margin-bottom:20px;
 }
 
-input, select{
+input,select{
     width:100%;
     padding:10px;
     margin-bottom:10px;
 }
 
-/* TARJETAS */
-.grid{
-    display:grid;
-    gap:12px;
+.fila{
+    display:flex;
+    gap:10px;
 }
+
+.fila > div{flex:1;}
+
+.oculto{display:none;}
 
 .tarjeta{
     background:white;
     padding:14px;
     border-radius:14px;
+    margin-bottom:12px;
     border:1px solid #e2e8f0;
-    box-shadow:0 3px 10px rgba(0,0,0,0.04);
 }
 
 .top{
     display:flex;
     justify-content:space-between;
-    margin-bottom:8px;
 }
 
 .badge{
@@ -122,34 +108,31 @@ input, select{
     font-weight:700;
 }
 
-.conductor{ background:#dcfce7; color:#166534; }
-.pasajero{ background:#dbeafe; color:#1e40af; }
+.conductor{background:#dcfce7;color:#166534;}
+.pasajero{background:#dbeafe;color:#1e40af;}
 
 .ruta{
     font-size:16px;
     font-weight:800;
-    margin-bottom:6px;
+    margin:6px 0;
 }
 
 .info{
     font-size:13px;
     color:#64748b;
-    margin-bottom:10px;
 }
 
 .btn-wa{
     display:block;
+    margin-top:10px;
     text-align:center;
-    padding:10px;
-    border-radius:8px;
     background:#25d366;
     color:white;
+    padding:10px;
+    border-radius:8px;
     text-decoration:none;
     font-weight:700;
 }
-
-/* OTRO INPUT */
-.oculto{ display:none; }
 
 </style>
 </head>
@@ -168,7 +151,7 @@ input, select{
 <h2>Viajes Compartidos</h2>
 <div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
 
-<button class="btn-publicar" onclick="toggleFormulario()">➕ PUBLICAR VIAJE</button>
+<button class="btn-publicar" onclick="toggleForm()">➕ PUBLICAR VIAJE</button>
 
 <div id="form">
 <form onsubmit="enviar(event)">
@@ -181,9 +164,8 @@ input, select{
 
 <div class="fila">
 <select id="desde" onchange="otro('desde')">
-<option>Desde</option>
+<option value="">Desde</option>
 <option>El Espinar</option>
-<option>San Rafael</option>
 <option>Madrid</option>
 <option value="Otro">Otro</option>
 </select>
@@ -192,9 +174,8 @@ input, select{
 
 <div class="fila">
 <select id="hasta" onchange="otro('hasta')">
-<option>Hasta</option>
+<option value="">Hasta</option>
 <option>El Espinar</option>
-<option>San Rafael</option>
 <option>Madrid</option>
 <option value="Otro">Otro</option>
 </select>
@@ -203,78 +184,85 @@ input, select{
 
 <input type="date" id="fecha">
 <select id="hora"></select>
+
 <input id="nombre" placeholder="Nombre">
 <input id="telefono" placeholder="Teléfono">
 
-<button type="submit" class="btn-publicar">PUBLICAR</button>
+<!-- 🔥 BOTÓN WHATSAPP RESTAURADO -->
+<button type="button" class="btn-publicar" onclick="whatsappPreview()">
+📲 ENVIAR POR WHATSAPP
+</button>
+
+<button type="submit" class="btn-publicar">
+PUBLICAR VIAJE
+</button>
 
 </form>
 </div>
 
 <div id="loading" style="text-align:center;padding:30px;">Cargando viajes...</div>
-
-<div id="tablon" class="grid"></div>
+<div id="tablon"></div>
 
 </div>
 
 <script>
 
-const urlScript = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
+const urlScript="https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
 
-function toggleFormulario(){
-    const f = document.getElementById('form');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+function toggleForm(){
+    const f=document.getElementById('form');
+    f.style.display = f.style.display==='block'?'none':'block';
 }
 
 function otro(id){
-    const sel = document.getElementById(id);
-    const inp = document.getElementById(id+'Otro');
-    if(sel.value === 'Otro'){
-        inp.classList.remove('oculto');
-    } else {
-        inp.classList.add('oculto');
-    }
+    const sel=document.getElementById(id);
+    const inp=document.getElementById(id+'Otro');
+    inp.classList.toggle('oculto', sel.value!=='Otro');
 }
 
 function generarHoras(){
-    const h = document.getElementById('hora');
+    const h=document.getElementById('hora');
     for(let i=0;i<24;i++){
         for(let j=0;j<60;j+=30){
-            const hh = String(i).padStart(2,'0');
-            const mm = String(j).padStart(2,'0');
-            h.innerHTML += `<option>${hh}:${mm}</option>`;
+            h.innerHTML+=`<option>${String(i).padStart(2,'0')}:${String(j).padStart(2,'0')}</option>`;
         }
     }
 }
 
-function obtener(id){
-    const v = document.getElementById(id).value;
-    if(v === 'Otro'){
-        return document.getElementById(id+'Otro').value;
-    }
-    return v;
+/* 🔥 WHATSAPP PREVIEW */
+function whatsappPreview(){
+
+    const msg=`🚗 VIAJE
+
+Tipo: ${document.getElementById('tipo').value}
+Desde: ${document.getElementById('desde').value}
+Hasta: ${document.getElementById('hasta').value}
+Fecha: ${document.getElementById('fecha').value}
+Hora: ${document.getElementById('hora').value}
+Nombre: ${document.getElementById('nombre').value}`;
+
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`,'_blank');
 }
 
-function ordenar(data){
-    return data.sort((a,b)=>{
-        const da = new Date(a.fecha+' '+a.hora);
-        const db = new Date(b.fecha+' '+b.hora);
-        return db-da;
-    });
+function obtener(id){
+    const v=document.getElementById(id).value;
+    if(v==='Otro')return document.getElementById(id+'Otro').value;
+    return v;
 }
 
 async function cargar(){
 
-    document.getElementById('loading').style.display='block';
+    const res=await fetch(urlScript);
+    const data=await res.json();
 
-    const res = await fetch(urlScript);
-    const data = await res.json();
-
-    const ordenado = ordenar(data);
+    data.sort((a,b)=>{
+        return new Date(a.fecha.split('/').reverse().join('-')+'T'+a.hora)
+             - new Date(b.fecha.split('/').reverse().join('-')+'T'+b.hora);
+    });
 
     document.getElementById('loading').style.display='none';
 
-    document.getElementById('tablon').innerHTML = ordenado.map(a=>`
+    document.getElementById('tablon').innerHTML=data.map(a=>`
 
     <div class="tarjeta">
 
@@ -282,19 +270,17 @@ async function cargar(){
             <span class="badge ${a.tipo==='CONDUCTOR'?'conductor':'pasajero'}">
                 ${a.tipo}
             </span>
-            <span style="font-size:11px;color:#64748b">${a.fecha}</span>
+            <span>${a.fecha}</span>
         </div>
 
-        <div class="ruta">
-            ${a.desde} → ${a.hasta}
-        </div>
+        <div class="ruta">${a.desde} → ${a.hasta}</div>
 
-        <div class="info">
-            ⏰ ${a.hora} · 🙋 ${a.nombre}
-        </div>
+        <div class="info">⏰ ${a.hora} · 🙋 ${a.nombre}</div>
 
-        <a class="btn-wa" href="https://wa.me/34${a.telefono}">
-            WhatsApp
+        <a class="btn-wa"
+           href="https://wa.me/34${a.telefono}"
+           target="_blank">
+           WhatsApp
         </a>
 
     </div>
@@ -303,16 +289,17 @@ async function cargar(){
 }
 
 async function enviar(e){
+
     e.preventDefault();
 
-    const payload = {
-        tipo: document.getElementById('tipo').value,
-        desde: obtener('desde'),
-        hasta: obtener('hasta'),
-        fecha: document.getElementById('fecha').value,
-        hora: document.getElementById('hora').value,
-        nombre: document.getElementById('nombre').value,
-        telefono: document.getElementById('telefono').value
+    const payload={
+        tipo:document.getElementById('tipo').value,
+        desde:obtener('desde'),
+        hasta:obtener('hasta'),
+        fecha:document.getElementById('fecha').value,
+        hora:document.getElementById('hora').value,
+        nombre:document.getElementById('nombre').value,
+        telefono:document.getElementById('telefono').value
     };
 
     await fetch(urlScript,{
@@ -326,6 +313,7 @@ async function enviar(e){
 generarHoras();
 cargar();
 
+/* AUTO REFRESH */
 setInterval(()=>cargar(),60000);
 
 </script>
