@@ -110,6 +110,13 @@
             <input id="hora" type="time">
             <input id="nombre" placeholder="Nombre" required>
             <input id="telefono" type="tel" placeholder="Teléfono" maxlength="9" required>
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin:10px 0; font-size:13px; color:#475569;">
+    ⚠️ Revisa que todos los datos sean correctos antes de publicar. <br><br>
+    <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
+        <input type="checkbox" id="aceptaPrivacidad" required style="width:auto; margin-top:3px; flex-shrink:0;">
+        <span>He leído y acepto la <a href="/privacidad" target="_blank" style="color:#1e40af;">política de privacidad</a> y autorizo el uso de mis datos para la gestión de viajes compartidos.</span>
+    </label>
+</div>
             <button type="submit" class="btn-toggle" style="background:#1e40af;">PUBLICAR</button>
             <button type="button" class="btn-wa" onclick="enviarWhatsApp()">💬 Compartir por WhatsApp</button>
         </form>
@@ -164,7 +171,6 @@ function renderizar(data) {
     }).join("") : '<p style="text-align:center; color:#94a3b8; margin-top:20px;">No se encontraron viajes.</p>';
 }
 
-        // Dentro de tu función submit del formulario
 document.getElementById('formViaje').onsubmit = async (e) => {
     e.preventDefault();
     const btn = e.target.querySelector('button[type="submit"]');
