@@ -223,8 +223,8 @@ input,select{
 
 <select id="tipo" required>
 <option value="">Tipo de viaje</option>
-<option value="CONDUCTOR">🚗 Conductor</option>
-<option value="PASAJERO">🙋 Pasajero</option>
+<option value="🚗 CONDUCTOR">🚗 Conductor</option>
+<option value="🙋 PASAJERO">🙋 Pasajero</option>
 </select>
 
 <div style="display:flex;gap:10px;">
@@ -335,31 +335,33 @@ fetch(urlScript)
 .then(r=>r.json())
 .then(data=>{
 
-document.getElementById("loading").style.display="none";
-
-document.getElementById("tablon").innerHTML=
-data.reverse().map(a=>`
+document.getElementById("tablon").innerHTML =
+data.reverse().map(a => `
 
 <div class="tarjeta">
 
 <div class="titulo-tarjeta">
-${a.tipo}
+${a.tipo || "SIN TIPO"}
 </div>
 
 <div class="ruta">
-📍 ${a.desde} → ${a.hasta}
+📍 ${a.desde || "?"} → ${a.hasta || "?"}
 </div>
 
 <div class="info-grid">
-<div class="info">📅 ${a.fecha}</div>
-<div class="info">⏰ ${a.hora}</div>
+<div class="info">📅 ${a.fecha || "?"}</div>
+<div class="info">⏰ ${a.hora || "?"}</div>
 </div>
 
-<div class="persona">🙋 ${a.nombre}</div>
+<div class="persona">
+🙋 ${a.nombre || "?"}
+</div>
 
 <a class="btn-wa"
-href="https://wa.me/34${a.telefono}"
-target="_blank">WHATSAPP</a>
+href="https://wa.me/34${a.telefono || ""}"
+target="_blank">
+WHATSAPP
+</a>
 
 </div>
 
