@@ -83,6 +83,9 @@
 
     <main class="main-container">
         <h2 class="titulo-seccion-principal">Viajes Compartidos</h2>
+        <input id="buscador" type="text" placeholder="🔍 Buscar por lugar, fecha..." 
+    oninput="filtrar()" 
+    style="margin-bottom: 10px; border-radius: 12px; border: 1px solid #cbd5e1; padding: 14px; font-size: 15px;">
         <button class="btn-toggle" onclick="document.getElementById('formViaje').style.display = 'block'">➕ PUBLICAR VIAJE</button>
 
         <form id="formViaje">
@@ -121,17 +124,30 @@
             const s = document.getElementById(id);
             document.getElementById(id + 'Otro').classList.toggle('oculto', s.value !== 'Otro');
         }
+        let todosLosViajes = [];
 
+function filtrar() {
+    const texto = document.getElementById('buscador').value.toLowerCase();
+    const filtrados = todosLosViajes.filter(v =>
+        [v.desde, v.hasta, v.fecha, v.hora, v.nombre, v.tipo]
+        .some(campo => campo.toLowerCase().includes(texto))
+    );
+    renderizar(filtrados);
+}
+
+        
         async function cargar() {
     const res = await fetch(URL);
-    const data = await res.json();
-    data.sort((a, b) => new Date(a.fecha + 'T' + a.hora) - new Date(b.fecha + 'T' + b.hora));
+    todosLosViajes = await res.json();
+    todosLosViajes.sort((a, b) => new Date(a.fecha + 'T' + a.hora) - new Date(b.fecha + 'T' + b.hora));
+    renderizar(todosLosViajes);
+}
 
-    document.getElementById('grid').innerHTML = data.map(v => {
+function renderizar(data) {
+    document.getElementById('grid').innerHTML = data.length ? data.map(v => {
         const tel = String(v.telefono).replace(/\s+/g, '');
         const numWhatsApp = tel.startsWith('34') ? tel : '34' + tel;
-        const fechaFormateada = v.fecha ? v.fecha.split('-').reverse().join('/') : v.fecha;  // ← aquí
-
+        const fechaFormateada = v.fecha ? v.fecha.split('-').reverse().join('/') : v.fecha;
         return `
             <div class="card">
                 <div class="card-header">${v.tipo}</div>
@@ -142,9 +158,8 @@
                 <a class="btn-wa" href="https://wa.me/${numWhatsApp}" target="_blank">
                     💬 Escribir a ${v.nombre}
                 </a>
-            </div>
-        `;
-    }).join("");
+            </div>`;
+    }).join("") : '<p style="text-align:center; color:#94a3b8; margin-top:20px;">No se encontraron viajes.</p>';
 }
 
         // Dentro de tu función submit del formulario
