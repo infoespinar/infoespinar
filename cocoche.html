@@ -99,10 +99,16 @@ input,select{
 }
 
 .tarjeta{
-  background:white;
-  padding:15px;
-  border-radius:12px;
-  border:1px solid #e2e8f0;
+    background:white;
+    border-radius:16px;
+    padding:16px;
+    border:1px solid #e2e8f0;
+    box-shadow:0 4px 10px rgba(0,0,0,0.04);
+    transition:transform .15s ease;
+}
+
+.tarjeta:hover{
+    transform:translateY(-2px);
 }
 
 .titulo{
@@ -111,7 +117,13 @@ input,select{
 }
 
 .ruta{
-  margin-bottom:8px;
+    font-size:18px;
+    font-weight:800;
+    color:#0f172a;
+    display:flex;
+    gap:8px;
+    align-items:center;
+    margin-bottom:8px;
 }
 
 .info{
@@ -147,6 +159,35 @@ input,select{
   margin-bottom:15px;
 }
 
+.cabecera-tarjeta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+}
+
+.badge{
+    font-size:11px;
+    padding:4px 10px;
+    border-radius:20px;
+    font-weight:700;
+}
+
+.badge.conductor{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.badge.pasajero{
+    background:#dbeafe;
+    color:#1e40af;
+}
+
+.fecha{
+    font-size:11px;
+    color:#64748b;
+}
+  
 .filtros button{
   padding:8px 12px;
   border:none;
@@ -160,6 +201,17 @@ input,select{
   background:var(--menta);
   color:white;
 }
+
+  .flecha{
+    color:#94a3b8;
+}
+
+.info-secundaria{
+    font-size:13px;
+    color:#64748b;
+    margin-bottom:12px;
+}
+  
 </style>
 </head>
 
@@ -175,9 +227,9 @@ input,select{
 <div class="contenedor-app">
 
 <h2>Viajes Compartidos</h2>
-<div class="subtitulo">Filtra por tipo de viaje</div>
+ <div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
 
-<div class="filtros">
+  <div class="filtros">
   <button onclick="setFiltro('TODOS')" class="activo">Todos</button>
   <button onclick="setFiltro('CONDUCTOR')">Conductores</button>
   <button onclick="setFiltro('PASAJERO')">Pasajeros</button>
@@ -252,23 +304,36 @@ async function cargar(){
     data = data.filter(v => v.tipo === filtro);
   }
 
-  document.getElementById("tablon").innerHTML = data.reverse().map(v => `
+  document.getElementById('tablon').innerHTML = data.reverse().map(a => `
 
-  <div class="tarjeta">
-    <div class="titulo">${v.tipo}</div>
-    <div class="ruta">📍 ${v.desde} → ${v.hasta}</div>
-    <div class="info">📅 ${v.fecha} | ⏰ ${v.hora}</div>
-    <div class="info">🙋 ${v.nombre}</div>
+<div class="tarjeta">
+
+    <div class="cabecera-tarjeta">
+        <span class="badge ${a.tipo === 'CONDUCTOR' ? 'conductor' : 'pasajero'}">
+            ${a.tipo === 'CONDUCTOR' ? '🚘 Conductor' : '🧍 Pasajero'}
+        </span>
+        <span class="fecha">${a.fecha}</span>
+    </div>
+
+    <div class="ruta">
+        <span>${a.desde}</span>
+        <span class="flecha">→</span>
+        <span>${a.hasta}</span>
+    </div>
+
+    <div class="info-secundaria">
+        ⏰ ${a.hora} · 🙋 ${a.nombre}
+    </div>
 
     <a class="btn-wa"
-      href="https://wa.me/34${v.telefono}"
-      target="_blank">
-      WhatsApp
+       href="https://wa.me/34${a.telefono}?text=${encodeURIComponent('Hola, he visto tu viaje en infoespinar.com')}"
+       target="_blank">
+       WhatsApp
     </a>
-  </div>
 
-  `).join("");
-}
+</div>
+
+`).join('');
 
 async function enviar(e){
   e.preventDefault();
