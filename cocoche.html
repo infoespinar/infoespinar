@@ -10,10 +10,7 @@
 
 *{box-sizing:border-box;margin:0;padding:0;}
 
-:root{
-    --menta:#20a088;
-    --fondo:#f4f6f9;
-}
+:root{--menta:#20a088;--fondo:#f4f6f9;}
 
 body{
     font-family:'Lato',sans-serif;
@@ -28,6 +25,7 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
 .header-logo{
@@ -41,29 +39,66 @@ body{
 .header-bandera{
     width:28px;
     height:28px;
+    object-fit:cover;
     border-radius:4px;
 }
 
-.contenedor-app{max-width:900px;margin:0 auto;padding:20px;}
+.header h1{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+}
 
-h2{text-align:center;margin:20px 0 5px;}
+.contenedor-app{
+    max-width:900px;
+    margin:0 auto;
+    padding:20px;
+}
 
-.subtitulo{text-align:center;font-size:13px;color:#64748b;margin-bottom:20px;}
+h2.titulo-seccion{
+    text-align:center;
+    margin:20px 0 5px;
+    font-size:24px;
+    text-transform:uppercase;
+    color:#1e293b;
+}
+
+.subtitulo{
+    text-align:center;
+    font-size:13px;
+    color:#64748b;
+    margin-bottom:20px;
+}
 
 .btn-publicar{
-    display:block;width:250px;margin:0 auto 30px;
-    padding:14px;background:var(--menta);
-    color:white;border:none;border-radius:30px;
+    display:block;
+    width:250px;
+    margin:0 auto 30px;
+    padding:14px;
+    background:var(--menta);
+    color:white;
+    border:none;
+    border-radius:30px;
     font-weight:700;
+    cursor:pointer;
 }
 
 #form{
-    background:white;padding:25px;border-radius:16px;
-    display:none;margin-bottom:40px;
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    border:1px solid #e2e8f0;
+    margin-bottom:40px;
+    display:none;
 }
 
 input,select{
-    width:100%;padding:12px;margin-bottom:12px;
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
 }
 
 .grid-anuncios{
@@ -74,19 +109,33 @@ input,select{
 
 .tarjeta{
     background:white;
-    padding:15px;
     border-radius:12px;
     border:1px solid #e2e8f0;
+    padding:15px;
 }
 
-.titulo{font-weight:900;font-size:18px;margin-bottom:10px;}
+.titulo-tarjeta{
+    font-weight:900;
+    font-size:18px;
+    margin-bottom:10px;
+}
 
-.descripcion{font-size:14px;white-space:pre-line;margin-bottom:10px;}
+.descripcion{
+    font-size:14px;
+    color:#475569;
+    margin-bottom:15px;
+    white-space:pre-line;
+}
 
-.tag{font-size:11px;background:#f1f5f9;padding:4px 10px;border-radius:20px;}
+.tag{
+    background:#f1f5f9;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:11px;
+}
 
 .btn-wa{
-    display:block;margin-top:10px;
+    display:block;
     text-align:center;
     padding:10px;
     background:#25d366;
@@ -108,8 +157,8 @@ input,select{
 
 <div class="contenedor-app">
 
-<h2>Viajes Compartidos</h2>
-<div class="subtitulo">Últimos 7 días · Ordenado por hora más próxima</div>
+<h2 class="titulo-seccion">Viajes Compartidos</h2>
+<div class="subtitulo">Últimos 7 días · ordenados por hora</div>
 
 <button class="btn-publicar" onclick="toggleFormulario()">➕ PUBLICAR VIAJE</button>
 
@@ -142,8 +191,7 @@ input,select{
 <input id="nombre" placeholder="Nombre" required>
 <input id="telefono" maxlength="9" pattern="[0-9]{9}" placeholder="Teléfono" required>
 
-<button type="button" class="btn-publicar" onclick="previsualizarWhatsapp()">WhatsApp</button>
-<button class="btn-publicar" type="submit" id="btn">Publicar</button>
+<button type="submit" id="btn" class="btn-publicar">PUBLICAR</button>
 
 </form>
 </div>
@@ -159,7 +207,7 @@ const urlScript = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNl
 
 function toggleFormulario(){
     const f = document.getElementById("form");
-    f.style.display = f.style.display === "block" ? "none" : "block";
+    f.style.display = f.style.display==="block"?"none":"block";
     if(f.style.display==="block") f.scrollIntoView({behavior:"smooth"});
 }
 
@@ -181,27 +229,19 @@ function esReciente(fechaStr){
 }
 
 function horaToMin(h){
-    const [hh,mm] = h.split(":").map(Number);
+    const [hh,mm]=h.split(":").map(Number);
     return hh*60+mm;
-}
-
-function obtenerValor(id){
-    return document.getElementById(id).value;
 }
 
 function construirMensaje(){
     return `🚗 VIAJE
 
-${obtenerValor("tipo")}
-De: ${obtenerValor("desde")}
-A: ${obtenerValor("hasta")}
-Fecha: ${obtenerValor("fecha")}
-Hora: ${obtenerValor("hora")}
-Nombre: ${obtenerValor("nombre")}`;
-}
-
-function previsualizarWhatsapp(){
-    window.open(`https://wa.me/?text=${encodeURIComponent(construirMensaje())}`);
+Tipo: ${document.getElementById("tipo").value}
+De: ${document.getElementById("desde").value}
+A: ${document.getElementById("hasta").value}
+Fecha: ${document.getElementById("fecha").value}
+Hora: ${document.getElementById("hora").value}
+Nombre: ${document.getElementById("nombre").value}`;
 }
 
 function cargar(){
@@ -212,19 +252,16 @@ fetch(urlScript)
 
 document.getElementById("loading").style.display="none";
 
-const ahora = new Date();
-
 const filtrados = data
 .filter(esReciente)
 .sort((a,b)=>{
 
-    const da = new Date(a.fecha);
-    const db = new Date(b.fecha);
+    const fa = new Date(a.fecha);
+    const fb = new Date(b.fecha);
 
-    const ha = horaToMin(a.hora||"00:00");
-    const hb = horaToMin(b.hora||"00:00");
+    if(fa - fb !== 0) return fa - fb;
 
-    return (da - db) + (ha - hb);
+    return horaToMin(a.hora)-horaToMin(b.hora);
 
 });
 
@@ -233,7 +270,7 @@ filtrados.map(a=>`
 
 <div class="tarjeta">
 
-<div class="titulo">
+<div class="titulo-tarjeta">
 ${a.tipo}
 </div>
 
@@ -243,9 +280,9 @@ ${a.fecha} ${a.hora}
 ${a.nombre}
 </div>
 
-<a class="btn-wa"
-href="https://wa.me/34${a.telefono}"
-target="_blank">WhatsApp</a>
+<a class="btn-wa" href="https://wa.me/34${a.telefono}" target="_blank">
+WhatsApp
+</a>
 
 </div>
 
@@ -258,28 +295,19 @@ target="_blank">WhatsApp</a>
 function enviar(e){
 e.preventDefault();
 
-const btn = document.getElementById("btn");
-btn.disabled=true;
-
 fetch(urlScript,{
 method:"POST",
 body:JSON.stringify({
-tipo:obtenerValor("tipo"),
-desde:obtenerValor("desde"),
-hasta:obtenerValor("hasta"),
-fecha:obtenerValor("fecha"),
-hora:obtenerValor("hora"),
-nombre:obtenerValor("nombre"),
-telefono:obtenerValor("telefono")
+tipo:document.getElementById("tipo").value,
+desde:document.getElementById("desde").value,
+hasta:document.getElementById("hasta").value,
+fecha:document.getElementById("fecha").value,
+hora:document.getElementById("hora").value,
+nombre:document.getElementById("nombre").value,
+telefono:document.getElementById("telefono").value
 })
 })
-.then(r=>r.json())
-.then(()=>{
-btn.disabled=false;
-document.getElementById("form").style.display="none";
-document.getElementById("publicarForm").reset();
-cargar();
-});
+.then(()=>location.reload());
 
 }
 
