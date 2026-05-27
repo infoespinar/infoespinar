@@ -495,7 +495,7 @@
                 const linea = lineas[i].trim();
                 if (!linea) continue;
 
-                // Parseador ultra-robusto celda por celda (ignora comas dentro de comillas y gestiona celdas vacías)
+                // Parseador ultra-robusto celda por celda
                 const columnas = [];
                 let dentroComillas = false;
                 let celdaActual = "";
@@ -516,24 +516,42 @@
                 // Procesamos las columnas extraídas
                 if (columnas.length >= 3) {
                     const id = `p_${i}`;
-                    const nombre = columnas[0].replace(/^"|"$/g, '').trim();
-                    // Limpiamos comillas y cambiamos comas decimales por puntos por seguridad
+                    let nombre = columnas[0].replace(/^"|"$/g, '').trim();
                     const precioTexto = columnas[1].replace(/^"|"$/g, '').replace(',', '.').trim();
                     const precio = parseFloat(precioTexto);
                     const formato = columnas[2].replace(/^"|"$/g, '').toLowerCase().trim(); // 'kg' o 'ud'
                     const cat = columnas[3] ? columnas[3].replace(/^"|"$/g, '').trim() : "Otros productos";
-                    const icono = columnas[4] ? columnas[4].replace(/^"|"$/g, '').trim() : "📦";
-                    const desc = columnas[5] ? columnas[5].replace(/^"|"$/g, '').trim() : "";
+                    
+                    // 1. Detectar si el nombre YA empieza o contiene un emoji
+                    // Esta expresión regular cubre casi todos los rangos de emojis (incluidos nuevos y compuestos)
+                    const tieneEmoji = /[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1FA00}-\u{1FAFF}]/u.test(nombre);
+
+                    // 2. Asignar el icono por defecto si no se detecta ninguno en el nombre
+                    let icono = "🛍️​"; // Por defecto total por si acaso
+                    
+                    if (tieneEmoji) {
+                        icono = ""; // Si ya tiene emoji en el texto, dejamos el icono vacío para no duplicar
+                    } else {
+                        // Si no tiene, miramos la categoría (lo pasamos a minúsculas para evitar fallos por tildes o mayúsculas)
+                        const catNormalizada = cat.toLowerCase();
+                        if (catNormalizada.includes("fruta")) {
+                            icono = "🍊";
+                        } else if (catNormalizada.includes("verdura") || catNormalizada.includes("hortaliza")) {
+                            icono = "🥦";
+                        } else if (catNormalizada.includes("local") || catNormalizada.includes("pueblo") || catNormalizada.includes("huevo")) {
+                            icono = "🐄​";
+                        }
+                    }
 
                     if (nombre && !isNaN(precio)) {
                         nuevosProductos.push({
                             id: id,
                             cat: cat,
-                            icono: icono,
+                            icono: icono, // Puede ser el emoji asignado o vacío si ya va en el nombre
                             nombre: nombre,
                             precioKg: formato === 'kg' ? precio : null,
                             precioUd: formato === 'ud' ? precio : null,
-                            desc: desc
+                            desc: columnas[5] ? columnas[5].replace(/^"|"$/g, '').trim() : ""
                         });
                     }
                 }
@@ -547,7 +565,6 @@
             document.getElementById("contenedor-productos").innerHTML = "❌ Error al sincronizar el catálogo de productos.";
         }
     }
-
     // ── RENDER CATÁLOGO ──
     function renderizarCatalogo() {
         const cont = document.getElementById("contenedor-productos");
