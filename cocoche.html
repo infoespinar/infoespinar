@@ -6,197 +6,159 @@
 <title>Viajes Compartidos | infoespinar.com</title>
 
 <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
 
 :root{
-    --menta:#20a088;
-    --fondo:#f4f6f9;
+  --menta:#20a088;
+  --fondo:#f4f6f9;
 }
 
 body{
-    font-family:'Lato',sans-serif;
-    background:var(--fondo);
-    color:#334155;
-    padding-bottom:50px;
+  font-family:'Lato',sans-serif;
+  background:var(--fondo);
+  color:#334155;
+  padding-bottom:50px;
 }
 
-/* HEADER */
 .header{
-    background:var(--menta);
-    padding:25px 20px;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    box-shadow:0 4px 12px rgba(0,0,0,0.05);
+  background:var(--menta);
+  padding:15px 20px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
-.header-logo-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .header-logo-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-1px);
-        }
+.header-logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  color:white;
+}
 
 .header-bandera{
-    width:28px;
-    height:28px;
-    border-radius:4px;
+  width:28px;
+  height:28px;
+  border-radius:4px;
 }
 
-/* LAYOUT */
 .contenedor-app{
-    max-width:900px;
-    margin:0 auto;
-    padding:20px;
+  max-width:900px;
+  margin:0 auto;
+  padding:20px;
 }
 
 h2{
-    text-align:center;
-    margin:20px 0 5px;
+  text-align:center;
+  margin:20px 0 10px;
 }
 
 .subtitulo{
-    text-align:center;
-    font-size:13px;
-    color:#64748b;
-    margin-bottom:20px;
+  text-align:center;
+  font-size:13px;
+  color:#64748b;
+  margin-bottom:20px;
 }
 
-/* BOTÓN */
 .btn-publicar{
-    display:block;
-    width:250px;
-    margin:0 auto 30px;
-    padding:14px;
-    background:var(--menta);
-    color:white;
-    border:none;
-    border-radius:30px;
-    font-weight:700;
-    cursor:pointer;
+  display:block;
+  width:250px;
+  margin:0 auto 20px;
+  padding:14px;
+  background:var(--menta);
+  color:white;
+  border:none;
+  border-radius:30px;
+  font-weight:700;
+  cursor:pointer;
 }
 
-/* FORM */
 #form{
-    background:white;
-    padding:25px;
-    border-radius:16px;
-    border:1px solid #e2e8f0;
-    display:none;
-    margin-bottom:40px;
+  display:none;
+  background:white;
+  padding:20px;
+  border-radius:14px;
+  margin-bottom:30px;
 }
 
 input,select{
-    width:100%;
-    padding:12px;
-    margin-bottom:12px;
-    border:1px solid #cbd5e1;
-    border-radius:8px;
+  width:100%;
+  padding:12px;
+  margin-bottom:10px;
+  border:1px solid #cbd5e1;
+  border-radius:8px;
 }
 
-/* ANUNCIOS */
-.grid-anuncios{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-    gap:20px;
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:15px;
 }
 
-/* 🔥 TARJETA NUEVA */
 .tarjeta{
-    background:white;
-    border-radius:18px;
-    border:1px solid #e2e8f0;
-    padding:16px;
-    box-shadow:0 4px 12px rgba(0,0,0,0.06);
-    transition:0.2s;
+  background:white;
+  padding:15px;
+  border-radius:12px;
+  border:1px solid #e2e8f0;
 }
 
-.tarjeta:hover{
-    transform:translateY(-3px);
-    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+.titulo{
+  font-weight:900;
+  margin-bottom:8px;
 }
 
-/* TITULO */
-.titulo-tarjeta{
-    font-weight:900;
-    font-size:13px;
-    letter-spacing:0.5px;
-    margin-bottom:10px;
-}
-
-/* RUTA */
 .ruta{
-    background:#f1f5f9;
-    padding:10px 12px;
-    border-radius:12px;
-    font-weight:800;
-    margin-bottom:10px;
-}
-
-/* INFO GRID */
-.info-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-    margin-bottom:10px;
+  margin-bottom:8px;
 }
 
 .info{
-    background:#f8fafc;
-    border:1px solid #e2e8f0;
-    padding:8px 10px;
-    border-radius:10px;
-    font-size:12px;
+  font-size:13px;
+  margin-bottom:10px;
+  color:#475569;
 }
 
-/* PERSONA */
-.persona{
-    margin-bottom:12px;
-    font-size:13px;
-    font-weight:600;
-    color:#334155;
+.tag{
+  display:inline-block;
+  font-size:11px;
+  background:#f1f5f9;
+  padding:4px 8px;
+  border-radius:12px;
+  margin-right:5px;
 }
 
-/* WHATSAPP */
 .btn-wa{
-    display:block;
-    text-align:center;
-    padding:10px;
-    background:linear-gradient(135deg,#25d366,#1faa57);
-    color:white;
-    border-radius:12px;
-    text-decoration:none;
-    font-weight:800;
-    font-size:13px;
+  display:block;
+  margin-top:10px;
+  text-align:center;
+  background:#25d366;
+  color:white;
+  padding:10px;
+  border-radius:8px;
+  text-decoration:none;
 }
 
-/* OCULTO */
-.oculto{display:none;}
+.filtros{
+  display:flex;
+  justify-content:center;
+  gap:10px;
+  margin-bottom:15px;
+}
 
-/* LOADING */
-#loading{
-    text-align:center;
-    padding:40px;
-    font-weight:700;
-    color:#64748b;
-    font-size:16px;
+.filtros button{
+  padding:8px 12px;
+  border:none;
+  border-radius:20px;
+  cursor:pointer;
+  background:#e2e8f0;
+  font-weight:700;
+}
+
+.filtros button.activo{
+  background:var(--menta);
+  color:white;
 }
 </style>
 </head>
@@ -204,196 +166,133 @@ input,select{
 <body>
 
 <header class="header">
-        <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar"> 
-            <h1>infoespinar.com</h1>
-        </a>
-    </header>
+  <a class="header-logo">
+    <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
+    <h1>INFOESPINAR.COM</h1>
+  </a>
+</header>
 
 <div class="contenedor-app">
 
 <h2>Viajes Compartidos</h2>
-<div class="subtitulo">Los viajes tienen una caducidad de 7 días</div>
+<div class="subtitulo">Filtra por tipo de viaje</div>
 
-<button class="btn-publicar" onclick="toggleFormulario()">➕ PUBLICAR VIAJE</button>
+<div class="filtros">
+  <button onclick="setFiltro('TODOS')" class="activo">Todos</button>
+  <button onclick="setFiltro('CONDUCTOR')">Conductores</button>
+  <button onclick="setFiltro('PASAJERO')">Pasajeros</button>
+</div>
+
+<button class="btn-publicar" onclick="toggleForm()">➕ PUBLICAR VIAJE</button>
 
 <div id="form">
+  <form onsubmit="enviar(event)">
 
-<form id="publicarForm" onsubmit="enviar(event)">
+    <select id="tipo" required>
+      <option value="">Tipo</option>
+      <option value="CONDUCTOR">Conductor</option>
+      <option value="PASAJERO">Pasajero</option>
+    </select>
 
-<select id="tipo" required>
-<option value="">Tipo de viaje</option>
-<option value="🚗 CONDUCTOR">🚗 Conductor</option>
-<option value="🙋 PASAJERO">🙋 Pasajero</option>
-</select>
+    <input id="desde" placeholder="Desde" required>
+    <input id="hasta" placeholder="Hasta" required>
 
-<div style="display:flex;gap:10px;">
-<div style="flex:1;">
-<select id="desde" onchange="controlarOtro('desde')" required>
-<option value="">Desde</option>
-<option>El Espinar</option>
-<option>San Rafael</option>
-<option>LASR</option>
-<option>La Estación</option>
-<option>Segovia</option>
-<option>Madrid</option>
-<option value="Otro">Otro</option>
-</select>
-<input id="desdeOtro" class="oculto" placeholder="Escribe origen">
+    <input type="date" id="fecha" required>
+
+    <select id="hora"></select>
+
+    <input id="nombre" placeholder="Nombre" required>
+
+    <input id="telefono" maxlength="9" placeholder="Teléfono" required>
+
+    <button class="btn-publicar" type="submit" style="width:100%;">PUBLICAR</button>
+
+  </form>
 </div>
 
-<div style="flex:1;">
-<select id="hasta" onchange="controlarOtro('hasta')" required>
-<option value="">Hasta</option>
-<option>El Espinar</option>
-<option>San Rafael</option>
-<option>LASR</option>
-<option>La Estación</option>
-<option>Segovia</option>
-<option>Madrid</option>
-<option value="Otro">Otro</option>
-</select>
-<input id="hastaOtro" class="oculto" placeholder="Escribe destino">
-</div>
-</div>
+<div id="loading" style="text-align:center;">Cargando viajes...</div>
 
-<input type="date" id="fecha" required>
-<select id="hora" required></select>
-
-<input id="nombre" placeholder="Nombre" required>
-
-<input type="tel" id="telefono" maxlength="9" pattern="[0-9]{9}" placeholder="Teléfono" required>
-
-<button type="button" class="btn-publicar" onclick="previsualizarWhatsapp()">📲 WhatsApp</button>
-<button type="submit" class="btn-publicar" id="btn">PUBLICAR VIAJE</button>
-
-</form>
-
-</div>
-
-<div id="loading">Cargando viajes...</div>
-<div id="tablon" class="grid-anuncios"></div>
+<div id="tablon" class="grid"></div>
 
 </div>
 
 <script>
 
-const urlScript = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
+const url = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
 
-function toggleFormulario(){
-    const f=document.getElementById("form");
-    f.style.display=f.style.display==="block"?"none":"block";
+let filtro = "TODOS";
+
+function setFiltro(t){
+  filtro = t;
+  cargar();
 }
 
-function controlarOtro(id){
-    const sel=document.getElementById(id);
-    const inp=document.getElementById(id+"Otro");
+function toggleForm(){
+  const f = document.getElementById("form");
+  f.style.display = f.style.display === "block" ? "none" : "block";
+}
 
-    if(sel.value==="Otro"){
-        inp.classList.remove("oculto");
-        inp.required=true;
-    }else{
-        inp.classList.add("oculto");
-        inp.required=false;
-        inp.value="";
+function horas(){
+  const h = document.getElementById("hora");
+  for(let i=0;i<24;i++){
+    for(let m=0;m<60;m+=15){
+      h.innerHTML += `<option>${String(i).padStart(2,'0')}:${String(m).padStart(2,'0')}</option>`;
     }
+  }
 }
 
-function generarHoras(){
-    const h=document.getElementById("hora");
-    for(let i=0;i<24;i++){
-        for(let m=0;m<60;m+=15){
-            h.innerHTML+=`<option>${String(i).padStart(2,"0")}:${String(m).padStart(2,"0")}</option>`;
-        }
-    }
+async function cargar(){
+
+  const res = await fetch(url);
+  let data = await res.json();
+
+  document.getElementById("loading").style.display="none";
+
+  if(filtro !== "TODOS"){
+    data = data.filter(v => v.tipo === filtro);
+  }
+
+  document.getElementById("tablon").innerHTML = data.reverse().map(v => `
+
+  <div class="tarjeta">
+    <div class="titulo">${v.tipo}</div>
+    <div class="ruta">📍 ${v.desde} → ${v.hasta}</div>
+    <div class="info">📅 ${v.fecha} | ⏰ ${v.hora}</div>
+    <div class="info">🙋 ${v.nombre}</div>
+
+    <a class="btn-wa"
+      href="https://wa.me/34${v.telefono}"
+      target="_blank">
+      WhatsApp
+    </a>
+  </div>
+
+  `).join("");
 }
 
-function obtener(id){
-    const v=document.getElementById(id).value;
-    if(v==="Otro") return document.getElementById(id+"Otro").value;
-    return v;
+async function enviar(e){
+  e.preventDefault();
+
+  const payload = {
+    tipo: tipo.value,
+    desde: desde.value,
+    hasta: hasta.value,
+    fecha: fecha.value,
+    hora: hora.value,
+    nombre: nombre.value,
+    telefono: telefono.value
+  };
+
+  await fetch(url,{
+    method:"POST",
+    body:JSON.stringify(payload)
+  });
+
+  document.getElementById("form").style.display="none";
+  cargar();
 }
 
-function construirMensaje(){
-    return `🚗 VIAJE COMPARTIDO
-
-👤 ${document.getElementById("tipo").value}
-📍 ${obtener("desde")} → ${obtener("hasta")}
-📅 ${document.getElementById("fecha").value}
-⏰ ${document.getElementById("hora").value}
-🙋 ${document.getElementById("nombre").value}
-📞 ${document.getElementById("telefono").value}`;
-}
-
-function previsualizarWhatsapp(){
-    window.open(`https://wa.me/?text=${encodeURIComponent(construirMensaje())}`);
-}
-
-function cargar(){
-
-fetch(urlScript)
-.then(r=>r.json())
-.then(data=>{
-
-document.getElementById("tablon").innerHTML =
-data.reverse().map(a => `
-
-<div class="tarjeta">
-
-<div class="titulo-tarjeta">
-${a.tipo || "SIN TIPO"}
-</div>
-
-<div class="ruta">
-📍 ${a.desde || "?"} → ${a.hasta || "?"}
-</div>
-
-<div class="info-grid">
-<div class="info">📅 ${a.fecha || "?"}</div>
-<div class="info">⏰ ${a.hora || "?"}</div>
-</div>
-
-<div class="persona">
-🙋 ${a.nombre || "?"}
-</div>
-
-<a class="btn-wa"
-href="https://wa.me/34${a.telefono || ""}"
-target="_blank">
-WHATSAPP
-</a>
-
-</div>
-
-`).join("");
-
-});
-
-}
-
-function enviar(e){
-e.preventDefault();
-
-fetch(urlScript,{
-method:"POST",
-body:JSON.stringify({
-tipo:obtener("tipo"),
-desde:obtener("desde"),
-hasta:obtener("hasta"),
-fecha:document.getElementById("fecha").value,
-hora:document.getElementById("hora").value,
-nombre:document.getElementById("nombre").value,
-telefono:document.getElementById("telefono").value
-})
-}).then(()=>{
-document.getElementById("form").style.display="none";
-document.getElementById("publicarForm").reset();
-cargar();
-});
-
-}
-
-generarHoras();
+horas();
 cargar();
 
 </script>
