@@ -92,20 +92,45 @@
             `).join("");
         }
 
-        document.getElementById('formViaje').onsubmit = async (e) => {
-            e.preventDefault();
-            const p = {
-                tipo: document.getElementById('tipo').value,
-                desde: document.getElementById('desde').value === 'Otro' ? document.getElementById('desdeOtro').value : document.getElementById('desde').value,
-                hasta: document.getElementById('hasta').value === 'Otro' ? document.getElementById('hastaOtro').value : document.getElementById('hasta').value,
-                fecha: document.getElementById('fecha').value,
-                hora: document.getElementById('hora').value,
-                nombre: document.getElementById('nombre').value,
-                telefono: document.getElementById('telefono').value
-            };
-            await fetch(URL, { method: "POST", body: JSON.stringify(p) });
-            location.reload();
-        };
+        // Dentro de tu función submit del formulario
+document.getElementById('formViaje').onsubmit = async (e) => {
+    e.preventDefault();
+    const btn = e.target.querySelector('button[type="submit"]');
+    
+    // 1. Obtener valores
+    const desde = document.getElementById('desde').value === 'Otro' ? document.getElementById('desdeOtro').value : document.getElementById('desde').value;
+    const hasta = document.getElementById('hasta').value === 'Otro' ? document.getElementById('hastaOtro').value : document.getElementById('hasta').value;
+    const fecha = document.getElementById('fecha').value;
+
+    // 2. Validaciones estrictas
+    if (desde === hasta) {
+        alert("El origen y el destino no pueden ser iguales.");
+        return;
+    }
+    if (new Date(fecha + 'T00:00:00') < new Date().setHours(0,0,0,0)) {
+        alert("No puedes viajar al pasado. Selecciona una fecha a partir de hoy.");
+        return;
+    }
+
+    // 3. Bloqueo de doble envío
+    btn.disabled = true;
+    btn.innerText = "Publicando...";
+
+    const p = {
+        tipo: document.getElementById('tipo').value,
+        desde: desde,
+        hasta: hasta,
+        fecha: fecha,
+        hora: document.getElementById('hora').value,
+        nombre: document.getElementById('nombre').value,
+        telefono: document.getElementById('telefono').value
+    };
+
+    await fetch("TU_URL_AQUÍ", { method: "POST", body: JSON.stringify(p) });
+    
+    alert("¡Viaje publicado!");
+    location.reload(); // Recarga para mostrar el nuevo viaje
+};
 
         function enviarWhatsApp() {
             const d = document.getElementById('desde').value === 'Otro' ? document.getElementById('desdeOtro').value : document.getElementById('desde').value;
