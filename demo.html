@@ -741,7 +741,7 @@
             lineas.push(`${item.icono} *${item.nombre}* — ${partes.join(" + ")}`);
         }
 
-        let msg = `🛒 *NUEVO PEDIDO — LA HUERTA DEL ESPINAR* 🛒\n`;
+        let msg = `🛒 *NUEVO PEDIDO DESDE INFOESPINAR* 🛒\n`;
         msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
         msg += lineas.join("\n") + `\n\n`;
         msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
@@ -751,9 +751,9 @@
         msg += `💰 *Total estimado:* ~${total.toFixed(2)}€\n`;
         if (nota) msg += `📝 *Notas:* ${nota}\n`;
         msg += `━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
-        msg += `_Pedido realizado desde infoespinar.com_`;
+        msg += `_El pedido solo se considerará confirmado una vez reciba respuesta a este mensaje._`;
 
-        const urlWA = `https://api.whatsapp.com/send?phone=34600000000&text=${encodeURIComponent(msg)}`;
+        const urlWA = `https://api.whatsapp.com/send?phone=34619546566&text=${encodeURIComponent(msg)}`;
         window.open(urlWA, '_blank');
     }
 
