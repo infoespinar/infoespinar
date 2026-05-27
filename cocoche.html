@@ -111,12 +111,10 @@ input, select{
     background:#fff;
 }
 
-/* FIX: mostrar placeholder en input[type=date] cuando está vacío */
 input[type="date"]:not(:valid):not(:focus){
     color:#94a3b8;
 }
 
-/* Algunos navegadores necesitan este truco adicional */
 input[type="date"].vacio{
     color:#94a3b8;
 }
@@ -190,7 +188,6 @@ input[type="date"].vacio{
 
 <div class="fila">
 <div>
-    <!-- FIX: añadido onchange para mostrar/ocultar campo "Otro" -->
     <select id="desde" onchange="mostrarOtro('desde')">
         <option value="">Desde</option>
         <option>El Espinar</option>
@@ -206,7 +203,6 @@ input[type="date"].vacio{
 </div>
 
 <div>
-    <!-- FIX: añadido onchange para mostrar/ocultar campo "Otro" -->
     <select id="hasta" onchange="mostrarOtro('hasta')">
         <option value="">Hasta</option>
         <option>El Espinar</option>
@@ -223,7 +219,6 @@ input[type="date"].vacio{
 </div>
 
 <div class="fila">
-    <!-- FIX: añadido placeholder visible y clase para color gris cuando vacío -->
     <input type="date" id="fecha" placeholder="Fecha"
         onchange="this.classList.remove('vacio')"
         class="vacio">
@@ -253,8 +248,6 @@ function toggle(){
     f.style.display = f.style.display === "block" ? "none" : "block";
 }
 
-/* ===== MOSTRAR/OCULTAR CAMPO OTRO ===== */
-/* FIX: función que faltaba para que funcione el campo libre "Otro" */
 function mostrarOtro(id){
     const sel = document.getElementById(id);
     const input = document.getElementById(id + "Otro");
@@ -267,18 +260,16 @@ function mostrarOtro(id){
     }
 }
 
-/* ===== OBTENER VALOR ===== */
 function obtenerValor(id){
     let v = document.getElementById(id).value;
     if(v === "Otro") v = document.getElementById(id + "Otro").value;
     return v;
 }
 
-/* ===== HORAS (FIX: empieza a las 08:00) ===== */
 function horas(){
     let h = document.getElementById("hora");
     h.innerHTML = "";
-    for(let i = 8; i < 24; i++){          // <-- cambiado de 0 a 8
+    for(let i = 8; i < 24; i++){
         for(let j = 0; j < 60; j += 15){
             let v = `${String(i).padStart(2,'0')}:${String(j).padStart(2,'0')}`;
             h.innerHTML += `<option value="${v}">${v}</option>`;
@@ -286,7 +277,6 @@ function horas(){
     }
 }
 
-/* ===== WHATSAPP ===== */
 function wa(){
     const tipo   = document.getElementById("tipo").value;
     const nombre = document.getElementById("nombre").value;
@@ -304,7 +294,6 @@ function wa(){
     window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
-/* ===== TARJETA INSTANTÁNEA ===== */
 function crearTarjeta(v){
     const div = document.createElement("div");
     div.className = "card";
@@ -319,46 +308,56 @@ function crearTarjeta(v){
     document.getElementById("grid").prepend(div);
 }
 
-/* ===== CARGAR via proxy CORS ===== */
-async function cargar(){
-    const proxyUrl = "https://corsproxy.io/?" + encodeURIComponent(url);
-    let d;
-    try {
-        const r = await fetch(proxyUrl);
-        d = await r.json();
-    } catch(err){
-        document.getElementById("grid").innerHTML =
-            `<p style="color:#ef4444;text-align:center;grid-column:1/-1">Error al cargar los viajes. Recarga la página.</p>`;
-        return;
-    }
-
-    // Ordenar por fecha/hora más próxima a ahora
-    const ahora = new Date();
-    d.sort((a, b) => {
-        const fechaA = new Date(`${a.fecha}T${a.hora}`);
-        const fechaB = new Date(`${b.fecha}T${b.hora}`);
-        const diffA = fechaA - ahora;
-        const diffB = fechaB - ahora;
-        if(diffA >= 0 && diffB >= 0) return diffA - diffB;
-        if(diffA < 0  && diffB < 0)  return diffB - diffA;
-        return diffA >= 0 ? -1 : 1;
+/* ===== CARGAR via JSONP CORREGIDO ===== */
+async function cargar() {
+    const callbackName = 'callback_' + Date.now();
+    
+    const script = document.createElement('script');
+    script.src = `${url}?callback=${callbackName}`;
+    
+    const dataPromise = new Promise((resolve, reject) => {
+        window[callbackName] = (data) => {
+            delete window[callbackName];
+            document.body.removeChild(script);
+            resolve(data);
+        };
+        script.onerror = () => reject('Error al cargar');
     });
 
-    document.getElementById("grid").innerHTML = d.length === 0
-        ? `<p style="text-align:center;color:#64748b;grid-column:1/-1">No hay viajes publicados.</p>`
-        : d.map(v => `
-            <div class="card">
-                <div class="titulo">${v.tipo}</div>
-                📍 ${v.desde} → ${v.hasta}<br>
-                📅 ${v.fecha}<br>
-                ⏰ ${v.hora}<br>
-                👤 ${v.nombre}<br>
-                <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
-            </div>
-        `).join("");
+    document.body.appendChild(script);
+
+    try {
+        const d = await dataPromise;
+        
+        const ahora = new Date();
+        d.sort((a, b) => {
+            const fechaA = new Date(`${a.fecha}T${a.hora}`);
+            const fechaB = new Date(`${b.fecha}T${b.hora}`);
+            const diffA = fechaA - ahora;
+            const diffB = fechaB - ahora;
+            if(diffA >= 0 && diffB >= 0) return diffA - diffB;
+            if(diffA < 0  && diffB < 0)  return diffB - diffA;
+            return diffA >= 0 ? -1 : 1;
+        });
+
+        document.getElementById("grid").innerHTML = d.length === 0
+            ? `<p style="text-align:center;color:#64748b;grid-column:1/-1">No hay viajes publicados.</p>`
+            : d.map(v => `
+                <div class="card">
+                    <div class="titulo">${v.tipo}</div>
+                    📍 ${v.desde} → ${v.hasta}<br>
+                    📅 ${v.fecha}<br>
+                    ⏰ ${v.hora}<br>
+                    👤 ${v.nombre}<br>
+                    <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
+                </div>
+            `).join("");
+    } catch(err) {
+        document.getElementById("grid").innerHTML = 
+            `<p style="color:#ef4444;text-align:center;grid-column:1/-1">Error al cargar los viajes. Recarga la página.</p>`;
+    }
 }
 
-/* ===== ENVIAR ===== */
 async function enviar(e){
     e.preventDefault();
 
@@ -366,16 +365,13 @@ async function enviar(e){
     const hasta = obtenerValor("hasta");
     const fecha = document.getElementById("fecha").value;
 
-    // 1. Origen = destino
     if(desde.trim().toLowerCase() === hasta.trim().toLowerCase()){
         alert("El origen y el destino no pueden ser iguales.");
         return;
     }
 
-    // FIX: parseo manual para evitar desfase UTC en la comparación de fechas
-    // new Date("2025-05-20") se interpreta como UTC medianoche → puede ser "ayer" en España
     const [anyo, mes, dia] = fecha.split("-").map(Number);
-    const fechaViaje = new Date(anyo, mes - 1, dia);   // hora local, sin UTC
+    const fechaViaje = new Date(anyo, mes - 1, dia);
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
 
@@ -397,19 +393,15 @@ async function enviar(e){
         telefono: document.getElementById("telefono").value
     };
 
-    /* Mostrar tarjeta inmediatamente */
     crearTarjeta(payload);
 
-    /* UX */
     btn.disabled  = true;
     btn.innerText = "Publicando...";
     form.style.display = "none";
 
-    // Google Apps Script no devuelve cabeceras CORS en POST → mode no-cors
     await fetch(url, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
 
     document.getElementById("formulario").reset();
-    // Restaurar clase "vacio" en el campo fecha tras el reset
     document.getElementById("fecha").classList.add("vacio");
 
     btn.disabled  = false;
