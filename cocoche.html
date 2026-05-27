@@ -6,51 +6,22 @@
     <title>Cocoche | infoespinar.com</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-        
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
 
-        .header {
-            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
-            color: white;
-            text-align: center;
-            padding: 25px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
-
-        .header-logo-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: background 0.2s, transform 0.2s;
-        }
-
-        .header-logo-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-1px);
-        }
-
-        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1 / 1; }
-        .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        .header { background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); }
         
         .main-container { max-width: 600px; margin: 0 auto; padding: 20px 12px; }
-        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; color: #0284c7; }
-
+        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; color: #0284c7; }
         .form-card { background: white; padding: 25px; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
         .form-group { margin-bottom: 15px; }
         label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 14px; }
         input, select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 16px; }
         
-        .btn { display: block; width: 100%; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; text-align: center; text-decoration: none; margin-top: 10px; }
+        .btn { display: block; width: 100%; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; text-align: center; margin-top: 15px; }
         .btn-publicar { background-color: #0ea5e9; color: white; }
-        .btn-whatsapp { background-color: #25d366; color: white; margin-top: 15px; }
-        
+        .btn-whatsapp { background-color: #25d366; color: white; }
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
     </style>
 </head>
@@ -58,86 +29,53 @@
 
     <header class="header">
         <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera"> 
-            <h1>infoespinar.com</h1>
+            <h1>infoespinar.com | Cocoche</h1>
         </a>
     </header>
 
     <main class="main-container">
-        <h2 class="titulo-seccion-principal">Cocoche 🚗​</h2>
+        <h2 class="titulo-seccion-principal">Nuevo Trayecto 🚗​</h2>
         
         <form class="form-card" id="formCocoche">
             <div class="form-group">
-                <label>Tipo de usuario</label>
-                <select id="tipo" required>
+                <label>Tipo</label>
+                <select name="tipo" id="tipo">
                     <option value="🚗 Conductor">🚗 Conductor</option>
                     <option value="👤 Pasajero">👤 Pasajero</option>
                 </select>
             </div>
-            
-            <div class="form-group">
-                <label>Desde</label>
-                <select id="desde" required>
-                    <option value="El Espinar">El Espinar</option>
-                    <option value="San Rafael">San Rafael</option>
-                    <option value="LASR">LASR</option>
-                    <option value="La Estación">La Estación</option>
-                    <option value="Segovia">Segovia</option>
-                    <option value="Ávila">Ávila</option>
-                    <option value="Madrid">Madrid</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
+            <div class="form-group"><label>Desde</label><input type="text" name="desde" id="desde" placeholder="Ej: San Rafael" required></div>
+            <div class="form-group"><label>Hasta</label><input type="text" name="hasta" id="hasta" placeholder="Ej: Madrid" required></div>
+            <div class="form-group"><label>Fecha y Hora</label><input type="datetime-local" name="fechahora" id="fechahora" required></div>
+            <div class="form-group"><label>Tu Nombre</label><input type="text" name="nombre" id="nombre" required></div>
+            <div class="form-group"><label>Tu Teléfono</label><input type="tel" name="telefono" id="telefono" placeholder="34600000000" required></div>
 
-            <div class="form-group">
-                <label>Hasta</label>
-                <select id="hasta" required>
-                    <option value="El Espinar">El Espinar</option>
-                    <option value="San Rafael">San Rafael</option>
-                    <option value="LASR">LASR</option>
-                    <option value="La Estación">La Estación</option>
-                    <option value="Segovia">Segovia</option>
-                    <option value="Ávila">Ávila</option>
-                    <option value="Madrid">Madrid</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <label>Fecha y Hora</label>
-                <input type="datetime-local" id="fechaHora" required>
-            </div>
-
+            <button type="button" class="btn btn-whatsapp" onclick="compartirWhatsApp()">Compartir en WhatsApp antes de publicar 💬</button>
             <button type="submit" class="btn btn-publicar">Publicar en Web</button>
-            <button type="button" class="btn btn-whatsapp" onclick="enviarWhatsApp()">Enviar por WhatsApp 💬</button>
         </form>
     </main>
 
-    <footer class="footer">
-        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
-    </footer>
-
     <script>
-        function enviarWhatsApp() {
-            const tipo = document.getElementById("tipo").value;
-            const desde = document.getElementById("desde").value;
-            const hasta = document.getElementById("hasta").value;
-            const fecha = document.getElementById("fechaHora").value;
+        function compartirWhatsApp() {
+            const t = document.getElementById("tipo").value;
+            const d = document.getElementById("desde").value;
+            const h = document.getElementById("hasta").value;
+            const f = document.getElementById("fechahora").value;
+            const n = document.getElementById("nombre").value;
             
-            const mensaje = `Hola, busco/ofrezco trayecto:
-${tipo}
-De: ${desde}
-A: ${hasta}
-Fecha: ${fecha}
-¡Gracias!`;
+            if(!n) { alert("Escribe tu nombre primero"); return; }
             
-            const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-            window.open(url, '_blank');
+            const msg = `Hola, soy ${n} y ${t.includes('Conductor') ? 'ofrezco' : 'busco'} viaje:\nDesde: ${d}\nHasta: ${h}\nFecha: ${f}`;
+            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
         }
 
         document.getElementById("formCocoche").addEventListener("submit", function(e) {
             e.preventDefault();
-            alert("Formulario enviado (integrar con Google Sheets aquí)");
+            const url = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
+            
+            fetch(url, { method: "POST", body: new FormData(this) })
+            .then(() => alert("¡Publicado con éxito!"))
+            .catch(err => alert("Error al publicar."));
         });
     </script>
 </body>
