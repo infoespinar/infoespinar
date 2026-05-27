@@ -175,8 +175,8 @@ input,select{
 
 <select id="tipo">
 <option value="">Tipo</option>
-<option value="CONDUCTOR">Conductor</option>
-<option value="PASAJERO">Pasajero</option>
+<option value="​🚘 CONDUCTOR">🚘​ Conductor</option>
+<option value="🙋​ PASAJERO">🙋​ Pasajero</option>
 </select>
 
 <div class="fila">
@@ -185,8 +185,11 @@ input,select{
 <option value="">Desde</option>
 <option>El Espinar</option>
 <option>San Rafael</option>
-<option>Segovia</option>
+<option>LASR</option>
+<option>La Estación</option>
 <option>Madrid</option>
+<option>Segoviar</option>
+<option>Ávila</option>
 <option value="Otro">Otro</option>
 </select>
 <input id="desdeOtro" class="oculto" placeholder="Escribe origen">
@@ -197,8 +200,11 @@ input,select{
 <option value="">Hasta</option>
 <option>El Espinar</option>
 <option>San Rafael</option>
-<option>Segovia</option>
+<option>LASR</option>
+<option>La Estación</option>
 <option>Madrid</option>
+<option>Segoviar</option>
+<option>Ávila</option>
 <option value="Otro">Otro</option>
 </select>
 <input id="hastaOtro" class="oculto" placeholder="Escribe destino">
@@ -249,15 +255,31 @@ function horas(){
  }
 }
 
-function wa(){
- alert("abre whatsapp (ya lo tenías bien)");
+function construirMensajeWhatsApp(){
+
+    const tipo = document.getElementById("tipo").value;
+    const desde = obtenerValor("desde");
+    const hasta = obtenerValor("hasta");
+    const fecha = document.getElementById("fecha").value;
+    const hora = document.getElementById("hora").value;
+    const nombre = document.getElementById("nombre").value;
+    const telefono = document.getElementById("telefono").value;
+
+    return `🚗 NUEVO VIAJE
+
+📌 Tipo: ${tipo}
+📍 De: ${desde}
+🏁 A: ${hasta}
+📅 Fecha: ${fecha}
+⏰ Hora: ${hora}
+👤 Nombre: ${nombre}`;
 }
 
 async function cargar(){
  let r=await fetch(url);
  let d=await r.json();
  document.getElementById("grid").innerHTML=
- d.map(v=>`
+ d.map(=>`
  <div class="card">
  <div class="titulo">${v.tipo}</div>
  📍 ${v.desde} → ${v.hasta}<br>
