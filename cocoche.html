@@ -194,8 +194,7 @@ function enviarWhatsApp() {
     const fechaFormateada = fechaRaw ? fechaRaw.split('-').reverse().join('/') : fechaRaw;  // ← aquí
     const msg = `Hola, soy ${document.getElementById('nombre').value}. ${document.getElementById('tipo').value.includes('CONDUCTOR') ? 'Voy a viajar' : 'Busco viaje'} desde ${d} hasta ${h} el ${fechaFormateada} a las ${document.getElementById('hora').value}. Si te interesa, escríbeme.`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
-}            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank");
-        }
+}     
 
         cargar();
     </script>
