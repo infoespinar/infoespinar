@@ -54,6 +54,14 @@
                 <option value="OFREZCO">Busco personal</option>
             </select>
             <input type="text" id="titulo" placeholder="TÍTULO (EJ: CAMARERO/A)" required oninput="this.value=this.value.toUpperCase()">
+            <select id="lugar" onchange="checkLugar()" required>
+                <option value="">Lugar de trabajo...</option>
+                <option>El Espinar</option>
+                <option>San Rafael</option>
+                <option>LASR</option>
+                <option>La Estación</option>
+                <option value="Otro">Otro</option> </select>
+        <input id="lugarOtro" class="oculto" placeholder="Escribe el lugar">
             <select id="jornada" required>
                 <option value="Jornada Completa">Jornada Completa</option>
                 <option value="Jornada Parcial">Jornada Parcial</option>
@@ -81,6 +89,11 @@
 <script>
 const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
 
+function checkLugar() {
+    const s = document.getElementById('lugar');
+    document.getElementById('lugarOtro').classList.toggle('oculto', s.value !== 'Otro');
+}
+    
 async function cargar() {
     const res = await fetch(urlScript);
     const data = await res.json();
@@ -105,6 +118,7 @@ async function enviar(e) {
     btn.disabled = true; btn.innerText = "Publicando...";
     const payload = {
         buscasUOfreces: document.getElementById("buscasUOfreces").value,
+        lugar: document.getElementById('lugar').value === 'Otro' ? document.getElementById('lugarOtro').value  : document.getElementById('lugar').value,
         titulo: document.getElementById("titulo").value,
         jornada: document.getElementById("jornada").value,
         descripcion: document.getElementById("descripcion").value,
