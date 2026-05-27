@@ -247,15 +247,10 @@ function horas(){
 function wa(){
 
     const mensaje =
-`🚗 NUEVO VIAJE
-
-📌 Tipo: ${document.getElementById("tipo").value}
-📍 De: ${obtenerValor("desde")}
-🏁 A: ${obtenerValor("hasta")}
-📅 Fecha: ${document.getElementById("fecha").value}
-⏰ Hora: ${document.getElementById("hora").value}
-👤 Nombre: ${document.getElementById("nombre").value}`;
-
+if (tipo === "🚘 Conductor"
+    msg += 'Hola, soy ${document.getElementById("nombre").value}. Voy a viajar desde ${obtenerValor("desde")} hasta ${obtenerValor("hasta")} el ${document.getElementById("fecha").value} a las ${document.getElementById("hora").value}. Si te interesa viajar conmigo, escríbeme.';
+if (tipo === "🙋 Pasajero"
+    msg += 'Hola, soy ${document.getElementById("nombre").value}. Quiero viajar desde ${obtenerValor("desde")} hasta ${obtenerValor("hasta")} el ${document.getElementById("fecha").value} a las ${document.getElementById("hora").value}. Si me puedes llevar, escríbeme.';
     window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
