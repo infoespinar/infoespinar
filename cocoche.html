@@ -123,30 +123,29 @@
         }
 
         async function cargar() {
-            const res = await fetch(URL);
-            const data = await res.json();
-            data.sort((a, b) => new Date(a.fecha + 'T' + a.hora) - new Date(b.fecha + 'T' + b.hora));
-            // ... dentro de la función cargar() ...
-document.getElementById('grid').innerHTML = data.map(v => {
-    // Limpiamos el teléfono: quitamos espacios y nos aseguramos de que empiece por 34
-    const tel = String(v.telefono).replace(/\s+/g, '');
-    const numWhatsApp = tel.startsWith('34') ? tel : '34' + tel;
-    
-    return `
-        <div class="card">
-            <div class="card-header">${v.tipo}</div>
-            <div class="card-ruta">${v.desde} ➔ ${v.hasta}</div>
-            <div class="card-info">📅 <b>Fecha:</b> ${v.fecha}</div>
-            <div class="card-info">⏰ <b>Hora:</b> ${v.hora}</div>
-            <div class="card-info">👤 <b>Publicado por:</b> ${v.nombre}</div>
-            
-            <a class="btn-wa" href="https://wa.me/${numWhatsApp}" target="_blank">
-                💬 Escribir a ${v.nombre}
-            </a>
-        </div>
-    `;
-}).join("");
-        }
+    const res = await fetch(URL);
+    const data = await res.json();
+    data.sort((a, b) => new Date(a.fecha + 'T' + a.hora) - new Date(b.fecha + 'T' + b.hora));
+
+    document.getElementById('grid').innerHTML = data.map(v => {
+        const tel = String(v.telefono).replace(/\s+/g, '');
+        const numWhatsApp = tel.startsWith('34') ? tel : '34' + tel;
+        const fechaFormateada = v.fecha ? v.fecha.split('-').reverse().join('/') : v.fecha;  // ← aquí
+
+        return `
+            <div class="card">
+                <div class="card-header">${v.tipo}</div>
+                <div class="card-ruta">${v.desde} ➔ ${v.hasta}</div>
+                <div class="card-info">📅 <b>Fecha:</b> ${fechaFormateada}</div>
+                <div class="card-info">⏰ <b>Hora:</b> ${v.hora}</div>
+                <div class="card-info">👤 <b>Publicado por:</b> ${v.nombre}</div>
+                <a class="btn-wa" href="https://wa.me/${numWhatsApp}" target="_blank">
+                    💬 Escribir a ${v.nombre}
+                </a>
+            </div>
+        `;
+    }).join("");
+}
 
         // Dentro de tu función submit del formulario
 document.getElementById('formViaje').onsubmit = async (e) => {
