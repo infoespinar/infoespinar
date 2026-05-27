@@ -7,60 +7,43 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         
+        /* Reset y Base */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
-
-        /* Header Estilo unificado */
-        .header { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); transition: background 0.2s, transform 0.2s; }
-        .header-logo-link:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
-        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1 / 1; }
-        .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
-
         .main-container { max-width: 1200px; margin: 0 auto; padding: 20px 12px; }
-        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; color: #9f1239; }
-        .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
 
-        /* BURBUJAS */
-        .contenedor-burbujas {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 2px;
-            margin-bottom: 8px;
-        }
+        /* Header */
+        .header { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.15); }
+        .header-bandera { width: 32px; height: 32px; border-radius: 6px; }
+        .header h1 { font-size: 20px; font-weight: 900; text-transform: uppercase; }
 
-        .burbuja-tipo {
-            display: inline-block;
-            background-color: #f1f5f9;
-            color: #475569;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid #e2e8f0; }
-      
-        .banner-comercio { width: 100%; height: 120px; border-radius: 14px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .banner-info { padding: 15px 20px; z-index: 2; }
-        .banner-label { display: inline-block; background: #9f1239; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
-        .banner-nombre { color: white; font-size: 19px; font-weight: 700; margin: 0; }
+        /* Componentes */
+        .titulo-seccion-principal { font-size: 26px; text-align: center; margin: 20px 0; text-transform: uppercase; color: #9f1239; }
+        .input-buscador { width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 14px; margin-bottom: 25px; font-size: 16px; }
 
-        .input-buscador { width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 14px; margin-bottom: 25px; font-size: 16px; outline: none; }
-
-        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; }
+        /* Grid y Tarjetas */
+        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
         .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #9f1239; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; }
         .nombre-comercio { font-size: 18px; font-weight: 700; color: #9f1239; margin-bottom: 8px; }
-        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 15px; }
+        .enlace-web { font-size: 13px; color: #3b82f6; text-decoration: none; margin-bottom: 10px; }
         
+        /* Burbujas y Botones */
+        .contenedor-burbujas { margin-bottom: 15px; }
+        .burbuja-tipo { background-color: #f1f5f9; color: #475569; font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; border: 1px solid #e2e8f0; }
         .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; color: white; }
+        .btn { padding: 10px; border-radius: 8px; text-align: center; font-size: 13px; font-weight: 700; color: white; text-decoration: none; }
         .btn-llamar { background-color: #0f172a; }
         .btn-whatsapp { background-color: #10b981; }
-        .btn-email { background-color: #f59e0b; color: #fff; }
+        .btn-email { background-color: #f59e0b; }
 
-        .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
+        /* Banner */
+        .banner-comercio { width: 100%; height: 120px; border-radius: 14px; display: flex; align-items: center; background-color: #0c4a6e; margin-bottom: 25px; padding: 20px; text-decoration: none; color: white; }
+        .banner-label { background: #0e7490; font-size: 9px; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; }
+        .banner-nombre { font-size: 19px; font-weight: 700; margin-top: 5px; }
+
+        /* Footer y Disclaimer */
+        .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; }
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
     </style>
 </head>
@@ -77,7 +60,10 @@
         <h2 class="titulo-seccion-principal">Otros Servicios</h2>
 
         <a href="mailto:info@infoespinar.com" class="banner-comercio">
-            <div class="banner-info"><span class="banner-label">Anuncia aquí</span><h3 class="banner-nombre">Tus Servicios</h3></div>
+            <div class="banner-info">
+                <span class="banner-label">Anuncia aquí</span>
+                <h3 class="banner-nombre">Tus Servicios</h3>
+            </div>
         </a>
 
         <input type="text" id="buscador" class="input-buscador" placeholder="🔍 Buscar empresa de eventos...">
@@ -85,13 +71,17 @@
         <div class="grid-comercios" id="gridComercios">
             <div class="tarjeta-comercio" data-nombre="Andrea Comesaña Ruibal">
                 <div class="nombre-comercio">Andrea Comesaña Ruibal</div>
-                <a href="https://www.andrearuibal.com" target="_blank" rel="noopener" class="enlace-web">🌐 https://www.andrearuibal.com</a>
-              <div class="contenedor-burbujas">
-                        <span class="burbuja-tipo">Traducción jurada en inglés y español</span>
-                    </div>
-                <div class="btn-group"><a href="tel:+34625089735" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34625089735" class="btn btn-whatsapp">💬 WhatsApp</a><a href="mailto:info@andrearuibal.com" class="btn btn-email">📧 Email</a></div>
+                <a href="https://www.andrearuibal.com" target="_blank" rel="noopener" class="enlace-web">🌐 Visitar web</a>
+                <div class="contenedor-burbujas">
+                    <span class="burbuja-tipo">Traducción jurada en inglés y español</span>
+                </div>
+                <div class="btn-group">
+                    <a href="tel:+34625089735" class="btn btn-llamar">📞 Llamar</a>
+                    <a href="https://wa.me/34625089735" class="btn btn-whatsapp">💬 WhatsApp</a>
+                    <a href="mailto:info@andrearuibal.com" class="btn btn-email">📧 Email</a>
+                </div>
             </div>
-            
+        </div>
 
         <div class="disclaimer-box">
             <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas.
@@ -101,20 +91,3 @@
     <footer class="footer">
         <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
     </footer>
-
-    <script>
-        const grid = document.getElementById("gridComercios");
-        const cards = Array.from(grid.children);
-        cards.sort(() => Math.random() - 0.5);
-        cards.forEach(card => grid.appendChild(card));
-
-        document.getElementById("buscador").addEventListener("input", function() {
-            const term = this.value.toLowerCase();
-            cards.forEach(card => {
-                const name = card.getAttribute("data-nombre").toLowerCase();
-                card.style.display = name.includes(term) ? "flex" : "none";
-            });
-        });
-    </script>
-</body>
-</html>
