@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Frutería La Huerta del Espinar | Pedidos Online</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght=300;400;700;900&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -172,6 +172,7 @@
 
         /* ── CATEGORÍAS ── */
         .cat-titulo {
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             font-size: 12px;
             font-weight: 900;
             text-transform: uppercase;
@@ -369,9 +370,9 @@
             margin-top: 30px;
             font-size: 13px;
             line-height: 1.6;
-            border-top: 3px solid #3b82f6;
+            border-top: 3px solid #16a34a;
         }
-        .footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+        .footer a { color: #16a34a; text-decoration: none; font-weight: 700; }
 
         @media (max-width: 480px) {
             .fila-doble { grid-template-columns: 1fr; }
@@ -475,19 +476,13 @@
     </footer>
 
     <script>
-    // ⚠️ COLOCA AQUÍ EL ENLACE DE TU HOJA EXPORTADA EN .CSV DE GOOGLE SHEETS
+    // ⚠️ TU ENLACE REAL DE GOOGLE SHEETS EN .CSV
     const SHEETS_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTm0lL1WLFBTYYOazW9aOmYBew467h2WyPFnbVsPFpOc197DJdTWZTbZgmSFSzhVNfMiSDBmTDFf1QO/pub?gid=0&single=true&output=csv';
 
     let productos = [];
     let carrito = {};
 
-    // Función que descarga los datos de Sheets e inicializa la App
     async function cargarCatalogoDesdeSheets() {
-        if (SHEETS_CSV_URL === 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTm0lL1WLFBTYYOazW9aOmYBew467h2WyPFnbVsPFpOc197DJdTWZTbZgmSFSzhVNfMiSDBmTDFf1QO/pub?gid=0&single=true&output=csv') {
-            document.getElementById("contenedor-productos").innerHTML = "<p style='color:red; text-align:center; font-weight:700;'>⚠️ Configura el enlace SHEETS_CSV_URL en el script.</p>";
-            return;
-        }
-
         try {
             const respuesta = await fetch(`${SHEETS_CSV_URL}&cacheBust=${Date.now()}`);
             const texto = await respuesta.text();
@@ -495,24 +490,40 @@
             
             const nuevosProductos = [];
 
-            // Procesamos la hoja empezando en la fila 1 (saltamos cabecera)
+            // Empezamos en la fila 1 para saltar la cabecera
             for (let i = 1; i < lineas.length; i++) {
-                if (!lineas[i].trim()) continue;
+                const linea = lineas[i].trim();
+                if (!linea) continue;
 
-                // REGLA CLAVE: Expresión regular para separar por comas, ignorando las comas que estén dentro de comillas ""
-                const columnas = lineas[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)|([^",\s]+)/g) || lineas[i].split(',');
-                
-                // Limpiamos comillas sobrantes de cada columna mapeada
-                const c = columnas.map(col => col ? col.replace(/^"|"$|"/g, '').trim() : "");
+                // Parseador ultra-robusto celda por celda (ignora comas dentro de comillas y gestiona celdas vacías)
+                const columnas = [];
+                let dentroComillas = false;
+                let celdaActual = "";
 
-                if (c.length >= 3) { // Comprobación mínima de Nombre, Precio y Formato
+                for (let c = 0; c < linea.length; c++) {
+                    const char = linea[c];
+                    if (char === '"') {
+                        dentroComillas = !dentroComillas;
+                    } else if (char === ',' && !dentroComillas) {
+                        columnas.push(celdaActual.trim());
+                        celdaActual = "";
+                    } else {
+                        celdaActual += char;
+                    }
+                }
+                columnas.push(celdaActual.trim());
+
+                // Procesamos las columnas extraídas
+                if (columnas.length >= 3) {
                     const id = `p_${i}`;
-                    const nombre = c[0];
-                    const precio = parseFloat(c[1]);
-                    const formato = c[2].toLowerCase(); // 'kg' o 'ud'
-                    const cat = c[3] ? c[3] : "Otros productos";
-                    const icono = c[4] ? c[4] : "📦";
-                    const desc = c[5] ? c[5] : ""; // Evita el 'undefined' visual
+                    const nombre = columnas[0].replace(/^"|"$/g, '').trim();
+                    // Limpiamos comillas y cambiamos comas decimales por puntos por seguridad
+                    const precioTexto = columnas[1].replace(/^"|"$/g, '').replace(',', '.').trim();
+                    const precio = parseFloat(precioTexto);
+                    const formato = columnas[2].replace(/^"|"$/g, '').toLowerCase().trim(); // 'kg' o 'ud'
+                    const cat = columnas[3] ? columnas[3].replace(/^"|"$/g, '').trim() : "Otros productos";
+                    const icono = columnas[4] ? columnas[4].replace(/^"|"$/g, '').trim() : "📦";
+                    const desc = columnas[5] ? columnas[5].replace(/^"|"$/g, '').trim() : "";
 
                     if (nombre && !isNaN(precio)) {
                         nuevosProductos.push({
@@ -537,11 +548,11 @@
         }
     }
 
-    // ── RENDER CATÁLOGO (Usa el array dinámico generado desde Sheets) ──
+    // ── RENDER CATÁLOGO ──
     function renderizarCatalogo() {
         const cont = document.getElementById("contenedor-productos");
         if (productos.length === 0) {
-            cont.innerHTML = "El catálogo está vacío actualmente.";
+            cont.innerHTML = "<p style='text-align:center; color:#64748b;'>El catálogo está vacío actualmente.</p>";
             return;
         }
 
@@ -623,15 +634,12 @@
 
     function actualizarUI(id) {
         const item = carrito[id];
-        // Kilos
         const elKg = document.getElementById(`kg-${id}`);
         if (elKg) elKg.textContent = item ? item.kilos : 0;
 
-        // Piezas
         const elUd = document.getElementById(`ud-${id}`);
         if (elUd) elUd.textContent = item ? item.piezas : 0;
 
-        // Resumen inline en la tarjeta
         const resumen = document.getElementById(`resumen-${id}`);
         if (!item || (item.kilos === 0 && item.piezas === 0)) {
             resumen.style.display = "none";
@@ -698,7 +706,6 @@
         }
         if (!nombre) { alert("Por favor, escribe tu nombre."); return; }
         
-        // Validación estricta añadida: Teléfono de 9 cifras sin letras
         if (!/^[0-9]{9}$/.test(tlf)) { 
             alert("Por favor, introduce un número de teléfono válido de exactamente 9 dígitos."); 
             return; 
@@ -733,7 +740,6 @@
         window.open(urlWA, '_blank');
     }
 
-    // Asegurar que el input de teléfono solo acepte números al escribir
     document.getElementById('txtTelefono').addEventListener('input', function () {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
