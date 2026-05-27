@@ -246,11 +246,21 @@ function horas(){
 
 function wa(){
 
-    const mensaje =
-if (tipo === "🚘 Conductor"
-    msg += 'Hola, soy ${document.getElementById("nombre").value}. Voy a viajar desde ${obtenerValor("desde")} hasta ${obtenerValor("hasta")} el ${document.getElementById("fecha").value} a las ${document.getElementById("hora").value}. Si te interesa viajar conmigo, escríbeme.';
-if (tipo === "🙋 Pasajero"
-    msg += 'Hola, soy ${document.getElementById("nombre").value}. Quiero viajar desde ${obtenerValor("desde")} hasta ${obtenerValor("hasta")} el ${document.getElementById("fecha").value} a las ${document.getElementById("hora").value}. Si me puedes llevar, escríbeme.';
+    const tipo = document.getElementById("tipo").value;
+    const nombre = document.getElementById("nombre").value;
+    const desde = obtenerValor("desde");
+    const hasta = obtenerValor("hasta");
+    const fecha = document.getElementById("fecha").value;
+    const hora = document.getElementById("hora").value;
+
+    let mensaje = "";
+
+    if(tipo.includes("CONDUCTOR")){
+        mensaje = `Hola, soy ${nombre}. Voy a viajar desde ${desde} hasta ${hasta} el ${fecha} a las ${hora}. Si te interesa viajar conmigo, escríbeme.`;
+    } else {
+        mensaje = `Hola, soy ${nombre}. Busco viaje desde ${desde} hasta ${hasta} el ${fecha} a las ${hora}. Si tienes sitio, escríbeme.`;
+    }
+
     window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
