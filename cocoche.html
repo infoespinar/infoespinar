@@ -82,10 +82,12 @@ h2{
     border-radius:30px;
     font-weight:700;
     cursor:pointer;
+    font-size:15px;
 }
 
-.btn-disabled{
+.btn-publicar:disabled{
     opacity:0.6;
+    cursor:not-allowed;
 }
 
 /* FORM */
@@ -97,12 +99,26 @@ h2{
     margin-bottom:30px;
 }
 
-input,select{
+input, select{
     width:100%;
     padding:10px;
     margin-bottom:10px;
     border:1px solid #cbd5e1;
     border-radius:8px;
+    font-size:15px;
+    font-family:'Lato',sans-serif;
+    color:#334155;
+    background:#fff;
+}
+
+/* FIX: mostrar placeholder en input[type=date] cuando está vacío */
+input[type="date"]:not(:valid):not(:focus){
+    color:#94a3b8;
+}
+
+/* Algunos navegadores necesitan este truco adicional */
+input[type="date"].vacio{
+    color:#94a3b8;
 }
 
 .fila{
@@ -174,46 +190,51 @@ input,select{
 
 <div class="fila">
 <div>
-<select id="desde">
-<option value="">Desde</option>
-<option>El Espinar</option>
-<option>San Rafael</option>
-<option>LASR</option>
-<option>La Estación</option>
-<option>Madrid</option>
-<option>Segovia</option>
-<option>Ávila</option>
-<option value="Otro">Otro</option>
-</select>
-<input id="desdeOtro" class="oculto" placeholder="Escribe origen">
+    <!-- FIX: añadido onchange para mostrar/ocultar campo "Otro" -->
+    <select id="desde" onchange="mostrarOtro('desde')">
+        <option value="">Desde</option>
+        <option>El Espinar</option>
+        <option>San Rafael</option>
+        <option>LASR</option>
+        <option>La Estación</option>
+        <option>Madrid</option>
+        <option>Segovia</option>
+        <option>Ávila</option>
+        <option value="Otro">Otro</option>
+    </select>
+    <input id="desdeOtro" class="oculto" placeholder="Escribe origen">
 </div>
 
 <div>
-<select id="hasta">
-<option value="">Hasta</option>
-<option>El Espinar</option>
-<option>San Rafael</option>
-<option>LASR</option>
-<option>La Estación</option>
-<option>Madrid</option>
-<option>Segovia</option>
-<option>Ávila</option>
-<option value="Otro">Otro</option>
-</select>
-<input id="hastaOtro" class="oculto" placeholder="Escribe destino">
+    <!-- FIX: añadido onchange para mostrar/ocultar campo "Otro" -->
+    <select id="hasta" onchange="mostrarOtro('hasta')">
+        <option value="">Hasta</option>
+        <option>El Espinar</option>
+        <option>San Rafael</option>
+        <option>LASR</option>
+        <option>La Estación</option>
+        <option>Madrid</option>
+        <option>Segovia</option>
+        <option>Ávila</option>
+        <option value="Otro">Otro</option>
+    </select>
+    <input id="hastaOtro" class="oculto" placeholder="Escribe destino">
 </div>
 </div>
 
 <div class="fila">
-<input type="date" id="fecha">
-<select id="hora"></select>
+    <!-- FIX: añadido placeholder visible y clase para color gris cuando vacío -->
+    <input type="date" id="fecha" placeholder="Fecha"
+        onchange="this.classList.remove('vacio')"
+        class="vacio">
+    <select id="hora"></select>
 </div>
 
 <input id="nombre" placeholder="Nombre">
 <input id="telefono" placeholder="Teléfono" maxlength="9" inputmode="numeric" pattern="[0-9]{9}"
     oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,9)"
 >
-<button type="button" class="btn-publicar" onclick="wa()" id="btnWa">WhatsApp</button>
+<button type="button" class="btn-publicar" onclick="wa()">WhatsApp</button>
 <button class="btn-publicar" id="btnPub">PUBLICAR</button>
 
 </form>
@@ -228,56 +249,65 @@ input,select{
 const url = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
 
 function toggle(){
- document.getElementById("form").style.display =
- document.getElementById("form").style.display==="block"?"none":"block";
+    const f = document.getElementById("form");
+    f.style.display = f.style.display === "block" ? "none" : "block";
+}
+
+/* ===== MOSTRAR/OCULTAR CAMPO OTRO ===== */
+/* FIX: función que faltaba para que funcione el campo libre "Otro" */
+function mostrarOtro(id){
+    const sel = document.getElementById(id);
+    const input = document.getElementById(id + "Otro");
+    if(sel.value === "Otro"){
+        input.classList.remove("oculto");
+        input.focus();
+    } else {
+        input.classList.add("oculto");
+        input.value = "";
+    }
 }
 
 /* ===== OBTENER VALOR ===== */
 function obtenerValor(id){
- let v=document.getElementById(id).value;
- if(v==="Otro") v=document.getElementById(id+"Otro").value;
- return v;
+    let v = document.getElementById(id).value;
+    if(v === "Otro") v = document.getElementById(id + "Otro").value;
+    return v;
 }
 
-/* ===== HORAS ===== */
+/* ===== HORAS (FIX: empieza a las 08:00) ===== */
 function horas(){
- let h=document.getElementById("hora");
- h.innerHTML="";
- for(let i=0;i<24;i++){
-  for(let j=0;j<60;j+=15){
-   let v=`${String(i).padStart(2,'0')}:${String(j).padStart(2,'0')}`;
-   h.innerHTML+=`<option value="${v}">${v}</option>`;
-  }
- }
+    let h = document.getElementById("hora");
+    h.innerHTML = "";
+    for(let i = 8; i < 24; i++){          // <-- cambiado de 0 a 8
+        for(let j = 0; j < 60; j += 15){
+            let v = `${String(i).padStart(2,'0')}:${String(j).padStart(2,'0')}`;
+            h.innerHTML += `<option value="${v}">${v}</option>`;
+        }
+    }
 }
 
 /* ===== WHATSAPP ===== */
 function wa(){
-
-    const tipo = document.getElementById("tipo").value;
+    const tipo   = document.getElementById("tipo").value;
     const nombre = document.getElementById("nombre").value;
-    const desde = obtenerValor("desde");
-    const hasta = obtenerValor("hasta");
-    const fecha = document.getElementById("fecha").value;
-    const hora = document.getElementById("hora").value;
+    const desde  = obtenerValor("desde");
+    const hasta  = obtenerValor("hasta");
+    const fecha  = document.getElementById("fecha").value;
+    const hora   = document.getElementById("hora").value;
 
     let mensaje = "";
-
     if(tipo.includes("CONDUCTOR")){
         mensaje = `Hola, soy ${nombre}. Voy a viajar desde ${desde} hasta ${hasta} el ${fecha} a las ${hora}. Si te interesa viajar conmigo, escríbeme.`;
     } else {
         mensaje = `Hola, soy ${nombre}. Busco viaje desde ${desde} hasta ${hasta} el ${fecha} a las ${hora}. Si tienes sitio, escríbeme.`;
     }
-
     window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
 /* ===== TARJETA INSTANTÁNEA ===== */
 function crearTarjeta(v){
-
     const div = document.createElement("div");
     div.className = "card";
-
     div.innerHTML = `
         <div class="titulo">${v.tipo}</div>
         📍 ${v.desde} → ${v.hasta}<br>
@@ -286,67 +316,101 @@ function crearTarjeta(v){
         👤 ${v.nombre}<br>
         <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
     `;
-
     document.getElementById("grid").prepend(div);
 }
 
-/* ===== CARGAR ===== */
+/* ===== CARGAR (FIX: ordenar por fecha/hora más próxima) ===== */
 async function cargar(){
- let r=await fetch(url);
- let d=await r.json();
+    let r = await fetch(url);
+    let d = await r.json();
 
- document.getElementById("grid").innerHTML =
- d.map(v=>`
- <div class="card">
- <div class="titulo">${v.tipo}</div>
- 📍 ${v.desde} → ${v.hasta}<br>
- 📅 ${v.fecha}<br>
- ⏰ ${v.hora}<br>
- 👤 ${v.nombre}<br>
- <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
- </div>
- `).join("");
+    // Ordenar por fecha y hora más próxima a ahora
+    const ahora = new Date();
+    d.sort((a, b) => {
+        const fechaA = new Date(`${a.fecha}T${a.hora}`);
+        const fechaB = new Date(`${b.fecha}T${b.hora}`);
+        // Viajes pasados van al final; los futuros, por proximidad
+        const diffA = fechaA - ahora;
+        const diffB = fechaB - ahora;
+        if(diffA >= 0 && diffB >= 0) return diffA - diffB;   // ambos futuros: más próximo primero
+        if(diffA < 0 && diffB < 0)  return diffB - diffA;    // ambos pasados: más reciente primero
+        return diffA >= 0 ? -1 : 1;                           // futuros antes que pasados
+    });
+
+    document.getElementById("grid").innerHTML = d.map(v => `
+        <div class="card">
+            <div class="titulo">${v.tipo}</div>
+            📍 ${v.desde} → ${v.hasta}<br>
+            📅 ${v.fecha}<br>
+            ⏰ ${v.hora}<br>
+            👤 ${v.nombre}<br>
+            <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
+        </div>
+    `).join("");
 }
 
 /* ===== ENVIAR ===== */
 async function enviar(e){
- e.preventDefault();
+    e.preventDefault();
 
- const btn = document.getElementById("btnPub");
- const form = document.getElementById("form");
+    const desde = obtenerValor("desde");
+    const hasta = obtenerValor("hasta");
+    const fecha = document.getElementById("fecha").value;
 
- const payload={
-  tipo:document.getElementById("tipo").value,
-  desde:obtenerValor("desde"),
-  hasta:obtenerValor("hasta"),
-  fecha:document.getElementById("fecha").value,
-  hora:document.getElementById("hora").value,
-  nombre:document.getElementById("nombre").value,
-  telefono:document.getElementById("telefono").value
- };
+    // 1. Origen = destino
+    if(desde.trim().toLowerCase() === hasta.trim().toLowerCase()){
+        alert("El origen y el destino no pueden ser iguales.");
+        return;
+    }
 
- /* 🔥 INSTANTÁNEO */
- crearTarjeta(payload);
+    // FIX: parseo manual para evitar desfase UTC en la comparación de fechas
+    // new Date("2025-05-20") se interpreta como UTC medianoche → puede ser "ayer" en España
+    const [anyo, mes, dia] = fecha.split("-").map(Number);
+    const fechaViaje = new Date(anyo, mes - 1, dia);   // hora local, sin UTC
+    const hoy = new Date();
+    hoy.setHours(0, 0, 0, 0);
 
- /* UX */
- btn.disabled = true;
- btn.innerText = "Publicando...";
+    if(fechaViaje < hoy){
+        alert("No puedes publicar viajes con fecha anterior a hoy.");
+        return;
+    }
 
- form.style.display = "none";
+    const btn  = document.getElementById("btnPub");
+    const form = document.getElementById("form");
 
- await fetch(url,{method:"POST",body:JSON.stringify(payload)});
+    const payload = {
+        tipo:     document.getElementById("tipo").value,
+        desde:    obtenerValor("desde"),
+        hasta:    obtenerValor("hasta"),
+        hora:     String(document.getElementById("hora").value),
+        fecha:    String(document.getElementById("fecha").value),
+        nombre:   document.getElementById("nombre").value,
+        telefono: document.getElementById("telefono").value
+    };
 
- document.getElementById("formulario").reset();
+    /* Mostrar tarjeta inmediatamente */
+    crearTarjeta(payload);
 
- btn.disabled = false;
- btn.innerText = "PUBLICAR";
+    /* UX */
+    btn.disabled  = true;
+    btn.innerText = "Publicando...";
+    form.style.display = "none";
 
- cargar();
+    await fetch(url, { method: "POST", body: JSON.stringify(payload) });
+
+    document.getElementById("formulario").reset();
+    // Restaurar clase "vacio" en el campo fecha tras el reset
+    document.getElementById("fecha").classList.add("vacio");
+
+    btn.disabled  = false;
+    btn.innerText = "PUBLICAR";
+
+    cargar();
 }
 
 horas();
 cargar();
-setInterval(()=>cargar(),60000);
+setInterval(() => cargar(), 60000);
 
 </script>
 
