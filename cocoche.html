@@ -1,150 +1,500 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cocoche | infoespinar.com</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viajes Compartidos | infoespinar.com</title>
 
-        .header {
-            background: linear-gradient(135deg, #0ea5e9 0%, #3b82f6 100%);
-            color: white;
-            text-align: center;
-            padding: 25px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
 
-        .header-logo-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            text-decoration: none;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: background 0.2s, transform 0.2s;
-        }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
-        .header-logo-link:hover { background: rgba(255, 255, 255, 0.15); transform: translateY(-1px); }
-        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1 / 1; }
-        .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
-        
-        .main-container { max-width: 600px; margin: 0 auto; padding: 20px 12px; }
-        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; color: #0284c7; }
-        
-        .form-card { background: white; padding: 25px; border-radius: 14px; border: 1px solid #e2e8f0; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 14px; }
-        input, select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 16px; }
-        
-        .btn { display: block; width: 100%; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; text-align: center; margin-top: 15px; text-decoration: none; }
-        .btn-publicar { background-color: #0ea5e9; color: white; }
-        .btn-whatsapp { background-color: #25d366; color: white; }
-        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
-    </style>
+:root{
+    --menta:#20a088;
+    --fondo:#f4f6f9;
+}
+
+body{
+    font-family:'Lato',sans-serif;
+    background:var(--fondo);
+    color:#334155;
+    padding-bottom:50px;
+}
+
+.header{
+    background:var(--menta);
+    padding:15px 20px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.header-logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:white;
+}
+
+.header-bandera{
+    width:28px;
+    height:28px;
+    object-fit:cover;
+    border-radius:4px;
+}
+
+.header h1{
+    font-size:18px;
+    font-weight:900;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+}
+
+.contenedor-app{
+    max-width:900px;
+    margin:0 auto;
+    padding:20px;
+}
+
+h2.titulo-seccion{
+    text-align:center;
+    margin:20px 0 5px;
+    font-size:24px;
+    text-transform:uppercase;
+    color:#1e293b;
+}
+
+.aviso{
+    text-align:center;
+    color:#64748b;
+    font-size:12px;
+    margin-bottom:20px;
+}
+
+.btn-publicar{
+    display:block;
+    width:250px;
+    margin:0 auto 30px;
+    padding:14px;
+    background:var(--menta);
+    color:white;
+    border:none;
+    border-radius:30px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+#form{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    border:1px solid #e2e8f0;
+    margin-bottom:40px;
+    display:none;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    margin-bottom:12px;
+    border:1px solid #cbd5e1;
+    border-radius:8px;
+    font-family:inherit;
+}
+
+.grid-anuncios{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:20px;
+}
+
+.tarjeta{
+    background:white;
+    border-radius:12px;
+    border:1px solid #e2e8f0;
+    overflow:hidden;
+    padding:15px;
+}
+
+.titulo-tarjeta{
+    font-weight:900;
+    font-size:18px;
+    margin-bottom:10px;
+    color:#1e293b;
+}
+
+.descripcion{
+    font-size:14px;
+    color:#475569;
+    margin-bottom:15px;
+    line-height:1.5;
+    white-space:pre-line;
+}
+
+.burbujas{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.tag{
+    background:#f1f5f9;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:11px;
+    font-weight:700;
+    color:#475569;
+    border:1px solid #e2e8f0;
+}
+
+.btn-wa{
+    display:block;
+    width:100%;
+    text-align:center;
+    padding:10px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:700;
+    font-size:13px;
+    color:white;
+    background:#25d366;
+}
+
+.oculto{
+    display:none;
+}
+
+.fila{
+    display:flex;
+    gap:10px;
+}
+
+.fila > div{
+    flex:1;
+}
+
+@media(max-width:700px){
+    .fila{
+        flex-direction:column;
+    }
+}
+</style>
 </head>
+
 <body>
 
-    <header class="header">
-        <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera"> 
-            <h1>infoespinar.com</h1>
-        </a>
-    </header>
+<header class="header">
+    <a href="index.html" class="header-logo">
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
+        <h1>INFOESPINAR.COM</h1>
+    </a>
+</header>
 
-    <main class="main-container">
-        <h2 class="titulo-seccion-principal">Compartir Coche 🚗​</h2>
-        
-        <form class="form-card" id="formCocoche">
-            <div class="form-group">
-                <label>Tipo</label>
-                <select name="tipo" id="tipo">
-                    <option value="🚗 Conductor">🚗 Conductor/a</option>
-                    <option value="🙋​ Pasajero">🙋​ Pasajero/a</option>
-                </select>
+<div class="contenedor-app">
+
+    <h2 class="titulo-seccion">Viajes Compartidos</h2>
+
+    <p class="aviso">
+        * Comparte coche entre El Espinar, Segovia y Madrid.  
+        Los anuncios se eliminan automáticamente tras 20 días.
+    </p>
+
+    <button class="btn-publicar" onclick="toggleFormulario()">
+        ➕ PUBLICAR VIAJE
+    </button>
+
+    <div id="form">
+
+        <form id="publicarForm" onsubmit="enviar(event)">
+
+            <select id="tipo" required>
+                <option value="">¿Qué buscas?</option>
+                <option value="CONDUCTOR">Soy conductor</option>
+                <option value="PASAJERO">Soy pasajero</option>
+            </select>
+
+            <div class="fila">
+
+                <div>
+                    <select id="desde" required onchange="controlarOtro('desde')">
+                        <option value="">Desde</option>
+                        <option>El Espinar</option>
+                        <option>San Rafael</option>
+                        <option>LASR</option>
+                        <option>La Estación</option>
+                        <option>Segovia</option>
+                        <option>Madrid</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+
+                    <input type="text" id="desdeOtro" class="oculto" placeholder="Escribe origen">
+                </div>
+
+                <div>
+                    <select id="hasta" required onchange="controlarOtro('hasta')">
+                        <option value="">Hasta</option>
+                        <option>El Espinar</option>
+                        <option>San Rafael</option>
+                        <option>LASR</option>
+                        <option>La Estación</option>
+                        <option>Segovia</option>
+                        <option>Madrid</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+
+                    <input type="text" id="hastaOtro" class="oculto" placeholder="Escribe destino">
+                </div>
+
             </div>
 
-            <div class="form-group">
-                <label>Desde</label>
-                <select name="desde" id="desde" onchange="manejarOtro('desde')">
-                    <option value="El Espinar">El Espinar</option>
-                    <option value="San Rafael">San Rafael</option>
-                    <option value="LASR">LASR</option>
-                    <option value="La Estación">La Estación</option>
-                    <option value="Segovia">Segovia</option>
-                    <option value="Ávila">Ávila</option>
-                    <option value="Madrid">Madrid</option>
-                    <option value="Otro">Otro...</option>
-                </select>
-                <input type="text" id="input_desde" placeholder="Escribe el origen" style="display:none; margin-top:5px;">
+            <div class="fila">
+
+                <div>
+                    <input type="date" id="fecha" required>
+                </div>
+
+                <div>
+                    <select id="hora" required></select>
+                </div>
+
             </div>
 
-            <div class="form-group">
-                <label>Hasta</label>
-                <select name="hasta" id="hasta" onchange="manejarOtro('hasta')">
-                    <option value="El Espinar">El Espinar</option>
-                    <option value="San Rafael">San Rafael</option>
-                    <option value="LASR">LASR</option>
-                    <option value="La Estación">La Estación</option>
-                    <option value="Segovia">Segovia</option>
-                    <option value="Ávila">Ávila</option>
-                    <option value="Madrid">Madrid</option>
-                    <option value="Otro">Otro...</option>
-                </select>
-                <input type="text" id="input_hasta" placeholder="Escribe el destino" style="display:none; margin-top:5px;">
-            </div>
+            <input type="text" id="nombre" placeholder="Nombre" required>
 
-            <div class="form-group"><label>Fecha y Hora</label><input type="datetime-local" name="fechahora" id="fechahora" step:"900" required></div>
-            <div class="form-group"><label>Tu Nombre</label><input type="text" name="nombre" id="nombre" required></div>
-            <div class="form-group"><label>Tu Teléfono</label><input type="tel" name="telefono" id="telefono" placeholder="34600000000" required></div>
+            <input 
+                type="tel"
+                id="telefono"
+                placeholder="Teléfono (9 cifras)"
+                required
+                maxlength="9"
+                pattern="[0-9]{9}"
+                oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            >
 
-            <button type="button" class="btn btn-whatsapp" onclick="compartirWhatsApp()">Compartir en WhatsApp antes de publicar 💬</button>
-            <button type="submit" class="btn btn-publicar">Publicar en Web</button>
+            <button type="button" class="btn-publicar" style="width:100%;" onclick="previsualizarWhatsapp()">
+                📲 ENVIAR POR WHATSAPP
+            </button>
+
+            <button type="submit" id="btn" class="btn-publicar" style="width:100%; margin-top:10px;">
+                PUBLICAR VIAJE
+            </button>
+
         </form>
-    </main>
 
-    <footer class="footer">
-        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
-    </footer>
+    </div>
 
-    <script>
-        function manejarOtro(id) {
-            const select = document.getElementById(id);
-            const input = document.getElementById('input_' + id);
-            if (select.value === 'Otro') {
-                input.style.display = 'block';
-                input.required = true;
-                input.oninput = function() { select.value = input.value; };
-            } else {
-                input.style.display = 'none';
-                input.required = false;
-            }
+    <div id="loading" style="text-align:center; padding:40px; font-weight:700; color:#888;">
+        Cargando viajes...
+    </div>
+
+    <div id="tablon" class="grid-anuncios"></div>
+
+</div>
+
+<script>
+
+const urlScript = "TU_GOOGLE_SCRIPT_AQUI";
+
+function toggleFormulario(){
+
+    const form = document.getElementById('form');
+
+    if(form.style.display === 'block'){
+        form.style.display = 'none';
+    }else{
+        form.style.display = 'block';
+        form.scrollIntoView({behavior:'smooth'});
+    }
+}
+
+function controlarOtro(tipo){
+
+    const select = document.getElementById(tipo);
+    const otro = document.getElementById(tipo + "Otro");
+
+    if(select.value === "Otro"){
+        otro.classList.remove("oculto");
+        otro.required = true;
+    }else{
+        otro.classList.add("oculto");
+        otro.required = false;
+    }
+}
+
+function generarHoras(){
+
+    const hora = document.getElementById("hora");
+
+    for(let h = 0; h < 24; h++){
+
+        for(let m = 0; m < 60; m += 15){
+
+            const hh = String(h).padStart(2,'0');
+            const mm = String(m).padStart(2,'0');
+
+            const valor = `${hh}:${mm}`;
+
+            hora.innerHTML += `<option value="${valor}">${valor}</option>`;
         }
+    }
+}
 
-        function compartirWhatsApp() {
-            const t = document.getElementById("tipo").value;
-            const d = document.getElementById("desde").value;
-            const h = document.getElementById("hasta").value;
-            const f = document.getElementById("fechahora").value;
-            const n = document.getElementById("nombre").value;
-            if(!n) { alert("Escribe tu nombre primero"); return; }
-            const msg = `Hola, soy ${n} y ${t.includes('Conductor') ? 'ofrezco' : 'busco'} viaje:\nDesde: ${d}\nHasta: ${h}\nFecha: ${f}`;
-            window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-        }
+function obtenerValor(campo){
 
-        document.getElementById("formCocoche").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const url = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
-            fetch(url, { method: "POST", body: new FormData(this) })
-            .then(() => alert("¡Publicado con éxito!"))
-            .catch(err => alert("Error al publicar."));
-        });
-    </script>
+    const valor = document.getElementById(campo).value;
+
+    if(valor === "Otro"){
+        return document.getElementById(campo + "Otro").value;
+    }
+
+    return valor;
+}
+
+function validarRuta(){
+
+    const desde = obtenerValor("desde").trim().toLowerCase();
+    const hasta = obtenerValor("hasta").trim().toLowerCase();
+
+    if(desde === hasta){
+        alert("El origen y el destino no pueden coincidir.");
+        return false;
+    }
+
+    return true;
+}
+
+function construirMensaje(){
+
+    const tipo = document.getElementById("tipo").value;
+    const desde = obtenerValor("desde");
+    const hasta = obtenerValor("hasta");
+    const fecha = document.getElementById("fecha").value;
+    const hora = document.getElementById("hora").value;
+    const nombre = document.getElementById("nombre").value;
+    const telefono = document.getElementById("telefono").value;
+
+    return `🚗 VIAJE COMPARTIDO
+
+👤 Tipo: ${tipo}
+📍 Desde: ${desde}
+🏁 Hasta: ${hasta}
+📅 Fecha: ${fecha}
+⏰ Hora: ${hora}
+🙋 Nombre: ${nombre}
+📞 Teléfono: ${telefono}`;
+}
+
+function previsualizarWhatsapp(){
+
+    if(!validarRuta()) return;
+
+    const mensaje = construirMensaje();
+
+    const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
+
+    window.open(url, '_blank');
+}
+
+async function cargar(){
+
+    const res = await fetch(urlScript);
+    const data = await res.json();
+
+    document.getElementById('loading').style.display = 'none';
+
+    document.getElementById('tablon').innerHTML = data.reverse().map(a => `
+
+        <div class="tarjeta">
+
+            <div class="titulo-tarjeta">
+                ${a.tipo === 'CONDUCTOR' ? '🚘 CONDUCTOR' : '🧍 PASAJERO'}
+            </div>
+
+            <div class="descripcion">
+📍 ${a.desde} → ${a.hasta}
+
+📅 ${a.fecha}
+⏰ ${a.hora}
+
+🙋 ${a.nombre}
+            </div>
+
+            <div class="burbujas">
+                <span class="tag">${a.desde}</span>
+                <span class="tag">${a.hasta}</span>
+            </div>
+
+            <a 
+                href="https://wa.me/34${a.telefono}?text=${encodeURIComponent('Hola, he visto tu viaje publicado en infoespinar.com')}" 
+                class="btn-wa" 
+                target="_blank"
+            >
+                WHATSAPP
+            </a>
+
+        </div>
+
+    `).join('');
+}
+
+async function enviar(e){
+
+    e.preventDefault();
+
+    if(!validarRuta()) return;
+
+    const btn = document.getElementById('btn');
+
+    btn.disabled = true;
+    btn.innerText = "Publicando...";
+
+    const payload = {
+
+        tipo: document.getElementById("tipo").value,
+        desde: obtenerValor("desde"),
+        hasta: obtenerValor("hasta"),
+        fecha: document.getElementById("fecha").value,
+        hora: document.getElementById("hora").value,
+        nombre: document.getElementById("nombre").value,
+        telefono: document.getElementById("telefono").value
+
+    };
+
+    const res = await fetch(urlScript,{
+        method:"POST",
+        body:JSON.stringify(payload)
+    });
+
+    const json = await res.json();
+
+    if(json.resultado === "ok"){
+
+        alert("¡Viaje publicado!");
+
+        location.reload();
+
+    }else{
+
+        alert("Error al publicar.");
+
+        btn.disabled = false;
+        btn.innerText = "PUBLICAR VIAJE";
+    }
+}
+
+generarHoras();
+cargar();
+
+</script>
+
 </body>
 </html>
