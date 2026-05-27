@@ -500,15 +500,20 @@
             for (let i = 1; i < lineas.length; i++) {
                 if (!lineas[i].trim()) continue;
 
-                const columnas = lineas[i].split(',');
-                if (columnas.length >= 5) {
+                // REGLA CLAVE: Expresión regular para separar por comas, ignorando las comas que estén dentro de comillas ""
+                const columnas = lineas[i].match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)|([^",\s]+)/g) || lineas[i].split(',');
+                
+                // Limpiamos comillas sobrantes de cada columna mapeada
+                const c = columnas.map(col => col ? col.replace(/^"|"$|"/g, '').trim() : "");
+
+                if (c.length >= 3) { // Comprobación mínima de Nombre, Precio y Formato
                     const id = `p_${i}`;
-                    const nombre = columnas[0].replace(/"/g, '').trim();
-                    const precio = parseFloat(columnas[1].replace(/"/g, '').trim());
-                    const formato = columnas[2].replace(/"/g, '').toLowerCase().trim(); // 'kg' o 'ud'
-                    const cat = columnas[3] ? columnas[3].replace(/"/g, '').trim() : "Otros productos";
-                    const icono = columnas[4] ? columnas[4].replace(/"/g, '').trim() : "📦";
-                    const desc = columnas[5] ? columnas[5].replace(/"/g, '').trim() : "";
+                    const nombre = c[0];
+                    const precio = parseFloat(c[1]);
+                    const formato = c[2].toLowerCase(); // 'kg' o 'ud'
+                    const cat = c[3] ? c[3] : "Otros productos";
+                    const icono = c[4] ? c[4] : "📦";
+                    const desc = c[5] ? c[5] : ""; // Evita el 'undefined' visual
 
                     if (nombre && !isNaN(precio)) {
                         nuevosProductos.push({
