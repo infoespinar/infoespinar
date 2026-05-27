@@ -319,42 +319,50 @@ function crearTarjeta(v){
     document.getElementById("grid").prepend(div);
 }
 
-/* ===== CARGAR (FIX: ordenar por fecha/hora más próxima) ===== */
-async function cargar(){
-    let d;
-    try {
-        const r = await fetch(url, { redirect: "follow" });
-        d = await r.json();
-    } catch(err){
+/* ===== CARGAR con JSONP (evita bloqueo CORS de Apps Script) ===== */
+function cargar(){
+    const viejo = document.getElementById("jsonp-script");
+    if(viejo) viejo.remove();
+
+    const cb = "jsonpCb_" + Date.now();
+
+    window[cb] = function(d){
+        delete window[cb];
+
+        // Ordenar por fecha/hora más próxima a ahora
+        const ahora = new Date();
+        d.sort((a, b) => {
+            const fechaA = new Date(`${a.fecha}T${a.hora}`);
+            const fechaB = new Date(`${b.fecha}T${b.hora}`);
+            const diffA = fechaA - ahora;
+            const diffB = fechaB - ahora;
+            if(diffA >= 0 && diffB >= 0) return diffA - diffB;
+            if(diffA < 0  && diffB < 0)  return diffB - diffA;
+            return diffA >= 0 ? -1 : 1;
+        });
+
+        document.getElementById("grid").innerHTML = d.length === 0
+            ? `<p style="text-align:center;color:#64748b;grid-column:1/-1">No hay viajes publicados.</p>`
+            : d.map(v => `
+                <div class="card">
+                    <div class="titulo">${v.tipo}</div>
+                    📍 ${v.desde} → ${v.hasta}<br>
+                    📅 ${v.fecha}<br>
+                    ⏰ ${v.hora}<br>
+                    👤 ${v.nombre}<br>
+                    <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
+                </div>
+            `).join("");
+    };
+
+    const s = document.createElement("script");
+    s.id = "jsonp-script";
+    s.src = url + "?callback=" + cb;
+    s.onerror = function(){
         document.getElementById("grid").innerHTML =
-            `<p style="color:#ef4444;text-align:center">Error al cargar los viajes. Recarga la página.</p>`;
-        console.error("Error cargar:", err);
-        return;
-    }
-
-    // Ordenar por fecha y hora más próxima a ahora
-    const ahora = new Date();
-    d.sort((a, b) => {
-        const fechaA = new Date(`${a.fecha}T${a.hora}`);
-        const fechaB = new Date(`${b.fecha}T${b.hora}`);
-        // Viajes pasados van al final; los futuros, por proximidad
-        const diffA = fechaA - ahora;
-        const diffB = fechaB - ahora;
-        if(diffA >= 0 && diffB >= 0) return diffA - diffB;   // ambos futuros: más próximo primero
-        if(diffA < 0 && diffB < 0)  return diffB - diffA;    // ambos pasados: más reciente primero
-        return diffA >= 0 ? -1 : 1;                           // futuros antes que pasados
-    });
-
-    document.getElementById("grid").innerHTML = d.map(v => `
-        <div class="card">
-            <div class="titulo">${v.tipo}</div>
-            📍 ${v.desde} → ${v.hasta}<br>
-            📅 ${v.fecha}<br>
-            ⏰ ${v.hora}<br>
-            👤 ${v.nombre}<br>
-            <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
-        </div>
-    `).join("");
+            `<p style="color:#ef4444;text-align:center;grid-column:1/-1">Error al cargar los viajes. Recarga la página.</p>`;
+    };
+    document.body.appendChild(s);
 }
 
 /* ===== ENVIAR ===== */
