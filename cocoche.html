@@ -2,6 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
     <title>Viajes Compartidos | infoespinar.com</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
@@ -56,7 +58,9 @@
             <input id="hora" type="time">
             <input id="nombre" placeholder="Nombre" required>
             <input id="telefono" type="tel" placeholder="Teléfono" maxlength="9" required>
-            <button class="btn-publicar" type="submit">CONFIRMAR PUBLICACIÓN</button>
+            <button type="button" class="btn-publicar" style="background: #25d366;" onclick="enviarWhatsApp()">
+    💬 Compartir por WhatsApp</button>
+            <button class="btn-publicar" type="submit">PUBLICAR VIAJE</button>
         </form>
 
         <div id="grid">Cargando viajes...</div>
@@ -70,6 +74,38 @@
             f.style.display = (f.style.display === 'block') ? 'none' : 'block';
         }
 
+        
+        function enviarWhatsApp() {
+    const tipo = document.getElementById('tipo').value;
+    const nombre = document.getElementById('nombre').value;
+    const fecha = document.getElementById('fecha').value;
+    const hora = document.getElementById('hora').value;
+    
+    // Obtenemos los valores considerando el campo "Otro"
+    const desde = document.getElementById('desde').value === 'Otro' 
+                  ? document.getElementById('desdeOtro').value 
+                  : document.getElementById('desde').value;
+    const hasta = document.getElementById('hasta').value === 'Otro' 
+                  ? document.getElementById('hastaOtro').value 
+                  : document.getElementById('hasta').value;
+
+    // Validación básica
+    if (!nombre || !desde || !hasta || !fecha || !hora) {
+        alert("Por favor, rellena los campos antes de enviar el WhatsApp.");
+        return;
+    }
+
+    let mensaje = "";
+    if (tipo.includes("CONDUCTOR")) {
+        mensaje = `Hola, soy ${nombre}. Voy a viajar desde ${desde} hasta ${hasta} el ${fecha} a las ${hora}. Si te interesa viajar conmigo, escríbeme.`;
+    } else {
+        mensaje = `Hola, soy ${nombre}. Busco viaje desde ${desde} hasta ${hasta} el ${fecha} a las ${hora}. Si tienes sitio, escríbeme.`;
+    }
+
+    // Abrir WhatsApp
+    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
+}
+        
         function checkOtro(id) {
             const sel = document.getElementById(id);
             const input = document.getElementById(id + 'Otro');
