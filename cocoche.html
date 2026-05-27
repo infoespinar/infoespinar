@@ -22,7 +22,7 @@ body{
     padding-bottom:50px;
 }
 
-/* HEADER IGUAL SIMPLE */
+/* HEADER */
 .header{
     background:var(--menta);
     padding:15px 20px;
@@ -129,16 +129,6 @@ input,select{
     margin-bottom:10px;
 }
 
-.tag{
-    display:inline-block;
-    padding:4px 8px;
-    font-size:11px;
-    background:#f1f5f9;
-    border-radius:20px;
-    margin-top:8px;
-}
-
-/* WHATSAPP */
 .wa{
     display:block;
     margin-top:10px;
@@ -170,25 +160,24 @@ input,select{
 <button class="btn-publicar" onclick="toggle()">➕ PUBLICAR VIAJE</button>
 
 <div id="form">
-
-<form onsubmit="enviar(event)">
+<form id="formulario" onsubmit="enviar(event)">
 
 <select id="tipo">
 <option value="">Tipo</option>
-<option value="​🚘 CONDUCTOR">🚘​ Conductor</option>
-<option value="🙋​ PASAJERO">🙋​ Pasajero</option>
+<option value="🚘 CONDUCTOR">🚘 Conductor</option>
+<option value="🙋 PASAJERO">🙋 Pasajero</option>
 </select>
 
 <div class="fila">
 <div>
-<select id="desde" onchange="otro('desde')">
+<select id="desde">
 <option value="">Desde</option>
 <option>El Espinar</option>
 <option>San Rafael</option>
 <option>LASR</option>
 <option>La Estación</option>
 <option>Madrid</option>
-<option>Segoviar</option>
+<option>Segovia</option>
 <option>Ávila</option>
 <option value="Otro">Otro</option>
 </select>
@@ -196,14 +185,14 @@ input,select{
 </div>
 
 <div>
-<select id="hasta" onchange="otro('hasta')">
+<select id="hasta">
 <option value="">Hasta</option>
 <option>El Espinar</option>
 <option>San Rafael</option>
 <option>LASR</option>
 <option>La Estación</option>
 <option>Madrid</option>
-<option>Segoviar</option>
+<option>Segovia</option>
 <option>Ávila</option>
 <option value="Otro">Otro</option>
 </select>
@@ -223,7 +212,6 @@ input,select{
 <button class="btn-publicar">PUBLICAR</button>
 
 </form>
-
 </div>
 
 <div id="grid" class="grid"></div>
@@ -239,73 +227,73 @@ function toggle(){
  document.getElementById("form").style.display==="block"?"none":"block";
 }
 
-function otro(id){
- let sel=document.getElementById(id);
- document.getElementById(id+"Otro").style.display =
- sel.value==="Otro"?"block":"none";
+function obtenerValor(id){
+ let v=document.getElementById(id).value;
+ if(v==="Otro") v=document.getElementById(id+"Otro").value;
+ return v;
 }
 
 function horas(){
  let h=document.getElementById("hora");
+ h.innerHTML="";
  for(let i=0;i<24;i++){
   for(let j=0;j<60;j+=15){
    let v=`${String(i).padStart(2,'0')}:${String(j).padStart(2,'0')}`;
-   h.innerHTML+=`<option>${v}</option>`;
+   h.innerHTML+=`<option value="${v}">${v}</option>`;
   }
  }
 }
 
-function construirMensajeWhatsApp(){
+function wa(){
 
-    const tipo = document.getElementById("tipo").value;
-    const desde = obtenerValor("desde");
-    const hasta = obtenerValor("hasta");
-    const fecha = document.getElementById("fecha").value;
-    const hora = document.getElementById("hora").value;
-    const nombre = document.getElementById("nombre").value;
-    const telefono = document.getElementById("telefono").value;
+    const mensaje =
+`🚗 NUEVO VIAJE
 
-    return `🚗 NUEVO VIAJE
+📌 Tipo: ${document.getElementById("tipo").value}
+📍 De: ${obtenerValor("desde")}
+🏁 A: ${obtenerValor("hasta")}
+📅 Fecha: ${document.getElementById("fecha").value}
+⏰ Hora: ${document.getElementById("hora").value}
+👤 Nombre: ${document.getElementById("nombre").value}`;
 
-📌 Tipo: ${tipo}
-📍 De: ${desde}
-🏁 A: ${hasta}
-📅 Fecha: ${fecha}
-⏰ Hora: ${hora}
-👤 Nombre: ${nombre}`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(mensaje)}`, "_blank");
 }
 
 async function cargar(){
+
  let r=await fetch(url);
  let d=await r.json();
- document.getElementById("grid").innerHTML=
- d.map(=>`
+
+ document.getElementById("grid").innerHTML =
+ d.map(v=>`
  <div class="card">
  <div class="titulo">${v.tipo}</div>
  📍 ${v.desde} → ${v.hasta}<br>
  📅 ${v.fecha}<br>
  ⏰ ${v.hora}<br>
  👤 ${v.nombre}<br>
- <a class="wa" href="https://wa.me/34${v.telefono}">WhatsApp</a>
+ <a class="wa" href="https://wa.me/34${v.telefono}" target="_blank">WhatsApp</a>
  </div>
  `).join("");
+
 }
 
 async function enviar(e){
  e.preventDefault();
 
  let payload={
-  tipo:tipo.value,
-  desde:desde.value,
-  hasta:hasta.value,
-  fecha:fecha.value,
-  hora:hora.value,
-  nombre:nombre.value,
-  telefono:telefono.value
+  tipo:document.getElementById("tipo").value,
+  desde:obtenerValor("desde"),
+  hasta:obtenerValor("hasta"),
+  fecha:document.getElementById("fecha").value,
+  hora:document.getElementById("hora").value,
+  nombre:document.getElementById("nombre").value,
+  telefono:document.getElementById("telefono").value
  };
 
  await fetch(url,{method:"POST",body:JSON.stringify(payload)});
- form.reset();
+
+ document.getElementById("formulario").reset();
  cargar();
 }
 
