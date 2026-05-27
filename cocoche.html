@@ -71,6 +71,13 @@ h2.titulo-seccion{
     color:#1e293b;
 }
 
+.subtitulo{
+    text-align:center;
+    font-size:13px;
+    color:#64748b;
+    margin-bottom:20px;
+}
+
 .aviso{
     text-align:center;
     color:#64748b;
@@ -202,6 +209,7 @@ select{
 <div class="contenedor-app">
 
     <h2 class="titulo-seccion">Viajes Compartidos</h2>
+    <div class="subtitulo">Se muestran viajes de los últimos 7 días</div>
 
     <p class="aviso">
         * Comparte coche entre El Espinar, Segovia y Madrid.  
@@ -305,19 +313,12 @@ select{
 const urlScript = "https://script.google.com/macros/s/AKfycbynbarvkvs_ETBnocznNlrT_01uoSeQwRuPdddewPLfRcM3ZG9iuz0IQan291_Vj2ai/exec";
 
 function toggleFormulario(){
-
     const form = document.getElementById('form');
-
-    if(form.style.display === 'block'){
-        form.style.display = 'none';
-    }else{
-        form.style.display = 'block';
-        form.scrollIntoView({behavior:'smooth'});
-    }
+    form.style.display = (form.style.display === 'block') ? 'none' : 'block';
+    form.scrollIntoView({behavior:'smooth'});
 }
 
 function controlarOtro(tipo){
-
     const select = document.getElementById(tipo);
     const otro = document.getElementById(tipo + "Otro");
 
@@ -331,119 +332,118 @@ function controlarOtro(tipo){
 }
 
 function generarHoras(){
-
     const hora = document.getElementById("hora");
 
     for(let h = 0; h < 24; h++){
-
         for(let m = 0; m < 60; m += 15){
-
             const hh = String(h).padStart(2,'0');
             const mm = String(m).padStart(2,'0');
-
-            const valor = `${hh}:${mm}`;
-
-            hora.innerHTML += `<option value="${valor}">${valor}</option>`;
+            hora.innerHTML += `<option value="${hh}:${mm}">${hh}:${mm}</option>`;
         }
     }
 }
 
 function obtenerValor(campo){
-
     const valor = document.getElementById(campo).value;
-
     if(valor === "Otro"){
         return document.getElementById(campo + "Otro").value;
     }
-
     return valor;
 }
 
 function validarRuta(){
-
     const desde = obtenerValor("desde").trim().toLowerCase();
     const hasta = obtenerValor("hasta").trim().toLowerCase();
-
     if(desde === hasta){
         alert("El origen y el destino no pueden coincidir.");
         return false;
     }
-
     return true;
 }
 
+// 🔥 FILTRO 7 DÍAS
+function esReciente(fechaStr){
+
+    if(!fechaStr) return false;
+
+    const fecha = new Date(fechaStr);
+    const hoy = new Date();
+
+    const limite = new Date();
+    limite.setDate(hoy.getDate() - 7);
+
+    return fecha >= limite;
+}
+
 function construirMensaje(){
-
-    const tipo = document.getElementById("tipo").value;
-    const desde = obtenerValor("desde");
-    const hasta = obtenerValor("hasta");
-    const fecha = document.getElementById("fecha").value;
-    const hora = document.getElementById("hora").value;
-    const nombre = document.getElementById("nombre").value;
-    const telefono = document.getElementById("telefono").value;
-
     return `🚗 VIAJE COMPARTIDO
 
-👤 Tipo: ${tipo}
-📍 Desde: ${desde}
-🏁 Hasta: ${hasta}
-📅 Fecha: ${fecha}
-⏰ Hora: ${hora}
-🙋 Nombre: ${nombre}
-📞 Teléfono: ${telefono}`;
+👤 Tipo: ${document.getElementById("tipo").value}
+📍 Desde: ${obtenerValor("desde")}
+🏁 Hasta: ${obtenerValor("hasta")}
+📅 Fecha: ${document.getElementById("fecha").value}
+⏰ Hora: ${document.getElementById("hora").value}
+🙋 Nombre: ${document.getElementById("nombre").value}
+📞 Teléfono: ${document.getElementById("telefono").value}`;
 }
 
 function previsualizarWhatsapp(){
-
     if(!validarRuta()) return;
-
-    const mensaje = construirMensaje();
-
-    const url = `https://wa.me/?text=${encodeURIComponent(mensaje)}`;
-
-    window.open(url, '_blank');
+    window.open(`https://wa.me/?text=${encodeURIComponent(construirMensaje())}`, '_blank');
 }
 
 async function cargar(){
 
-    const res = await fetch(urlScript);
-    const data = await res.json();
+    try{
 
-    document.getElementById('loading').style.display = 'none';
+        const res = await fetch(urlScript);
+        const data = await res.json();
 
-    document.getElementById('tablon').innerHTML = data.reverse().map(a => `
+        document.getElementById('loading').style.display = 'none';
 
-        <div class="tarjeta">
+        if(!Array.isArray(data)){
+            document.getElementById('loading').innerText = "Error cargando viajes";
+            return;
+        }
 
-            <div class="titulo-tarjeta">
-                ${a.tipo === 'CONDUCTOR' ? '🚘 CONDUCTOR' : '🧍 PASAJERO'}
-            </div>
+        const filtrados = data.filter(esReciente).reverse();
 
-            <div class="descripcion">
+        document.getElementById('tablon').innerHTML = filtrados.map(a => `
+
+            <div class="tarjeta">
+
+                <div class="titulo-tarjeta">
+                    ${a.tipo === 'CONDUCTOR' ? '🚘 CONDUCTOR' : '🧍 PASAJERO'}
+                </div>
+
+                <div class="descripcion">
 📍 ${a.desde} → ${a.hasta}
 
 📅 ${a.fecha}
 ⏰ ${a.hora}
 
 🙋 ${a.nombre}
+                </div>
+
+                <div class="burbujas">
+                    <span class="tag">${a.desde}</span>
+                    <span class="tag">${a.hasta}</span>
+                </div>
+
+                <a class="btn-wa"
+                   href="https://wa.me/34${a.telefono}?text=${encodeURIComponent('Hola, he visto tu viaje publicado en infoespinar.com')}"
+                   target="_blank">
+                   WHATSAPP
+                </a>
+
             </div>
 
-            <div class="burbujas">
-                <span class="tag">${a.desde}</span>
-                <span class="tag">${a.hasta}</span>
-            </div>
+        `).join('');
 
-            <a 
-                href="https://wa.me/34${a.telefono}?text=${encodeURIComponent('Hola, he visto tu viaje publicado en infoespinar.com')}" 
-                class="btn-wa" 
-                target="_blank"
-            >
-                WHATSAPP
-            </a>
-
-        </div>
-
-    `).join('');
+    }catch(err){
+        console.error(err);
+        document.getElementById('loading').innerText = "Error cargando viajes";
+    }
 }
 
 async function enviar(e){
@@ -458,7 +458,6 @@ async function enviar(e){
     btn.innerText = "Publicando...";
 
     const payload = {
-
         tipo: document.getElementById("tipo").value,
         desde: obtenerValor("desde"),
         hasta: obtenerValor("hasta"),
@@ -466,7 +465,6 @@ async function enviar(e){
         hora: document.getElementById("hora").value,
         nombre: document.getElementById("nombre").value,
         telefono: document.getElementById("telefono").value
-
     };
 
     const res = await fetch(urlScript,{
@@ -480,7 +478,13 @@ async function enviar(e){
 
         alert("¡Viaje publicado!");
 
-        location.reload();
+        document.getElementById("form").style.display = "none";
+        document.getElementById("publicarForm").reset();
+
+        btn.disabled = false;
+        btn.innerText = "PUBLICAR VIAJE";
+
+        cargar();
 
     }else{
 
