@@ -331,14 +331,17 @@ async function cargar() {
         
         const ahora = new Date();
         d.sort((a, b) => {
-            const fechaA = new Date(`${a.fecha}T${a.hora}`);
-            const fechaB = new Date(`${b.fecha}T${b.hora}`);
-            const diffA = fechaA - ahora;
-            const diffB = fechaB - ahora;
-            if(diffA >= 0 && diffB >= 0) return diffA - diffB;
-            if(diffA < 0  && diffB < 0)  return diffB - diffA;
-            return diffA >= 0 ? -1 : 1;
-        });
+    // Función para convertir "dd-mm-yyyy" a formato fecha de JS
+    const parseFecha = (f, h) => {
+        const [d, m, y] = f.split("-");
+        return new Date(`${y}-${m}-${d}T${h}:00`);
+    };
+
+    const fechaA = parseFecha(a.fecha, a.hora);
+    const fechaB = parseFecha(b.fecha, b.hora);
+    
+    return fechaA - fechaB; // Orden cronológico simple
+});
 
         document.getElementById("grid").innerHTML = d.length === 0
             ? `<p style="text-align:center;color:#64748b;grid-column:1/-1">No hay viajes publicados.</p>`
