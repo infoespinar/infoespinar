@@ -10,7 +10,7 @@
         :root { --menta: #20a088; --fondo: #f4f6f9; }
         body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; padding-bottom: 50px; }
 
-        .header { background: var(--menta); padding: 15px 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .header { background: linear-gradient(135deg, #20a088 0%, #0d7a68 100%); padding: 15px 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
         .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; }
         .header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
@@ -50,7 +50,7 @@
 </header>
 
 <div class="contenedor-app">
-    <h2 class="titulo-seccion">Anuncios Particulares</h2>
+<h2 class="titulo-seccion" style="background: linear-gradient(135deg, #20a088 0%, #0d7a68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anuncios Particulares</h2>
     <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
     <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">➕ PUBLICAR ANUNCIO</button>
   
