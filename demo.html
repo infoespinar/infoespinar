@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Recogida</title>
+    <title>Formulario de Pedido - Frutería</title>
     <style>
-        /* Estilos base modernos y limpios */
         :root {
             --primary-color: #2563eb;
             --primary-hover: #1d4ed8;
@@ -33,7 +32,7 @@
             background-color: var(--form-bg);
             padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
             width: 100%;
             max-width: 450px;
         }
@@ -66,7 +65,6 @@
             border-radius: 6px;
             font-size: 1rem;
             box-sizing: border-box;
-            transition: border-color 0.2s, box-shadow 0.2s;
             background-color: #fff;
         }
 
@@ -77,6 +75,19 @@
             box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
         }
 
+        .price-badge {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 20px;
+            text-align: center;
+            display: none;
+        }
+
         .form-group .help-text {
             display: block;
             margin-top: 5px;
@@ -84,17 +95,16 @@
             color: #64748b;
         }
 
-        /* Estilo para los grupos del desplegable (Mañana / Tarde) */
         optgroup {
             font-weight: 700;
-            padding: 5px;
             background-color: #f1f5f9;
+            color: #1e293b;
         }
 
         optgroup option {
             font-weight: normal;
             background-color: #fff;
-            padding: 4px;
+            color: var(--text-color);
         }
 
         .btn-submit {
@@ -107,7 +117,6 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background-color 0.2s;
             margin-top: 10px;
         }
 
@@ -119,10 +128,24 @@
 <body>
 
     <div class="form-container">
-        <h2 class="form-title">Solicitud de Recogida</h2>
+        <h2 class="form-title">Pedido de Frutería</h2>
         
+        <div class="price-badge" id="precioContainer">
+            Selecciona un producto para ver el precio
+        </div>
+
         <form id="recogidaForm" action="#" method="POST">
             
+            <input type="hidden" id="precioFinal" name="precio_valor" value="0">
+            <input type="hidden" id="formatoFinal" name="precio_formato" value="">
+
+            <div class="form-group">
+                <label for="producto">Producto</label>
+                <select id="producto" name="producto" required disabled>
+                    <option value="" disabled selected>Cargando catálogo...</option>
+                </select>
+            </div>
+
             <div class="form-group">
                 <label for="telefono">Teléfono de Contacto</label>
                 <input 
@@ -136,20 +159,18 @@
                     placeholder="Ej: 612345678"
                     autocomplete="tel"
                 >
-                <span class="help-text">Introduce un número de 9 cifras sin espacios ni letras.</span>
+                <span class="help-text">Introduce un número de 9 cifras.</span>
             </div>
 
             <div class="form-group">
                 <label for="horario">Horario de Recogida</label>
                 <select id="horario" name="horario" required>
                     <option value="" disabled selected>Selecciona una franja horaria...</option>
-                    
                     <optgroup label="☀️ Turnos de Mañana">
                         <option value="manana_primera">09:00 - 11:00</option>
                         <option value="manana_media">11:00 - 13:00</option>
                         <option value="manana_ultima">13:00 - 15:00</option>
                     </optgroup>
-                    
                     <optgroup label="🌙 Turnos de Tarde">
                         <option value="tarde_primera">16:00 - 18:00</option>
                         <option value="tarde_media">18:00 - 20:00</option>
@@ -158,23 +179,124 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn-submit">Confirmar Recogida</button>
+            <button type="submit" class="btn-submit">Confirmar Pedido</button>
         </form>
     </div>
 
     <script>
-        const telefonoInput = document.getElementById('telefono');
+        // ⚠️ PEGA AQUÍ TU ENLACE EN FORMATO .CSV PUBLICADO DE GOOGLE SHEETS:
+        const SHEETS_CSV_URL = 'TU_ENLACE_DE_GOOGLE_SHEETS_AQUI';
 
-        // JavaScript para filtrar la entrada en tiempo real:
-        // Evita que se escriban letras, espacios o símbolos, dejando solo números.
-        telefonoInput.addEventListener('input', function (e) {
+        let listaProductos = []; 
+
+        async function cargarDatosDesdeSheets() {
+            const selectProducto = document.getElementById('producto');
+            
+            try {
+                const respuesta = await fetch(`${SHEETS_CSV_URL}&cacheBust=${Date.now()}`);
+                const texto = await respuesta.text();
+                
+                const lineas = texto.split(/\r?\n/);
+                
+                const categoriasAgrupadas = {
+                    "Frutas": [],
+                    "Verduras": [],
+                    "Productos locales": [],
+                    "Otros": []
+                };
+
+                listaProductos = []; 
+
+                for (let i = 1; i < lineas.length; i++) {
+                    if (!lineas[i].trim()) continue; 
+                    
+                    const columnas = lineas[i].split(',');
+                    
+                    if (columnas.length >= 3) {
+                        const nombreProducto = columnas[0].replace(/"/g, '').trim();
+                        const precioProducto = parseFloat(columnas[1].replace(/"/g, '').trim());
+                        const formatoProducto = columnas[2].replace(/"/g, '').toLowerCase().trim(); // 'kg' o 'ud'
+                        let catProducto = columnas[3] ? columnas[3].replace(/"/g, '').trim() : "Otros";
+
+                        if (nombreProducto && !isNaN(precioProducto)) {
+                            const nuevoProducto = { 
+                                nombre: nombreProducto, 
+                                precio: precioProducto, 
+                                formato: formatoProducto === 'ud' ? 'ud' : 'kg' // Por defecto si hay error será kg
+                            };
+                            listaProductos.push(nuevoProducto);
+
+                            if (categoriasAgrupadas[catProducto]) {
+                                categoriasAgrupadas[catProducto].push(nuevoProducto);
+                            } else {
+                                categoriasAgrupadas["Otros"].push(nuevoProducto);
+                            }
+                        }
+                    }
+                }
+
+                selectProducto.innerHTML = '<option value="" disabled selected>Selecciona un producto...</option>';
+
+                for (const [nombreCat, productos] of Object.entries(categoriasAgrupadas)) {
+                    if (productos.length > 0) {
+                        const grupoHTML = document.createElement('optgroup');
+                        grupoHTML.label = `📦 ${nombreCat.toUpperCase()}`;
+
+                        productos.forEach(p => {
+                            const option = document.createElement('option');
+                            option.value = p.nombre;
+                            option.textContent = p.nombre;
+                            grupoHTML.appendChild(option);
+                        });
+
+                        selectProducto.appendChild(grupoHTML);
+                    }
+                }
+                
+                selectProducto.disabled = false;
+
+            } catch (error) {
+                console.error("Error cargando el catálogo:", error);
+                selectProducto.innerHTML = '<option value="" disabled selected>Error al cargar productos</option>';
+            }
+        }
+
+        // Detectar cambio de producto para mostrar el precio dinámico por Kilo o Unidad
+        document.getElementById('producto').addEventListener('change', function() {
+            const productoSeleccionado = this.value;
+            const contenedorPrecio = document.getElementById('precioContainer');
+            const inputPrecioOculto = document.getElementById('precioFinal');
+            const inputFormatoOculto = document.getElementById('formatoFinal');
+            
+            const datosProducto = listaProductos.find(p => p.nombre === productoSeleccionado);
+            
+            if (datosProducto) {
+                const precioFormateado = datosProducto.precio.toFixed(2);
+                const textoFormato = datosProducto.formato === 'ud' ? 'ud' : 'kg';
+                
+                // Mostramos el precio adaptado dinámicamente al formato correcto
+                contenedorPrecio.style.display = 'block';
+                contenedorPrecio.innerHTML = `💰 Precio actual: <strong>${precioFormateado} € / ${textoFormato}</strong>`;
+                
+                // Guardamos los datos en los campos ocultos
+                inputPrecioOculto.value = precioFormateado;
+                inputFormatoOculto.value = textoFormato;
+            }
+        });
+
+        if(SHEETS_CSV_URL !== 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTm0lL1WLFBTYYOazW9aOmYBew467h2WyPFnbVsPFpOc197DJdTWZTbZgmSFSzhVNfMiSDBmTDFf1QO/pub?gid=0&single=true&output=csv') {
+            cargarDatosDesdeSheets();
+        }
+
+        // Validación estricta del teléfono
+        const telefonoInput = document.getElementById('telefono');
+        telefonoInput.addEventListener('input', function () {
             this.value = this.value.replace(/[^0-9]/g, '');
         });
 
-        // Validación extra antes de enviar el formulario
         document.getElementById('recogidaForm').addEventListener('submit', function (e) {
             if (telefonoInput.value.length !== 9) {
-                e.preventDefault(); // Detiene el envío
+                e.preventDefault();
                 alert('Por favor, introduce un número de teléfono válido de exactamente 9 dígitos.');
                 telefonoInput.focus();
             }
