@@ -108,11 +108,15 @@
         /* ── FOOTER ── */
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
 
-        /* ── BOTONES SCROLL ── */
-        .scroll-ctrl { position: fixed; bottom: 22px; right: 18px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
-        .scroll-btn { width: 40px; height: 40px; border-radius: 50%; background: #9f1239; border: none; color: #fff; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(159,18,57,0.4); transition: background 0.2s, transform 0.15s; }
-        .scroll-btn:hover { background: #e11d48; transform: scale(1.08); }
-        .scroll-btn.pausado { background: #475569; }
+        /* ── LIGHTBOX ── */
+        .lb-overlay { display: none; position: fixed; inset: 0; z-index: 1000; background: rgba(0,0,0,0.88); align-items: center; justify-content: center; cursor: zoom-out; backdrop-filter: blur(6px); }
+        .lb-overlay.abierto { display: flex; animation: lbFadeIn 0.2s ease; }
+        @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .lb-img { max-width: 92vw; max-height: 90vh; border-radius: 10px; box-shadow: 0 24px 80px rgba(0,0,0,0.6); object-fit: contain; cursor: default; animation: lbZoomIn 0.22s cubic-bezier(0.25,0.46,0.45,0.94); }
+        @keyframes lbZoomIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        .lb-cerrar { position: fixed; top: 18px; right: 22px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 22px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.18s; line-height: 1; }
+        .lb-cerrar:hover { background: rgba(255,255,255,0.25); }
+        .cartel-img-wrap { cursor: zoom-in; }
 
         @media (max-width: 500px) {
             .cartelera { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -169,9 +173,10 @@
     <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
 </footer>
 
-<div class="scroll-ctrl">
-    <button class="scroll-btn" id="btnScroll" title="Pausar / reanudar scroll">▶</button>
-    <button class="scroll-btn" id="btnTop" title="Volver arriba">↑</button>
+<!-- Lightbox -->
+<div class="lb-overlay" id="lb-overlay">
+    <button class="lb-cerrar" id="lb-cerrar">✕</button>
+    <img class="lb-img" id="lb-img" src="" alt="">
 </div>
 
 <script>
@@ -354,9 +359,15 @@ async function cargarEventos() {
 
         marquee.innerHTML = marqueeHTML ? marqueeHTML + marqueeHTML : "<span>No hay eventos próximos programados</span>";
 
-        document.querySelectorAll('.cartel').forEach(c => {
-            c.addEventListener('mouseenter', () => pausaHover = true);
-            c.addEventListener('mouseleave', () => pausaHover = false);
+        // Lightbox: clic en imagen → ver en grande
+        document.querySelectorAll('.cartel-img-wrap img').forEach(img => {
+            img.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                document.getElementById('lb-img').src = img.src;
+                document.getElementById('lb-overlay').classList.add('abierto');
+                document.body.style.overflow = 'hidden';
+            });
         });
 
     } catch (error) {
@@ -367,36 +378,15 @@ async function cargarEventos() {
 
 cargarEventos();
 
-// ── AUTOSCROLL CONTROL ────────────────────────────────────────────────────────
-let activo = true;
-let pausaHover = false;
-let pausaManual = false;
-let timerManual;
-const VEL = 0.6;
-
-(function loop() {
-    if (activo && !pausaHover && !pausaManual) {
-        const max = document.documentElement.scrollHeight - window.innerHeight;
-        if (max > 0) {
-            window.scrollY >= max ? window.scrollTo({ top: 0, behavior: 'instant' }) : window.scrollBy(0, VEL);
-        }
-    }
-    requestAnimationFrame(loop);
-})();
-
-window.addEventListener('wheel', () => {
-    pausaManual = true;
-    clearTimeout(timerManual);
-    timerManual = setTimeout(() => pausaManual = false, 2500);
-}, { passive: true });
-
-const btnScroll = document.getElementById('btnScroll');
-btnScroll.addEventListener('click', () => {
-    activo = !activo;
-    btnScroll.textContent = activo ? '▶' : '⏸';
-    btnScroll.classList.toggle('pausado', !activo);
-});
-document.getElementById('btnTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+// ── LIGHTBOX CONTROL ─────────────────────────────────────────────────────────
+function cerrarLightbox() {
+    document.getElementById('lb-overlay').classList.remove('abierto');
+    document.body.style.overflow = '';
+}
+document.getElementById('lb-overlay').addEventListener('click', cerrarLightbox);
+document.getElementById('lb-cerrar').addEventListener('click', (e) => { e.stopPropagation(); cerrarLightbox(); });
+document.getElementById('lb-img').addEventListener('click', (e) => e.stopPropagation());
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarLightbox(); });
 </script>
 
 </body>
