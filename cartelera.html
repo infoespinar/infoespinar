@@ -110,8 +110,7 @@
 </header>
 
 <div class="marquee-wrap">
-    <div class="marquee-inner" id="marquee-contenido">
-        </div>
+    <div class="marquee-inner" id="marquee-contenido"></div>
 </div>
 
 <main class="main-container">
@@ -142,31 +141,34 @@
 </div>
 
 <script>
-// ⚠️ PEGA AQUÍ TU ENLACE DE GOOGLE SHEETS EN FORMATO .CSV
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zpL_RCmFxrwSfn0XMZPIIUhM52uV0HxKY33cZ89XtE9dfrvDJ9HSqFiA61SjXHQoaMvfYDKx/pub?output=csv";
 
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
 function parseFecha(s) { 
-    if(!s) return new Date();
-    const [y,m,d] = s.split('-').map(Number); 
-    return new Date(y,m-1,d); 
+    if(!s || typeof s !== 'string') return new Date();
+    // Limpiar espacios raros por si acaso
+    const limpia = s.trim();
+    if(!limpia.includes('-')) return new Date();
+    
+    const [y,m,d] = limpia.split('-').map(Number); 
+    // Validar que los fragmentos procesados sean números válidos
+    if (isNaN(y) || isNaN(m) || isNaN(d)) return new Date();
+    
+    return new Date(y, m - 1, d); 
 }
 
-// Procesador simple para convertir CSV en un array de Objetos JavaScript
 function csvToObjects(csvText) {
     const lines = csvText.split(/\r?\n/);
     if (lines.length === 0) return [];
     
-    // Obtener cabeceras y limpiar espacios
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
     const result = [];
     
     for (let i = 1; i < lines.length; i++) {
         if (!lines[i].trim()) continue;
         
-        // Manejo básico de comillas por si hay comas dentro de los textos
         let currentLine = lines[i];
         let cells = [];
         let inQuotes = false;
@@ -184,11 +186,15 @@ function csvToObjects(csvText) {
         }
         cells.push(currentCell.trim());
         
-        // Crear objeto fila
+        // Control crítico: Si la fila no tiene título ni fecha real, ignorarla por completo (evita carteles vacíos)
+        const tituloIndex = headers.indexOf('titulo');
+        const fechaIndex = headers.indexOf('fecha');
+        if (tituloIndex !== -1 && (!cells[tituloIndex] || cells[tituloIndex] === '""')) continue;
+        
         const obj = {};
         headers.forEach((header, index) => {
             let val = cells[index] || '';
-            val = val.replace(/^"|"$/g, ''); // Limpiar comillas
+            val = val.replace(/^"|"$/g, '').trim(); 
             if (val === 'null' || val === '') val = null;
             obj[header] = val;
         });
@@ -197,7 +203,6 @@ function csvToObjects(csvText) {
     return result;
 }
 
-// Cargar y renderizar la web desde Sheets
 async function cargarEventos() {
     try {
         const respuesta = await fetch(SHEET_CSV_URL);
@@ -209,7 +214,7 @@ async function cargarEventos() {
         const hoy = new Date(); 
         hoy.setHours(0,0,0,0);
         
-        // Ordenar eventos cronológicamente
+        // Filtrar y ordenar eventos cronológicamente
         const ordenados = [...eventos].sort((a,b) => parseFecha(a.fecha) - parseFecha(b.fecha));
         let mesActual = null;
         let marqueeHTML = '';
@@ -219,12 +224,10 @@ async function cargarEventos() {
             const mesKey = `${fecha.getMonth()}-${fecha.getFullYear()}`;
             const pasado = fecha < hoy;
 
-            // Rellenar el texto de la marquesina de arriba (solo eventos futuros)
             if(!pasado) {
                 marqueeHTML += `<span>${ev.titulo}</span>`;
             }
 
-            // Separador de Meses en la cuadrícula
             if (mesActual !== mesKey) {
                 mesActual = mesKey;
                 const sep = document.createElement('div');
@@ -238,30 +241,35 @@ async function cargarEventos() {
             cartel.className = 'cartel' + (pasado ? ' pasado' : '');
             if (ev.url) { cartel.href = ev.url; cartel.target = '_blank'; cartel.rel = 'noopener'; }
 
+            // Sanitizar categoría por seguridad si está vacía
+            const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
+
             cartel.innerHTML = `
                 <div class="cartel-img-wrap">
-                    <img src="${ev.imagen}" alt="${ev.titulo}" loading="lazy">
+                    <img src="${ev.imagen || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80'}" alt="${ev.titulo}" loading="lazy">
                     <div class="cartel-overlay"></div>
                     <div class="cartel-fecha">
                         <span class="fecha-dia">${String(fecha.getDate()).padStart(2,'0')}</span>
                         <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
                     </div>
-                    <span class="cartel-cat cat-${ev.categoria}">${ev.categoria}</span>
+                    <span class="cartel-cat cat-${catClase}">${catClase}</span>
                     <div class="cartel-info">
                         <div class="cartel-titulo">${ev.titulo}</div>
-                        <div class="cartel-lugar">${ev.lugar}</div>
+                        <div class="cartel-lugar">${ev.lugar || 'El Espinar'}</div>
                     </div>
                     ${ev.url ? '<div class="cartel-link-icon">↗</div>' : ''}
                 </div>`;
             grid.appendChild(cartel);
         });
 
-        // Duplicar texto de la marquesina para el efecto infinito del CSS
-        marquee.innerHTML = marqueeHTML + marqueeHTML;
+        if(marqueeHTML) {
+            marquee.innerHTML = marqueeHTML + marqueeHTML;
+        } else {
+            marquee.innerHTML = "<span>No hay eventos próximos programados</span>";
+        }
 
-        // Activar pausas con hover en los nuevos carteles inyectados
+        // Eventos de hover arreglados sin líneas erróneas duplicadas
         document.querySelectorAll('.cartel').forEach(c => {
-            c.addEventListener('mouseenter', () =>pausaHover = true); // Corrección para scope global
             c.addEventListener('mouseenter', () => pausaHover = true);
             c.addEventListener('mouseleave', () => pausaHover = false);
         });
@@ -272,7 +280,6 @@ async function cargarEventos() {
     }
 }
 
-// Ejecutar carga al abrir la página
 cargarEventos();
 
 // ── AUTOSCROLL CONTROL ────────────────────────────────────────────────────────
@@ -285,7 +292,9 @@ const VEL = 0.6;
 (function loop() {
     if (activo && !pausaHover && !pausaManual) {
         const max = document.documentElement.scrollHeight - window.innerHeight;
-        window.scrollY >= max ? window.scrollTo({top:0,behavior:'instant'}) : window.scrollBy(0, VEL);
+        if(max > 0) {
+            window.scrollY >= max ? window.scrollTo({top:0,behavior:'instant'}) : window.scrollBy(0, VEL);
+        }
     }
     requestAnimationFrame(loop);
 })();
