@@ -39,42 +39,48 @@
         .mes-separador::before, .mes-separador::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
 
         /* ── CARTEL ── */
-        .cartel { position: relative; border-radius: 14px; overflow: hidden; text-decoration: none; color: #fff; display: block; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease; box-shadow: 0 4px 18px rgba(0,0,0,0.18); background: #1e293b; }
-        .cartel:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.28); }
+        .cartel { position: relative; border-radius: 14px; overflow: hidden; text-decoration: none; color: #334155; display: block; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease; box-shadow: 0 4px 18px rgba(0,0,0,0.12); background: #fff; }
+        .cartel:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.18); }
 
+        /* ── IMAGEN: limpia, sin overlays ── */
         .cartel-img-wrap { position: relative; aspect-ratio: 2/3; overflow: hidden; }
         .cartel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
         .cartel:hover img { transform: scale(1.06); }
-        .cartel-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, rgba(15,23,42,0.55) 58%, rgba(15,23,42,0.97) 100%); }
+
+        /* ── PANEL DE INFORMACIÓN (debajo de la imagen) ── */
+        .cartel-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
+
+        /* Fila superior: fecha + categoría */
+        .cartel-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
         /* Badge fecha */
-        .cartel-fecha { position: absolute; top: 12px; left: 12px; background: #9f1239; border-radius: 8px; padding: 6px 10px; text-align: center; line-height: 1.1; box-shadow: 0 2px 10px rgba(0,0,0,0.35); }
-        .fecha-dia { display: block; font-size: 22px; font-weight: 900; color: #fff; }
+        .cartel-fecha { background: #9f1239; border-radius: 8px; padding: 5px 10px; text-align: center; line-height: 1.1; flex-shrink: 0; }
+        .fecha-dia { display: block; font-size: 20px; font-weight: 900; color: #fff; }
         .fecha-mes { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #f0c060; }
 
         /* Badge categoría */
-        .cartel-cat { position: absolute; top: 12px; right: 12px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
-        .cat-musica    { color: #a78bfa; border-color: #a78bfa; background: rgba(167,139,250,0.15); }
-        .cat-cultura   { color: #34d399; border-color: #34d399; background: rgba(52,211,153,0.15); }
-        .cat-talleres  { color: #fb923c; border-color: #fb923c; background: rgba(251,146,60,0.15); }
-        .cat-fiestas   { color: #f472b6; border-color: #f472b6; background: rgba(244,114,182,0.15); }
-        .cat-deporte   { color: #38bdf8; border-color: #38bdf8; background: rgba(56,189,248,0.15); }
-        .cat-mercado   { color: #f0c060; border-color: #f0c060; background: rgba(240,192,96,0.15); }
+        .cartel-cat { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
+        .cat-musica    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
+        .cat-cultura   { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
+        .cat-talleres  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
+        .cat-fiestas   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
+        .cat-deporte   { color: #0284c7; border-color: #0284c7; background: rgba(2,132,199,0.08); }
+        .cat-mercado   { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.08); }
 
-        /* Info del cartel */
-        .cartel-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 14px 14px; }
-        .cartel-titulo { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.25; margin-bottom: 5px; color: #fff; }
-        .cartel-lugar { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+        /* Título y lugar */
+        .cartel-titulo { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; line-height: 1.3; color: #1e293b; }
+        .cartel-lugar { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
         .cartel-lugar::before { content: '📍 '; }
 
         /* Icono enlace externo */
-        .cartel-link-icon { position: absolute; bottom: 14px; right: 14px; width: 28px; height: 28px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; opacity: 0; transition: opacity 0.25s; }
+        .cartel-link-icon { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #334155; opacity: 0; transition: opacity 0.25s; backdrop-filter: blur(4px); }
         .cartel:hover .cartel-link-icon { opacity: 1; }
 
         /* Eventos pasados */
-        .cartel.pasado img { filter: grayscale(55%); }
-        .cartel.pasado .cartel-img-wrap::after { content: 'FINALIZADO'; position: absolute; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: rgba(255,255,255,0.45); }
+        .cartel.pasado img { filter: grayscale(60%); }
+        .cartel.pasado .cartel-img-wrap::after { content: 'FINALIZADO'; position: absolute; inset: 0; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: rgba(255,255,255,0.6); }
         .cartel.pasado .cartel-fecha { background: #475569; }
+        .cartel.pasado .cartel-titulo { color: #64748b; }
 
         /* ── BANNER PUBLICIDAD ── */
         .banner-comercio { width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 24px; }
@@ -148,14 +154,10 @@ const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct"
 
 function parseFecha(s) { 
     if(!s || typeof s !== 'string') return new Date();
-    // Limpiar espacios raros por si acaso
     const limpia = s.trim();
     if(!limpia.includes('-')) return new Date();
-    
     const [y,m,d] = limpia.split('-').map(Number); 
-    // Validar que los fragmentos procesados sean números válidos
     if (isNaN(y) || isNaN(m) || isNaN(d)) return new Date();
-    
     return new Date(y, m - 1, d); 
 }
 
@@ -186,7 +188,6 @@ function csvToObjects(csvText) {
         }
         cells.push(currentCell.trim());
         
-        // Control crítico: Si la fila no tiene título ni fecha real, ignorarla por completo (evita carteles vacíos)
         const tituloIndex = headers.indexOf('titulo');
         const fechaIndex = headers.indexOf('fecha');
         if (tituloIndex !== -1 && (!cells[tituloIndex] || cells[tituloIndex] === '""')) continue;
@@ -214,7 +215,6 @@ async function cargarEventos() {
         const hoy = new Date(); 
         hoy.setHours(0,0,0,0);
         
-        // Filtrar y ordenar eventos cronológicamente
         const ordenados = [...eventos].sort((a,b) => parseFecha(a.fecha) - parseFecha(b.fecha));
         let mesActual = null;
         let marqueeHTML = '';
@@ -241,23 +241,23 @@ async function cargarEventos() {
             cartel.className = 'cartel' + (pasado ? ' pasado' : '');
             if (ev.url) { cartel.href = ev.url; cartel.target = '_blank'; cartel.rel = 'noopener'; }
 
-            // Sanitizar categoría por seguridad si está vacía
             const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
 
             cartel.innerHTML = `
                 <div class="cartel-img-wrap">
                     <img src="${ev.imagen || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80'}" alt="${ev.titulo}" loading="lazy">
-                    <div class="cartel-overlay"></div>
-                    <div class="cartel-fecha">
-                        <span class="fecha-dia">${String(fecha.getDate()).padStart(2,'0')}</span>
-                        <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
-                    </div>
-                    <span class="cartel-cat cat-${catClase}">${catClase}</span>
-                    <div class="cartel-info">
-                        <div class="cartel-titulo">${ev.titulo}</div>
-                        <div class="cartel-lugar">${ev.lugar || 'El Espinar'}</div>
-                    </div>
                     ${ev.url ? '<div class="cartel-link-icon">↗</div>' : ''}
+                </div>
+                <div class="cartel-body">
+                    <div class="cartel-meta">
+                        <div class="cartel-fecha">
+                            <span class="fecha-dia">${String(fecha.getDate()).padStart(2,'0')}</span>
+                            <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
+                        </div>
+                        <span class="cartel-cat cat-${catClase}">${catClase}</span>
+                    </div>
+                    <div class="cartel-titulo">${ev.titulo}</div>
+                    <div class="cartel-lugar">${ev.lugar || 'El Espinar'}</div>
                 </div>`;
             grid.appendChild(cartel);
         });
@@ -268,7 +268,6 @@ async function cargarEventos() {
             marquee.innerHTML = "<span>No hay eventos próximos programados</span>";
         }
 
-        // Eventos de hover arreglados sin líneas erróneas duplicadas
         document.querySelectorAll('.cartel').forEach(c => {
             c.addEventListener('mouseenter', () => pausaHover = true);
             c.addEventListener('mouseleave', () => pausaHover = false);
