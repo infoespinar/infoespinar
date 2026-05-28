@@ -121,7 +121,7 @@
     <a href="mailto:info@infoespinar.com" class="banner-comercio">
         <div class="banner-info">
             <span class="banner-label">¿Organizas un evento?</span>
-            <h3 class="banner-nombre">¡Anúnciate aquí!</h3>
+            <h3 class="banner-nombre">¡Anúncialo Aquí!</h3>
         </div>
     </a>
 
@@ -261,7 +261,7 @@ async function cargarEventos() {
 
         // Activar pausas con hover en los nuevos carteles inyectados
         document.querySelectorAll('.cartel').forEach(c => {
-            c.addEventListener('mouseenter', () =>启用pausaHover = true); // Corrección para scope global
+            c.addEventListener('mouseenter', () =>pausaHover = true); // Corrección para scope global
             c.addEventListener('mouseenter', () => pausaHover = true);
             c.addEventListener('mouseleave', () => pausaHover = false);
         });
