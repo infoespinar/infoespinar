@@ -76,6 +76,10 @@
         .cat-fiestas   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
         .cat-deporte   { color: #0284c7; border-color: #0284c7; background: rgba(2,132,199,0.08); }
         .cat-mercado   { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.08); }
+        .cat-concierto { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
+        .cat-popular   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
+        .cat-teatro    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
+        .cat-infantil  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
 
         /* Título: Lato 700 — coherente con el resto */
         .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; }
@@ -182,10 +186,17 @@ const filtros = { categoria: null, lugar: null };
 function parseFecha(s) {
     if (!s || typeof s !== 'string') return new Date();
     const limpia = s.trim();
-    if (!limpia.includes('-')) return new Date();
-    const [y, m, d] = limpia.split('-').map(Number);
-    if (isNaN(y) || isNaN(m) || isNaN(d)) return new Date();
-    return new Date(y, m - 1, d);
+    // Formato DD/MM/YYYY (Google Sheets en español)
+    if (limpia.includes('/')) {
+        const [d, m, y] = limpia.split('/').map(Number);
+        if (!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y, m - 1, d);
+    }
+    // Formato YYYY-MM-DD (fallback)
+    if (limpia.includes('-')) {
+        const [y, m, d] = limpia.split('-').map(Number);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) return new Date(y, m - 1, d);
+    }
+    return new Date();
 }
 
 function csvToObjects(csvText) {
