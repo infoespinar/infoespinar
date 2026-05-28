@@ -10,28 +10,48 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
 
-        /* ── HEADER ── */
         .header { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
         .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s, transform 0.2s; }
         .header-logo-link:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
         .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
         .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
-        /* ── MARQUEE ── */
         .marquee-wrap { background: #9f1239; overflow: hidden; white-space: nowrap; padding: 7px 0; border-bottom: 2px solid #c9a84c; }
         .marquee-inner { display: inline-block; animation: marquee 32s linear infinite; }
         .marquee-inner span { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0 28px; color: #fff; opacity: 0.9; }
         .marquee-inner span::before { content: '★  '; color: #f0c060; }
         @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-        /* ── CONTENEDOR ── */
         .main-container { max-width: 1200px; margin: 0 auto; padding: 28px 12px 60px; }
 
-        /* ── TÍTULO SECCIÓN ── */
         .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 0 0 28px; text-transform: uppercase; color: #9f1239; }
 
+        /* ── BOTÓN PUBLICAR ── */
+        .btn-publicar { display: flex; align-items: center; gap: 6px; margin: 0 auto 20px; background: transparent; border: 1.5px solid #cbd5e1; color: #94a3b8; font-family: 'Lato', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 7px 16px; border-radius: 30px; cursor: pointer; transition: all 0.2s; }
+        .btn-publicar:hover { border-color: #9f1239; color: #9f1239; background: rgba(159,18,57,0.04); }
+        .btn-publicar-icon { font-size: 15px; }
+
+        /* ── BANNER PUBLICIDAD ── */
+        .banner-comercio { width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .banner-info { padding: 15px 20px; }
+        .banner-label { display: inline-block; background: #9f1239; color: #fff; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
+        .banner-nombre { color: white; font-size: 18px; font-weight: 700; margin: 0; }
+
+        /* ── FILTRAR (texto discreto) ── */
+        .filtrar-toggle-wrap { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+        .btn-filtrar { background: none; border: none; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #94a3b8; cursor: pointer; padding: 4px 0; display: flex; align-items: center; gap: 6px; transition: color 0.18s; }
+        .btn-filtrar:hover { color: #9f1239; }
+        .btn-filtrar.activo { color: #9f1239; }
+        .btn-filtrar-arrow { display: inline-block; transition: transform 0.22s; font-style: normal; font-size: 10px; }
+        .btn-filtrar.activo .btn-filtrar-arrow { transform: rotate(180deg); }
+
         /* ── FILTROS ── */
-        .filtros-wrap { background: #fff; border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); display: flex; flex-direction: column; gap: 12px; }
+        .filtros-wrap { background: #fff; border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); display: flex; flex-direction: column; gap: 12px;
+            overflow: hidden; max-height: 0; padding-top: 0; padding-bottom: 0; margin-bottom: 0;
+            transition: max-height 0.3s ease, padding 0.3s ease, margin-bottom 0.3s ease, opacity 0.3s ease;
+            opacity: 0; }
+        .filtros-wrap.visible { max-height: 300px; padding: 16px 18px; margin-bottom: 22px; opacity: 1; }
+
         .filtro-grupo { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
         .filtro-label { font-size: 10px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #94a3b8; padding-top: 5px; white-space: nowrap; min-width: 68px; }
         .filtro-pills { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -43,32 +63,25 @@
         /* ── GRID DE CARTELES ── */
         .cartelera { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
 
-        /* ── SEPARADOR DE MES ── */
         .mes-separador { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; margin-top: 10px; }
         .mes-separador span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #9f1239; white-space: nowrap; }
         .mes-separador::before, .mes-separador::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
 
-        /* ── CARTEL ── */
         .cartel { position: relative; border-radius: 14px; overflow: hidden; text-decoration: none; color: #334155; display: block; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease; box-shadow: 0 4px 18px rgba(0,0,0,0.12); background: #fff; }
         .cartel:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.18); }
         .cartel.oculto { display: none; }
 
-        /* ── IMAGEN: limpia, sin overlays ── */
-        .cartel-img-wrap { position: relative; aspect-ratio: 2/3; overflow: hidden; }
+        .cartel-img-wrap { position: relative; aspect-ratio: 2/3; overflow: hidden; cursor: zoom-in; }
         .cartel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
         .cartel:hover img { transform: scale(1.06); }
 
-        /* ── PANEL DE INFORMACIÓN ── */
         .cartel-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
-
         .cartel-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
-        /* Badge fecha */
         .cartel-fecha { background: #9f1239; border-radius: 8px; padding: 5px 10px; text-align: center; line-height: 1.1; flex-shrink: 0; }
         .fecha-dia { display: block; font-size: 20px; font-weight: 900; color: #fff; }
         .fecha-mes { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #f0c060; }
 
-        /* Badge categoría */
         .cartel-cat { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
         .cat-musica    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
         .cat-cultura   { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
@@ -81,33 +94,20 @@
         .cat-teatro    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
         .cat-infantil  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
 
-        /* Título: Lato 700 — coherente con el resto */
         .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; }
         .cartel-lugar { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
         .cartel-lugar::before { content: '📍 '; }
         .cartel-web { font-style: normal; font-size: 12px; margin-left: 4px; opacity: 0.7; }
 
-        /* Panel inferior como enlace */
         .cartel-body--link { text-decoration: none; display: flex; flex-direction: column; gap: 6px; transition: background 0.18s; }
         .cartel-body--link:hover { background: #fdf2f4; }
         .cartel-body--link:hover .cartel-titulo { color: #9f1239; }
 
-        /* Icono enlace externo */
         .cartel-link-icon { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #334155; opacity: 0; transition: opacity 0.25s; backdrop-filter: blur(4px); }
         .cartel:hover .cartel-link-icon { opacity: 1; }
 
-        /* Eventos pasados — no se muestran, CSS mantenido por si se reactiva */
-
-        /* ── BANNER PUBLICIDAD ── */
-        .banner-comercio { width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 24px; }
-        .banner-info { padding: 15px 20px; }
-        .banner-label { display: inline-block; background: #9f1239; color: #fff; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
-        .banner-nombre { color: white; font-size: 18px; font-weight: 700; margin: 0; }
-
-        /* ── DISCLAIMER ── */
         .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
 
-        /* ── FOOTER ── */
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
 
         /* ── LIGHTBOX ── */
@@ -118,12 +118,6 @@
         @keyframes lbZoomIn { from { transform: scale(0.92); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         .lb-cerrar { position: fixed; top: 18px; right: 22px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-size: 22px; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.18s; line-height: 1; }
         .lb-cerrar:hover { background: rgba(255,255,255,0.25); }
-        .cartel-img-wrap { cursor: zoom-in; }
-
-        /* ── BOTÓN PUBLICAR EVENTO ── */
-        .btn-publicar { display: flex; align-items: center; gap: 8px; margin: 0 auto 24px; background: #fff; border: 1.5px solid #e2e8f0; color: #64748b; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 18px; border-radius: 30px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .btn-publicar:hover { border-color: #9f1239; color: #9f1239; box-shadow: 0 4px 14px rgba(159,18,57,0.12); }
-        .btn-publicar-icon { font-size: 15px; }
 
         /* ── MODAL FORMULARIO ── */
         .modal-overlay { display: none; position: fixed; inset: 0; z-index: 900; background: rgba(15,23,42,0.7); align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(4px); }
@@ -143,7 +137,6 @@
         .form-input::placeholder { color: #cbd5e1; }
         .form-hint { font-size: 11px; color: #94a3b8; }
 
-        /* Upload imagen */
         .img-upload-area { border: 2px dashed #e2e8f0; border-radius: 10px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.2s; background: #f8fafc; position: relative; }
         .img-upload-area:hover, .img-upload-area.drag { border-color: #9f1239; background: #fdf2f4; }
         .img-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
@@ -156,7 +149,6 @@
         .img-status.err { color: #dc2626; }
         .img-status.loading { color: #9f1239; }
 
-        /* Submit */
         .btn-submit { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: #fff; border: none; border-radius: 10px; padding: 13px; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 900; letter-spacing: 0.5px; cursor: pointer; transition: opacity 0.2s, transform 0.15s; text-transform: uppercase; }
         .btn-submit:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
         .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -192,6 +184,9 @@
 
     <h2 class="titulo-seccion-principal">Cartelera de Eventos</h2>
 
+    <!-- BOTÓN PUBLICAR — encima del banner -->
+    <button class="btn-publicar" id="btn-publicar"> Publica Tu Evento </button>
+
     <a href="mailto:info@infoespinar.com" class="banner-comercio">
         <div class="banner-info">
             <span class="banner-label">¿Organizas un evento?</span>
@@ -199,10 +194,15 @@
         </div>
     </a>
 
-    <button class="btn-publicar" id="btn-publicar">Publicar Evento</button>
+    <!-- Botón "Filtrar" discreto -->
+    <div class="filtrar-toggle-wrap">
+        <button class="btn-filtrar" id="btn-filtrar">
+            ⚙ Filtrar <i class="btn-filtrar-arrow">▾</i>
+        </button>
+    </div>
 
-    <!-- Filtros rápidos — se rellenan dinámicamente -->
-    <div class="filtros-wrap" id="filtros-wrap" style="display:none;">
+    <!-- Panel de filtros: oculto por defecto -->
+    <div class="filtros-wrap" id="filtros-wrap">
         <div class="filtro-grupo">
             <span class="filtro-label">Categoría</span>
             <div class="filtro-pills" id="pills-categoria"></div>
@@ -303,18 +303,15 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zp
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
-// Estado de filtros activos
 const filtros = { categoria: null, lugar: null };
 
 function parseFecha(s) {
     if (!s || typeof s !== 'string') return new Date();
     const limpia = s.trim();
-    // Formato DD/MM/YYYY (Google Sheets en español)
     if (limpia.includes('/')) {
         const [d, m, y] = limpia.split('/').map(Number);
         if (!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y, m - 1, d);
     }
-    // Formato YYYY-MM-DD (fallback)
     if (limpia.includes('-')) {
         const [y, m, d] = limpia.split('-').map(Number);
         if (!isNaN(y) && !isNaN(m) && !isNaN(d)) return new Date(y, m - 1, d);
@@ -349,7 +346,6 @@ function csvToObjects(csvText) {
     return result;
 }
 
-// Aplica los filtros activos: muestra/oculta carteles y separadores de mes
 function aplicarFiltros() {
     const carteles = document.querySelectorAll('.cartel');
     carteles.forEach(c => {
@@ -357,17 +353,13 @@ function aplicarFiltros() {
         const lugOk = !filtros.lugar    || c.dataset.lugar === filtros.lugar;
         c.classList.toggle('oculto', !(catOk && lugOk));
     });
-
-    // Ocultar separadores de mes que no tengan ningún cartel visible
     const separadores = document.querySelectorAll('.mes-separador');
     separadores.forEach(sep => {
-        // Recorre los elementos siguientes hasta el próximo separador
         let siguiente = sep.nextElementSibling;
         let tieneVisibles = false;
         while (siguiente && !siguiente.classList.contains('mes-separador')) {
             if (siguiente.classList.contains('cartel') && !siguiente.classList.contains('oculto')) {
-                tieneVisibles = true;
-                break;
+                tieneVisibles = true; break;
             }
             siguiente = siguiente.nextElementSibling;
         }
@@ -375,7 +367,6 @@ function aplicarFiltros() {
     });
 }
 
-// Crea las píldoras de filtro para un grupo
 function crearPills(containerId, tipo, valores) {
     const container = document.getElementById(containerId);
     const todos = document.createElement('button');
@@ -388,7 +379,6 @@ function crearPills(containerId, tipo, valores) {
         aplicarFiltros();
     });
     container.appendChild(todos);
-
     valores.forEach(val => {
         const pill = document.createElement('button');
         pill.className = 'filtro-pill';
@@ -402,6 +392,14 @@ function crearPills(containerId, tipo, valores) {
         container.appendChild(pill);
     });
 }
+
+// Toggle filtros
+const btnFiltrar = document.getElementById('btn-filtrar');
+const filtrosWrap = document.getElementById('filtros-wrap');
+btnFiltrar.addEventListener('click', () => {
+    const abierto = filtrosWrap.classList.toggle('visible');
+    btnFiltrar.classList.toggle('activo', abierto);
+});
 
 async function cargarEventos() {
     try {
@@ -420,7 +418,6 @@ async function cargarEventos() {
         let mesActual = null;
         let marqueeHTML = '';
 
-        // Recopilar valores únicos para los filtros
         const categorias = [...new Set(ordenados.map(ev => ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura').filter(Boolean))];
         const lugares    = [...new Set(ordenados.map(ev => ev.lugar || 'El Espinar').filter(Boolean))];
 
@@ -440,8 +437,6 @@ async function cargarEventos() {
                 grid.appendChild(sep);
             }
 
-            // El cartel es siempre un div — la imagen va al lightbox,
-            // el panel de info es el enlace si hay URL
             const cartel = document.createElement('div');
             cartel.className = 'cartel';
             cartel.dataset.cat   = catClase;
@@ -468,18 +463,22 @@ async function cargarEventos() {
             grid.appendChild(cartel);
         });
 
-        // Construir filtros sólo si hay más de un valor en cada grupo
+        // Solo mostrar filtros si hay variedad
         if (categorias.length > 1 || lugares.length > 1) {
-            document.getElementById('filtros-wrap').style.display = '';
             if (categorias.length > 1) crearPills('pills-categoria', 'categoria', categorias);
             else document.querySelector('.filtro-grupo:first-child').style.display = 'none';
             if (lugares.length > 1) crearPills('pills-lugar', 'lugar', lugares);
-            else document.querySelector('.filtros-divider').style.display = 'none', document.querySelector('.filtro-grupo:last-child').style.display = 'none';
+            else {
+                document.querySelector('.filtros-divider').style.display = 'none';
+                document.querySelector('.filtro-grupo:last-child').style.display = 'none';
+            }
+        } else {
+            // Ocultar el toggle si no hay filtros útiles
+            document.querySelector('.filtrar-toggle-wrap').style.display = 'none';
         }
 
         marquee.innerHTML = marqueeHTML ? marqueeHTML + marqueeHTML : "<span>No hay eventos próximos programados</span>";
 
-        // Lightbox: clic en imagen → ver en grande
         document.querySelectorAll('.cartel-img-wrap img').forEach(img => {
             img.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -498,10 +497,9 @@ async function cargarEventos() {
 
 cargarEventos();
 
-// ── FORMULARIO PUBLICAR EVENTO ───────────────────────────────────────────────
-// ⚠️ REEMPLAZA estas dos constantes con tus valores reales:
+// ── FORMULARIO ────────────────────────────────────────────────────────────────
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVCNJEtMhq8Q-YK1QtY4kM0HSDzLMuTTWS2PCTCWi5qb7pFv7KnrIUt2CH1WnPGygB/exec';
-const IMGBB_API_KEY   = '889d9ccbbcd91efdb92e1cdaee18b11d'; // obtén la tuya gratis en imgbb.com/api
+const IMGBB_API_KEY   = '889d9ccbbcd91efdb92e1cdaee18b11d';
 
 const modalOverlay = document.getElementById('modal-overlay');
 
@@ -511,14 +509,13 @@ document.getElementById('btn-publicar').addEventListener('click', () => {
 });
 document.getElementById('modal-cerrar').addEventListener('click', cerrarModal);
 modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) cerrarModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { cerrarModal(); cerrarLightbox(); } });
 
 function cerrarModal() {
     modalOverlay.classList.remove('abierto');
     document.body.style.overflow = '';
 }
 
-// Vista previa de imagen
 const inputImg = document.getElementById('f-imagen');
 inputImg.addEventListener('change', () => {
     const file = inputImg.files[0];
@@ -532,7 +529,6 @@ inputImg.addEventListener('change', () => {
     reader.readAsDataURL(file);
 });
 
-// Drag & drop visual
 const uploadArea = document.getElementById('upload-area');
 uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag'); });
 uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag'));
@@ -542,17 +538,13 @@ uploadArea.addEventListener('drop', (e) => {
     if (e.dataTransfer.files[0]) { inputImg.files = e.dataTransfer.files; inputImg.dispatchEvent(new Event('change')); }
 });
 
-// Subir imagen a ImgBB y obtener URL
 async function subirImagen(file) {
     const status = document.getElementById('img-status');
     status.textContent = 'Subiendo imagen…';
     status.className = 'img-status loading';
     const formData = new FormData();
     formData.append('image', file);
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-        method: 'POST',
-        body: formData
-    });
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
     const data = await res.json();
     if (data.success) {
         status.textContent = '✓ Imagen subida correctamente';
@@ -565,7 +557,6 @@ async function subirImagen(file) {
     }
 }
 
-// Envío del formulario
 document.getElementById('btn-submit').addEventListener('click', async () => {
     const titulo    = document.getElementById('f-titulo').value.trim();
     const fecha     = document.getElementById('f-fecha').value;
@@ -583,24 +574,18 @@ document.getElementById('btn-submit').addEventListener('click', async () => {
     btn.disabled = true;
     btn.textContent = 'Enviando…';
 
-    // Convertir fecha de YYYY-MM-DD a DD/MM/YYYY para el Sheet
     const [y, m, d] = fecha.split('-');
     const fechaSheet = `${d}/${m}/${y}`;
 
-    // Subir imagen si hay una
     let imagenUrl = '';
-    if (file) {
-        imagenUrl = await subirImagen(file) || '';
-    }
+    if (file) imagenUrl = await subirImagen(file) || '';
 
     try {
         await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
+            method: 'POST', mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ titulo, fecha: fechaSheet, lugar, categoria, url: url || '', imagen: imagenUrl })
         });
-        // no-cors no devuelve respuesta legible, asumimos éxito si no hay excepción
         document.getElementById('modal-body').querySelectorAll('.form-group, .btn-submit, .form-aviso').forEach(el => el.style.display = 'none');
         document.getElementById('form-ok').style.display = 'flex';
     } catch (err) {
@@ -609,6 +594,7 @@ document.getElementById('btn-submit').addEventListener('click', async () => {
         btn.textContent = 'Enviar para revisión';
     }
 });
+
 function cerrarLightbox() {
     document.getElementById('lb-overlay').classList.remove('abierto');
     document.body.style.overflow = '';
@@ -616,7 +602,6 @@ function cerrarLightbox() {
 document.getElementById('lb-overlay').addEventListener('click', cerrarLightbox);
 document.getElementById('lb-cerrar').addEventListener('click', (e) => { e.stopPropagation(); cerrarLightbox(); });
 document.getElementById('lb-img').addEventListener('click', (e) => e.stopPropagation());
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarLightbox(); });
 </script>
 
 </body>
