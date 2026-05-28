@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartelera de Eventos | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:wght@700;900&display=swap');
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
+
+        /* ── HEADER ── */
+        .header { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s, transform 0.2s; }
+        .header-logo-link:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; }
+        .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        /* ── MARQUEE ── */
+        .marquee-wrap { background: #9f1239; overflow: hidden; white-space: nowrap; padding: 7px 0; border-bottom: 2px solid #c9a84c; }
+        .marquee-inner { display: inline-block; animation: marquee 32s linear infinite; }
+        .marquee-inner span { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 0 28px; color: #fff; opacity: 0.9; }
+        .marquee-inner span::before { content: '★  '; color: #f0c060; }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* ── CONTENEDOR ── */
+        .main-container { max-width: 1200px; margin: 0 auto; padding: 28px 12px 60px; }
+
+        /* ── TÍTULO SECCIÓN ── */
+        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 0 0 28px; text-transform: uppercase; color: #9f1239; }
+
+        /* ── GRID DE CARTELES ── */
+        .cartelera { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+
+        /* ── SEPARADOR DE MES ── */
+        .mes-separador { grid-column: 1 / -1; display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+        .mes-separador span { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #9f1239; white-space: nowrap; }
+        .mes-separador::before, .mes-separador::after { content: ''; flex: 1; height: 1px; background: #e2e8f0; }
+
+        /* ── CARTEL ── */
+        .cartel { position: relative; border-radius: 14px; overflow: hidden; text-decoration: none; color: #fff; display: block; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease; box-shadow: 0 4px 18px rgba(0,0,0,0.18); background: #1e293b; }
+        .cartel:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.28); }
+
+        .cartel-img-wrap { position: relative; aspect-ratio: 2/3; overflow: hidden; }
+        .cartel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
+        .cartel:hover img { transform: scale(1.06); }
+        .cartel-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 30%, rgba(15,23,42,0.55) 58%, rgba(15,23,42,0.97) 100%); }
+
+        /* Badge fecha */
+        .cartel-fecha { position: absolute; top: 12px; left: 12px; background: #9f1239; border-radius: 8px; padding: 6px 10px; text-align: center; line-height: 1.1; box-shadow: 0 2px 10px rgba(0,0,0,0.35); }
+        .fecha-dia { display: block; font-size: 22px; font-weight: 900; color: #fff; }
+        .fecha-mes { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #f0c060; }
+
+        /* Badge categoría */
+        .cartel-cat { position: absolute; top: 12px; right: 12px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
+        .cat-musica    { color: #a78bfa; border-color: #a78bfa; background: rgba(167,139,250,0.15); }
+        .cat-cultura   { color: #34d399; border-color: #34d399; background: rgba(52,211,153,0.15); }
+        .cat-talleres  { color: #fb923c; border-color: #fb923c; background: rgba(251,146,60,0.15); }
+        .cat-fiestas   { color: #f472b6; border-color: #f472b6; background: rgba(244,114,182,0.15); }
+        .cat-deporte   { color: #38bdf8; border-color: #38bdf8; background: rgba(56,189,248,0.15); }
+        .cat-mercado   { color: #f0c060; border-color: #f0c060; background: rgba(240,192,96,0.15); }
+
+        /* Info del cartel */
+        .cartel-info { position: absolute; bottom: 0; left: 0; right: 0; padding: 16px 14px 14px; }
+        .cartel-titulo { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.25; margin-bottom: 5px; color: #fff; }
+        .cartel-lugar { font-size: 10px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1px; }
+        .cartel-lugar::before { content: '📍 '; }
+
+        /* Icono enlace externo */
+        .cartel-link-icon { position: absolute; bottom: 14px; right: 14px; width: 28px; height: 28px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; opacity: 0; transition: opacity 0.25s; }
+        .cartel:hover .cartel-link-icon { opacity: 1; }
+
+        /* Eventos pasados */
+        .cartel.pasado img { filter: grayscale(55%); }
+        .cartel.pasado .cartel-img-wrap::after { content: 'FINALIZADO'; position: absolute; inset: 0; background: rgba(0,0,0,0.45); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: rgba(255,255,255,0.45); }
+        .cartel.pasado .cartel-fecha { background: #475569; }
+
+        /* ── BANNER PUBLICIDAD ── */
+        .banner-comercio { width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 24px; }
+        .banner-info { padding: 15px 20px; }
+        .banner-label { display: inline-block; background: #9f1239; color: #fff; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
+        .banner-nombre { color: white; font-size: 18px; font-weight: 700; margin: 0; }
+
+        /* ── DISCLAIMER ── */
+        .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
+
+        /* ── FOOTER ── */
+        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
+
+        /* ── BOTONES SCROLL ── */
+        .scroll-ctrl { position: fixed; bottom: 22px; right: 18px; z-index: 200; display: flex; flex-direction: column; gap: 8px; }
+        .scroll-btn { width: 40px; height: 40px; border-radius: 50%; background: #9f1239; border: none; color: #fff; font-size: 17px; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(159,18,57,0.4); transition: background 0.2s, transform 0.15s; }
+        .scroll-btn:hover { background: #e11d48; transform: scale(1.08); }
+        .scroll-btn.pausado { background: #475569; }
+
+        @media (max-width: 500px) {
+            .cartelera { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .cartel-titulo { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <a href="index.html" class="header-logo-link">
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera">
+        <h1>infoespinar.com</h1>
+    </a>
+</header>
+
+<div class="marquee-wrap">
+    <div class="marquee-inner" id="marquee-contenido">
+        </div>
+</div>
+
+<main class="main-container">
+
+    <h2 class="titulo-seccion-principal">Cartelera de Eventos</h2>
+
+    <a href="mailto:info@infoespinar.com" class="banner-comercio">
+        <div class="banner-info">
+            <span class="banner-label">¿Organizas un evento?</span>
+            <h3 class="banner-nombre">¡Anúnciate aquí!</h3>
+        </div>
+    </a>
+
+    <div class="cartelera" id="cartelera"></div>
+
+    <div class="disclaimer-box">
+        <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas.
+    </div>
+</main>
+
+<footer class="footer">
+    <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+</footer>
+
+<div class="scroll-ctrl">
+    <button class="scroll-btn" id="btnScroll" title="Pausar / reanudar scroll">▶</button>
+    <button class="scroll-btn" id="btnTop" title="Volver arriba">↑</button>
+</div>
+
+<script>
+// ⚠️ PEGA AQUÍ TU ENLACE DE GOOGLE SHEETS EN FORMATO .CSV
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zpL_RCmFxrwSfn0XMZPIIUhM52uV0HxKY33cZ89XtE9dfrvDJ9HSqFiA61SjXHQoaMvfYDKx/pub?output=csv";
+
+const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+
+function parseFecha(s) { 
+    if(!s) return new Date();
+    const [y,m,d] = s.split('-').map(Number); 
+    return new Date(y,m-1,d); 
+}
+
+// Procesador simple para convertir CSV en un array de Objetos JavaScript
+function csvToObjects(csvText) {
+    const lines = csvText.split(/\r?\n/);
+    if (lines.length === 0) return [];
+    
+    // Obtener cabeceras y limpiar espacios
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    const result = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        
+        // Manejo básico de comillas por si hay comas dentro de los textos
+        let currentLine = lines[i];
+        let cells = [];
+        let inQuotes = false;
+        let currentCell = '';
+        
+        for (let char of currentLine) {
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                cells.push(currentCell.trim());
+                currentCell = '';
+            } else {
+                currentCell += char;
+            }
+        }
+        cells.push(currentCell.trim());
+        
+        // Crear objeto fila
+        const obj = {};
+        headers.forEach((header, index) => {
+            let val = cells[index] || '';
+            val = val.replace(/^"|"$/g, ''); // Limpiar comillas
+            if (val === 'null' || val === '') val = null;
+            obj[header] = val;
+        });
+        result.push(obj);
+    }
+    return result;
+}
+
+// Cargar y renderizar la web desde Sheets
+async function cargarEventos() {
+    try {
+        const respuesta = await fetch(SHEET_CSV_URL);
+        const textoCSV = await respuesta.text();
+        const eventos = csvToObjects(textoCSV);
+        
+        const grid = document.getElementById('cartelera');
+        const marquee = document.getElementById('marquee-contenido');
+        const hoy = new Date(); 
+        hoy.setHours(0,0,0,0);
+        
+        // Ordenar eventos cronológicamente
+        const ordenados = [...eventos].sort((a,b) => parseFecha(a.fecha) - parseFecha(b.fecha));
+        let mesActual = null;
+        let marqueeHTML = '';
+
+        ordenados.forEach(ev => {
+            const fecha = parseFecha(ev.fecha);
+            const mesKey = `${fecha.getMonth()}-${fecha.getFullYear()}`;
+            const pasado = fecha < hoy;
+
+            // Rellenar el texto de la marquesina de arriba (solo eventos futuros)
+            if(!pasado) {
+                marqueeHTML += `<span>${ev.titulo}</span>`;
+            }
+
+            // Separador de Meses en la cuadrícula
+            if (mesActual !== mesKey) {
+                mesActual = mesKey;
+                const sep = document.createElement('div');
+                sep.className = 'mes-separador';
+                sep.innerHTML = `<span>${MESES[fecha.getMonth()]} ${fecha.getFullYear()}</span>`;
+                grid.appendChild(sep);
+            }
+
+            const tag = ev.url ? 'a' : 'div';
+            const cartel = document.createElement(tag);
+            cartel.className = 'cartel' + (pasado ? ' pasado' : '');
+            if (ev.url) { cartel.href = ev.url; cartel.target = '_blank'; cartel.rel = 'noopener'; }
+
+            cartel.innerHTML = `
+                <div class="cartel-img-wrap">
+                    <img src="${ev.imagen}" alt="${ev.titulo}" loading="lazy">
+                    <div class="cartel-overlay"></div>
+                    <div class="cartel-fecha">
+                        <span class="fecha-dia">${String(fecha.getDate()).padStart(2,'0')}</span>
+                        <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
+                    </div>
+                    <span class="cartel-cat cat-${ev.categoria}">${ev.categoria}</span>
+                    <div class="cartel-info">
+                        <div class="cartel-titulo">${ev.titulo}</div>
+                        <div class="cartel-lugar">${ev.lugar}</div>
+                    </div>
+                    ${ev.url ? '<div class="cartel-link-icon">↗</div>' : ''}
+                </div>`;
+            grid.appendChild(cartel);
+        });
+
+        // Duplicar texto de la marquesina para el efecto infinito del CSS
+        marquee.innerHTML = marqueeHTML + marqueeHTML;
+
+        // Activar pausas con hover en los nuevos carteles inyectados
+        document.querySelectorAll('.cartel').forEach(c => {
+            c.addEventListener('mouseenter', () =>启用pausaHover = true); // Corrección para scope global
+            c.addEventListener('mouseenter', () => pausaHover = true);
+            c.addEventListener('mouseleave', () => pausaHover = false);
+        });
+
+    } catch (error) {
+        console.error("Error cargando los eventos desde Google Sheets:", error);
+        document.getElementById('cartelera').innerHTML = "<p style='color:red; text-align:center; grid-column: 1/-1;'>Error al cargar la cartelera. Inténtelo más tarde.</p>";
+    }
+}
+
+// Ejecutar carga al abrir la página
+cargarEventos();
+
+// ── AUTOSCROLL CONTROL ────────────────────────────────────────────────────────
+let activo = true;
+let pausaHover = false;
+let pausaManual = false;
+let timerManual;
+const VEL = 0.6; 
+
+(function loop() {
+    if (activo && !pausaHover && !pausaManual) {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        window.scrollY >= max ? window.scrollTo({top:0,behavior:'instant'}) : window.scrollBy(0, VEL);
+    }
+    requestAnimationFrame(loop);
+})();
+
+window.addEventListener('wheel', () => {
+    pausaManual = true;
+    clearTimeout(timerManual);
+    timerManual = setTimeout(() => pausaManual = false, 2500);
+}, { passive: true });
+
+const btnScroll = document.getElementById('btnScroll');
+btnScroll.addEventListener('click', () => {
+    activo = !activo;
+    btnScroll.textContent = activo ? '▶' : '⏸';
+    btnScroll.classList.toggle('pausado', !activo);
+});
+document.getElementById('btnTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+
+</body>
+</html>
