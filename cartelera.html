@@ -70,31 +70,33 @@
 
         /* Badge categoría */
         .cartel-cat { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
-        .cat-musica    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
-        .cat-cultura   { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
-        .cat-talleres  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
-        .cat-fiestas   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
-        .cat-deporte   { color: #0284c7; border-color: #0284c7; background: rgba(2,132,199,0.08); }
-        .cat-mercado   { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.08); }
-        .cat-concierto { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
-        .cat-popular   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
-        .cat-teatro    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
-        .cat-infantil  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
+        .cat-MÚSICA    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
+        .cat-CULTURA   { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
+        .cat-TALLERES  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
+        .cat-FIESTAS   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
+        .cat-DEPORTE   { color: #0284c7; border-color: #0284c7; background: rgba(2,132,199,0.08); }
+        .cat-MERCADO   { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.08); }
+        .cat-CONCIERTO { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
+        .cat-POPULAR   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
+        .cat-TEATRO    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
+        .cat-INFANTIL  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
 
         /* Título: Lato 700 — coherente con el resto */
         .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; }
         .cartel-lugar { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
         .cartel-lugar::before { content: '📍 '; }
+        .cartel-web { font-style: normal; font-size: 12px; margin-left: 4px; opacity: 0.7; }
+
+        /* Panel inferior como enlace */
+        .cartel-body--link { text-decoration: none; display: flex; flex-direction: column; gap: 6px; transition: background 0.18s; }
+        .cartel-body--link:hover { background: #fdf2f4; }
+        .cartel-body--link:hover .cartel-titulo { color: #9f1239; }
 
         /* Icono enlace externo */
         .cartel-link-icon { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #334155; opacity: 0; transition: opacity 0.25s; backdrop-filter: blur(4px); }
         .cartel:hover .cartel-link-icon { opacity: 1; }
 
-        /* Eventos pasados */
-        .cartel.pasado img { filter: grayscale(60%); }
-        .cartel.pasado .cartel-img-wrap::after { content: 'FINALIZADO'; position: absolute; inset: 0; background: rgba(0,0,0,0.35); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 900; letter-spacing: 3px; color: rgba(255,255,255,0.6); }
-        .cartel.pasado .cartel-fecha { background: #475569; }
-        .cartel.pasado .cartel-titulo { color: #64748b; }
+        /* Eventos pasados — no se muestran, CSS mantenido por si se reactiva */
 
         /* ── BANNER PUBLICIDAD ── */
         .banner-comercio { width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 24px; }
@@ -296,7 +298,9 @@ async function cargarEventos() {
         const hoy = new Date();
         hoy.setHours(0, 0, 0, 0);
 
-        const ordenados = [...eventos].sort((a, b) => parseFecha(a.fecha) - parseFecha(b.fecha));
+        const ordenados = [...eventos]
+            .filter(ev => parseFecha(ev.fecha) >= hoy)
+            .sort((a, b) => parseFecha(a.fecha) - parseFecha(b.fecha));
         let mesActual = null;
         let marqueeHTML = '';
 
@@ -307,7 +311,7 @@ async function cargarEventos() {
         ordenados.forEach(ev => {
             const fecha = parseFecha(ev.fecha);
             const mesKey = `${fecha.getMonth()}-${fecha.getFullYear()}`;
-            const pasado = fecha < hoy;
+            const pasado = false; // los eventos pasados se filtran antes de llegar aquí
             const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
             const lugar = ev.lugar || 'El Espinar';
 
@@ -321,20 +325,21 @@ async function cargarEventos() {
                 grid.appendChild(sep);
             }
 
-            const tag = ev.url ? 'a' : 'div';
-            const cartel = document.createElement(tag);
+            // El cartel es siempre un div — la imagen va al lightbox,
+            // el panel de info es el enlace si hay URL
+            const cartel = document.createElement('div');
             cartel.className = 'cartel' + (pasado ? ' pasado' : '');
-            // Data attributes para filtrado
             cartel.dataset.cat   = catClase;
             cartel.dataset.lugar = lugar;
-            if (ev.url) { cartel.href = ev.url; cartel.target = '_blank'; cartel.rel = 'noopener'; }
+
+            const bodyTag  = ev.url ? 'a' : 'div';
+            const bodyAttr = ev.url ? `href="${ev.url}" target="_blank" rel="noopener"` : '';
 
             cartel.innerHTML = `
                 <div class="cartel-img-wrap">
                     <img src="${ev.imagen || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80'}" alt="${ev.titulo}" loading="lazy">
-                    ${ev.url ? '<div class="cartel-link-icon">↗</div>' : ''}
                 </div>
-                <div class="cartel-body">
+                <${bodyTag} class="cartel-body${ev.url ? ' cartel-body--link' : ''}" ${bodyAttr}>
                     <div class="cartel-meta">
                         <div class="cartel-fecha">
                             <span class="fecha-dia">${String(fecha.getDate()).padStart(2, '0')}</span>
@@ -343,8 +348,8 @@ async function cargarEventos() {
                         <span class="cartel-cat cat-${catClase}">${catClase}</span>
                     </div>
                     <div class="cartel-titulo">${ev.titulo}</div>
-                    <div class="cartel-lugar">${lugar}</div>
-                </div>`;
+                    <div class="cartel-lugar">${lugar}${ev.url ? ' <span class="cartel-web" title="Ver más info">🌐</span>' : ''}</div>
+                </${bodyTag}>`;
             grid.appendChild(cartel);
         });
 
