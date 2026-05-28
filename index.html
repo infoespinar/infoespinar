@@ -6,248 +6,84 @@
     <title>infoespinar.com | El portal de El Espinar</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
-        /* 🎨 VARIABLES Y ESTILOS GENERALES */
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-        
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; display: flex; flex-direction: column; min-height: 100vh; }
 
-        body {
-            font-family: 'Lato', sans-serif;
-            background-color: #f4f6f9;
-            color: #334155;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; margin-bottom: 12px; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s, transform 0.2s; }
+        .header-logo-link:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+        .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1/1; background-color: rgba(255,255,255,0.2); }
+        .header h1 { font-size: 24px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        .header p { font-size: 15px; opacity: 0.9; margin-bottom: 10px; }
 
-        /* 📋 ENCABEZADO */
-        .header {background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-        }
+        .main-container { max-width: 1200px; width: 100%; margin: 0 auto; padding: 15px 12px; flex-grow: 1; }
+        .titulo-seccion { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 20px 0 12px 4px; font-weight: 700; }
 
-        .header-logo-link {display: inline-flex;align-items: center;gap: 12px;         text-decoration: none;
-            color: white;
-            margin-bottom: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: background 0.2s, transform 0.2s;
-        }
+        /* CARRUSEL */
+        .contenedor-ofertas { width: 100%; overflow: hidden; position: relative; }
+        .carrusel-track { display: flex; width: 100%; overflow: hidden; }
+        .carrusel-inner { display: flex; will-change: transform; }
+        .oferta-item { width: 140px; margin: 0 10px 0 0; text-align: center; flex-shrink: 0; display: block; text-decoration: none; }
+        .imagen-oferta { width: 140px; height: 140px; border-radius: 18px; object-fit: cover; border: 1px solid #e2e8f0; box-shadow: 0 4px 8px rgba(0,0,0,0.06); user-select: none; -webkit-user-drag: none; }
+        .nombre-comercio { display: block; font-size: 10px; color: #334155; margin-top: 8px; text-transform: uppercase; font-weight: 700; }
+        .texto-rojo .servicio-texto { color: #dc2626; }
 
-        .header-logo-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-1px);
-        }
+        /* UTILIDADES */
+        .grid-utilidades { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; width: 100%; }
+        .enlace-util, .boton-util-guardia { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background-color: #ffffff; border: 2px solid #cbd5e1; border-radius: 16px; text-decoration: none; color: #1e293b; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); transition: all 0.2s ease; width: 100%; box-sizing: border-box; text-align: left; cursor: pointer; font-family: 'Lato', sans-serif; }
+        .enlace-util:hover, .boton-util-guardia:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -5px rgba(0,0,0,0.08); }
 
-        .header-bandera {
-            width: 32px;
-            height: 32px;
-            object-fit: cover;
-            border-radius: 6px;
-            aspect-ratio: 1 / 1;
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .header h1 {
-            font-size: 24px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .header p {
-            font-size: 15px;
-            opacity: 0.9;
-            margin-bottom: 10px;
-        }
-
-                /* 🏛️ CONTENEDOR PRINCIPAL */
-        .main-container {
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 15px 12px;
-            flex-grow: 1;
-        }
-
-        .titulo-seccion {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #475569;
-            margin: 20px 0 12px 4px;
-            font-weight: 700;
-        }
-
-        /* 🎪 1. CARRUSEL INFINITO */
-        .contenedor-ofertas {
-            width: 100%;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .carrusel-track {
-            display: flex;
-            width: 100%;
-            overflow: hidden; /* Ocultamos el scroll nativo; el infinito lo maneja JS */
-        }
-
-        /* La pista interior que se mueve con translate */
-        .carrusel-inner {
-            display: flex;
-            will-change: transform;
-        }
-
-        .oferta-item {
-            width: 140px;
-            margin: 0 10px 0 0;
-            text-align: center;
-            flex-shrink: 0;
-            display: block;
-            text-decoration: none;
-        }
-
-        .imagen-oferta {
-            width: 140px;
-            height: 140px;
-            border-radius: 18px;
-            object-fit: cover;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
-            user-select: none;
-            -webkit-user-drag: none;
-        }
-
-        .nombre-comercio {
-            display: block;
-            font-size: 10px;
-            color: #334155;
-            margin-top: 8px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
-        .texto-rojo .servicio-texto {  color: #dc2626; }
-        
-
-        /* ⚡ 2. INFORMACIÓN DE INTERÉS */
-        .grid-utilidades {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 12px;
-            width: 100%;
-        }
-
-        .enlace-util, .boton-util-guardia {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 18px;
-            background-color: #ffffff;
-            border: 2px solid #cbd5e1;
-            border-radius: 16px;
-            text-decoration: none;
-            color: #1e293b;
-            font-size: 14px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-            transition: all 0.2s ease;
-            width: 100%;
-            box-sizing: border-box;
-            text-align: left;
-            cursor: pointer;
-            font-family: 'Lato', sans-serif;
-        }
-
-        .enlace-util:hover, .boton-util-guardia:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.08);
-        }
-
-        .contenedor-split-taxi {
-            display: flex;
-            background-color: #fefce8;
-            border: 2px solid #fef08a;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
-            transition: all 0.2s ease;
-            width: 100%;
-            overflow: hidden;
-        }
-        .contenedor-split-taxi:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 15px -5px rgba(0, 0, 0, 0.08);
-            border-color: #eab308;
-        }
-        .taxi-mitad-web {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 14px 14px 14px 18px;
-            text-decoration: none;
-            flex-grow: 1;
-            color: #1e293b;
-        }
+        .contenedor-split-taxi { display: flex; background-color: #fefce8; border: 2px solid #fef08a; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); transition: all 0.2s ease; width: 100%; overflow: hidden; }
+        .contenedor-split-taxi:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -5px rgba(0,0,0,0.08); border-color: #eab308; }
+        .taxi-mitad-web { display: flex; align-items: center; gap: 14px; padding: 14px 14px 14px 18px; text-decoration: none; flex-grow: 1; color: #1e293b; }
         .taxi-mitad-web:hover { background-color: #fef9c3; }
-        
-        .taxi-mitad-azar {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 0 15px;
-            background-color: transparent;
-            border: none;
-            border-left: 2px dashed #fde047;
-            cursor: pointer;
-            min-width: 85px;
-        }
+        .taxi-mitad-azar { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 15px; background-color: transparent; border: none; border-left: 2px dashed #fde047; cursor: pointer; min-width: 85px; }
         .taxi-mitad-azar:hover { background-color: #fef9c3; }
-        
         .taxi-color-texto { color: #a16207 !important; }
         .taxi-color-secundario { color: #854d0e !important; font-weight: 700; }
         .bg-amarillo { background-color: #fef08a; color: #a16207; }
         .boton-util-guardia { background-color: #e6fbd0; border-color: #a7f3d0; }
         .boton-util-guardia:hover { border-color: #10b981; }
 
-        .icono-wrap {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            font-size: 20px;
-            flex-shrink: 0;
-        }
-
+        .icono-wrap { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 12px; font-size: 20px; flex-shrink: 0; }
         .bg-azul { background-color: #7dd3fc; color: #0369a1; }
         .bg-rojo { background-color: #fecdd3; color: #be123c; }
         .bg-morado { background-color: #f5d0fe; color: #a21caf; }
 
-        .titulo-boton {
-            display: block;
-            font-weight: 900;
-            font-size: 12px;
-            letter-spacing: 0.5px;
-            color: #475569;
-            margin-bottom: 2px;
-        }
-
-        .nombre-farmacia-viva, .tiempo-dinamico {
-            display: block;
-            font-size: 15px;
-            font-weight: 700;
-            line-height: 1.2;
-        }
+        .titulo-boton { display: block; font-weight: 900; font-size: 12px; letter-spacing: 0.5px; color: #475569; margin-bottom: 2px; }
+        .nombre-farmacia-viva, .tiempo-dinamico { display: block; font-size: 15px; font-weight: 700; line-height: 1.2; }
         .nombre-farmacia-viva { color: #065f46; }
         .texto-secundario { display: block; font-size: 12px; color: #64748b; }
         .agenda-color { background-color: #fae8ff; border-color: #f5d0fe; }
         .agenda-color:hover { border-color: #d946ef; }
         .agenda-color .titulo-boton { color: #a21caf; }
-        .agenda-color .texto-secundario { color: #701a75; font-weight: 700; }
+
+        /* ── AGENDA WIDGET: scroll vertical ── */
+        .agenda-ticker-wrap {
+            overflow: hidden;
+            height: 1.25em; /* una línea visible */
+            position: relative;
+        }
+        .agenda-ticker-inner {
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .agenda-ticker-item {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: #701a75;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.25em;
+            height: 1.25em;
+            flex-shrink: 0;
+        }
+        /* fallback texto único sin ticker */
+        .agenda-ticker-wrap.sin-ticker .agenda-ticker-item { color: #701a75; }
 
         /* Climas */
         .clima-soleado { background-color: #fef9c3 !important; border-color: #fde047 !important; }
@@ -271,209 +107,45 @@
         .clima-nocturno .tiempo-dinamico { color: #f8fafc !important; }
         .clima-nocturno .icono-wrap { background-color: #1e293b !important; color: #f1f5f9 !important; }
 
-        /* 🏷️ 3. CATEGORÍAS */
-        .grid-servicios {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 8px;
-            width: 100%;
-        }
+        /* CATEGORÍAS */
+        .grid-servicios { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
+        .card-servicio { background-color: #ffffff; border-radius: 14px; padding: 16px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; transition: transform 0.2s, box-shadow 0.2s; gap: 8px; }
+        .card-servicio:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.06); background-color: #f8fafc; }
+        .servicio-icono { font-size: 30px; display: flex; align-items: center; justify-content: center; }
+        .servicio-texto { font-size: 15px; font-weight: 700; color: #334155; }
 
-        .card-servicio {
-            background-color: #ffffff;
-            border-radius: 14px;
-            padding: 16px 10px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            text-decoration: none;
-            color: #1e293b;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            border: 1px solid #e2e8f0;
-            transition: transform 0.2s, box-shadow 0.2s;
-            gap: 8px;
-        }
-
-        .card-servicio:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.06);
-            background-color: #f8fafc;
-        }
-
-        .servicio-icono {
-            font-size: 30px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .servicio-texto {
-            font-size: 15px;
-            font-weight: 700;
-            color: #334155;
-        }
-
-        /* 🚨 4. EMERGENCIAS */
-        .grid-telefonos {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 10px;
-            width: 100%;
-        }
-
-        .telf-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 16px;
-            background-color: #ffffff;
-            border: 1px solid #fee2e2;
-            border-radius: 12px;
-            text-decoration: none;
-            color: #1e293b;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            transition: background-color 0.2s, transform 0.1s;
-        }
-
-        .telf-item:hover {
-            background-color: #fef2f2;
-            transform: translateY(-1px);
-        }
-
-        .telf-112 {
-            background-color: #dc2626;
-            border-color: #dc2626;
-            color: #ffffff;
-        }
+        /* EMERGENCIAS */
+        .grid-telefonos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; width: 100%; }
+        .telf-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background-color: #ffffff; border: 1px solid #fee2e2; border-radius: 12px; text-decoration: none; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: background-color 0.2s, transform 0.1s; }
+        .telf-item:hover { background-color: #fef2f2; transform: translateY(-1px); }
+        .telf-112 { background-color: #dc2626; border-color: #dc2626; color: #ffffff; }
         .telf-112:hover { background-color: #b91c1c; }
-        .telf-112 .numero-telf {
-            color: #ffffff;
-            background: rgba(255,255,255,0.2);
-            padding: 2px 8px;
-            border-radius: 6px;
-        }
-
+        .telf-112 .numero-telf { color: #ffffff; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 6px; }
         .nombre-servicio { font-size: 13.5px; font-weight: 700; }
         .numero-telf { font-size: 13.5px; font-weight: 700; color: #dc2626; }
 
-        /* 💻 RESPONSIVE */
         @media screen and (min-width: 768px) {
             .header { padding: 45px 20px; }
-            .grid-servicios {
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 16px;
-            }
+            .grid-servicios { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
         }
 
-        /* 👣 FOOTER */
-        .footer {
-            background-color: #1e293b;
-            color: #94a3b8;
-            text-align: center;
-            padding: 25px 20px;
-            margin-top: 40px;
-            margin-bottom: 0px;
-            font-size: 13px;
-            line-height: 1.6;
-            border-top: 3px solid #3b82f6;
-        }
+        /* FOOTER */
+        .footer { background-color: #1e293b; color: #94a3b8; text-align: center; padding: 25px 20px; margin-top: 40px; font-size: 13px; line-height: 1.6; border-top: 3px solid #3b82f6; }
+        .footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
 
-        .footer a {
-            color: #3b82f6;
-            text-decoration: none;
-            font-weight: 700;
-        }
-
-        /* 🚀 5. BANNER FLOTANTE */
-        .banner-emergente {
-            position: fixed;
-            bottom: -100%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92%;
-            max-width: 700px;
-            background: #ffffff;
-            border: 2px solid #3b82f6;
-            box-shadow: 0 10px 30px rgba(30, 58, 138, 0.2);
-            border-radius: 20px;
-            padding: 16px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            z-index: 9999;
-            transition: bottom 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
+        /* BANNER FLOTANTE */
+        .banner-emergente { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 92%; max-width: 700px; background: #ffffff; border: 2px solid #3b82f6; box-shadow: 0 10px 30px rgba(30,58,138,0.2); border-radius: 20px; padding: 16px 20px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 12px; z-index: 9999; transition: bottom 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
         .banner-emergente.activo { bottom: 16px; }
-
-        .banner-texto {
-            font-size: 14.5px;
-            color: #1e293b;
-            text-align: center;
-            line-height: 1.4;
-        }
-
-        .banner-texto strong {
-            color: #2563eb;
-            background-color: #eff6ff;
-            padding: 2px 6px;
-            border-radius: 6px;
-        }
-
-        .banner-acciones {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .btn-formulario {
-            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 13.5px;
-            padding: 10px 18px;
-            border-radius: 30px;
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.2);
-            transition: transform 0.2s, box-shadow 0.2s;
-            text-align: center;
-        }
-
-        .btn-formulario:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 14px rgba(37, 99, 235, 0.3);
-        }
-
-        .btn-cerrar-banner {
-            background: #f1f5f9;
-            color: #64748b;
-            border: none;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 10px 14px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-cerrar-banner:hover {
-            background: #e2e8f0;
-            color: #334155;
-        }
+        .banner-texto { font-size: 14.5px; color: #1e293b; text-align: center; line-height: 1.4; }
+        .banner-texto strong { color: #2563eb; background-color: #eff6ff; padding: 2px 6px; border-radius: 6px; }
+        .banner-acciones { display: flex; align-items: center; gap: 10px; width: 100%; justify-content: center; }
+        .btn-formulario { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; text-decoration: none; font-weight: 700; font-size: 13.5px; padding: 10px 18px; border-radius: 30px; box-shadow: 0 4px 10px rgba(37,99,235,0.2); transition: transform 0.2s, box-shadow 0.2s; text-align: center; }
+        .btn-formulario:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(37,99,235,0.3); }
+        .btn-cerrar-banner { background: #f1f5f9; color: #64748b; border: none; font-size: 13px; font-weight: 700; padding: 10px 14px; border-radius: 30px; cursor: pointer; transition: background 0.2s; }
+        .btn-cerrar-banner:hover { background: #e2e8f0; color: #334155; }
 
         @media (min-width: 580px) {
-            .banner-emergente {
-                flex-direction: row;
-                text-align: left;
-                padding: 14px 24px;
-                gap: 20px;
-            }
+            .banner-emergente { flex-direction: row; text-align: left; padding: 14px 24px; gap: 20px; }
             .banner-texto { text-align: left; }
             .banner-acciones { width: auto; flex-shrink: 0; }
         }
@@ -481,422 +153,430 @@
 </head>
 <body>
 
-    <header class="header">
-        <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar"> 
-            <h1>infoespinar.com</h1>
-        </a>
-        <p>Tu guía local de comercios, servicios y teléfonos de interés</p>
-        </header>
+<header class="header">
+    <a href="index.html" class="header-logo-link">
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
+        <h1>infoespinar.com</h1>
+    </a>
+    <p>Tu guía local de comercios, servicios y teléfonos de interés</p>
+</header>
 
-    <main class="main-container">
+<main class="main-container">
 
-        <!-- 🎪 CARRUSEL -->
-        <div class="titulo-seccion">Ofertas destacadas</div>
-        <div class="contenedor-ofertas">
-            <div class="carrusel-track">
-                <div class="carrusel-inner" id="carruselInner">
-                    <!-- Los items se duplican por JS para el efecto infinito -->
-                    <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item">
-                        <img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta" alt="El Taller de Boli">
-                        <span class="nombre-comercio">El Taller de Boli</span>
-                    </a>
-                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                        <img src="https://i.imgur.com/mbn5vQH.jpeg" class="imagen-oferta" alt="Tu Evento">
-                        <span class="nombre-comercio">TU EVENTO</span>
-                    </a>
-                    <a href="https://andrearuibal.com" class="oferta-item">
-                        <img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta" alt="Andrea Comesaña">
-                        <span class="nombre-comercio">Andrea Comesaña</span>
-                    </a>
-                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Limpiezas">
-                        <span class="nombre-comercio">Limpiezas</span>
-                    </a>
-                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                        <img src="https://i.imgur.com/mbn5vQH.jpeg" class="imagen-oferta" alt="Tu Evento">
-                        <span class="nombre-comercio">TU EVENTO</span>
-                    </a>
-                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Panadería">
-                        <span class="nombre-comercio">Panadería</span>
-                    </a>
-                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Cafetería">
-                        <span class="nombre-comercio">Cafetería</span>
-                    </a>
-                    <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
-                        <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Reformas">
-                        <span class="nombre-comercio">Reformas</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- ⚡ INFORMACIÓN DE INTERÉS -->
-        <div class="titulo-seccion">Información de interés</div>
-        <div class="grid-utilidades">
-
-            <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" rel="noopener" class="enlace-util" id="botonTiempo">
-                <div class="icono-wrap bg-azul" id="tiempoIcono">🌤️</div>
-                <div>
-                    <span class="titulo-boton" id="tiempoTitulo">EL TIEMPO</span>
-                    <span id="tiempoTexto" class="tiempo-dinamico">Cargando...</span>
-                </div>
-            </a>
-
-            <button onclick="irAFarmaciaGuardiaHoy()" class="boton-util-guardia">
-                <div class="icono-wrap bg-rojo">🏥</div>
-                <div>
-                    <span class="titulo-boton">FARMACIA DE GUARDIA</span>
-                    <span id="txtFarmaciaNombre" class="nombre-farmacia-viva">Cargando...</span>
-                </div>
-            </button>
-
-            <a href="https://elespinar.es/agenda/" target="_blank" rel="noopener" class="enlace-util agenda-color">
-                <div class="icono-wrap bg-morado">📅</div>
-                <div>
-                    <span class="titulo-boton">AGENDA CULTURAL</span>
-                    <span id="agendaTexto" class="texto-secundario">Cargando eventos...</span>
-                </div>
-            </a>
-
-            <div class="contenedor-split-taxi">
-                <a href="taxi.html" class="taxi-mitad-web">
-                    <div class="icono-wrap bg-amarillo">🚖</div>
-                    <div>
-                        <span class="titulo-boton taxi-color-texto">TAXIS</span>
-                        <span class="texto-secundario taxi-color-secundario">Ver Teléfonos</span>
-                    </div>
+    <!-- CARRUSEL -->
+    <div class="titulo-seccion">Ofertas destacadas</div>
+    <div class="contenedor-ofertas">
+        <div class="carrusel-track">
+            <div class="carrusel-inner" id="carruselInner">
+                <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item">
+                    <img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta" alt="El Taller de Boli">
+                    <span class="nombre-comercio">El Taller de Boli</span>
                 </a>
-                <button onclick="llamarTaxiAzar()" class="taxi-mitad-azar" title="Llamar a un taxi aleatorio">
-                    <span style="font-size: 24px; margin-bottom: 4px;">🎲</span>
-                    <span style="font-size: 11px; font-weight: 900; color: #a16207; letter-spacing: 0.5px;">AZAR</span>
-                </button>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/mbn5vQH.jpeg" class="imagen-oferta" alt="Tu Evento">
+                    <span class="nombre-comercio">TU EVENTO</span>
+                </a>
+                <a href="https://andrearuibal.com" class="oferta-item">
+                    <img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta" alt="Andrea Comesaña">
+                    <span class="nombre-comercio">Andrea Comesaña</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Limpiezas">
+                    <span class="nombre-comercio">Limpiezas</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/mbn5vQH.jpeg" class="imagen-oferta" alt="Tu Evento">
+                    <span class="nombre-comercio">TU EVENTO</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Panadería">
+                    <span class="nombre-comercio">Panadería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Cafetería">
+                    <span class="nombre-comercio">Cafetería</span>
+                </a>
+                <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item">
+                    <img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta" alt="Reformas">
+                    <span class="nombre-comercio">Reformas</span>
+                </a>
             </div>
-
-        </div>
-
-        <!-- 🏷️ CATEGORÍAS -->
-        <div class="titulo-seccion">Categorías profesionales</div>
-        <div class="grid-servicios">
-            <a href="jardineria.html" class="card-servicio"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
-            <a href="limpieza.html" class="card-servicio"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza</span></a>    
-            <a href="reformas.html" class="card-servicio"><div class="servicio-icono">🏗️</div><span class="servicio-texto">Reformas - Mantenimiento</span></a>
-            <a href="fontaneria.html" class="card-servicio"><div class="servicio-icono">🔧</div><span class="servicio-texto">Fontanería - Climatización</span></a>
-            <a href="talleres.html" class="card-servicio"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
-            <a href="ferreteria.html" class="card-servicio"><div class="servicio-icono">🔨</div><span class="servicio-texto">Ferretería - Materiales</span></a>
-            <a href="panaderia.html" class="card-servicio"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
-            <a href="restaurantes.html" class="card-servicio"><div class="servicio-icono">🍴</div><span class="servicio-texto">A Comer</span></a>
-            <a href="salud.html" class="card-servicio"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
-            <a href="bienestar.html" class="card-servicio"><div class="servicio-icono">💆</div><span class="servicio-texto">Bienestar</span></a>
-            <a href="formacion.html" class="card-servicio"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
-            <a href="ocio.html" class="card-servicio"><div class="servicio-icono">🚵‍♀️</div><span class="servicio-texto">Ocio - Deporte</span></a>
-            <a href="artesania.html" class="card-servicio"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
-            <a href="eventos.html" class="card-servicio"><div class="servicio-icono">🎉</div><span class="servicio-texto">Eventos</span></a>
-            <a href="otros-servicios.html" class="card-servicio"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
-            <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
-            <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
-            <a href="alimentacion.html" class="card-servicio"><div class="servicio-icono">🍉​</div><span class="servicio-texto">Alimentación</span></a>
-            <a href="empleo.html" class="card-servicio texto-rojo"><div class="servicio-icono">💼</div><span class="servicio-texto">Empleo</span></a>
-            <a href="particulares.html" class="card-servicio texto-rojo"><div class="servicio-icono">🤝</div><span class="servicio-texto">Particulares</span></a>
-            
-
-        </div>
-
-        <!-- 🚨 EMERGENCIAS -->
-        <div class="titulo-seccion" style="color: #dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
-        <div class="grid-telefonos">
-            <a href="tel:112" class="telf-item telf-112">
-                <span class="nombre-servicio">Emergencias General</span>
-                <span class="numero-telf">112</span>
-            </a>
-            <a href="tel:921182323" class="telf-item">
-                <span class="nombre-servicio">Policía Municipal (Fijo)</span>
-                <span class="numero-telf">921 182 323</span>
-            </a>
-            <a href="tel:600400880" class="telf-item">
-                <span class="nombre-servicio">Policía Municipal (Móvil)</span>
-                <span class="numero-telf">600 400 880</span>
-            </a>
-            <a href="tel:921181029" class="telf-item">
-                <span class="nombre-servicio">Guardia Civil El Espinar</span>
-                <span class="numero-telf">921 181 029</span>
-            </a>
-            <a href="tel:921422222" class="telf-item">
-                <span class="nombre-servicio">Bomberos (Provincia)</span>
-                <span class="numero-telf">921 422 222</span>
-            </a>
-        </div>
-
-    </main>
-
-    <!-- 🚀 BANNER FLOTANTE -->
-    <div id="popupAnuncio" class="banner-emergente">
-        <p class="banner-texto">¿Tienes un negocio? Aparecer en esta web es <strong>GRATIS</strong>, solo tienes que rellenar el formulario.</p>
-        <div class="banner-acciones">
-            <a href="./inscripcion.html" class="btn-formulario">Inscribirme ya</a>
-            <button class="btn-cerrar-banner" onclick="cerrarPopup()">✕</button>
         </div>
     </div>
 
-    <footer class="footer">
-        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
-        <p>Página optimizada de forma nativa para móviles y PC.</p>
-        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
-    </footer>
+    <!-- INFORMACIÓN DE INTERÉS -->
+    <div class="titulo-seccion">Información de interés</div>
+    <div class="grid-utilidades">
 
-    <script>
-    /* ============================================================
-       🎠 CARRUSEL INFINITO
-       Técnica: duplicamos los items en el DOM y cuando el scroll
-       llega a la mitad (fin del bloque original) lo reiniciamos
-       al inicio sin que el usuario lo note.
-    ============================================================ */
-    (function () {
-        const inner = document.getElementById('carruselInner');
-        if (!inner) return;
+        <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" rel="noopener" class="enlace-util" id="botonTiempo">
+            <div class="icono-wrap bg-azul" id="tiempoIcono">🌤️</div>
+            <div>
+                <span class="titulo-boton" id="tiempoTitulo">EL TIEMPO</span>
+                <span id="tiempoTexto" class="tiempo-dinamico">Cargando...</span>
+            </div>
+        </a>
 
-        // Duplicamos los items para crear el efecto infinito
-        const itemsOriginales = Array.from(inner.children);
-        itemsOriginales.forEach(item => {
-            const clon = item.cloneNode(true);
-            inner.appendChild(clon);
-        });
+        <button onclick="irAFarmaciaGuardiaHoy()" class="boton-util-guardia">
+            <div class="icono-wrap bg-rojo">🏥</div>
+            <div>
+                <span class="titulo-boton">FARMACIA DE GUARDIA</span>
+                <span id="txtFarmaciaNombre" class="nombre-farmacia-viva">Cargando...</span>
+            </div>
+        </button>
 
-        const ITEM_ANCHO = 150; // 140px imagen + 10px margen
-        let posicion = 0;
-        let arrastrando = false;
-        let inicioX = 0;
-        let posicionAlArrastrar = 0;
-        const anchoOriginal = itemsOriginales.length * ITEM_ANCHO;
+        <!-- AGENDA: ticker vertical desde el sheet -->
+        <a href="cartelera.html" class="enlace-util agenda-color">
+            <div class="icono-wrap bg-morado">📅</div>
+            <div style="min-width:0;flex:1;">
+                <span class="titulo-boton">AGENDA CULTURAL</span>
+                <div class="agenda-ticker-wrap" id="agendaTickerWrap">
+                    <div class="agenda-ticker-inner" id="agendaTickerInner">
+                        <span class="agenda-ticker-item" id="agendaFallback">Cargando eventos...</span>
+                    </div>
+                </div>
+            </div>
+        </a>
 
-        function clamp(pos) {
-            // Mantiene la posición dentro del rango del bucle infinito
-            return ((pos % anchoOriginal) + anchoOriginal) % anchoOriginal;
-        }
+        <div class="contenedor-split-taxi">
+            <a href="taxi.html" class="taxi-mitad-web">
+                <div class="icono-wrap bg-amarillo">🚖</div>
+                <div>
+                    <span class="titulo-boton taxi-color-texto">TAXIS</span>
+                    <span class="texto-secundario taxi-color-secundario">Ver Teléfonos</span>
+                </div>
+            </a>
+            <button onclick="llamarTaxiAzar()" class="taxi-mitad-azar" title="Llamar a un taxi aleatorio">
+                <span style="font-size:24px;margin-bottom:4px;">🎲</span>
+                <span style="font-size:11px;font-weight:900;color:#a16207;letter-spacing:0.5px;">AZAR</span>
+            </button>
+        </div>
 
-        function moverCarrusel() {
-            if (!arrastrando) {
-                posicion = clamp(posicion + 0.5);
-                inner.style.transform = `translateX(-${posicion}px)`;
-            }
-            requestAnimationFrame(moverCarrusel);
-        }
+    </div>
 
-        // --- Soporte RATÓN (escritorio) ---
-        inner.addEventListener('mousedown', (e) => {
-            arrastrando = true;
-            inicioX = e.clientX;
-            posicionAlArrastrar = posicion;
-            inner.style.cursor = 'grabbing';
-        });
-        window.addEventListener('mousemove', (e) => {
-            if (!arrastrando) return;
-            const delta = inicioX - e.clientX;
-            posicion = clamp(posicionAlArrastrar + delta);
-            inner.style.transform = `translateX(-${posicion}px)`;
-        });
-        window.addEventListener('mouseup', () => {
-            arrastrando = false;
-            inner.style.cursor = 'grab';
-        });
+    <!-- CATEGORÍAS -->
+    <div class="titulo-seccion">Categorías profesionales</div>
+    <div class="grid-servicios">
+        <a href="jardineria.html" class="card-servicio"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
+        <a href="limpieza.html" class="card-servicio"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza</span></a>
+        <a href="reformas.html" class="card-servicio"><div class="servicio-icono">🏗️</div><span class="servicio-texto">Reformas - Mantenimiento</span></a>
+        <a href="fontaneria.html" class="card-servicio"><div class="servicio-icono">🔧</div><span class="servicio-texto">Fontanería - Climatización</span></a>
+        <a href="talleres.html" class="card-servicio"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
+        <a href="ferreteria.html" class="card-servicio"><div class="servicio-icono">🔨</div><span class="servicio-texto">Ferretería - Materiales</span></a>
+        <a href="panaderia.html" class="card-servicio"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
+        <a href="restaurantes.html" class="card-servicio"><div class="servicio-icono">🍴</div><span class="servicio-texto">A Comer</span></a>
+        <a href="salud.html" class="card-servicio"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
+        <a href="bienestar.html" class="card-servicio"><div class="servicio-icono">💆</div><span class="servicio-texto">Bienestar</span></a>
+        <a href="formacion.html" class="card-servicio"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
+        <a href="ocio.html" class="card-servicio"><div class="servicio-icono">🚵‍♀️</div><span class="servicio-texto">Ocio - Deporte</span></a>
+        <a href="artesania.html" class="card-servicio"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
+        <a href="eventos.html" class="card-servicio"><div class="servicio-icono">🎉</div><span class="servicio-texto">Eventos</span></a>
+        <a href="otros-servicios.html" class="card-servicio"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
+        <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
+        <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
+        <a href="alimentacion.html" class="card-servicio"><div class="servicio-icono">🍉</div><span class="servicio-texto">Alimentación</span></a>
+        <a href="empleo.html" class="card-servicio texto-rojo"><div class="servicio-icono">💼</div><span class="servicio-texto">Empleo</span></a>
+        <a href="particulares.html" class="card-servicio texto-rojo"><div class="servicio-icono">🤝</div><span class="servicio-texto">Particulares</span></a>
+    </div>
 
-        // --- Soporte TÁCTIL (móvil) ---
-        inner.addEventListener('touchstart', (e) => {
-            arrastrando = true;
-            inicioX = e.touches[0].clientX;
-            posicionAlArrastrar = posicion;
-        }, { passive: true });
-        inner.addEventListener('touchmove', (e) => {
-            if (!arrastrando) return;
-            const delta = inicioX - e.touches[0].clientX;
-            posicion = clamp(posicionAlArrastrar + delta);
-            inner.style.transform = `translateX(-${posicion}px)`;
-        }, { passive: true });
-        inner.addEventListener('touchend', () => {
-            arrastrando = false;
-        });
+    <!-- EMERGENCIAS -->
+    <div class="titulo-seccion" style="color:#dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
+    <div class="grid-telefonos">
+        <a href="tel:112" class="telf-item telf-112">
+            <span class="nombre-servicio">Emergencias General</span>
+            <span class="numero-telf">112</span>
+        </a>
+        <a href="tel:921182323" class="telf-item">
+            <span class="nombre-servicio">Policía Municipal (Fijo)</span>
+            <span class="numero-telf">921 182 323</span>
+        </a>
+        <a href="tel:600400880" class="telf-item">
+            <span class="nombre-servicio">Policía Municipal (Móvil)</span>
+            <span class="numero-telf">600 400 880</span>
+        </a>
+        <a href="tel:921181029" class="telf-item">
+            <span class="nombre-servicio">Guardia Civil El Espinar</span>
+            <span class="numero-telf">921 181 029</span>
+        </a>
+        <a href="tel:921422222" class="telf-item">
+            <span class="nombre-servicio">Bomberos (Provincia)</span>
+            <span class="numero-telf">921 422 222</span>
+        </a>
+    </div>
 
-        // Cursor grab por defecto en escritorio
-        inner.style.cursor = 'grab';
+</main>
 
+<!-- BANNER FLOTANTE -->
+<div id="popupAnuncio" class="banner-emergente">
+    <p class="banner-texto">¿Tienes un negocio? Aparecer en esta web es <strong>GRATIS</strong>, solo tienes que rellenar el formulario.</p>
+    <div class="banner-acciones">
+        <a href="./inscripcion.html" class="btn-formulario">Inscribirme ya</a>
+        <button class="btn-cerrar-banner" onclick="cerrarPopup()">✕</button>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+    <p>Página optimizada de forma nativa para móviles y PC.</p>
+    <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+</footer>
+
+<script>
+/* ============================================================
+   CARRUSEL INFINITO
+============================================================ */
+(function () {
+    const inner = document.getElementById('carruselInner');
+    if (!inner) return;
+    const itemsOriginales = Array.from(inner.children);
+    itemsOriginales.forEach(item => inner.appendChild(item.cloneNode(true)));
+    const ITEM_ANCHO = 150;
+    let posicion = 0, arrastrando = false, inicioX = 0, posicionAlArrastrar = 0;
+    const anchoOriginal = itemsOriginales.length * ITEM_ANCHO;
+    function clamp(pos) { return ((pos % anchoOriginal) + anchoOriginal) % anchoOriginal; }
+    function moverCarrusel() {
+        if (!arrastrando) { posicion = clamp(posicion + 0.5); inner.style.transform = `translateX(-${posicion}px)`; }
         requestAnimationFrame(moverCarrusel);
-    })();
+    }
+    inner.addEventListener('mousedown', (e) => { arrastrando = true; inicioX = e.clientX; posicionAlArrastrar = posicion; inner.style.cursor = 'grabbing'; });
+    window.addEventListener('mousemove', (e) => { if (!arrastrando) return; posicion = clamp(posicionAlArrastrar + (inicioX - e.clientX)); inner.style.transform = `translateX(-${posicion}px)`; });
+    window.addEventListener('mouseup', () => { arrastrando = false; inner.style.cursor = 'grab'; });
+    inner.addEventListener('touchstart', (e) => { arrastrando = true; inicioX = e.touches[0].clientX; posicionAlArrastrar = posicion; }, { passive: true });
+    inner.addEventListener('touchmove', (e) => { if (!arrastrando) return; posicion = clamp(posicionAlArrastrar + (inicioX - e.touches[0].clientX)); inner.style.transform = `translateX(-${posicion}px)`; }, { passive: true });
+    inner.addEventListener('touchend', () => { arrastrando = false; });
+    inner.style.cursor = 'grab';
+    requestAnimationFrame(moverCarrusel);
+})();
 
+/* ============================================================
+   TAXIS
+============================================================ */
+const telefonosTaxis = ["628826577","666154968","649553180","639752456","722501122","697920835","662958026","690840809"];
+function llamarTaxiAzar() {
+    if (!telefonosTaxis.length) return;
+    window.location.href = `tel:${telefonosTaxis[Math.floor(Math.random() * telefonosTaxis.length)]}`;
+}
 
-    /* ============================================================
-       🌤️ TIEMPO, 🏥 FARMACIA y 📅 AGENDA
-    ============================================================ */
+/* ============================================================
+   FARMACIA DE GUARDIA
+============================================================ */
+const MAPS_SR        = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+San+Rafael+Travesia+Alto+del+Leon+19+San+Rafael";
+const MAPS_HONTANILLA = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+Aparicio+Av+Hontanilla+18+El+Espinar";
+const MAPS_PERALES   = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+El+Espinar+Calle+Marques+de+Perales+2+El+Espinar";
+const MAPS_GENERICO  = "https://elespinar.es/farmacias/";
 
-    // --- Taxis ---
-    const telefonosTaxis = [
-        "628826577", "666154968", "649553180", "639752456",
-        "722501122", "697920835", "662958026", "690840809"
-    ];
+const calendarioGuardias = [
+    { inicio:"2026-01-01",fin:"2026-01-04",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-01-05",fin:"2026-01-11",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-01-12",fin:"2026-01-18",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-01-19",fin:"2026-01-25",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-01-26",fin:"2026-02-01",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-02-02",fin:"2026-02-08",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-02-09",fin:"2026-02-15",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-02-16",fin:"2026-02-22",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-02-23",fin:"2026-03-01",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-03-02",fin:"2026-03-08",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-03-09",fin:"2026-03-15",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-03-16",fin:"2026-03-22",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-03-23",fin:"2026-03-29",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-03-30",fin:"2026-04-05",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-04-06",fin:"2026-04-12",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-04-13",fin:"2026-04-19",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-04-20",fin:"2026-04-26",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-04-27",fin:"2026-05-03",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-05-04",fin:"2026-05-10",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-05-11",fin:"2026-05-17",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-05-18",fin:"2026-05-24",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-05-25",fin:"2026-05-31",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-06-01",fin:"2026-06-07",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-06-08",fin:"2026-06-14",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-06-15",fin:"2026-06-21",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-06-22",fin:"2026-06-28",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-06-29",fin:"2026-07-05",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-07-06",fin:"2026-07-12",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-07-13",fin:"2026-07-19",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-07-20",fin:"2026-07-26",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-07-27",fin:"2026-08-02",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-08-03",fin:"2026-08-09",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-08-10",fin:"2026-08-16",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+    { inicio:"2026-08-17",fin:"2026-08-23",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+    { inicio:"2026-08-24",fin:"2026-08-30",farmacia:MAPS_SR,nombre:"San Rafael"},
+    { inicio:"2026-08-31",fin:"2026-09-06",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"}
+];
 
-    function llamarTaxiAzar() {
-        if (telefonosTaxis.length === 0) return;
-        const indice = Math.floor(Math.random() * telefonosTaxis.length);
-        window.location.href = `tel:${telefonosTaxis[indice]}`;
+function obtenerFechaLocal() {
+    const ahora = new Date();
+    return new Date(ahora.getTime() - ahora.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+}
+
+function obtenerTurnoHoy() {
+    const hoy = obtenerFechaLocal();
+    return calendarioGuardias.find(r => hoy >= r.inicio && hoy <= r.fin) || null;
+}
+
+function irAFarmaciaGuardiaHoy() {
+    const turno = obtenerTurnoHoy();
+    window.open(turno ? turno.farmacia : MAPS_GENERICO, "_blank", "noopener");
+}
+
+function cargarFarmacia() {
+    const turno = obtenerTurnoHoy();
+    document.getElementById("txtFarmaciaNombre").innerText = turno ? turno.nombre : "Consultar Guardia";
+}
+
+/* ============================================================
+   TIEMPO
+============================================================ */
+function cargarTiempoReal() {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=40.7183&longitude=-4.2415&current=temperature_2m,weather_code,is_day";
+    const btn = document.getElementById("botonTiempo");
+    fetch(url)
+        .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(data => {
+            const temp = Math.round(data.current.temperature_2m);
+            const code = data.current.weather_code;
+            const esDia = data.current.is_day === 1;
+            let icono = "☀️", estado = "Despejado", clase = "clima-soleado";
+            if (code === 0) { icono = esDia ? "☀️" : "🌙"; estado = "Despejado"; clase = esDia ? "clima-soleado" : "clima-nocturno"; }
+            else if (code >= 1 && code <= 3) { icono = esDia ? "⛅" : "☁️"; estado = "Intervalos"; clase = esDia ? "clima-nublado" : "clima-nocturno"; }
+            else if (code >= 45 && code <= 48) { icono = "🌫️"; estado = "Niebla"; clase = esDia ? "clima-nublado" : "clima-nocturno"; }
+            else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) { icono = "🌧️"; estado = "Lluvia"; clase = esDia ? "clima-lluvia" : "clima-nocturno"; }
+            else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) { icono = "❄️"; estado = "Nieve"; clase = esDia ? "clima-nieve" : "clima-nocturno"; }
+            else if (code >= 95) { icono = "⛈️"; estado = "Tormenta"; clase = esDia ? "clima-lluvia" : "clima-nocturno"; }
+            document.getElementById("tiempoIcono").innerText = icono;
+            document.getElementById("tiempoTexto").innerText = `${temp}°C · ${estado}`;
+            btn.className = `enlace-util ${clase}`;
+        })
+        .catch(() => {
+            document.getElementById("tiempoIcono").innerText = "🌤️";
+            document.getElementById("tiempoTexto").innerText = "Ver previsión";
+        });
+}
+
+/* ============================================================
+   AGENDA TICKER — lee del Google Sheet (mismo CSV que cartelera)
+============================================================ */
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zpL_RCmFxrwSfn0XMZPIIUhM52uV0HxKY33cZ89XtE9dfrvDJ9HSqFiA61SjXHQoaMvfYDKx/pub?output=csv";
+const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+
+function parseFechaSheet(s) {
+    if (!s) return null;
+    const l = s.trim();
+    if (l.includes('/')) {
+        const [d, m, y] = l.split('/').map(Number);
+        if (!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y, m - 1, d);
+    }
+    if (l.includes('-')) {
+        const [y, m, d] = l.split('-').map(Number);
+        if (!isNaN(y) && !isNaN(m) && !isNaN(d)) return new Date(y, m - 1, d);
+    }
+    return null;
+}
+
+function csvToObjects(csv) {
+    const lines = csv.split(/\r?\n/);
+    if (!lines.length) return [];
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    const result = [];
+    for (let i = 1; i < lines.length; i++) {
+        if (!lines[i].trim()) continue;
+        let cells = [], inQ = false, cell = '';
+        for (const ch of lines[i]) {
+            if (ch === '"') { inQ = !inQ; }
+            else if (ch === ',' && !inQ) { cells.push(cell.trim()); cell = ''; }
+            else { cell += ch; }
+        }
+        cells.push(cell.trim());
+        const obj = {};
+        headers.forEach((h, idx) => {
+            let v = (cells[idx] || '').replace(/^"|"$/g, '').trim();
+            obj[h] = v === 'null' || v === '' ? null : v;
+        });
+        if (obj.titulo) result.push(obj);
+    }
+    return result;
+}
+
+function iniciarTicker(textos) {
+    const wrap  = document.getElementById('agendaTickerWrap');
+    const inner = document.getElementById('agendaTickerInner');
+
+    if (textos.length === 0) {
+        inner.querySelector('.agenda-ticker-item').textContent = 'Ver Agenda Completa';
+        return;
     }
 
-    // --- Farmacia de guardia ---
-    const MAPS_SR        = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+San+Rafael+Travesia+Alto+del+Leon+19+San+Rafael";
-    const MAPS_HONTANILLA = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+Aparicio+Av+Hontanilla+18+El+Espinar";
-    const MAPS_PERALES   = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+El+Espinar+Calle+Marques+de+Perales+2+El+Espinar";
-    const MAPS_GENERICO  = "https://elespinar.es/farmacias/";
-
-    const calendarioGuardias = [
-        { inicio: "2026-01-01", fin: "2026-01-04", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-01-05", fin: "2026-01-11", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-01-12", fin: "2026-01-18", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-01-19", fin: "2026-01-25", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-01-26", fin: "2026-02-01", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-02-02", fin: "2026-02-08", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-02-09", fin: "2026-02-15", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-02-16", fin: "2026-02-22", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-02-23", fin: "2026-03-01", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-03-02", fin: "2026-03-08", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-03-09", fin: "2026-03-15", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-03-16", fin: "2026-03-22", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-03-23", fin: "2026-03-29", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-03-30", fin: "2026-04-05", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-04-06", fin: "2026-04-12", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-04-13", fin: "2026-04-19", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-04-20", fin: "2026-04-26", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-04-27", fin: "2026-05-03", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-05-04", fin: "2026-05-10", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-05-11", fin: "2026-05-17", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-05-18", fin: "2026-05-24", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-05-25", fin: "2026-05-31", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-06-01", fin: "2026-06-07", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-06-08", fin: "2026-06-14", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-06-15", fin: "2026-06-21", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-06-22", fin: "2026-06-28", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-06-29", fin: "2026-07-05", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-07-06", fin: "2026-07-12", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-07-13", fin: "2026-07-19", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-07-20", fin: "2026-07-26", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-07-27", fin: "2026-08-02", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-08-03", fin: "2026-08-09", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-08-10", fin: "2026-08-16", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" },
-        { inicio: "2026-08-17", fin: "2026-08-23", farmacia: MAPS_PERALES,    nombre: "C/ Marqués de Perales" },
-        { inicio: "2026-08-24", fin: "2026-08-30", farmacia: MAPS_SR,         nombre: "San Rafael" },
-        { inicio: "2026-08-31", fin: "2026-09-06", farmacia: MAPS_HONTANILLA, nombre: "Av. Hontanilla 18" }
-    ];
-
-    // --- Agenda ---
-    const listaEventos = [
-        { fecha: "2026-05-22", texto: "22 May: Jornadas KuPfunana" },
-        { fecha: "2026-05-23", texto: "23 May: Teatro 'El último que apague la luz'" },
-        { fecha: "2026-05-29", texto: "29 May: Prevención y Salud Mental" },
-        { fecha: "2026-05-29", texto: "29 May: Titirimundi en El Espinar" },
-        { fecha: "2026-05-30", texto: "30 May: Carga Leña Fest II Edición" },
-        { fecha: "2026-06-06", texto: "06 Jun: Música para Hitler (Teatro)" },
-        { fecha: "2026-06-07", texto: "07 Jun: Torneo Ajedrez Diputación" },
-        { fecha: "2026-06-19", texto: "19 Jun: Una Noche de Película (Orquesta)" },
-        { fecha: "2026-07-04", texto: "04 Jul: Gala Mundial de la Magia" },
-        { fecha: "2026-07-11", texto: "11 Jul: Monólogo de J.J. Vaquero" },
-        { fecha: "2026-07-25", texto: "25 Jul: Concierto Piano y Candelas Trío" }
-    ];
-
-    // --- Utilidades ---
-    function obtenerFechaLocal() {
-        const ahora = new Date();
-        const offset = ahora.getTimezoneOffset() * 60000;
-        const local = new Date(ahora.getTime() - offset);
-        return local.toISOString().split('T')[0];
+    if (textos.length === 1) {
+        inner.querySelector('.agenda-ticker-item').textContent = textos[0];
+        return;
     }
 
-    function obtenerTurnoHoy() {
-        try {
-            const hoy = obtenerFechaLocal();
-            for (let i = 0; i < calendarioGuardias.length; i++) {
-                const r = calendarioGuardias[i];
-                if (hoy >= r.inicio && hoy <= r.fin) return r;
-            }
-        } catch(e) { console.error(e); }
-        return null;
-    }
-
-    function irAFarmaciaGuardiaHoy() {
-        const turno = obtenerTurnoHoy();
-        window.open(turno ? turno.farmacia : MAPS_GENERICO, "_blank", "noopener");
-    }
-
-    // --- Carga del tiempo (Open-Meteo, gratuita, sin API key) ---
-    function cargarTiempoReal() {
-        const url = "https://api.open-meteo.com/v1/forecast?latitude=40.7183&longitude=-4.2415&current=temperature_2m,weather_code,is_day";
-        const btn = document.getElementById("botonTiempo");
-
-        fetch(url)
-            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
-            .then(data => {
-                const temp  = Math.round(data.current.temperature_2m);
-                const code  = data.current.weather_code;
-                const esDia = data.current.is_day === 1;
-
-                let icono = "☀️", estado = "Despejado", clase = "clima-soleado";
-
-                if (code === 0) {
-                    icono = esDia ? "☀️" : "🌙"; estado = "Despejado"; clase = esDia ? "clima-soleado" : "clima-nocturno";
-                } else if (code >= 1 && code <= 3) {
-                    icono = esDia ? "⛅" : "☁️"; estado = "Intervalos"; clase = esDia ? "clima-nublado" : "clima-nocturno";
-                } else if (code >= 45 && code <= 48) {
-                    icono = "🌫️"; estado = "Niebla"; clase = esDia ? "clima-nublado" : "clima-nocturno";
-                } else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) {
-                    icono = "🌧️"; estado = "Lluvia"; clase = esDia ? "clima-lluvia" : "clima-nocturno";
-                } else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) {
-                    icono = "❄️"; estado = "Nieve"; clase = esDia ? "clima-nieve" : "clima-nocturno";
-                } else if (code >= 95) {
-                    icono = "⛈️"; estado = "Tormenta"; clase = esDia ? "clima-lluvia" : "clima-nocturno";
-                }
-
-                document.getElementById("tiempoIcono").innerText = icono;
-                document.getElementById("tiempoTexto").innerText = `${temp}°C · ${estado}`;
-                btn.className = `enlace-util ${clase}`;
-            })
-            .catch(() => {
-                document.getElementById("tiempoIcono").innerText = "🌤️";
-                document.getElementById("tiempoTexto").innerText = "Ver previsión";
-            });
-    }
-
-    // --- Carga de la agenda ---
-    function cargarAgendaLocal() {
-        const txt   = document.getElementById("agendaTexto");
-        const hoy   = obtenerFechaLocal();
-        const prox  = listaEventos.find(e => e.fecha >= hoy);
-        txt.innerText = prox ? prox.texto : "Ver Agenda Completa";
-    }
-
-    // --- Farmacia en el botón ---
-    function cargarFarmacia() {
-        const txt   = document.getElementById("txtFarmaciaNombre");
-        const turno = obtenerTurnoHoy();
-        txt.innerText = turno ? turno.nombre : "Consultar Guardia";
-    }
-
-    // --- Popup banner ---
-    function mostrarPopup() {
-        setTimeout(() => {
-            document.getElementById('popupAnuncio').classList.add('activo');
-        }, 1500);
-    }
-
-    function cerrarPopup() {
-        document.getElementById('popupAnuncio').classList.remove('activo');
-    }
-
-    // --- Arranque ---
-    document.addEventListener('DOMContentLoaded', function () {
-        cargarFarmacia();
-        cargarTiempoReal();
-        cargarAgendaLocal();
-        mostrarPopup();
+    // Construir todos los items
+    inner.innerHTML = '';
+    textos.forEach(t => {
+        const span = document.createElement('span');
+        span.className = 'agenda-ticker-item';
+        span.textContent = t;
+        inner.appendChild(span);
     });
-    </script>
+
+    let idx = 0;
+    const INTERVALO = 3000; // ms entre rotaciones
+
+    setInterval(() => {
+        idx = (idx + 1) % textos.length;
+        inner.style.transform = `translateY(-${idx * 1.25}em)`;
+    }, INTERVALO);
+}
+
+async function cargarAgendaSheet() {
+    try {
+        const res  = await fetch(SHEET_CSV_URL);
+        const csv  = await res.text();
+        const rows = csvToObjects(csv);
+        const hoy  = obtenerFechaLocal();
+
+        const proximos = rows
+            .filter(ev => {
+                const f = parseFechaSheet(ev.fecha);
+                return f && f.toISOString().split('T')[0] >= hoy
+                    && (ev.aprobado || '').toLowerCase().trim() === 'ok';
+            })
+            .sort((a, b) => parseFechaSheet(a.fecha) - parseFechaSheet(b.fecha))
+            .slice(0, 6); // máximo 6 en el ticker
+
+        const textos = proximos.map(ev => {
+            const f = parseFechaSheet(ev.fecha);
+            const dia = String(f.getDate()).padStart(2, '0');
+            const mes = MESES_CORTO[f.getMonth()];
+            return `${dia} ${mes} · ${ev.titulo}`;
+        });
+
+        iniciarTicker(textos);
+    } catch (e) {
+        document.getElementById('agendaTickerInner').querySelector('.agenda-ticker-item').textContent = 'Ver Agenda';
+    }
+}
+
+/* ============================================================
+   POPUP
+============================================================ */
+function mostrarPopup() {
+    setTimeout(() => document.getElementById('popupAnuncio').classList.add('activo'), 1500);
+}
+function cerrarPopup() {
+    document.getElementById('popupAnuncio').classList.remove('activo');
+}
+
+/* ============================================================
+   ARRANQUE
+============================================================ */
+document.addEventListener('DOMContentLoaded', function () {
+    cargarFarmacia();
+    cargarTiempoReal();
+    cargarAgendaSheet();
+    mostrarPopup();
+});
+</script>
 
 </body>
 </html>
