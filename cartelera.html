@@ -62,6 +62,12 @@
         .cartel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
         .cartel:hover img { transform: scale(1.06); }
 
+        /* ── TEXTO FILTRAR ── */
+        .texto-filtrar { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin: 0 0 14px; cursor: pointer; transition: color 0.18s; text-align: left;}
+
+        .texto-filtrar:hover { color: #9f1239;}
+            
+
         /* ── PANEL DE INFORMACIÓN ── */
         .cartel-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
         .cartel-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -119,8 +125,10 @@
         .cartel-img-wrap { cursor: zoom-in; }
 
         /* ── BOTÓN PUBLICAR EVENTO ── */
-        .btn-publicar { display: flex; align-items: center; gap: 8px; margin: 0 auto 24px; background: #fff; border: 1.5px solid #e2e8f0; color: #64748b; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 18px; border-radius: 30px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
-        .btn-publicar:hover { border-color: #9f1239; color: #9f1239; box-shadow: 0 4px 14px rgba(159,18,57,0.12); }
+        .btn-publicar { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 18px; background: transparent; border: none; color: #9f1239; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase;
+    padding: 0; cursor: pointer; transition: opacity 0.18s; box-shadow: none; }
+
+.btn-publicar:hover { opacity: 0.7; }
         .btn-publicar-icon { font-size: 15px; }
 
         /* ── MODAL FORMULARIO ── */
@@ -197,8 +205,8 @@
         </div>
     </a>
 
-    <button class="btn-toggle-filtros" id="btn-toggle-filtros">🔍 Filtrar Eventos</button>
-
+<div class="texto-filtrar" id="btn-toggle-filtros">Filtrar</div>
+    
     <div class="filtros-wrap" id="filtros-wrap">
         <div class="filtro-grupo">
             <span class="filtro-label">Categoría</span>
