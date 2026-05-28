@@ -535,14 +535,19 @@ async function cargarAgendaSheet() {
         const rows = csvToObjects(csv);
         const hoy  = obtenerFechaLocal();
 
-        const proximos = rows
+        const todos = rows
             .filter(ev => {
                 const f = parseFechaSheet(ev.fecha);
                 return f && f.toISOString().split('T')[0] >= hoy
                     && (ev.aprobado || '').toLowerCase().trim() === 'ok';
             })
-            .sort((a, b) => parseFechaSheet(a.fecha) - parseFechaSheet(b.fecha))
-            .slice(0, 6); // máximo 6 en el ticker
+            .sort((a, b) => parseFechaSheet(a.fecha) - parseFechaSheet(b.fecha));
+
+        // Solo los eventos de la fecha más próxima
+        const fechaMasProxima = todos.length ? parseFechaSheet(todos[0].fecha).toISOString().split('T')[0] : null;
+        const proximos = fechaMasProxima
+            ? todos.filter(ev => parseFechaSheet(ev.fecha).toISOString().split('T')[0] === fechaMasProxima)
+            : [];
 
         const textos = proximos.map(ev => {
             const f = parseFechaSheet(ev.fecha);
