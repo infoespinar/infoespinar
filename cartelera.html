@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cartelera de Eventos | infoespinar.com</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Playfair+Display:wght@700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
@@ -30,6 +30,16 @@
         /* ── TÍTULO SECCIÓN ── */
         .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 0 0 28px; text-transform: uppercase; color: #9f1239; }
 
+        /* ── FILTROS ── */
+        .filtros-wrap { background: #fff; border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); display: flex; flex-direction: column; gap: 12px; }
+        .filtro-grupo { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
+        .filtro-label { font-size: 10px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #94a3b8; padding-top: 5px; white-space: nowrap; min-width: 68px; }
+        .filtro-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+        .filtro-pill { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1.5px solid #e2e8f0; background: transparent; color: #64748b; cursor: pointer; transition: all 0.18s; letter-spacing: 0.5px; }
+        .filtro-pill:hover { border-color: #9f1239; color: #9f1239; background: rgba(159,18,57,0.04); }
+        .filtro-pill.activo { background: #9f1239; border-color: #9f1239; color: #fff; }
+        .filtros-divider { height: 1px; background: #f1f5f9; margin: 0 -2px; }
+
         /* ── GRID DE CARTELES ── */
         .cartelera { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
 
@@ -41,16 +51,16 @@
         /* ── CARTEL ── */
         .cartel { position: relative; border-radius: 14px; overflow: hidden; text-decoration: none; color: #334155; display: block; transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), box-shadow 0.35s ease; box-shadow: 0 4px 18px rgba(0,0,0,0.12); background: #fff; }
         .cartel:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.18); }
+        .cartel.oculto { display: none; }
 
         /* ── IMAGEN: limpia, sin overlays ── */
         .cartel-img-wrap { position: relative; aspect-ratio: 2/3; overflow: hidden; }
         .cartel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
         .cartel:hover img { transform: scale(1.06); }
 
-        /* ── PANEL DE INFORMACIÓN (debajo de la imagen) ── */
+        /* ── PANEL DE INFORMACIÓN ── */
         .cartel-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
 
-        /* Fila superior: fecha + categoría */
         .cartel-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
         /* Badge fecha */
@@ -67,8 +77,8 @@
         .cat-deporte   { color: #0284c7; border-color: #0284c7; background: rgba(2,132,199,0.08); }
         .cat-mercado   { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.08); }
 
-        /* Título y lugar */
-        .cartel-titulo { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 700; line-height: 1.3; color: #1e293b; }
+        /* Título: Lato 700 — coherente con el resto */
+        .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; }
         .cartel-lugar { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
         .cartel-lugar::before { content: '📍 '; }
 
@@ -102,7 +112,8 @@
 
         @media (max-width: 500px) {
             .cartelera { grid-template-columns: repeat(2, 1fr); gap: 12px; }
-            .cartel-titulo { font-size: 14px; }
+            .cartel-titulo { font-size: 13px; }
+            .filtro-label { min-width: 58px; }
         }
     </style>
 </head>
@@ -130,6 +141,19 @@
         </div>
     </a>
 
+    <!-- Filtros rápidos — se rellenan dinámicamente -->
+    <div class="filtros-wrap" id="filtros-wrap" style="display:none;">
+        <div class="filtro-grupo">
+            <span class="filtro-label">Categoría</span>
+            <div class="filtro-pills" id="pills-categoria"></div>
+        </div>
+        <div class="filtros-divider"></div>
+        <div class="filtro-grupo">
+            <span class="filtro-label">Lugar</span>
+            <div class="filtro-pills" id="pills-lugar"></div>
+        </div>
+    </div>
+
     <div class="cartelera" id="cartelera"></div>
 
     <div class="disclaimer-box">
@@ -152,50 +176,37 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zp
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
-function parseFecha(s) { 
-    if(!s || typeof s !== 'string') return new Date();
+// Estado de filtros activos
+const filtros = { categoria: null, lugar: null };
+
+function parseFecha(s) {
+    if (!s || typeof s !== 'string') return new Date();
     const limpia = s.trim();
-    if(!limpia.includes('-')) return new Date();
-    const [y,m,d] = limpia.split('-').map(Number); 
+    if (!limpia.includes('-')) return new Date();
+    const [y, m, d] = limpia.split('-').map(Number);
     if (isNaN(y) || isNaN(m) || isNaN(d)) return new Date();
-    return new Date(y, m - 1, d); 
+    return new Date(y, m - 1, d);
 }
 
 function csvToObjects(csvText) {
     const lines = csvText.split(/\r?\n/);
     if (lines.length === 0) return [];
-    
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
     const result = [];
-    
     for (let i = 1; i < lines.length; i++) {
         if (!lines[i].trim()) continue;
-        
-        let currentLine = lines[i];
-        let cells = [];
-        let inQuotes = false;
-        let currentCell = '';
-        
-        for (let char of currentLine) {
-            if (char === '"') {
-                inQuotes = !inQuotes;
-            } else if (char === ',' && !inQuotes) {
-                cells.push(currentCell.trim());
-                currentCell = '';
-            } else {
-                currentCell += char;
-            }
+        let cells = [], inQuotes = false, currentCell = '';
+        for (let char of lines[i]) {
+            if (char === '"') { inQuotes = !inQuotes; }
+            else if (char === ',' && !inQuotes) { cells.push(currentCell.trim()); currentCell = ''; }
+            else { currentCell += char; }
         }
         cells.push(currentCell.trim());
-        
         const tituloIndex = headers.indexOf('titulo');
-        const fechaIndex = headers.indexOf('fecha');
         if (tituloIndex !== -1 && (!cells[tituloIndex] || cells[tituloIndex] === '""')) continue;
-        
         const obj = {};
         headers.forEach((header, index) => {
-            let val = cells[index] || '';
-            val = val.replace(/^"|"$/g, '').trim(); 
+            let val = (cells[index] || '').replace(/^"|"$/g, '').trim();
             if (val === 'null' || val === '') val = null;
             obj[header] = val;
         });
@@ -204,29 +215,87 @@ function csvToObjects(csvText) {
     return result;
 }
 
+// Aplica los filtros activos: muestra/oculta carteles y separadores de mes
+function aplicarFiltros() {
+    const carteles = document.querySelectorAll('.cartel');
+    carteles.forEach(c => {
+        const catOk = !filtros.categoria || c.dataset.cat === filtros.categoria;
+        const lugOk = !filtros.lugar    || c.dataset.lugar === filtros.lugar;
+        c.classList.toggle('oculto', !(catOk && lugOk));
+    });
+
+    // Ocultar separadores de mes que no tengan ningún cartel visible
+    const separadores = document.querySelectorAll('.mes-separador');
+    separadores.forEach(sep => {
+        // Recorre los elementos siguientes hasta el próximo separador
+        let siguiente = sep.nextElementSibling;
+        let tieneVisibles = false;
+        while (siguiente && !siguiente.classList.contains('mes-separador')) {
+            if (siguiente.classList.contains('cartel') && !siguiente.classList.contains('oculto')) {
+                tieneVisibles = true;
+                break;
+            }
+            siguiente = siguiente.nextElementSibling;
+        }
+        sep.style.display = tieneVisibles ? '' : 'none';
+    });
+}
+
+// Crea las píldoras de filtro para un grupo
+function crearPills(containerId, tipo, valores) {
+    const container = document.getElementById(containerId);
+    const todos = document.createElement('button');
+    todos.className = 'filtro-pill activo';
+    todos.textContent = 'Todos';
+    todos.addEventListener('click', () => {
+        filtros[tipo] = null;
+        container.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo'));
+        todos.classList.add('activo');
+        aplicarFiltros();
+    });
+    container.appendChild(todos);
+
+    valores.forEach(val => {
+        const pill = document.createElement('button');
+        pill.className = 'filtro-pill';
+        pill.textContent = val;
+        pill.addEventListener('click', () => {
+            filtros[tipo] = val;
+            container.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo'));
+            pill.classList.add('activo');
+            aplicarFiltros();
+        });
+        container.appendChild(pill);
+    });
+}
+
 async function cargarEventos() {
     try {
         const respuesta = await fetch(SHEET_CSV_URL);
         const textoCSV = await respuesta.text();
         const eventos = csvToObjects(textoCSV);
-        
+
         const grid = document.getElementById('cartelera');
         const marquee = document.getElementById('marquee-contenido');
-        const hoy = new Date(); 
-        hoy.setHours(0,0,0,0);
-        
-        const ordenados = [...eventos].sort((a,b) => parseFecha(a.fecha) - parseFecha(b.fecha));
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+
+        const ordenados = [...eventos].sort((a, b) => parseFecha(a.fecha) - parseFecha(b.fecha));
         let mesActual = null;
         let marqueeHTML = '';
+
+        // Recopilar valores únicos para los filtros
+        const categorias = [...new Set(ordenados.map(ev => ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura').filter(Boolean))];
+        const lugares    = [...new Set(ordenados.map(ev => ev.lugar || 'El Espinar').filter(Boolean))];
 
         ordenados.forEach(ev => {
             const fecha = parseFecha(ev.fecha);
             const mesKey = `${fecha.getMonth()}-${fecha.getFullYear()}`;
             const pasado = fecha < hoy;
+            const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
+            const lugar = ev.lugar || 'El Espinar';
 
-            if(!pasado) {
-                marqueeHTML += `<span>${ev.titulo}</span>`;
-            }
+            if (!pasado) marqueeHTML += `<span>${ev.titulo}</span>`;
 
             if (mesActual !== mesKey) {
                 mesActual = mesKey;
@@ -239,9 +308,10 @@ async function cargarEventos() {
             const tag = ev.url ? 'a' : 'div';
             const cartel = document.createElement(tag);
             cartel.className = 'cartel' + (pasado ? ' pasado' : '');
+            // Data attributes para filtrado
+            cartel.dataset.cat   = catClase;
+            cartel.dataset.lugar = lugar;
             if (ev.url) { cartel.href = ev.url; cartel.target = '_blank'; cartel.rel = 'noopener'; }
-
-            const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
 
             cartel.innerHTML = `
                 <div class="cartel-img-wrap">
@@ -251,22 +321,27 @@ async function cargarEventos() {
                 <div class="cartel-body">
                     <div class="cartel-meta">
                         <div class="cartel-fecha">
-                            <span class="fecha-dia">${String(fecha.getDate()).padStart(2,'0')}</span>
+                            <span class="fecha-dia">${String(fecha.getDate()).padStart(2, '0')}</span>
                             <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
                         </div>
                         <span class="cartel-cat cat-${catClase}">${catClase}</span>
                     </div>
                     <div class="cartel-titulo">${ev.titulo}</div>
-                    <div class="cartel-lugar">${ev.lugar || 'El Espinar'}</div>
+                    <div class="cartel-lugar">${lugar}</div>
                 </div>`;
             grid.appendChild(cartel);
         });
 
-        if(marqueeHTML) {
-            marquee.innerHTML = marqueeHTML + marqueeHTML;
-        } else {
-            marquee.innerHTML = "<span>No hay eventos próximos programados</span>";
+        // Construir filtros sólo si hay más de un valor en cada grupo
+        if (categorias.length > 1 || lugares.length > 1) {
+            document.getElementById('filtros-wrap').style.display = '';
+            if (categorias.length > 1) crearPills('pills-categoria', 'categoria', categorias);
+            else document.querySelector('.filtro-grupo:first-child').style.display = 'none';
+            if (lugares.length > 1) crearPills('pills-lugar', 'lugar', lugares);
+            else document.querySelector('.filtros-divider').style.display = 'none', document.querySelector('.filtro-grupo:last-child').style.display = 'none';
         }
+
+        marquee.innerHTML = marqueeHTML ? marqueeHTML + marqueeHTML : "<span>No hay eventos próximos programados</span>";
 
         document.querySelectorAll('.cartel').forEach(c => {
             c.addEventListener('mouseenter', () => pausaHover = true);
@@ -286,13 +361,13 @@ let activo = true;
 let pausaHover = false;
 let pausaManual = false;
 let timerManual;
-const VEL = 0.6; 
+const VEL = 0.6;
 
 (function loop() {
     if (activo && !pausaHover && !pausaManual) {
         const max = document.documentElement.scrollHeight - window.innerHeight;
-        if(max > 0) {
-            window.scrollY >= max ? window.scrollTo({top:0,behavior:'instant'}) : window.scrollBy(0, VEL);
+        if (max > 0) {
+            window.scrollY >= max ? window.scrollTo({ top: 0, behavior: 'instant' }) : window.scrollBy(0, VEL);
         }
     }
     requestAnimationFrame(loop);
@@ -310,7 +385,7 @@ btnScroll.addEventListener('click', () => {
     btnScroll.textContent = activo ? '▶' : '⏸';
     btnScroll.classList.toggle('pausado', !activo);
 });
-document.getElementById('btnTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+document.getElementById('btnTop').addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 </script>
 
 </body>
