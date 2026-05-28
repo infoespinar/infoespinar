@@ -94,7 +94,7 @@
         .cat-teatro    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
         .cat-infantil  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
 
-        .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; }
+        .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; text-transform: uppercase; }
         .cartel-lugar { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
         .cartel-lugar::before { content: '📍 '; }
         .cartel-web { font-style: normal; font-size: 12px; margin-left: 4px; opacity: 0.7; }
@@ -185,7 +185,7 @@
     <h2 class="titulo-seccion-principal">Cartelera de Eventos</h2>
 
     <!-- BOTÓN PUBLICAR — encima del banner -->
-    <button class="btn-publicar" id="btn-publicar"> Publica Tu Evento </button>
+    <button class="btn-publicar" id="btn-publicar">Publica Tu Evento</button>
 
     <a href="mailto:info@infoespinar.com" class="banner-comercio">
         <div class="banner-info">
@@ -237,7 +237,7 @@
             <div class="form-row">
                 <div class="form-group" style="grid-column: 1 / -1">
                     <label class="form-label">Título del evento *</label>
-                    <input class="form-input" id="f-titulo" type="text" placeholder="Ej: Concierto de verano" maxlength="80" required oninput="this.value=this.value.toUpperCase()>
+                    <input class="form-input" id="f-titulo" type="text" placeholder="Ej: Concierto de verano" maxlength="80" style="text-transform:uppercase">
                 </div>
             </div>
             <div class="form-row">
@@ -263,7 +263,13 @@
             </div>
             <div class="form-group">
                 <label class="form-label">Lugar *</label>
-                <input class="form-input" id="f-lugar" type="text" placeholder="Ej: Plaza Mayor, El Espinar">
+                <select class="form-select" id="f-lugar">
+                    <option value="">— Elige —</option>
+                    <option>EL ESPINAR</option>
+                    <option>SAN RAFAEL</option>
+                    <option>LASR</option>
+                    <option>LA ESTACIÓN</option>
+                </select>
             </div>
             <div class="form-group">
                 <label class="form-label">Enlace web <span style="font-weight:400;text-transform:none">(opcional)</span></label>
@@ -558,7 +564,7 @@ async function subirImagen(file) {
 }
 
 document.getElementById('btn-submit').addEventListener('click', async () => {
-    const titulo    = document.getElementById('f-titulo').value.trim();
+    const titulo    = document.getElementById('f-titulo').value.trim().toUpperCase();
     const fecha     = document.getElementById('f-fecha').value;
     const categoria = document.getElementById('f-categoria').value;
     const lugar     = document.getElementById('f-lugar').value.trim();
