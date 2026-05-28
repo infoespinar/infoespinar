@@ -60,31 +60,21 @@
         .agenda-color .titulo-boton { color: #a21caf; }
 
         /* ── AGENDA WIDGET: scroll vertical ── */
-        .agenda-ticker-wrap {
-            overflow: hidden;
-            height: 1.5em;
-            padding-bottom: 0.25em;
-            position: relative;
-        }
-        .agenda-ticker-inner {
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        .agenda-ticker-wrap { position: relative; height: 1.3em; overflow: hidden; }
         .agenda-ticker-item {
-            display: block;
+            position: absolute;
+            inset: 0;
             font-size: 12px;
             font-weight: 700;
             color: #701a75;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            line-height: 1.25em;
-            height: 1.25em;
-            flex-shrink: 0;
+            line-height: 1.3em;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
-        /* fallback texto único sin ticker */
-        .agenda-ticker-wrap.sin-ticker .agenda-ticker-item { color: #701a75; }
+        .agenda-ticker-item.visible { opacity: 1; }
 
         /* Climas */
         .clima-soleado { background-color: #fef9c3 !important; border-color: #fde047 !important; }
@@ -231,9 +221,7 @@
             <div style="min-width:0;flex:1;">
                 <span class="titulo-boton">AGENDA CULTURAL</span>
                 <div class="agenda-ticker-wrap" id="agendaTickerWrap">
-                    <div class="agenda-ticker-inner" id="agendaTickerInner">
-                        <span class="agenda-ticker-item" id="agendaFallback">Cargando eventos...</span>
-                    </div>
+                    <span class="agenda-ticker-item visible">Cargando...</span>
                 </div>
             </div>
         </a>
@@ -498,34 +486,32 @@ function csvToObjects(csv) {
 }
 
 function iniciarTicker(textos) {
-    const wrap  = document.getElementById('agendaTickerWrap');
-    const inner = document.getElementById('agendaTickerInner');
+    const wrap = document.getElementById('agendaTickerWrap');
 
     if (textos.length === 0) {
-        inner.querySelector('.agenda-ticker-item').textContent = 'Ver Agenda Completa';
+        wrap.innerHTML = '<span class="agenda-ticker-item visible">Ver Agenda</span>';
         return;
     }
 
-    if (textos.length === 1) {
-        inner.querySelector('.agenda-ticker-item').textContent = textos[0];
-        return;
-    }
-
-    // Construir todos los items
-    inner.innerHTML = '';
-    textos.forEach(t => {
+    // Construir todos los items superpuestos
+    wrap.innerHTML = '';
+    textos.forEach((t, i) => {
         const span = document.createElement('span');
-        span.className = 'agenda-ticker-item';
+        span.className = 'agenda-ticker-item' + (i === 0 ? ' visible' : '');
         span.textContent = t;
-        inner.appendChild(span);
+        wrap.appendChild(span);
     });
 
+    if (textos.length === 1) return; // solo uno, no hace falta rotar
+
     let idx = 0;
-    const INTERVALO = 3000; // ms entre rotaciones
+    const items = wrap.querySelectorAll('.agenda-ticker-item');
+    const INTERVALO = 3000;
 
     setInterval(() => {
-        idx = (idx + 1) % textos.length;
-        inner.style.transform = `translateY(-${idx * 1.25}em)`;
+        items[idx].classList.remove('visible');
+        idx = (idx + 1) % items.length;
+        items[idx].classList.add('visible');
     }, INTERVALO);
 }
 
@@ -559,7 +545,7 @@ async function cargarAgendaSheet() {
 
         iniciarTicker(textos);
     } catch (e) {
-        document.getElementById('agendaTickerInner').querySelector('.agenda-ticker-item').textContent = 'Ver Agenda';
+        document.getElementById('agendaTickerWrap').innerHTML = '<span class="agenda-ticker-item visible">Ver Agenda</span>';
     }
 }
 
