@@ -17,6 +17,9 @@
         .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1 / 1; }
         .header h1 { font-size: 20px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
+        .txt-eventos { color: ##9f1239; }
+        .txt-talleres { color: #e11d48; }
+
         .main-container { max-width: 1200px; margin: 0 auto; padding: 20px 12px; }
         .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; color: #9f1239; }
         .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
@@ -42,7 +45,18 @@
         .btn-llamar { background-color: #0f172a; }
         .btn-whatsapp { background-color: #10b981; }
         .btn-email { background-color: #f59e0b; color: #fff; }
+        .btn-maps    { background-color: #1a73e8; width: 100%; }
 
+        .enlace-web { display: inline-block;  font-size: 13.5px; color: #475569; text-decoration: none; font-weight: 400; margin-bottom: 8px; word-break: break-all;}
+        .enlace-web:hover { text-decoration: underline; olor: #7c3aed; }
+
+        .badge-tipo {display: inline-block; background-color: #FCA5A5; color: #111111;
+    font-size: 9px; font-weight: 700;padding: 3px 8px;border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+}
+            
         .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
     </style>
@@ -57,7 +71,8 @@
     </header>
 
     <main class="main-container">
-        <h2 class="titulo-seccion-principal">Eventos</h2>
+        <h2 class="titulo-seccion-principal">
+        <span class="txt-eventos">Eventos y</span> <span class="txt-talleres">Talleres</span></h2>
         <div class="titulo-bloque">Localización de servicios</div>
         <div class="contenedor-mapa-fijo"><div class="map-wrapper"><iframe src="https://www.google.com/maps/d/embed?mid=1PYGI-pAZ47aV4WQjSm4izhTG878ntgI&ehbc=2E312F&noprof=1"></iframe></div></div>
 
@@ -78,6 +93,26 @@
                 <div class="direccion-comercio">📍 Calle Cristo del Caloco, 5, El Espinar</div>
                 <div class="btn-group"><a href="tel:+34696935916" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34696935916" class="btn btn-whatsapp">💬 WhatsApp</a></div>
             </div>
+
+            <div class="tarjeta-comercio" data-search="borratejo concept store regalos artesania manualidades arte ceramica reciclaje">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Borratejo Concept Store</div>
+                    <span class="badge-tipo">Talleres</span>
+                    <a href="https://borrajetoconcept-store.my.canva.site/a-adir-un-t-tulo?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn7uMVLjZfK4cnyZYj73tMt20-0a8LikOXHLolXp-Md_ZRby7iUXYup7BR8es_aem_cBzCPZEc3bT1kSZeNiNlfA" target="_blank" rel="noopener" class="enlace-web">🌐 https://borrajetoconcept-store</a>
+                    <div class="direccion-comercio">📍 C. Bruno Ortega, 7, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="btn-group">
+                            <a href="tel:+34638250114" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34638250114" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="https://maps.google.com/?q=Borratejo+Concept+Store+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:borrajeto@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                    </div></div>
+                </div>
+            </div>
+    </div>
+
+
+
+            
         </div>
 
         <div class="disclaimer-box">
