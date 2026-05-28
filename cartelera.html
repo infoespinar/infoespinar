@@ -35,7 +35,7 @@
         .filtro-grupo { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
         .filtro-label { font-size: 10px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #94a3b8; padding-top: 5px; white-space: nowrap; min-width: 68px; }
         .filtro-pills { display: flex; flex-wrap: wrap; gap: 6px; }
-        .filtro-pill { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1.5px solid #e2e8f0; background: transparent; color: #64748b; cursor: pointer; transition: all 0.18s; letter-spacing: 0.5px; }
+        .filtro-pill { font-size: 11px; font-weight: 700; padding: 4px 12px; border-radius: 20px; border: 1.5px solid #e2e8f0; background: transparent; color: #64748b; cursor: pointer; transition: all 0.18s; letter-spacing: 0.5px; text-transform: uppercase; }
         .filtro-pill:hover { border-color: #9f1239; color: #9f1239; background: rgba(159,18,57,0.04); }
         .filtro-pill.activo { background: #9f1239; border-color: #9f1239; color: #fff; }
         .filtros-divider { height: 1px; background: #f1f5f9; margin: 0 -2px; }
@@ -70,16 +70,16 @@
 
         /* Badge categoría */
         .cartel-cat { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
-        .cat-MÚSICA    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
-        .cat-CULTURA   { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
-        .cat-TALLERES  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
-        .cat-FIESTAS   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
-        .cat-DEPORTE   { color: #0284c7; border-color: #0284c7; background: rgba(2,132,199,0.08); }
-        .cat-MERCADO   { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.08); }
-        .cat-CONCIERTO { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
-        .cat-POPULAR   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
-        .cat-TEATRO    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
-        .cat-INFANTIL  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
+        .cat-musica    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
+        .cat-cultura   { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
+        .cat-talleres  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
+        .cat-fiestas   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
+        .cat-deporte   { color: #0284c7; border-color: #0284c7; background: rgba(2,132,199,0.08); }
+        .cat-mercado   { color: #b45309; border-color: #b45309; background: rgba(180,83,9,0.08); }
+        .cat-concierto { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
+        .cat-popular   { color: #db2777; border-color: #db2777; background: rgba(219,39,119,0.08); }
+        .cat-teatro    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
+        .cat-infantil  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
 
         /* Título: Lato 700 — coherente con el resto */
         .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; }
@@ -120,10 +120,58 @@
         .lb-cerrar:hover { background: rgba(255,255,255,0.25); }
         .cartel-img-wrap { cursor: zoom-in; }
 
+        /* ── BOTÓN PUBLICAR EVENTO ── */
+        .btn-publicar { display: flex; align-items: center; gap: 8px; margin: 0 auto 24px; background: #fff; border: 1.5px solid #e2e8f0; color: #64748b; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 18px; border-radius: 30px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .btn-publicar:hover { border-color: #9f1239; color: #9f1239; box-shadow: 0 4px 14px rgba(159,18,57,0.12); }
+        .btn-publicar-icon { font-size: 15px; }
+
+        /* ── MODAL FORMULARIO ── */
+        .modal-overlay { display: none; position: fixed; inset: 0; z-index: 900; background: rgba(15,23,42,0.7); align-items: center; justify-content: center; padding: 16px; backdrop-filter: blur(4px); }
+        .modal-overlay.abierto { display: flex; animation: lbFadeIn 0.2s ease; }
+        .modal-box { background: #fff; border-radius: 18px; width: 100%; max-width: 520px; max-height: 90vh; overflow-y: auto; box-shadow: 0 24px 60px rgba(0,0,0,0.3); animation: lbZoomIn 0.22s cubic-bezier(0.25,0.46,0.45,0.94); }
+        .modal-header { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: #fff; padding: 20px 24px 16px; border-radius: 18px 18px 0 0; position: relative; }
+        .modal-header h3 { font-size: 17px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        .modal-header p { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+        .modal-cerrar { position: absolute; top: 14px; right: 16px; background: rgba(255,255,255,0.15); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.18s; }
+        .modal-cerrar:hover { background: rgba(255,255,255,0.28); }
+        .modal-body { padding: 22px 24px 24px; display: flex; flex-direction: column; gap: 16px; }
+        .form-group { display: flex; flex-direction: column; gap: 5px; }
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .form-label { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #64748b; }
+        .form-input, .form-select { font-family: 'Lato', sans-serif; font-size: 14px; color: #1e293b; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 9px; padding: 9px 12px; width: 100%; transition: border-color 0.18s, box-shadow 0.18s; outline: none; }
+        .form-input:focus, .form-select:focus { border-color: #9f1239; box-shadow: 0 0 0 3px rgba(159,18,57,0.08); background: #fff; }
+        .form-input::placeholder { color: #cbd5e1; }
+        .form-hint { font-size: 11px; color: #94a3b8; }
+
+        /* Upload imagen */
+        .img-upload-area { border: 2px dashed #e2e8f0; border-radius: 10px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.2s; background: #f8fafc; position: relative; }
+        .img-upload-area:hover, .img-upload-area.drag { border-color: #9f1239; background: #fdf2f4; }
+        .img-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
+        .img-upload-icon { font-size: 26px; margin-bottom: 6px; }
+        .img-upload-text { font-size: 12px; color: #64748b; font-weight: 700; }
+        .img-upload-sub { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+        .img-preview { width: 100%; max-height: 160px; object-fit: cover; border-radius: 8px; display: none; margin-top: 10px; }
+        .img-status { font-size: 11px; margin-top: 6px; min-height: 16px; }
+        .img-status.ok  { color: #059669; }
+        .img-status.err { color: #dc2626; }
+        .img-status.loading { color: #9f1239; }
+
+        /* Submit */
+        .btn-submit { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: #fff; border: none; border-radius: 10px; padding: 13px; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 900; letter-spacing: 0.5px; cursor: pointer; transition: opacity 0.2s, transform 0.15s; text-transform: uppercase; }
+        .btn-submit:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .form-aviso { font-size: 11px; color: #94a3b8; text-align: center; line-height: 1.5; }
+        .form-ok { display: none; flex-direction: column; align-items: center; gap: 10px; padding: 20px 0 8px; text-align: center; }
+        .form-ok-icon { font-size: 44px; }
+        .form-ok h4 { font-size: 17px; font-weight: 900; color: #1e293b; }
+        .form-ok p { font-size: 13px; color: #64748b; }
+
         @media (max-width: 500px) {
             .cartelera { grid-template-columns: repeat(2, 1fr); gap: 12px; }
             .cartel-titulo { font-size: 13px; }
             .filtro-label { min-width: 58px; }
+            .form-row { grid-template-columns: 1fr; }
+            .modal-body { padding: 18px 16px 20px; }
         }
     </style>
 </head>
@@ -151,6 +199,10 @@
         </div>
     </a>
 
+    <button class="btn-publicar" id="btn-publicar">
+        <span class="btn-publicar-icon">📅</span> Publicar Evento
+    </button>
+
     <!-- Filtros rápidos — se rellenan dinámicamente -->
     <div class="filtros-wrap" id="filtros-wrap" style="display:none;">
         <div class="filtro-grupo">
@@ -174,6 +226,72 @@
 <footer class="footer">
     <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
 </footer>
+
+<!-- Modal: Publicar Evento -->
+<div class="modal-overlay" id="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h3>📅 Publicar un Evento</h3>
+            <p>Revisaremos tu propuesta antes de publicarla</p>
+            <button class="modal-cerrar" id="modal-cerrar">✕</button>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <div class="form-row">
+                <div class="form-group" style="grid-column: 1 / -1">
+                    <label class="form-label">Título del evento *</label>
+                    <input class="form-input" id="f-titulo" type="text" placeholder="Ej: Concierto de verano" maxlength="80">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label">Fecha *</label>
+                    <input class="form-input" id="f-fecha" type="date">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Categoría *</label>
+                    <select class="form-select" id="f-categoria">
+                        <option value="">— Elige —</option>
+                        <option>CONCIERTO</option>
+                        <option>POPULAR</option>
+                        <option>CULTURA</option>
+                        <option>FIESTAS</option>
+                        <option>DEPORTE</option>
+                        <option>MERCADO</option>
+                        <option>TALLERES</option>
+                        <option>TEATRO</option>
+                        <option>INFANTIL</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Lugar *</label>
+                <input class="form-input" id="f-lugar" type="text" placeholder="Ej: Plaza Mayor, El Espinar">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Enlace web <span style="font-weight:400;text-transform:none">(opcional)</span></label>
+                <input class="form-input" id="f-url" type="url" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Imagen del cartel <span style="font-weight:400;text-transform:none">(opcional)</span></label>
+                <div class="img-upload-area" id="upload-area">
+                    <input type="file" id="f-imagen" accept="image/*">
+                    <div class="img-upload-icon">🖼️</div>
+                    <div class="img-upload-text">Arrastra o haz clic para subir</div>
+                    <div class="img-upload-sub">JPG, PNG — máx. 5 MB</div>
+                </div>
+                <img class="img-preview" id="img-preview" alt="Vista previa">
+                <div class="img-status" id="img-status"></div>
+            </div>
+            <button class="btn-submit" id="btn-submit">Enviar para revisión</button>
+            <p class="form-aviso">Tu evento será revisado antes de aparecer en la cartelera. No publicamos eventos con fines comerciales no locales.</p>
+            <div class="form-ok" id="form-ok">
+                <div class="form-ok-icon">✅</div>
+                <h4>¡Evento enviado!</h4>
+                <p>Lo revisaremos pronto. Gracias por contribuir a la cartelera.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Lightbox -->
 <div class="lb-overlay" id="lb-overlay">
@@ -299,7 +417,7 @@ async function cargarEventos() {
         hoy.setHours(0, 0, 0, 0);
 
         const ordenados = [...eventos]
-            .filter(ev => parseFecha(ev.fecha) >= hoy)
+            .filter(ev => parseFecha(ev.fecha) >= hoy && (ev.aprobado || '').toLowerCase().trim() === 'ok')
             .sort((a, b) => parseFecha(a.fecha) - parseFecha(b.fecha));
         let mesActual = null;
         let marqueeHTML = '';
@@ -311,11 +429,10 @@ async function cargarEventos() {
         ordenados.forEach(ev => {
             const fecha = parseFecha(ev.fecha);
             const mesKey = `${fecha.getMonth()}-${fecha.getFullYear()}`;
-            const pasado = false; // los eventos pasados se filtran antes de llegar aquí
             const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
             const lugar = ev.lugar || 'El Espinar';
 
-            if (!pasado) marqueeHTML += `<span>${ev.titulo}</span>`;
+            marqueeHTML += `<span>${ev.titulo}</span>`;
 
             if (mesActual !== mesKey) {
                 mesActual = mesKey;
@@ -328,7 +445,7 @@ async function cargarEventos() {
             // El cartel es siempre un div — la imagen va al lightbox,
             // el panel de info es el enlace si hay URL
             const cartel = document.createElement('div');
-            cartel.className = 'cartel' + (pasado ? ' pasado' : '');
+            cartel.className = 'cartel';
             cartel.dataset.cat   = catClase;
             cartel.dataset.lugar = lugar;
 
@@ -383,7 +500,117 @@ async function cargarEventos() {
 
 cargarEventos();
 
-// ── LIGHTBOX CONTROL ─────────────────────────────────────────────────────────
+// ── FORMULARIO PUBLICAR EVENTO ───────────────────────────────────────────────
+// ⚠️ REEMPLAZA estas dos constantes con tus valores reales:
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVCNJEtMhq8Q-YK1QtY4kM0HSDzLMuTTWS2PCTCWi5qb7pFv7KnrIUt2CH1WnPGygB/exec';
+const IMGBB_API_KEY   = '889d9ccbbcd91efdb92e1cdaee18b11d'; // obtén la tuya gratis en imgbb.com/api
+
+const modalOverlay = document.getElementById('modal-overlay');
+
+document.getElementById('btn-publicar').addEventListener('click', () => {
+    modalOverlay.classList.add('abierto');
+    document.body.style.overflow = 'hidden';
+});
+document.getElementById('modal-cerrar').addEventListener('click', cerrarModal);
+modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) cerrarModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
+
+function cerrarModal() {
+    modalOverlay.classList.remove('abierto');
+    document.body.style.overflow = '';
+}
+
+// Vista previa de imagen
+const inputImg = document.getElementById('f-imagen');
+inputImg.addEventListener('change', () => {
+    const file = inputImg.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        const preview = document.getElementById('img-preview');
+        preview.src = e.target.result;
+        preview.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+});
+
+// Drag & drop visual
+const uploadArea = document.getElementById('upload-area');
+uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag'); });
+uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag'));
+uploadArea.addEventListener('drop', (e) => {
+    e.preventDefault();
+    uploadArea.classList.remove('drag');
+    if (e.dataTransfer.files[0]) { inputImg.files = e.dataTransfer.files; inputImg.dispatchEvent(new Event('change')); }
+});
+
+// Subir imagen a ImgBB y obtener URL
+async function subirImagen(file) {
+    const status = document.getElementById('img-status');
+    status.textContent = 'Subiendo imagen…';
+    status.className = 'img-status loading';
+    const formData = new FormData();
+    formData.append('image', file);
+    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
+        method: 'POST',
+        body: formData
+    });
+    const data = await res.json();
+    if (data.success) {
+        status.textContent = '✓ Imagen subida correctamente';
+        status.className = 'img-status ok';
+        return data.data.url;
+    } else {
+        status.textContent = '✗ Error al subir la imagen';
+        status.className = 'img-status err';
+        return null;
+    }
+}
+
+// Envío del formulario
+document.getElementById('btn-submit').addEventListener('click', async () => {
+    const titulo    = document.getElementById('f-titulo').value.trim();
+    const fecha     = document.getElementById('f-fecha').value;
+    const categoria = document.getElementById('f-categoria').value;
+    const lugar     = document.getElementById('f-lugar').value.trim();
+    const url       = document.getElementById('f-url').value.trim();
+    const file      = inputImg.files[0];
+
+    if (!titulo || !fecha || !categoria || !lugar) {
+        alert('Por favor rellena los campos obligatorios: título, fecha, categoría y lugar.');
+        return;
+    }
+
+    const btn = document.getElementById('btn-submit');
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+
+    // Convertir fecha de YYYY-MM-DD a DD/MM/YYYY para el Sheet
+    const [y, m, d] = fecha.split('-');
+    const fechaSheet = `${d}/${m}/${y}`;
+
+    // Subir imagen si hay una
+    let imagenUrl = '';
+    if (file) {
+        imagenUrl = await subirImagen(file) || '';
+    }
+
+    try {
+        await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ titulo, fecha: fechaSheet, lugar, categoria, url: url || '', imagen: imagenUrl })
+        });
+        // no-cors no devuelve respuesta legible, asumimos éxito si no hay excepción
+        document.getElementById('modal-body').querySelectorAll('.form-group, .btn-submit, .form-aviso').forEach(el => el.style.display = 'none');
+        document.getElementById('form-ok').style.display = 'flex';
+    } catch (err) {
+        alert('Ha ocurrido un error al enviar. Inténtalo de nuevo.');
+        btn.disabled = false;
+        btn.textContent = 'Enviar para revisión';
+    }
+});
 function cerrarLightbox() {
     document.getElementById('lb-overlay').classList.remove('abierto');
     document.body.style.overflow = '';
