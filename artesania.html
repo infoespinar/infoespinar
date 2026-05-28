@@ -28,12 +28,46 @@
         .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; }
         .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #db2777; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; }
         .nombre-comercio { font-size: 18px; font-weight: 700; color: #db2777; margin-bottom: 15px; }
-        
+
+        .enlace-web { display: inline-block;  font-size: 13.5px;
+            color: #475569;
+            text-decoration: none;
+            font-weight: 400;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .enlace-web:hover { text-decoration: underline; olor: #7c3aed; }
         .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
         .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; color: white; }
         .btn-llamar { background-color: #0f172a; }
         .btn-instagram { background-color: #e1306c; color: #fff; }
+        .btn:hover { opacity: 0.9; }
+        .btn-whatsapp { background-color: #10b981; flex: 1; }
+        .btn-maps    { background-color: #1a73e8; width: 100%; }
+        .btn-mail   { background-color: #facc15; color: #000000; width: 100%; }
 
+        .burbuja-nucleo {
+            display: inline-block;
+            background-color: #f3f0fa;
+            color: #5b21b6;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border: 1px solid #ddd6fe;
+        }
+
+        .direccion-comercio {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 20px;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+
+        
         .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
     </style>
@@ -65,7 +99,23 @@
                     <a href="https://www.instagram.com/eltallerdeboli/" class="btn btn-instagram">📸 Instagram</a>
                 </div>
             </div>
-        </div>
+        
+        
+        <div class="tarjeta-comercio" data-search="borratejo concept store regalos artesania manualidades arte ceramica reciclaje">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Borratejo Concept Store</div>
+                    <a href="https://borrajetoconcept-store.my.canva.site/a-adir-un-t-tulo?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPOTM2NjE5NzQzMzkyNDU5AAGn7uMVLjZfK4cnyZYj73tMt20-0a8LikOXHLolXp-Md_ZRby7iUXYup7BR8es_aem_cBzCPZEc3bT1kSZeNiNlfA" target="_blank" rel="noopener" class="enlace-web">🌐 https://borrajetoconcept-store</a>
+                    <div class="direccion-comercio">📍 C. Bruno Ortega, 7, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="btn-group">
+                            <a href="tel:+34638250114" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="https://wa.me/34638250114" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="https://maps.google.com/?q=Borratejo+Concept+Store+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="mailto:borrajeto@gmail.com" class="btn btn-mail">📧 Enviar Email</a>
+                    </div></div>
+                </div>
+            </div>
+    </div>
 
         <div class="disclaimer-box">
             <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas. Si observa algún error o desea actualizar su información, por favor póngase en contacto con nosotros.
