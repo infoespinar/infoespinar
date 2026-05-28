@@ -4,98 +4,93 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Taxis en El Espinar - InfoEspinar</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* 🎨 1. CONFIGURACIÓN GENERAL / RESET */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Lato', sans-serif;
-            background-color: #f8fafc; /* Gris azulado muy limpio */
+            background-color: #f8fafc;
             color: #1e293b;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { width: 100%; max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-        /* 🟦 2. CABECERA (HEADER) IDÉNTICA AL INDEX */
+        /* ── HEADER ── */
         header {
-            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #0ea5e9 45%, #22c55e 100%);
             color: white;
-            padding: 30px 0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            padding: 24px 20px 30px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.10);
+            position: relative;
+            overflow: hidden;
         }
 
-        .header-content {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
+        header::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(255,255,255,0.12), transparent 35%);
+            pointer-events: none;
         }
 
-        /* Enlace de volver atrás limpio */
-        .btn-volver {
-            align-self: flex-start;
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 700;
+        .header-logo-link {
+            position: relative;
+            z-index: 2;
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            background-color: rgba(255, 255, 255, 0.15);
-            padding: 6px 14px;
-            border-radius: 20px;
-            transition: background 0.2s;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(6px);
+            padding: 10px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s;
+            margin-bottom: 18px;
         }
 
-        .btn-volver:hover {
-            background-color: rgba(255, 255, 255, 0.25);
+        .header-logo-link:hover {
+            background: rgba(255,255,255,0.22);
+            transform: translateY(-1px);
         }
 
-        .header-main {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+        .header-bandera {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border-radius: 6px;
         }
 
-        .header-title h1 {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
+        .header-logo-link span {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
         }
 
-        .header-title p {
-            font-size: 14px;
-            color: #bfdbfe;
-            margin-top: 4px;
-        }
-
-        /* Buscador integrado y funcional */
         .search-container {
             position: relative;
+            z-index: 2;
             width: 100%;
             max-width: 320px;
+            margin: 0 auto;
         }
 
         .search-input {
             width: 100%;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            background-color: rgba(255, 255, 255, 0.2);
+            padding: 13px 16px;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background-color: rgba(255,255,255,0.16);
+            backdrop-filter: blur(6px);
             color: white;
             font-size: 14px;
             font-family: 'Lato', sans-serif;
@@ -104,19 +99,40 @@
         }
 
         .search-input::placeholder {
-            color: #bfdbfe;
+            color: rgba(255,255,255,0.82);
         }
 
         .search-input:focus {
             background-color: white;
             color: #1e293b;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
         }
 
-        /* 📢 3. BLOQUE DE ANUNCIO DE COMERCIANTES */
-        .seccion-anuncio {
-            margin-top: 30px;
+        /* ── TÍTULO FUERA DEL HEADER ── */
+
+        .titulo-seccion {
+            text-align: center;
+            margin-top: 26px;
+            margin-bottom: 6px;
         }
+
+        .titulo-seccion h1 {
+            font-size: 32px;
+            font-weight: 900;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .titulo-seccion p {
+            color: #64748b;
+            font-size: 15px;
+            margin-top: 6px;
+        }
+
+        /* ── BANNER ── */
+
+        .seccion-anuncio { margin-top: 24px; }
 
         .banner-comercio {
             width: 100%;
@@ -179,14 +195,11 @@
             font-size: 12px;
             margin-top: 4px;
             text-shadow: 0px 1px 3px rgba(0,0,0,0.4);
-            line-height: 1.3;
         }
 
-        /* 🚖 4. SECCIÓN DE NEGOCIOS (GRID) */
-        .seccion-taxis {
-            margin-top: 30px;
-            flex-grow: 1; /* Empuja el footer abajo si hay pocos elementos */
-        }
+        /* ── GRID ── */
+
+        .seccion-taxis { margin-top: 30px; flex-grow: 1; }
 
         .grid-comercios {
             display: grid;
@@ -194,7 +207,7 @@
             gap: 20px;
             width: 100%;
             padding-bottom: 30px;
-            opacity: 0; /* Suavizado de carga al barajar */
+            opacity: 0;
             transition: opacity 0.2s ease-in-out;
         }
 
@@ -202,7 +215,7 @@
             background: #ffffff;
             border: 1px solid #e2e8f0;
             border-radius: 14px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
             display: flex;
             flex-direction: column;
             transition: transform 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -210,10 +223,9 @@
 
         .tarjeta-comercio:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05);
         }
 
-        /* Colores de los bordes superiores */
         .borde-taxi-verde    { border-top: 5px solid #10b981; }
         .borde-taxi-azul     { border-top: 5px solid #3b82f6; }
         .borde-taxi-naranja  { border-top: 5px solid #f97316; }
@@ -231,7 +243,7 @@
         .nombre-comercio {
             font-size: 19px;
             font-weight: 700;
-            color: #0f172a; 
+            color: #0f172a;
             margin-bottom: 12px;
             line-height: 1.3;
         }
@@ -281,31 +293,37 @@
             justify-content: center;
             gap: 8px;
             color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
             transition: background-color 0.15s ease;
             width: 100%;
         }
 
-        /* Variaciones de colores de botones */
-        .btn-verde-suave { background-color: #10b981; }
-        .btn-verde-suave:hover { background-color: #059669; }
+        .btn-verde-suave   { background-color: #10b981; }
+        .btn-verde-suave:hover   { background-color: #059669; }
 
-        .btn-azul-suave { background-color: #3b82f6; }
-        .btn-azul-suave:hover { background-color: #2563eb; }
+        .btn-azul-suave    { background-color: #3b82f6; }
+        .btn-azul-suave:hover    { background-color: #2563eb; }
 
         .btn-naranja-suave { background-color: #f97316; }
         .btn-naranja-suave:hover { background-color: #ea580c; }
 
-        .btn-amarillo-suave { background-color: #eab308; color: #1e293b; }
-        .btn-amarillo-suave:hover { background-color: #ca8a04; color: #ffffff; }
+        .btn-amarillo-suave {
+            background-color: #eab308;
+            color: #1e293b;
+        }
 
-        .btn-carmin-suave { background-color: #ec4899; }
-        .btn-carmin-suave:hover { background-color: #db2777; }
+        .btn-amarillo-suave:hover {
+            background-color: #ca8a04;
+            color: #fff;
+        }
+
+        .btn-carmin-suave  { background-color: #ec4899; }
+        .btn-carmin-suave:hover  { background-color: #db2777; }
 
         .btn-turquesa-suave { background-color: #14b8a6; }
         .btn-turquesa-suave:hover { background-color: #0d9488; }
 
-        /* ⚠️ 5. TEXTO DISCLAIMER */
+        /* ── DISCLAIMER ── */
+
         .disclaimer-box {
             background-color: #fff;
             border: 1px solid #e2e8f0;
@@ -318,7 +336,8 @@
             margin-bottom: 40px;
         }
 
-        /* <tfoot> 6. FOOTER COMPLETAMENTE IDÉNTICO AL INDEX */
+        /* ── FOOTER ── */
+
         footer {
             background-color: #0f172a;
             color: #94a3b8;
@@ -346,19 +365,17 @@
             color: white;
         }
 
-        /* 📱 RESPONSIVO ADICIONAL PARA MÓVILES */
         @media (max-width: 600px) {
-            .header-main {
-                flex-direction: column;
-                align-items: flex-start;
+
+            .titulo-seccion h1 {
+                font-size: 26px;
             }
-            .search-container {
-                max-width: 100%;
-            }
+
             .footer-content {
                 flex-direction: column;
                 text-align: center;
             }
+
             .footer-links a {
                 margin: 0 10px;
             }
@@ -367,19 +384,23 @@
 </head>
 <body>
 
-    <header>
-        <div class="container header-content">
-            <a href="index.html" class="btn-volver">← Volver a Inicio</a>
-            <div class="header-main">
-                <div class="header-title">
-                    <h1>Taxis de El Espinar</h1>
-                    <p>Contacta directamente con los conductores de la zona</p>
-                </div>
-                <div class="search-container">
-                    <input type="text" id="buscador" class="search-input" placeholder="Buscar taxista, plazas, móvil...">
-                </div>
-            </div>
-        </div>
+<header>
+    <a href="index.html" class="header-logo-link">
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
+        <span>infoespinar.com</span>
+    </a>
+
+    <div class="search-container">
+        <input type="text" id="buscador" class="search-input" placeholder="Buscar taxista, plazas, móvil...">
+    </div>
+</header>
+
+<section class="titulo-seccion">
+    <div class="container">
+        <h1>🚖 Taxis y Movilidad</h1>
+        <p>Servicios de taxi y transporte en El Espinar y alrededores</p>
+    </div>
+</section>
     </header>
 
     <section class="seccion-anuncio">
