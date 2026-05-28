@@ -30,8 +30,12 @@
         /* ── TÍTULO SECCIÓN ── */
         .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 0 0 28px; text-transform: uppercase; color: #9f1239; }
 
+        /* ── BOTÓN PARA MOSTRAR/OCULTAR FILTROS ── */
+        .btn-toggle-filtros { display: flex; align-items: center; gap: 8px; margin: 0 auto 16px; background: #fff; border: 1.5px solid #e2e8f0; color: #64748b; font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 9px 18px; border-radius: 30px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+        .btn-toggle-filtros:hover { border-color: #9f1239; color: #9f1239; box-shadow: 0 4px 14px rgba(159,18,57,0.12); }
+
         /* ── FILTROS ── */
-        .filtros-wrap { background: #fff; border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); display: flex; flex-direction: column; gap: 12px; }
+        .filtros-wrap { background: #fff; border-radius: 14px; padding: 16px 18px; margin-bottom: 22px; box-shadow: 0 2px 10px rgba(0,0,0,0.07); display: none; flex-direction: column; gap: 12px; }
         .filtro-grupo { display: flex; align-items: flex-start; gap: 10px; flex-wrap: wrap; }
         .filtro-label { font-size: 10px; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: #94a3b8; padding-top: 5px; white-space: nowrap; min-width: 68px; }
         .filtro-pills { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -53,14 +57,13 @@
         .cartel:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(0,0,0,0.18); }
         .cartel.oculto { display: none; }
 
-        /* ── IMAGEN: limpia, sin overlays ── */
+        /* ── IMAGEN ── */
         .cartel-img-wrap { position: relative; aspect-ratio: 2/3; overflow: hidden; }
         .cartel img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
         .cartel:hover img { transform: scale(1.06); }
 
         /* ── PANEL DE INFORMACIÓN ── */
         .cartel-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 6px; }
-
         .cartel-meta { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 
         /* Badge fecha */
@@ -81,22 +84,17 @@
         .cat-teatro    { color: #059669; border-color: #059669; background: rgba(5,150,105,0.08); }
         .cat-infantil  { color: #ea580c; border-color: #ea580c; background: rgba(234,88,12,0.08); }
 
-        /* Título: Lato 700 — coherente con el resto */
         .cartel-titulo { font-size: 15px; font-weight: 700; line-height: 1.35; color: #1e293b; letter-spacing: 0.1px; }
         .cartel-lugar { font-size: 10px; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
         .cartel-lugar::before { content: '📍 '; }
         .cartel-web { font-style: normal; font-size: 12px; margin-left: 4px; opacity: 0.7; }
 
-        /* Panel inferior como enlace */
         .cartel-body--link { text-decoration: none; display: flex; flex-direction: column; gap: 6px; transition: background 0.18s; }
         .cartel-body--link:hover { background: #fdf2f4; }
         .cartel-body--link:hover .cartel-titulo { color: #9f1239; }
 
-        /* Icono enlace externo */
         .cartel-link-icon { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #334155; opacity: 0; transition: opacity 0.25s; backdrop-filter: blur(4px); }
         .cartel:hover .cartel-link-icon { opacity: 1; }
-
-        /* Eventos pasados — no se muestran, CSS mantenido por si se reactiva */
 
         /* ── BANNER PUBLICIDAD ── */
         .banner-comercio { width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 24px; }
@@ -143,7 +141,6 @@
         .form-input::placeholder { color: #cbd5e1; }
         .form-hint { font-size: 11px; color: #94a3b8; }
 
-        /* Upload imagen */
         .img-upload-area { border: 2px dashed #e2e8f0; border-radius: 10px; padding: 18px; text-align: center; cursor: pointer; transition: all 0.2s; background: #f8fafc; position: relative; }
         .img-upload-area:hover, .img-upload-area.drag { border-color: #9f1239; background: #fdf2f4; }
         .img-upload-area input[type=file] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; }
@@ -156,7 +153,6 @@
         .img-status.err { color: #dc2626; }
         .img-status.loading { color: #9f1239; }
 
-        /* Submit */
         .btn-submit { background: linear-gradient(135deg, #9f1239 0%, #e11d48 100%); color: #fff; border: none; border-radius: 10px; padding: 13px; font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 900; letter-spacing: 0.5px; cursor: pointer; transition: opacity 0.2s, transform 0.15s; text-transform: uppercase; }
         .btn-submit:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); }
         .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
@@ -192,6 +188,8 @@
 
     <h2 class="titulo-seccion-principal">Cartelera de Eventos</h2>
 
+        <button class="btn-publicar" id="btn-publicar">Publica Tu Evento</button>
+
     <a href="mailto:info@infoespinar.com" class="banner-comercio">
         <div class="banner-info">
             <span class="banner-label">¿Organizas un evento?</span>
@@ -199,10 +197,9 @@
         </div>
     </a>
 
-    <button class="btn-publicar" id="btn-publicar">Publicar Evento</button>
+    <button class="btn-toggle-filtros" id="btn-toggle-filtros">🔍 Filtrar Eventos</button>
 
-    <!-- Filtros rápidos — se rellenan dinámicamente -->
-    <div class="filtros-wrap" id="filtros-wrap" style="display:none;">
+    <div class="filtros-wrap" id="filtros-wrap">
         <div class="filtro-grupo">
             <span class="filtro-label">Categoría</span>
             <div class="filtro-pills" id="pills-categoria"></div>
@@ -225,12 +222,11 @@
     <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
 </footer>
 
-<!-- Modal: Publicar Evento -->
 <div class="modal-overlay" id="modal-overlay">
     <div class="modal-box">
         <div class="modal-header">
-            <h3>Publica tu Evento</h3>
-            <p>¡Revisaremos tu propuesta antes de publicarla!</p>
+            <h3>📅 Publicar un Evento</h3>
+            <p>Revisaremos tu propuesta antes de publicarla</p>
             <button class="modal-cerrar" id="modal-cerrar">✕</button>
         </div>
         <div class="modal-body" id="modal-body">
@@ -291,7 +287,6 @@
     </div>
 </div>
 
-<!-- Lightbox -->
 <div class="lb-overlay" id="lb-overlay">
     <button class="lb-cerrar" id="lb-cerrar">✕</button>
     <img class="lb-img" id="lb-img" src="" alt="">
@@ -303,18 +298,18 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zp
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
 
-// Estado de filtros activos
 const filtros = { categoria: null, lugar: null };
+
+// Variable de control interna de carga para saber si los filtros tienen datos válidos
+let filtrosDisponibles = false;
 
 function parseFecha(s) {
     if (!s || typeof s !== 'string') return new Date();
     const limpia = s.trim();
-    // Formato DD/MM/YYYY (Google Sheets en español)
     if (limpia.includes('/')) {
         const [d, m, y] = limpia.split('/').map(Number);
         if (!isNaN(d) && !isNaN(m) && !isNaN(y)) return new Date(y, m - 1, d);
     }
-    // Formato YYYY-MM-DD (fallback)
     if (limpia.includes('-')) {
         const [y, m, d] = limpia.split('-').map(Number);
         if (!isNaN(y) && !isNaN(m) && !isNaN(d)) return new Date(y, m - 1, d);
@@ -349,275 +344,7 @@ function csvToObjects(csvText) {
     return result;
 }
 
-// Aplica los filtros activos: muestra/oculta carteles y separadores de mes
 function aplicarFiltros() {
     const carteles = document.querySelectorAll('.cartel');
     carteles.forEach(c => {
-        const catOk = !filtros.categoria || c.dataset.cat === filtros.categoria;
-        const lugOk = !filtros.lugar    || c.dataset.lugar === filtros.lugar;
-        c.classList.toggle('oculto', !(catOk && lugOk));
-    });
-
-    // Ocultar separadores de mes que no tengan ningún cartel visible
-    const separadores = document.querySelectorAll('.mes-separador');
-    separadores.forEach(sep => {
-        // Recorre los elementos siguientes hasta el próximo separador
-        let siguiente = sep.nextElementSibling;
-        let tieneVisibles = false;
-        while (siguiente && !siguiente.classList.contains('mes-separador')) {
-            if (siguiente.classList.contains('cartel') && !siguiente.classList.contains('oculto')) {
-                tieneVisibles = true;
-                break;
-            }
-            siguiente = siguiente.nextElementSibling;
-        }
-        sep.style.display = tieneVisibles ? '' : 'none';
-    });
-}
-
-// Crea las píldoras de filtro para un grupo
-function crearPills(containerId, tipo, valores) {
-    const container = document.getElementById(containerId);
-    const todos = document.createElement('button');
-    todos.className = 'filtro-pill activo';
-    todos.textContent = 'Todos';
-    todos.addEventListener('click', () => {
-        filtros[tipo] = null;
-        container.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo'));
-        todos.classList.add('activo');
-        aplicarFiltros();
-    });
-    container.appendChild(todos);
-
-    valores.forEach(val => {
-        const pill = document.createElement('button');
-        pill.className = 'filtro-pill';
-        pill.textContent = val;
-        pill.addEventListener('click', () => {
-            filtros[tipo] = val;
-            container.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo'));
-            pill.classList.add('activo');
-            aplicarFiltros();
-        });
-        container.appendChild(pill);
-    });
-}
-
-async function cargarEventos() {
-    try {
-        const respuesta = await fetch(SHEET_CSV_URL);
-        const textoCSV = await respuesta.text();
-        const eventos = csvToObjects(textoCSV);
-
-        const grid = document.getElementById('cartelera');
-        const marquee = document.getElementById('marquee-contenido');
-        const hoy = new Date();
-        hoy.setHours(0, 0, 0, 0);
-
-        const ordenados = [...eventos]
-            .filter(ev => parseFecha(ev.fecha) >= hoy && (ev.aprobado || '').toLowerCase().trim() === 'ok')
-            .sort((a, b) => parseFecha(a.fecha) - parseFecha(b.fecha));
-        let mesActual = null;
-        let marqueeHTML = '';
-
-        // Recopilar valores únicos para los filtros
-        const categorias = [...new Set(ordenados.map(ev => ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura').filter(Boolean))];
-        const lugares    = [...new Set(ordenados.map(ev => ev.lugar || 'El Espinar').filter(Boolean))];
-
-        ordenados.forEach(ev => {
-            const fecha = parseFecha(ev.fecha);
-            const mesKey = `${fecha.getMonth()}-${fecha.getFullYear()}`;
-            const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
-            const lugar = ev.lugar || 'El Espinar';
-
-            marqueeHTML += `<span>${ev.titulo}</span>`;
-
-            if (mesActual !== mesKey) {
-                mesActual = mesKey;
-                const sep = document.createElement('div');
-                sep.className = 'mes-separador';
-                sep.innerHTML = `<span>${MESES[fecha.getMonth()]} ${fecha.getFullYear()}</span>`;
-                grid.appendChild(sep);
-            }
-
-            // El cartel es siempre un div — la imagen va al lightbox,
-            // el panel de info es el enlace si hay URL
-            const cartel = document.createElement('div');
-            cartel.className = 'cartel';
-            cartel.dataset.cat   = catClase;
-            cartel.dataset.lugar = lugar;
-
-            const bodyTag  = ev.url ? 'a' : 'div';
-            const bodyAttr = ev.url ? `href="${ev.url}" target="_blank" rel="noopener"` : '';
-
-            cartel.innerHTML = `
-                <div class="cartel-img-wrap">
-                    <img src="${ev.imagen || 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&q=80'}" alt="${ev.titulo}" loading="lazy">
-                </div>
-                <${bodyTag} class="cartel-body${ev.url ? ' cartel-body--link' : ''}" ${bodyAttr}>
-                    <div class="cartel-meta">
-                        <div class="cartel-fecha">
-                            <span class="fecha-dia">${String(fecha.getDate()).padStart(2, '0')}</span>
-                            <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
-                        </div>
-                        <span class="cartel-cat cat-${catClase}">${catClase}</span>
-                    </div>
-                    <div class="cartel-titulo">${ev.titulo}</div>
-                    <div class="cartel-lugar">${lugar}${ev.url ? ' <span class="cartel-web" title="Ver más info">🌐</span>' : ''}</div>
-                </${bodyTag}>`;
-            grid.appendChild(cartel);
-        });
-
-        // Construir filtros sólo si hay más de un valor en cada grupo
-        if (categorias.length > 1 || lugares.length > 1) {
-            document.getElementById('filtros-wrap').style.display = '';
-            if (categorias.length > 1) crearPills('pills-categoria', 'categoria', categorias);
-            else document.querySelector('.filtro-grupo:first-child').style.display = 'none';
-            if (lugares.length > 1) crearPills('pills-lugar', 'lugar', lugares);
-            else document.querySelector('.filtros-divider').style.display = 'none', document.querySelector('.filtro-grupo:last-child').style.display = 'none';
-        }
-
-        marquee.innerHTML = marqueeHTML ? marqueeHTML + marqueeHTML : "<span>No hay eventos próximos programados</span>";
-
-        // Lightbox: clic en imagen → ver en grande
-        document.querySelectorAll('.cartel-img-wrap img').forEach(img => {
-            img.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                document.getElementById('lb-img').src = img.src;
-                document.getElementById('lb-overlay').classList.add('abierto');
-                document.body.style.overflow = 'hidden';
-            });
-        });
-
-    } catch (error) {
-        console.error("Error cargando los eventos desde Google Sheets:", error);
-        document.getElementById('cartelera').innerHTML = "<p style='color:red; text-align:center; grid-column: 1/-1;'>Error al cargar la cartelera. Inténtelo más tarde.</p>";
-    }
-}
-
-cargarEventos();
-
-// ── FORMULARIO PUBLICAR EVENTO ───────────────────────────────────────────────
-// ⚠️ REEMPLAZA estas dos constantes con tus valores reales:
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwVCNJEtMhq8Q-YK1QtY4kM0HSDzLMuTTWS2PCTCWi5qb7pFv7KnrIUt2CH1WnPGygB/exec';
-const IMGBB_API_KEY   = '889d9ccbbcd91efdb92e1cdaee18b11d'; // obtén la tuya gratis en imgbb.com/api
-
-const modalOverlay = document.getElementById('modal-overlay');
-
-document.getElementById('btn-publicar').addEventListener('click', () => {
-    modalOverlay.classList.add('abierto');
-    document.body.style.overflow = 'hidden';
-});
-document.getElementById('modal-cerrar').addEventListener('click', cerrarModal);
-modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) cerrarModal(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarModal(); });
-
-function cerrarModal() {
-    modalOverlay.classList.remove('abierto');
-    document.body.style.overflow = '';
-}
-
-// Vista previa de imagen
-const inputImg = document.getElementById('f-imagen');
-inputImg.addEventListener('change', () => {
-    const file = inputImg.files[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-        const preview = document.getElementById('img-preview');
-        preview.src = e.target.result;
-        preview.style.display = 'block';
-    };
-    reader.readAsDataURL(file);
-});
-
-// Drag & drop visual
-const uploadArea = document.getElementById('upload-area');
-uploadArea.addEventListener('dragover', (e) => { e.preventDefault(); uploadArea.classList.add('drag'); });
-uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('drag'));
-uploadArea.addEventListener('drop', (e) => {
-    e.preventDefault();
-    uploadArea.classList.remove('drag');
-    if (e.dataTransfer.files[0]) { inputImg.files = e.dataTransfer.files; inputImg.dispatchEvent(new Event('change')); }
-});
-
-// Subir imagen a ImgBB y obtener URL
-async function subirImagen(file) {
-    const status = document.getElementById('img-status');
-    status.textContent = 'Subiendo imagen…';
-    status.className = 'img-status loading';
-    const formData = new FormData();
-    formData.append('image', file);
-    const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, {
-        method: 'POST',
-        body: formData
-    });
-    const data = await res.json();
-    if (data.success) {
-        status.textContent = '✓ Imagen subida correctamente';
-        status.className = 'img-status ok';
-        return data.data.url;
-    } else {
-        status.textContent = '✗ Error al subir la imagen';
-        status.className = 'img-status err';
-        return null;
-    }
-}
-
-// Envío del formulario
-document.getElementById('btn-submit').addEventListener('click', async () => {
-    const titulo    = document.getElementById('f-titulo').value.trim();
-    const fecha     = document.getElementById('f-fecha').value;
-    const categoria = document.getElementById('f-categoria').value;
-    const lugar     = document.getElementById('f-lugar').value.trim();
-    const url       = document.getElementById('f-url').value.trim();
-    const file      = inputImg.files[0];
-
-    if (!titulo || !fecha || !categoria || !lugar) {
-        alert('Por favor rellena los campos obligatorios: título, fecha, categoría y lugar.');
-        return;
-    }
-
-    const btn = document.getElementById('btn-submit');
-    btn.disabled = true;
-    btn.textContent = 'Enviando…';
-
-    // Convertir fecha de YYYY-MM-DD a DD/MM/YYYY para el Sheet
-    const [y, m, d] = fecha.split('-');
-    const fechaSheet = `${d}/${m}/${y}`;
-
-    // Subir imagen si hay una
-    let imagenUrl = '';
-    if (file) {
-        imagenUrl = await subirImagen(file) || '';
-    }
-
-    try {
-        await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ titulo, fecha: fechaSheet, lugar, categoria, url: url || '', imagen: imagenUrl })
-        });
-        // no-cors no devuelve respuesta legible, asumimos éxito si no hay excepción
-        document.getElementById('modal-body').querySelectorAll('.form-group, .btn-submit, .form-aviso').forEach(el => el.style.display = 'none');
-        document.getElementById('form-ok').style.display = 'flex';
-    } catch (err) {
-        alert('Ha ocurrido un error al enviar. Inténtalo de nuevo.');
-        btn.disabled = false;
-        btn.textContent = 'Enviar para revisión';
-    }
-});
-function cerrarLightbox() {
-    document.getElementById('lb-overlay').classList.remove('abierto');
-    document.body.style.overflow = '';
-}
-document.getElementById('lb-overlay').addEventListener('click', cerrarLightbox);
-document.getElementById('lb-cerrar').addEventListener('click', (e) => { e.stopPropagation(); cerrarLightbox(); });
-document.getElementById('lb-img').addEventListener('click', (e) => e.stopPropagation());
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') cerrarLightbox(); });
-</script>
-
-</body>
-</html>
+        const cat
