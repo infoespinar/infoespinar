@@ -747,14 +747,25 @@ function filtrar() {
 /* ── CARGA ── */
 async function cargar() {
     try {
+        const res = await fetch(URL_SCRIPT);
+
         const text = await res.text();
         console.log(text);
-        alert(text);
-        todosLosViajes = await res.json();
-        todosLosViajes.sort((a,b) => new Date(a.fecha+'T'+a.hora) - new Date(b.fecha+'T'+b.hora));
+
+        todosLosViajes = JSON.parse(text);
+
+        todosLosViajes.sort((a,b) =>
+            new Date(a.fecha + 'T' + a.hora) -
+            new Date(b.fecha + 'T' + b.hora)
+        );
+
         renderizar(todosLosViajes);
+
     } catch(e) {
-        document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes.</div>';
+        console.error(e);
+
+        document.getElementById('grid').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes.</div>';
     }
 }
 
