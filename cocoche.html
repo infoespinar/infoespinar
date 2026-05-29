@@ -33,6 +33,8 @@
         .dias-semana input[type="checkbox"] { width: auto; margin: 0; }
         .dias-semana label:has(input:checked) { background: #dbeafe; border-color: #1e40af; color: #1e40af; }
 
+        .email-hint { font-size: 12px; color: #64748b; margin: -4px 0 8px 2px; }
+
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin-top: 30px; }
 
         .card { background: white; padding: 24px; border-radius: 16px; border-top: 6px solid #10b981; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: transform 0.2s; position: relative; }
@@ -51,6 +53,10 @@
         .pin-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
         .pin-box .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #065f46; margin: 10px 0; font-variant-numeric: tabular-nums; }
         .pin-box .pin-aviso { font-size: 12px; color: #047857; margin-top: 4px; }
+
+        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #065f46; color: white; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        .btn-copiar-pin:hover { background: #047857; }
+        .btn-copiar-pin.copiado { background: #1e40af; }
 
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
     </style>
@@ -106,11 +112,11 @@
         </div>
 
         <div id="seccion-lv" class="oculto">
-            <p style="font-size:12px; color:#64748b; margin:6px 0;">Se publicarán entradas para las próximas 4 semanas de lunes a viernes.</p>
+            <p style="font-size:12px; color:#64748b; margin:6px 0;">Se publicarán entradas para las próximas 2 semanas de lunes a viernes.</p>
         </div>
 
         <div id="seccion-personalizada" class="oculto">
-            <p style="font-size:12px; color:#64748b; margin:6px 0 8px;">Selecciona los días (próximas 4 semanas):</p>
+            <p style="font-size:12px; color:#64748b; margin:6px 0 8px;">Selecciona los días (próximas 2 semanas):</p>
             <div class="dias-semana">
                 <label><input type="checkbox" value="1"> Lun</label>
                 <label><input type="checkbox" value="2"> Mar</label>
@@ -124,6 +130,9 @@
 
         <input id="nombre" placeholder="Nombre" required>
         <input id="telefono" type="tel" placeholder="Teléfono" maxlength="9" required>
+
+        <input id="email" type="email" placeholder="Email (opcional)">
+        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
 
         <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin:10px 0; font-size:13px; color:#475569;">
             ⚠️ Revisa que todos los datos sean correctos antes de publicar.<br><br>
@@ -159,7 +168,7 @@
         const fechas = [];
         const hoy = new Date();
         hoy.setHours(0, 0, 0, 0);
-        for (let i = 0; i <= 28; i++) {
+        for (let i = 0; i <= 14; i++) {
             const d = new Date(hoy);
             d.setDate(hoy.getDate() + i);
             if (diasSemana.includes(d.getDay())) {
@@ -268,7 +277,8 @@
             desde, hasta,
             hora:     document.getElementById('hora').value,
             nombre:   document.getElementById('nombre').value,
-            telefono: document.getElementById('telefono').value
+            telefono: document.getElementById('telefono').value,
+            email:    document.getElementById('email').value.trim()
         };
 
         const payload = fechas.map(f => ({ ...base, fecha: f }));
@@ -280,18 +290,25 @@
             });
             const data = await res.json();
 
-            // Mostrar PIN al usuario
+            const emailIntroducido = base.email;
             const pinBox = document.getElementById('pinMostrado');
             pinBox.innerHTML = `
                 <div class="pin-box">
                     <p>🔑 <b>Tu PIN personal es:</b></p>
-                    <div class="pin-num">${data.pin}</div>
-                    <p class="pin-aviso">Guárdalo. Lo necesitarás para borrar tus anuncios.<br>
-                    ${data.total > 1 ? `Se han publicado <b>${data.total} viajes</b>.` : 'Se ha publicado <b>1 viaje</b>.'}</p>
+                    <div class="pin-num" id="pinTexto">${data.pin}</div>
+                    <button class="btn-copiar-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
+                    <p class="pin-aviso" style="margin-top:10px;">
+                        ${emailIntroducido
+                            ? `✅ Te hemos enviado el PIN a <b>${emailIntroducido}</b>`
+                            : '⚠️ Guarda este PIN, no podrás recuperarlo si lo pierdes.'
+                        }<br>
+                        ${data.total > 1 ? `Se han publicado <b>${data.total} viajes</b>.` : 'Se ha publicado <b>1 viaje</b>.'}
+                    </p>
                 </div>`;
 
             btn.disabled = false;
             btn.innerText = "PUBLICAR";
+            await cargar();
 
         } catch(err) {
             alert("Error al publicar. Inténtalo de nuevo.");
@@ -299,6 +316,17 @@
             btn.innerText = "PUBLICAR";
         }
     };
+
+    function copiarPin(pin, btn) {
+        navigator.clipboard.writeText(pin).then(() => {
+            btn.textContent = "✅ ¡Copiado!";
+            btn.classList.add('copiado');
+            setTimeout(() => {
+                btn.textContent = "📋 Copiar PIN";
+                btn.classList.remove('copiado');
+            }, 2500);
+        });
+    }
 
     function enviarWhatsApp() {
         const d = document.getElementById('desde').value === 'Otro' ? document.getElementById('desdeOtro').value : document.getElementById('desde').value;
