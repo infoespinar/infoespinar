@@ -857,14 +857,14 @@ async function publicarViaje() {
     const payload = fechas.map(f => ({ ...base, fecha: f }));
 
     try {
-        const res = await fetch(URL_SCRIPT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(payload.length === 1 ? payload[0] : payload)
-});
-const text = await res.text();
-console.log('RESPUESTA:', text);
-const data = JSON.parse(text);
+    const res = await fetch(URL_SCRIPT, {
+        method: 'POST',
+        mode: 'cors', // Aseguramos el modo cors
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, // Cambiado a form-urlencoded que se lleva mejor con el doPost básico
+        body: new URLSearchParams({ payload: JSON.stringify(payload.length === 1 ? payload[0] : payload) })
+    });
+    
+    const data = await res.json();
 
         const pinBox = document.getElementById('pinMostrado');
         pinBox.innerHTML = `
