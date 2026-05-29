@@ -981,19 +981,9 @@ async function publicarViaje() {
     // Construir payload de ida
     const payload = fechas.map(f => ({ ...base, fecha: f }));
 
-    // Añadir vuelta si corresponde (misma fecha, origen/destino invertidos)
-    if (conVuelta) {
-        payload.push({
-            ...base,
-            desde: hasta,
-            hasta: desde,
-            hora: horaVuelta,
-            fecha: fechas[0]
-        });
-    }
-
     try {
-        const res = await fetch(URL_SCRIPT, {
+        // Primera llamada: ida
+        const resIda = await fetch(URL_SCRIPT, {
             method: 'POST',
             mode: 'cors',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -1001,14 +991,30 @@ async function publicarViaje() {
                 payload: JSON.stringify(payload.length === 1 ? payload[0] : payload)
             })
         });
+        const data = await resIda.json();
+        console.log('PIN ida:', data.pin);
 
-        const data = await res.json();
-        console.log('PIN:', data.pin);
+        // Segunda llamada: vuelta (anuncio independiente, mismo PIN)
+        if (conVuelta) {
+            const vuelta = {
+                ...base,
+                desde: hasta,
+                hasta: desde,
+                hora: horaVuelta,
+                fecha: fechas[0]
+            };
+            await fetch(URL_SCRIPT, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ payload: JSON.stringify(vuelta) })
+            });
+        }
 
         const pinBox = document.getElementById('pinMostrado');
         const numViajes = data.total || payload.length;
         const textoViajes = conVuelta
-            ? `Se han publicado <b>${numViajes} viajes</b>: ida y vuelta.`
+            ? `Se han publicado <b>2 anuncios</b>: ida (${desde} → ${hasta}) y vuelta (${hasta} → ${desde}).`
             : numViajes > 1
                 ? `Se han publicado <b>${numViajes} viajes</b>.`
                 : 'Se ha publicado <b>1 viaje</b>.';
