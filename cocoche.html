@@ -859,10 +859,11 @@ async function publicarViaje() {
     try {
         const res = await fetch(URL_SCRIPT, {
     method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },  // ← text/plain no dispara preflight
+    headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(payload.length === 1 ? payload[0] : payload)
 });
 const text = await res.text();
+console.log('RESPUESTA:', text);
 const data = JSON.parse(text);
 
         const pinBox = document.getElementById('pinMostrado');
