@@ -106,7 +106,6 @@
             padding: 32px 20px 60px;
         }
 
-        
         /* SEARCH */
         .search-wrap {
             position: relative;
@@ -303,15 +302,38 @@
             line-height: 1.5;
         }
 
-        .card-user {
-            position: absolute;
-            top: 14px;
-            right: 48px;
-            font-size: 13px;
+        /* VUELTA */
+        .vuelta-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: var(--surface-2);
+            border: 1.5px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            margin: 10px 0 6px;
+            cursor: pointer;
+        }
+        .vuelta-toggle input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            accent-color: var(--accent);
+        }
+        .vuelta-toggle label {
+            font-size: 14px;
             font-weight: 500;
             color: var(--ink-mid);
+            cursor: pointer;
+        }
+        .vuelta-toggle.activo {
+            border-color: var(--accent);
+            background: var(--accent-light);
+        }
+        .vuelta-toggle.activo label {
+            color: var(--accent-dark);
+        }
 
-            }
         /* PRIVACIDAD */
         .privacy-box {
             background: var(--surface-2);
@@ -437,12 +459,12 @@
             margin-bottom: 14px;
         }
 
-        grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    align-items: start;
-}
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+            align-items: start;
+        }
 
         .card {
             background: var(--surface);
@@ -479,6 +501,8 @@
             color: var(--ink);
             margin-bottom: 14px;
             line-height: 1.2;
+            /* deja sitio para el botón de borrar */
+            padding-right: 36px;
         }
 
         .card-meta {
@@ -490,9 +514,14 @@
         .card-meta-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: space-between;
             font-size: 14px;
             color: var(--ink-mid);
+        }
+        .card-meta-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .card-meta-icon {
             width: 20px;
@@ -506,6 +535,11 @@
             flex-shrink: 0;
         }
         .card-meta-val { font-weight: 500; color: var(--ink); }
+        .card-meta-hora {
+            font-size: 13px;
+            color: var(--ink-mid);
+            white-space: nowrap;
+        }
 
         .btn-wa-card {
             display: flex;
@@ -525,28 +559,27 @@
         .btn-wa-card:hover { background: var(--wa-dark); }
 
         .btn-delete {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.5;
-    transition: opacity 0.2s, transform 0.15s, background 0.2s;
-}
-
-.btn-delete:hover {
-    opacity: 1;
-    background: rgba(0,0,0,0.06);
-    transform: scale(1.1);
-}
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.45;
+            transition: opacity 0.2s, transform 0.15s, background 0.2s;
+        }
+        .btn-delete:hover {
+            opacity: 1;
+            background: rgba(0,0,0,0.06);
+            transform: scale(1.1);
+        }
 
         .empty-state {
             grid-column: 1/-1;
@@ -641,7 +674,18 @@
 
         <div id="seccion-unica" class="input-row">
             <input id="fecha" type="date">
+
+            <!-- OPCIÓN VUELTA (solo en fecha única) -->
+            <div class="vuelta-toggle" id="vueltaToggle" onclick="toggleVuelta()">
+                <input type="checkbox" id="addVuelta" onclick="event.stopPropagation(); toggleVuelta()">
+                <label for="addVuelta" onclick="event.stopPropagation(); toggleVuelta()">🔄 Añadir viaje de vuelta</label>
+            </div>
+            <div id="horaVueltaWrap" class="oculto" style="margin-top:8px;">
+                <input id="horaVuelta" type="time" placeholder="Hora de vuelta">
+                <p class="hint" id="hintVuelta">Se publicará el viaje de vuelta a esta hora, con origen y destino invertidos.</p>
+            </div>
         </div>
+
         <div id="seccion-lv" class="oculto">
             <p class="hint">Se publicarán entradas para las próximas 2 semanas, de lunes a viernes.</p>
         </div>
@@ -717,6 +761,13 @@ function setRecurrencia(val) {
     document.getElementById('seccion-unica').classList.toggle('oculto', val !== 'unica');
     document.getElementById('seccion-lv').classList.toggle('oculto', val !== 'lv');
     document.getElementById('seccion-personalizada').classList.toggle('oculto', val !== 'personalizada');
+
+    // Si no es fecha única, resetea la vuelta
+    if (val !== 'unica') {
+        document.getElementById('addVuelta').checked = false;
+        document.getElementById('horaVueltaWrap').classList.add('oculto');
+        document.getElementById('vueltaToggle').classList.remove('activo');
+    }
 }
 
 function toggleDay(el) {
@@ -726,6 +777,29 @@ function toggleDay(el) {
 function checkOtro(id) {
     const val = document.getElementById(id).value;
     document.getElementById(id + 'Otro').classList.toggle('oculto', val !== 'Otro');
+    // Actualiza el hint de vuelta con los lugares actuales
+    actualizarHintVuelta();
+}
+
+function toggleVuelta() {
+    const cb = document.getElementById('addVuelta');
+    // Si el click fue en el checkbox, ya cambió; si fue en el div, lo cambiamos nosotros
+    // Usamos el estado actual del checkbox tras el click
+    const checked = cb.checked;
+    document.getElementById('horaVueltaWrap').classList.toggle('oculto', !checked);
+    document.getElementById('vueltaToggle').classList.toggle('activo', checked);
+    actualizarHintVuelta();
+}
+
+function actualizarHintVuelta() {
+    const desde = document.getElementById('desde').value === 'Otro'
+        ? document.getElementById('desdeOtro').value.trim() || '...'
+        : document.getElementById('desde').value || '...';
+    const hasta = document.getElementById('hasta').value === 'Otro'
+        ? document.getElementById('hastaOtro').value.trim() || '...'
+        : document.getElementById('hasta').value || '...';
+    const hint = document.getElementById('hintVuelta');
+    if (hint) hint.textContent = `Se publicará el viaje de vuelta (${hasta} → ${desde}) a esta hora.`;
 }
 
 /* ── FECHAS ── */
@@ -783,68 +857,53 @@ async function cargar() {
 
 /* ── RENDER ── */
 function renderizar(data) {
-
     if (!data.length) {
         document.getElementById('grid').innerHTML =
             '<div class="empty-state"><div class="empty-icon">🚗</div>No se encontraron viajes.</div>';
         return;
     }
 
-    // 🔥 AGRUPAR POR ANUNCIO PADRE
+    // Agrupar por anuncio padre
     const grupos = {};
-
     data.forEach(v => {
         if (!grupos[v.anuncio]) grupos[v.anuncio] = [];
         grupos[v.anuncio].push(v);
     });
 
     document.getElementById('grid').innerHTML = Object.values(grupos).map(viajes => {
-
         const base = viajes[0];
-
         const tel = String(base.telefono).replace(/\s+/g,'');
         const numWA = tel.startsWith('34') ? tel : '34' + tel;
-
         const esConductor = base.tipo.includes('Conductor');
 
         return `
         <div class="card">
-                <button class="btn-delete" onclick="borrarViaje('${base.anuncio}')">🗑️</button>
+            <button class="btn-delete" title="Borrar anuncio" onclick="borrarViaje('${base.anuncio}')">🗑️</button>
             <div class="card-badge ${esConductor ? 'badge-conductor' : 'badge-pasajero'}">
                 ${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}
             </div>
-
             <div class="card-route">
                 ${base.desde} → ${base.hasta}
             </div>
-
             <div style="font-size:12px;color:var(--ink-light);margin-bottom:10px;">
-                ${viajes.length} viajes publicados
+                ${viajes.length} ${viajes.length === 1 ? 'viaje publicado' : 'viajes publicados'}
             </div>
-
             <div class="card-meta">
-
                 ${viajes.map(v => `
-                    <div class="card-meta-row" style="justify-content: space-between;">
-    <div style="display:flex; align-items:center; gap:8px;">
-        <div class="card-meta-icon">📅</div>
-        <span class="card-meta-val">${formatFecha(v.fecha)}</span>
-        <span style="color:var(--ink-light); font-size:13px">
-            (${nombreDia(v.fecha)})
-        </span>
-    </div>
-    <span style="color:var(--ink-mid); font-size:13px; white-space:nowrap;">⏰ ${v.hora}</span>
-</div>
+                    <div class="card-meta-row">
+                        <div class="card-meta-left">
+                            <div class="card-meta-icon">📅</div>
+                            <span class="card-meta-val">${formatFecha(v.fecha)}</span>
+                            <span style="color:var(--ink-light); font-size:13px">(${nombreDia(v.fecha)})</span>
+                        </div>
+                        <span class="card-meta-hora">⏰ ${v.hora}</span>
+                    </div>
                 `).join('')}
-
-        </div>
-
+            </div>
             <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
                 💬 Escribir a ${base.nombre}
             </a>
-
-        </div>
-        `;
+        </div>`;
     }).join('');
 }
 
@@ -856,8 +915,8 @@ async function borrarViaje(id) {
         const res = await fetch(`${URL_SCRIPT}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
         const data = await res.json();
         if (data.status === 'ok') {
-            document.getElementById('card-'+id)?.remove();
-            todosLosViajes = todosLosViajes.filter(v => v.id !== id);
+            todosLosViajes = todosLosViajes.filter(v => v.anuncio !== id);
+            renderizar(todosLosViajes);
             alert('✅ Anuncio eliminado correctamente.');
         } else {
             alert('❌ PIN incorrecto. El anuncio no se ha borrado.');
@@ -870,6 +929,7 @@ async function publicarViaje() {
     if (!document.getElementById('aceptaPrivacidad').checked) {
         alert('Debes aceptar la política de privacidad.'); return;
     }
+
     const desde = document.getElementById('desde').value === 'Otro'
         ? document.getElementById('desdeOtro').value.trim()
         : document.getElementById('desde').value;
@@ -898,11 +958,19 @@ async function publicarViaje() {
         fechas = generarFechas(activos.map(el => parseInt(el.dataset.val)));
     }
 
+    // Validar vuelta si está activada
+    const conVuelta = recurrenciaActual === 'unica' && document.getElementById('addVuelta').checked;
+    let horaVuelta = '';
+    if (conVuelta) {
+        horaVuelta = document.getElementById('horaVuelta').value;
+        if (!horaVuelta) { alert('Introduce la hora de vuelta.'); return; }
+    }
+
     const btn = document.getElementById('btnPublicar');
     btn.disabled = true; btn.textContent = 'Publicando...';
 
     const base = {
-        tipo: document.getElementById('tipo').value,
+        tipo:     document.getElementById('tipo').value,
         desde, hasta,
         hora:     document.getElementById('hora').value,
         nombre:   document.getElementById('nombre').value.trim(),
@@ -910,22 +978,41 @@ async function publicarViaje() {
         email:    document.getElementById('email').value.trim()
     };
 
+    // Construir payload de ida
     const payload = fechas.map(f => ({ ...base, fecha: f }));
 
-    try {
-    const res = await fetch(URL_SCRIPT, {
-    method: 'POST',
-    mode: 'cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-        payload: JSON.stringify(payload.length === 1 ? payload[0] : payload)
-    })
-});
+    // Añadir vuelta si corresponde (misma fecha, origen/destino invertidos)
+    if (conVuelta) {
+        payload.push({
+            ...base,
+            desde: hasta,
+            hasta: desde,
+            hora: horaVuelta,
+            fecha: fechas[0]
+        });
+    }
 
-const data = await res.json(); // 🔥 ESTO FALTABA
-console.log('PIN:', data.pin);
+    try {
+        const res = await fetch(URL_SCRIPT, {
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                payload: JSON.stringify(payload.length === 1 ? payload[0] : payload)
+            })
+        });
+
+        const data = await res.json();
+        console.log('PIN:', data.pin);
 
         const pinBox = document.getElementById('pinMostrado');
+        const numViajes = data.total || payload.length;
+        const textoViajes = conVuelta
+            ? `Se han publicado <b>${numViajes} viajes</b>: ida y vuelta.`
+            : numViajes > 1
+                ? `Se han publicado <b>${numViajes} viajes</b>.`
+                : 'Se ha publicado <b>1 viaje</b>.';
+
         pinBox.innerHTML = `
             <div class="pin-box">
                 <p class="pin-label">🔑 Tu PIN personal es:</p>
@@ -935,23 +1022,28 @@ console.log('PIN:', data.pin);
                     ${base.email
                         ? `✅ Te hemos enviado el PIN a ${base.email}`
                         : '⚠️ Guarda este PIN — no podrás recuperarlo si lo pierdes.'
-                    }<br>
-                    ${data.total > 1 ? `Se han publicado <b>${data.total} viajes</b>.` : 'Se ha publicado <b>1 viaje</b>.'}
+                    }<br>${textoViajes}
                 </p>
             </div>`;
 
-        // Reemplaza todo el bloque de reset por esto:
-btn.textContent = '✅ Publicado';
-btn.disabled = true;
-document.getElementById('desde').value = '';
-document.getElementById('hasta').value = '';
-document.getElementById('hora').value = '';
-document.getElementById('fecha').value = '';
-document.getElementById('nombre').value = '';
-document.getElementById('telefono').value = '';
-document.getElementById('email').value = '';
-document.getElementById('aceptaPrivacidad').checked = false;
-await cargar();
+        // Reset
+        btn.textContent = '✅ Publicado';
+        btn.disabled = true;
+        document.getElementById('desde').value = '';
+        document.getElementById('hasta').value = '';
+        document.getElementById('hora').value = '';
+        document.getElementById('fecha').value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('telefono').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('aceptaPrivacidad').checked = false;
+        document.getElementById('addVuelta').checked = false;
+        document.getElementById('horaVuelta').value = '';
+        document.getElementById('horaVueltaWrap').classList.add('oculto');
+        document.getElementById('vueltaToggle').classList.remove('activo');
+
+        await cargar();
+
     } catch(err) {
         alert('Error al publicar. Comprueba tu conexión e inténtalo de nuevo.');
         btn.disabled = false; btn.textContent = 'Publicar';
@@ -966,7 +1058,7 @@ function copiarPin(pin, btn) {
     });
 }
 
-/* ── WHATSAPP (ADAPTADO A RECURRENCIA) ── */
+/* ── WHATSAPP ── */
 function enviarWhatsApp() {
     const d = document.getElementById('desde').value === 'Otro'
         ? document.getElementById('desdeOtro').value.trim()
@@ -980,7 +1072,6 @@ function enviarWhatsApp() {
     const esConductor = tipo === 'Conductor';
 
     let cuandoText = '';
-
     if (recurrenciaActual === 'unica') {
         const f = document.getElementById('fecha').value;
         cuandoText = f ? `el ${formatFecha(f)} (${nombreDia(f)})` : 'en una fecha concreta';
@@ -989,12 +1080,9 @@ function enviarWhatsApp() {
     } else {
         const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
         const nombresMap = {'0':'domingos','1':'lunes','2':'martes','3':'miércoles','4':'jueves','5':'viernes','6':'sábados'};
-        if (activos.length) {
-            const nombres = activos.map(el => nombresMap[el.dataset.val]);
-            cuandoText = `los ${nombres.join(', ')} (próximas 2 semanas)`;
-        } else {
-            cuandoText = 'varios días';
-        }
+        cuandoText = activos.length
+            ? `los ${activos.map(el => nombresMap[el.dataset.val]).join(', ')} (próximas 2 semanas)`
+            : 'varios días';
     }
 
     const accion = esConductor ? 'tengo plaza' : 'busco viaje';
