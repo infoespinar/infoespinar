@@ -858,10 +858,12 @@ async function publicarViaje() {
 
     try {
         const res = await fetch(URL_SCRIPT, {
-            method: 'POST',
-            body: JSON.stringify(payload.length === 1 ? payload[0] : payload)
-        });
-        const data = await res.json();
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },  // ← text/plain no dispara preflight
+    body: JSON.stringify(payload.length === 1 ? payload[0] : payload)
+});
+const text = await res.text();
+const data = JSON.parse(text);
 
         const pinBox = document.getElementById('pinMostrado');
         pinBox.innerHTML = `
@@ -878,8 +880,18 @@ async function publicarViaje() {
                 </p>
             </div>`;
 
-        btn.disabled = false; btn.textContent = 'Publicar';
-        await cargar();
+        // Reemplaza todo el bloque de reset por esto:
+btn.textContent = '✅ Publicado';
+btn.disabled = true;
+document.getElementById('desde').value = '';
+document.getElementById('hasta').value = '';
+document.getElementById('hora').value = '';
+document.getElementById('fecha').value = '';
+document.getElementById('nombre').value = '';
+document.getElementById('telefono').value = '';
+document.getElementById('email').value = '';
+document.getElementById('aceptaPrivacidad').checked = false;
+await cargar();
     } catch(err) {
         alert('Error al publicar. Comprueba tu conexión e inténtalo de nuevo.');
         btn.disabled = false; btn.textContent = 'Publicar';
