@@ -310,7 +310,8 @@
             font-size: 13px;
             font-weight: 500;
             color: var(--ink-mid);
-}
+
+            }
         /* PRIVACIDAD */
         .privacy-box {
             background: var(--surface-2);
@@ -436,11 +437,12 @@
             margin-bottom: 14px;
         }
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 16px;
-        }
+        grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 16px;
+    align-items: start;
+}
 
         .card {
             background: var(--surface);
@@ -525,7 +527,7 @@
         .btn-delete {
     position: absolute;
     top: 14px;
-    right: 14px;
+    right: 54px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
