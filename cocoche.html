@@ -527,7 +527,7 @@
         .btn-delete {
     position: absolute;
     top: 14px;
-    right: 54px;
+    right: 14px;
     width: 30px;
     height: 30px;
     border-radius: 50%;
@@ -825,14 +825,16 @@ function renderizar(data) {
             <div class="card-meta">
 
                 ${viajes.map(v => `
-                    <div class="card-meta-row">
-                        <div class="card-meta-icon">📅</div>
-                        <span class="card-meta-val">${formatFecha(v.fecha)}</span>
-                        <span style="color:var(--ink-light); font-size:13px">
-                            (${nombreDia(v.fecha)})
-                        </span>
-                        <span style="margin-left:10px;">⏰ ${v.hora}</span>
-                    </div>
+                    <div class="card-meta-row" style="justify-content: space-between;">
+    <div style="display:flex; align-items:center; gap:8px;">
+        <div class="card-meta-icon">📅</div>
+        <span class="card-meta-val">${formatFecha(v.fecha)}</span>
+        <span style="color:var(--ink-light); font-size:13px">
+            (${nombreDia(v.fecha)})
+        </span>
+    </div>
+    <span style="color:var(--ink-mid); font-size:13px; white-space:nowrap;">⏰ ${v.hora}</span>
+</div>
                 `).join('')}
 
         </div>
