@@ -748,10 +748,7 @@ function filtrar() {
 async function cargar() {
     try {
         const res = await fetch(URL_SCRIPT);
-
         const text = await res.text();
-        console.log(text);
-
         todosLosViajes = JSON.parse(text);
 
         todosLosViajes.sort((a,b) =>
@@ -763,7 +760,6 @@ async function cargar() {
 
     } catch(e) {
         console.error(e);
-
         document.getElementById('grid').innerHTML =
             '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes.</div>';
     }
@@ -863,7 +859,6 @@ async function publicarViaje() {
     try {
         const res = await fetch(URL_SCRIPT, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' }, // ← FIX: header necesario
             body: JSON.stringify(payload.length === 1 ? payload[0] : payload)
         });
         const data = await res.json();
