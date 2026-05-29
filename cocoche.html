@@ -807,8 +807,7 @@ function renderizar(data) {
 
         return `
         <div class="card">
-        <div class="card-user">${base.nombre}</div>
-        <button class="btn-delete" onclick="borrarViaje('${base.anuncio}')">🗑️</button>
+                <button class="btn-delete" onclick="borrarViaje('${base.anuncio}')">🗑️</button>
             <div class="card-badge ${esConductor ? 'badge-conductor' : 'badge-pasajero'}">
                 ${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}
             </div>
