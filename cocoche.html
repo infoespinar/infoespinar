@@ -767,28 +767,71 @@ async function cargar() {
 
 /* ── RENDER ── */
 function renderizar(data) {
+
     if (!data.length) {
-        document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="empty-icon">🚗</div>No se encontraron viajes.</div>';
+        document.getElementById('grid').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">🚗</div>No se encontraron viajes.</div>';
         return;
     }
-    document.getElementById('grid').innerHTML = data.map(v => {
-        const tel = String(v.telefono).replace(/\s+/g,'');
-        const numWA = tel.startsWith('34') ? tel : '34'+tel;
-        const esConductor = v.tipo.includes('Conductor');
+
+    // 🔥 AGRUPAR POR ANUNCIO PADRE
+    const grupos = {};
+
+    data.forEach(v => {
+        if (!grupos[v.anuncio]) grupos[v.anuncio] = [];
+        grupos[v.anuncio].push(v);
+    });
+
+    document.getElementById('grid').innerHTML = Object.values(grupos).map(viajes => {
+
+        const base = viajes[0];
+
+        const tel = String(base.telefono).replace(/\s+/g,'');
+        const numWA = tel.startsWith('34') ? tel : '34' + tel;
+
+        const esConductor = base.tipo.includes('Conductor');
+
         return `
-        <div class="card" id="card-${v.id}">
-            <button class="btn-delete" onclick="borrarViaje('${v.id}')" title="Borrar anuncio">🗑</button>
+        <div class="card">
+
             <div class="card-badge ${esConductor ? 'badge-conductor' : 'badge-pasajero'}">
                 ${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}
             </div>
-            <div class="card-route">${v.desde} → ${v.hasta}</div>
-            <div class="card-meta">
-                <div class="card-meta-row"><div class="card-meta-icon">📅</div><span class="card-meta-val">${formatFecha(v.fecha)}</span><span style="color:var(--ink-light); font-size:13px">(${nombreDia(v.fecha)})</span></div>
-                <div class="card-meta-row"><div class="card-meta-icon">⏰</div><span class="card-meta-val">${v.hora}</span></div>
-                <div class="card-meta-row"><div class="card-meta-icon">👤</div><span class="card-meta-val">${v.nombre}</span></div>
+
+            <div class="card-route">
+                ${base.desde} → ${base.hasta}
             </div>
-            <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">💬 Escribir a ${v.nombre}</a>
-        </div>`;
+
+            <div style="font-size:12px;color:var(--ink-light);margin-bottom:10px;">
+                ${viajes.length} viajes publicados
+            </div>
+
+            <div class="card-meta">
+
+                ${viajes.map(v => `
+                    <div class="card-meta-row">
+                        <div class="card-meta-icon">📅</div>
+                        <span class="card-meta-val">${formatFecha(v.fecha)}</span>
+                        <span style="color:var(--ink-light); font-size:13px">
+                            (${nombreDia(v.fecha)})
+                        </span>
+                        <span style="margin-left:10px;">⏰ ${v.hora}</span>
+                    </div>
+                `).join('')}
+
+                <div class="card-meta-row">
+                    <div class="card-meta-icon">👤</div>
+                    <span class="card-meta-val">${base.nombre}</span>
+                </div>
+
+            </div>
+
+            <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
+                💬 Escribir a ${base.nombre}
+            </a>
+
+        </div>
+        `;
     }).join('');
 }
 
@@ -864,7 +907,7 @@ async function publicarViaje() {
         body: new URLSearchParams({ payload: JSON.stringify(payload.length === 1 ? payload[0] : payload) })
     });
     
-    const data = await res.json();
+    console.log('Anuncio ID:', data.anuncioId);
 
         const pinBox = document.getElementById('pinMostrado');
         pinBox.innerHTML = `
