@@ -747,7 +747,9 @@ function filtrar() {
 /* ── CARGA ── */
 async function cargar() {
     try {
-        const res = await fetch(URL_SCRIPT);
+        const text = await res.text();
+        console.log(text);
+        alert(text);
         todosLosViajes = await res.json();
         todosLosViajes.sort((a,b) => new Date(a.fecha+'T'+a.hora) - new Date(b.fecha+'T'+b.hora));
         renderizar(todosLosViajes);
