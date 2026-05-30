@@ -149,7 +149,7 @@
 
     <div id="formActividad">
         <p class="form-section">Actividad</p>
-        <select id="actividad">
+        <select id="actividad" onchange="toggleOtraActividad()">
             <option value="">Elige una actividad...</option>
             <option>⚽ Fútbol</option>
             <option>🎾 Tenis</option>
@@ -164,6 +164,7 @@
             <option>🏐 Voleibol</option>
             <option>🎯 Otra actividad</option>
         </select>
+        <input type="text" id="otraActividad" placeholder="¿Cuál? Escribe la actividad..." style="display:none; margin-top:-4px;">
 
         <p class="form-section">Nivel</p>
         <select id="nivel">
@@ -183,8 +184,7 @@
             <button type="button" class="lugar-pill" data-lugar="San Rafael">San Rafael</button>
             <button type="button" class="lugar-pill" data-lugar="LASR">LASR</button>
             <button type="button" class="lugar-pill" data-lugar="La Estación">La Estación</button>
-      
-        </div>
+          </div>
 
         <p class="form-section">Fecha y hora</p>
         <div class="fecha-opcional-wrap" id="fechaToggleWrap" onclick="toggleFecha()">
@@ -374,7 +374,10 @@ async function publicar() {
         alert('Debes aceptar la política de privacidad.'); return;
     }
 
-    const actividad  = document.getElementById('actividad').value;
+    const actividadSel = document.getElementById('actividad').value;
+    const esOtra = actividadSel.includes('Otra actividad');
+    const otraActividad = document.getElementById('otraActividad').value.trim();
+    const actividad = esOtra ? (otraActividad || '') : actividadSel;
     const nivel      = document.getElementById('nivel').value;
     const personas   = document.getElementById('personas').value;
     const lugar      = getLugares();
@@ -385,7 +388,8 @@ async function publicar() {
     const fecha      = conFecha ? document.getElementById('fecha').value : '';
     const hora       = conFecha ? document.getElementById('hora').value : '';
 
-    if (!actividad)  { alert('Selecciona una actividad.'); return; }
+    if (!actividadSel) { alert('Selecciona una actividad.'); return; }
+    if (esOtra && !otraActividad) { alert('Escribe el nombre de la actividad.'); return; }
     if (!nivel)      { alert('Selecciona el nivel.'); return; }
     if (!lugar)      { alert('Selecciona una zona.'); return; }
     if (!nombre)     { alert('Introduce tu nombre.'); return; }
@@ -437,6 +441,14 @@ function copiarPin(pin, btn) {
         btn.classList.add('copiado');
         setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
     });
+}
+
+function toggleOtraActividad() {
+    const sel = document.getElementById('actividad');
+    const input = document.getElementById('otraActividad');
+    const esOtra = sel.value.includes('Otra actividad');
+    input.style.display = esOtra ? 'block' : 'none';
+    if (esOtra) input.focus();
 }
 
 function getLugares() {
