@@ -250,6 +250,7 @@ function toggleFormulario() {
     f.style.display = f.style.display === 'block' ? 'none' : 'block';
 }
 
+// CORREGIDO: Lógica limpia para abrir/cerrar fechas sin conflictos de clics
 function toggleFecha() {
     const cb   = document.getElementById('conFecha');
     const wrap = document.getElementById('fechaHoraWrap');
@@ -317,8 +318,7 @@ function renderizar(data) {
         document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="empty-icon">🏃</div>No se encontraron propuestas.</div>';
         return;
     }
-    const hoy = new Date(); hoy.setHours(0,0,0,0);
-
+    
     document.getElementById('grid').innerHTML = data.map(p => {
         const tel = String(p.telefono).replace(/\s+/g, '');
         const numWA = tel.startsWith('34') ? tel : '34' + tel;
@@ -406,9 +406,8 @@ async function publicar() {
     const params = new URLSearchParams({ actividad, nivel, personas, lugar, nombre, telefono, email, fecha, hora });
 
     try {
-        const res  = await fetch(URL_SCRIPT, { method: 'POST', body: params, redirect: 'follow' });
-        const text = await res.text();
-        const data = JSON.parse(text);
+        const res  = await fetch(URL_SCRIPT, { method: 'POST', body: params });
+        const data = await res.json();
 
         if (data.status === 'ok') {
             document.getElementById('pinMostrado').innerHTML = `
@@ -430,7 +429,7 @@ async function publicar() {
             btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
         }
     } catch(err) {
-        alert('Error al publicar. Comprueba tu conexión.');
+        alert('Error al publicar. Comprueba tu conexión o script.');
         btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
     }
 }
@@ -457,11 +456,31 @@ function getLugares() {
         .join(', ');
 }
 
+// CORREGIDO: Inicialización robusta para capturar los clicks en las pills de lugar y checkbox
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('lugarPills').addEventListener('click', e => {
-        const pill = e.target.closest('.lugar-pill');
-        if (pill) pill.classList.toggle('activo');
-    });
+    // Manejo de las píldoras de lugar
+    const contenedorLugares = document.getElementById('lugarPills');
+    if (contenedorLugares) {
+        contenedorLugares.addEventListener('click', e => {
+            const pill = e.target.closest('.lugar-pill');
+            if (pill) {
+                e.preventDefault();
+                pill.classList.toggle('activo');
+            }
+        });
+    }
+
+    // Manejo limpio del click en todo el contenedor del checkbox de fecha
+    const contenedorFecha = document.getElementById('fechaToggleWrap');
+    const checkboxFecha = document.getElementById('conFecha');
+    if (contenedorFecha && checkboxFecha) {
+        contenedorFecha.addEventListener('click', (e) => {
+            if (e.target !== checkboxFecha && e.target.tagName !== 'LABEL') {
+                checkboxFecha.checked = !checkboxFecha.checked;
+            }
+            toggleFecha();
+        });
+    }
 });
 
 cargar();
