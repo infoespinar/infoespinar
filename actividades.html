@@ -343,7 +343,24 @@ function renderizar(data) {
     document.getElementById('grid').innerHTML = data.map(p => {
         const tel = String(p.telefono).replace(/\s+/g, '');
         const numWA = tel.startsWith('34') ? tel : '34' + tel;
+        
+        // 1. Obtenemos el emoji base de la actividad (la pelota, la bota, etc.)
         const emoji = emojiActividad(p.actividad || '');
+
+        // 2. Calculamos cuántas personas busca
+        const numPersonas = parseInt(p.personas) || 1;
+        
+        // CORRECCIÓN: Como el nombre ya trae un emoji, restamos 1 al bloque dinámico
+        // Si busca 1 persona, necesitamos 0 emojis extra. Si busca 3, necesitamos 2 extra.
+        const repeticiones = Math.max(0, Math.min(numPersonas - 1, 4));
+        
+        // Creamos la tanda de emojis extra
+        let bloqueEmojis = emoji.repeat(repeticiones);
+        
+        // Si buscan más de 5 personas, limitamos a 4 extras y metemos los puntos suspensivos
+        if (numPersonas > 5) {
+            bloqueEmojis = emoji.repeat(4) + '...';
+        }
 
         let fechaHtml = '';
         if (p.fecha) {
@@ -358,7 +375,8 @@ function renderizar(data) {
         return `
         <div class="card" id="card-${p.id}">
             <button class="btn-borrar" onclick="borrar('${p.id}')" title="Borrar propuesta">🗑️</button>
-            <div class="card-actividad-badge">${emoji} ${p.actividad}</div>
+            
+            <div class="card-actividad-badge">${bloqueEmojis} ${p.actividad}</div>
             
             <div class="card-titulo">Propuesta de ${p.nombre}</div>
             
