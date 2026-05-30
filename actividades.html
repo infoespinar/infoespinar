@@ -42,6 +42,10 @@
         .filtro-pill:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
         .filtro-pill.activo { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
 
+        .lugar-pill { padding: 6px 14px; border-radius: 20px; border: 1.5px solid #e2e8f0; background: white; font-size: 13px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.18s; font-family: inherit; }
+        .lugar-pill:hover { border-color: var(--brand-primary); color: var(--brand-primary); }
+        .lugar-pill.activo { background: var(--brand-primary); border-color: var(--brand-primary); color: white; }
+
         /* BTN PUBLICAR */
         .btn-toggle { display: block; width: 100%; padding: 15px; background: var(--brand-primary); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 20px; font-size: 15px; font-family: inherit; transition: background 0.2s; }
         .btn-toggle:hover { background: var(--brand-dark); }
@@ -174,16 +178,15 @@
         <input type="number" id="personas" placeholder="Número de personas (ej: 2)" min="1" max="50">
 
         <p class="form-section">Lugar</p>
-        <select id="lugar">
-            <option value="">Zona...</option>
-            <option>El Espinar</option>
-            <option>San Rafael</option>
-            <option>LASR</option>
-            <option>La Estación</option>
-            <option>Zona del río</option>
-            <option>Pistas municipales</option>
-            <option>A convenir</option>
-        </select>
+        <div id="lugarPills" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+            <button type="button" class="lugar-pill" data-lugar="El Espinar">El Espinar</button>
+            <button type="button" class="lugar-pill" data-lugar="San Rafael">San Rafael</button>
+            <button type="button" class="lugar-pill" data-lugar="LASR">LASR</button>
+            <button type="button" class="lugar-pill" data-lugar="La Estación">La Estación</button>
+            <button type="button" class="lugar-pill" data-lugar="Zona del río">Zona del río</button>
+            <button type="button" class="lugar-pill" data-lugar="Pistas municipales">Pistas municipales</button>
+            <button type="button" class="lugar-pill" data-lugar="A convenir">A convenir</button>
+        </div>
 
         <p class="form-section">Fecha y hora</p>
         <div class="fecha-opcional-wrap" id="fechaToggleWrap" onclick="toggleFecha()">
@@ -376,7 +379,7 @@ async function publicar() {
     const actividad  = document.getElementById('actividad').value;
     const nivel      = document.getElementById('nivel').value;
     const personas   = document.getElementById('personas').value;
-    const lugar      = document.getElementById('lugar').value;
+    const lugar      = getLugares();
     const nombre     = document.getElementById('nombre').value.trim();
     const telefono   = document.getElementById('telefono').value.trim();
     const email      = document.getElementById('email').value.trim();
@@ -437,6 +440,19 @@ function copiarPin(pin, btn) {
         setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
     });
 }
+
+function getLugares() {
+    return [...document.querySelectorAll('.lugar-pill.activo')]
+        .map(p => p.dataset.lugar)
+        .join(', ');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('lugarPills').addEventListener('click', e => {
+        const pill = e.target.closest('.lugar-pill');
+        if (pill) pill.classList.toggle('activo');
+    });
+});
 
 cargar();
 </script>
