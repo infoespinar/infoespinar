@@ -266,16 +266,35 @@ function construirFiltros(data) {
     const container = document.getElementById('filtrosActividad');
     container.innerHTML = '';
 
+    // 1. Píldora inicial de "Todas"
     const todos = document.createElement('button');
     todos.className = 'filtro-pill activo';
     todos.textContent = 'Todas';
     todos.onclick = () => { filtroActivo = null; actualizarPills(todos); filtrar(); };
     container.appendChild(todos);
 
+    // 2. Píldoras dinámicas por actividad con contador de monigotes
     actividades.forEach(act => {
         const pill = document.createElement('button');
         pill.className = 'filtro-pill';
-        pill.textContent = act;
+        
+        // Buscamos la propuesta de esta actividad que pida más personas para calcular los emojis
+        const propuestasDeAct = data.filter(p => p.actividad === act);
+        // Sacamos el número máximo de personas solicitadas en esta categoría
+        const maxPersonas = Math.max(...propuestasDeAct.map(p => parseInt(p.personas) || 1));
+
+        // Generamos los emojis de personas (máximo 5)
+        const numEmojis = Math.min(maxPersonas, 5);
+        let cadenaEmojis = '👤'.repeat(numEmojis);
+        
+        // Si el límite supera los 5, le metemos el "+" para indicar que se busca más gente
+        if (maxPersonas > 5) {
+            cadenaEmojis += '+';
+        }
+
+        // Estructura final dentro del botón: "⚽ Fútbol (👤👤👤+)"
+        pill.textContent = `${act} (${cadenaEmojis})`;
+        
         pill.onclick = () => { filtroActivo = act; actualizarPills(pill); filtrar(); };
         container.appendChild(pill);
     });
