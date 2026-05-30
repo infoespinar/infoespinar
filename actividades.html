@@ -161,8 +161,14 @@
             <option>🎯 Otra actividad</option>
         </select>
 
-        <p class="form-section">Descripción</p>
-        <textarea id="descripcion" placeholder="Cuéntanos más: qué buscas, nivel, cualquier detalle..." rows="3"></textarea>
+        <p class="form-section">Nivel</p>
+        <select id="nivel">
+            <option value="">Selecciona el nivel...</option>
+            <option>🟢 Iniciación</option>
+            <option>🟡 Intermedio</option>
+            <option>🟠 Avanzado</option>
+            <option>🔴 Pro</option>
+        </select>
 
         <p class="form-section">¿Cuántas personas buscas?</p>
         <input type="number" id="personas" placeholder="Número de personas (ej: 2)" min="1" max="50">
@@ -279,7 +285,7 @@ function actualizarPills(activo) {
 function filtrar() {
     const texto = document.getElementById('buscador').value.toLowerCase();
     const filtrados = todasLasPropuestas.filter(p => {
-        const coincideTexto = [p.actividad, p.descripcion, p.lugar, p.nombre, p.fecha]
+        const coincideTexto = [p.actividad, p.nivel, p.lugar, p.nombre, p.fecha]
             .some(c => String(c || '').toLowerCase().includes(texto));
         const coincideActividad = !filtroActivo || p.actividad === filtroActivo;
         return coincideTexto && coincideActividad;
@@ -331,9 +337,10 @@ function renderizar(data) {
         <div class="card" id="card-${p.id}">
             <button class="btn-borrar" onclick="borrar('${p.id}')" title="Borrar propuesta">🗑️</button>
             <div class="card-actividad-badge">${emoji} ${p.actividad}</div>
-            <div class="card-titulo">${p.descripcion || p.actividad}</div>
+            <div class="card-titulo">${p.nivel || p.actividad}</div>
             <div class="card-meta">
                 ${fechaHtml}
+                ${p.nivel ? `<div class="card-meta-row">🎯 Nivel: <b>${p.nivel}</b></div>` : ''}
                 <div class="card-meta-row">📍 <b>${p.lugar}</b></div>
                 ${p.personas ? `<div class="card-meta-row">👥 Busca <b>${p.personas} ${p.personas == 1 ? 'persona' : 'personas'}</b></div>` : ''}
                 <div class="card-meta-row">👤 <b>${p.nombre}</b></div>
@@ -367,7 +374,7 @@ async function publicar() {
     }
 
     const actividad  = document.getElementById('actividad').value;
-    const descripcion = document.getElementById('descripcion').value.trim();
+    const nivel      = document.getElementById('nivel').value;
     const personas   = document.getElementById('personas').value;
     const lugar      = document.getElementById('lugar').value;
     const nombre     = document.getElementById('nombre').value.trim();
@@ -378,6 +385,7 @@ async function publicar() {
     const hora       = conFecha ? document.getElementById('hora').value : '';
 
     if (!actividad)  { alert('Selecciona una actividad.'); return; }
+    if (!nivel)      { alert('Selecciona el nivel.'); return; }
     if (!lugar)      { alert('Selecciona una zona.'); return; }
     if (!nombre)     { alert('Introduce tu nombre.'); return; }
     if (!telefono)   { alert('Introduce tu teléfono.'); return; }
@@ -390,7 +398,7 @@ async function publicar() {
     const btn = document.getElementById('btnPublicar');
     btn.disabled = true; btn.textContent = 'Publicando...';
 
-    const params = new URLSearchParams({ actividad, descripcion, personas, lugar, nombre, telefono, email, fecha, hora });
+    const params = new URLSearchParams({ actividad, nivel, personas, lugar, nombre, telefono, email, fecha, hora });
 
     try {
         const res  = await fetch(URL_SCRIPT, { method: 'POST', body: params, redirect: 'follow' });
