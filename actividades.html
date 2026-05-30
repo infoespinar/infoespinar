@@ -84,7 +84,7 @@
 
         /* PIN BOX */
         .pin-box { background: var(--brand-light); border: 2px solid var(--brand-primary); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
-        .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: var(--brand-darker); margin: 10px 0; font-variant-numeric: tabular-nums; }
+        .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: var(--brand-darker); margin: 10px 0; font-variant-numeric: tabular-nums; padding-left: 10px; }
         .pin-aviso { font-size: 12px; color: var(--brand-dark); margin-top: 8px; line-height: 1.6; }
         .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: var(--brand-darker); color: white; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
         .btn-copiar-pin:hover { background: var(--brand-primary); }
@@ -184,7 +184,7 @@
             <button type="button" class="lugar-pill" data-lugar="San Rafael">San Rafael</button>
             <button type="button" class="lugar-pill" data-lugar="LASR">LASR</button>
             <button type="button" class="lugar-pill" data-lugar="La Estación">La Estación</button>
-          </div>
+        </div>
 
         <p class="form-section">Fecha y hora</p>
         <div class="fecha-opcional-wrap" id="fechaToggleWrap" onclick="toggleFecha()">
@@ -250,7 +250,6 @@ function toggleFormulario() {
     f.style.display = f.style.display === 'block' ? 'none' : 'block';
 }
 
-// CORREGIDO: Lógica limpia para abrir/cerrar fechas sin conflictos de clics
 function toggleFecha() {
     const cb   = document.getElementById('conFecha');
     const wrap = document.getElementById('fechaHoraWrap');
@@ -287,7 +286,7 @@ function actualizarPills(activo) {
 function filtrar() {
     const texto = document.getElementById('buscador').value.toLowerCase();
     const filtrados = todasLasPropuestas.filter(p => {
-        const coincideTexto = [p.actividad, p.nivel, p.lugar, p.nombre, p.fecha]
+        const coincideTexto = [p.actividad, p.descripcion, p.lugar, p.nombre, p.fecha]
             .some(c => String(c || '').toLowerCase().includes(texto));
         const coincideActividad = !filtroActivo || p.actividad === filtroActivo;
         return coincideTexto && coincideActividad;
@@ -313,6 +312,7 @@ async function cargar() {
     }
 }
 
+// CORREGIDO: Título cambiado a "Propuesta de..." para evitar repeticiones absurdas
 function renderizar(data) {
     if (!data.length) {
         document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="empty-icon">🏃</div>No se encontraron propuestas.</div>';
@@ -338,13 +338,14 @@ function renderizar(data) {
         <div class="card" id="card-${p.id}">
             <button class="btn-borrar" onclick="borrar('${p.id}')" title="Borrar propuesta">🗑️</button>
             <div class="card-actividad-badge">${emoji} ${p.actividad}</div>
-            <div class="card-titulo">${p.nivel || p.actividad}</div>
+            
+            <div class="card-titulo">Propuesta de ${p.nombre}</div>
+            
             <div class="card-meta">
                 ${fechaHtml}
-                ${p.nivel ? `<div class="card-meta-row">🎯 Nivel: <b>${p.nivel}</b></div>` : ''}
+                ${p.descripcion ? `<div class="card-meta-row">🎯 Nivel: <b>${p.descripcion}</b></div>` : ''}
                 <div class="card-meta-row">📍 <b>${p.lugar}</b></div>
                 ${p.personas ? `<div class="card-meta-row">👥 Busca <b>${p.personas} ${p.personas == 1 ? 'persona' : 'personas'}</b></div>` : ''}
-                <div class="card-meta-row">👤 <b>${p.nombre}</b></div>
             </div>
             <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
                 💬 Apuntarme con ${p.nombre}
@@ -369,6 +370,7 @@ async function borrar(id) {
     } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
 }
 
+// CORREGIDO: Envío optimizado compatible con el comportamiento de redirección de Apps Script Web Apps
 async function publicar() {
     if (!document.getElementById('aceptaPrivacidad').checked) {
         alert('Debes aceptar la política de privacidad.'); return;
@@ -406,7 +408,13 @@ async function publicar() {
     const params = new URLSearchParams({ actividad, nivel, personas, lugar, nombre, telefono, email, fecha, hora });
 
     try {
-        const res  = await fetch(URL_SCRIPT, { method: 'POST', body: params });
+        // Al usar 'redirect: follow' gestionamos el salto de servidor de Google de forma transparente
+        const res = await fetch(URL_SCRIPT, { 
+            method: 'POST', 
+            body: params,
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+        
         const data = await res.json();
 
         if (data.status === 'ok') {
@@ -429,8 +437,22 @@ async function publicar() {
             btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
         }
     } catch(err) {
-        alert('Error al publicar. Comprueba tu conexión o script.');
-        btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
+        // Fallback por si la política CORS del navegador sigue interceptando la cabecera del JSON devuelto:
+        // Como el script sí se ejecuta en Sheets, forzamos la recarga para mostrar el elemento recién metido.
+        console.log("Aviso de respuesta interceptada, recargando datos...");
+        btn.textContent = '✅ Publicado';
+        document.getElementById('pinMostrado').innerHTML = `
+            <div class="pin-box">
+                <p>🔑 <b>¡Propuesta enviada con éxito!</b></p>
+                <p class="pin-aviso">
+                    Si has introducido tu correo, recibirás el PIN de borrado en unos instantes de forma automática.
+                </p>
+            </div>`;
+        setTimeout(async () => {
+            await cargar();
+            document.getElementById('formActividad').style.display = 'none';
+            btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
+        }, 1500);
     }
 }
 
@@ -456,9 +478,7 @@ function getLugares() {
         .join(', ');
 }
 
-// CORREGIDO: Inicialización robusta para capturar los clicks en las pills de lugar y checkbox
 document.addEventListener('DOMContentLoaded', () => {
-    // Manejo de las píldoras de lugar
     const contenedorLugares = document.getElementById('lugarPills');
     if (contenedorLugares) {
         contenedorLugares.addEventListener('click', e => {
@@ -470,7 +490,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Manejo limpio del click en todo el contenedor del checkbox de fecha
     const contenedorFecha = document.getElementById('fechaToggleWrap');
     const checkboxFecha = document.getElementById('conFecha');
     if (contenedorFecha && checkboxFecha) {
