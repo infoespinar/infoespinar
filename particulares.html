@@ -240,8 +240,9 @@ async function enviar(e) {
         imagenUrl:   imagenUrl
     });
 
-    const res  = await fetch(SCRIPT_URL, { method: 'POST', body: params });
-    const data = await res.json();
+    const res  = await fetch(SCRIPT_URL, { method: 'POST', body: params, redirect: 'follow' });
+    const text = await res.text();
+    const data = JSON.parse(text);
 
     if (data.status === 'ok') {
         const emailIntroducido = document.getElementById('email').value.trim();
