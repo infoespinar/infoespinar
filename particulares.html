@@ -58,7 +58,8 @@
             transition: opacity 0.2s, background 0.2s, transform 0.15s;
             backdrop-filter: blur(4px);
         }
-        .btn-borrar-foto:hover { opacity: 1; background: rgba(220,38,38,0.80); transform: scale(1.08); }
+        .btn-borrar-foto:hover {     opacity: 1;     background: rgba(248, 113, 113, 0.9); /* Un rojo pastel/clarito mucho más suave */    transform: scale(1.08); 
+}
 
         .titulo-tarjeta { font-weight: 900; font-size: 16px; padding: 15px 15px 5px; color: #1e293b; }
         .precio { font-weight: 900; font-size: 20px; padding: 0 15px 10px; }
@@ -112,6 +113,13 @@
                 <img id="imgPreview" src="" alt="Vista previa">
             </div>
             <div class="img-status" id="imgStatus"></div>
+
+            <div style="margin: 15px 0 20px 2px; display: flex; align-items: flex-start; gap: 8px;">
+    <input type="checkbox" id="privacidad" required style="width: auto; margin: 4px 0 0 0; cursor: pointer;">
+    <label for="privacidad" style="font-size: 13px; color: #475569; line-height: 1.4; cursor: pointer;">
+        Acepto la <a href="/privacidad" target="_blank" style="color: var(--menta); font-weight: 700; text-decoration: none;">política de privacidad</a> y confirmo que soy un particular.
+    </label>
+</div>
 
             <button type="submit" id="btn" class="btn-publicar" style="width:100%; margin-bottom:0;">ENVIAR ANUNCIO</button>
         </form>
