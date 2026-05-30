@@ -25,6 +25,14 @@
 
         .email-hint { font-size: 12px; color: #64748b; margin: -8px 0 12px 2px; }
 
+        /* Imagen preview */
+        .img-preview-wrap { margin-bottom: 12px; display: none; }
+        .img-preview-wrap img { width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0; }
+        .img-status { font-size: 12px; margin: -8px 0 10px 2px; min-height: 16px; }
+        .img-status.loading { color: #20a088; }
+        .img-status.ok  { color: #059669; }
+        .img-status.err { color: #dc2626; }
+
         /* PIN BOX */
         .pin-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
         .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #065f46; margin: 10px 0; font-variant-numeric: tabular-nums; }
@@ -39,25 +47,14 @@
         /* TARJETA */
         .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; position: relative; }
 
-        /* Contenedor de imagen con papelera encima */
         .foto-wrap { position: relative; }
         .foto-articulo { width: 100%; height: 200px; object-fit: cover; cursor: pointer; display: block; }
         .btn-borrar-foto {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.55);
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            opacity: 0.75;
+            position: absolute; top: 10px; right: 10px;
+            width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(0,0,0,0.55); border: none; cursor: pointer;
+            font-size: 16px; display: flex; align-items: center; justify-content: center;
+            color: white; opacity: 0.75;
             transition: opacity 0.2s, background 0.2s, transform 0.15s;
             backdrop-filter: blur(4px);
         }
@@ -109,7 +106,13 @@
             <input type="email" id="email" placeholder="Email (opcional)">
             <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
 
-            <input type="file" id="imagen" accept="image/*" required>
+            <!-- Imagen: preview + estado -->
+            <input type="file" id="imagen" accept="image/*" required onchange="previsualizarImagen(this)">
+            <div class="img-preview-wrap" id="imgPreviewWrap">
+                <img id="imgPreview" src="" alt="Vista previa">
+            </div>
+            <div class="img-status" id="imgStatus"></div>
+
             <button type="submit" id="btn" class="btn-publicar" style="width:100%; margin-bottom:0;">ENVIAR ANUNCIO</button>
         </form>
         <div id="pinMostrado"></div>
@@ -122,10 +125,47 @@
 <div id="modal" onclick="this.style.display='none'"><img id="imgGrande" src=""></div>
 
 <script>
-const url = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
+const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
+const IMGBB_KEY    = "889d9ccbbcd91efdb92e1cdaee18b11d";
 
+// ── PREVIEW IMAGEN ────────────────────────────────────────────────
+function previsualizarImagen(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        const wrap = document.getElementById('imgPreviewWrap');
+        document.getElementById('imgPreview').src = e.target.result;
+        wrap.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
+
+// ── SUBIR A imgBB ─────────────────────────────────────────────────
+async function subirImagen(file) {
+    const status = document.getElementById('imgStatus');
+    status.textContent = 'Subiendo imagen…';
+    status.className = 'img-status loading';
+
+    const formData = new FormData();
+    formData.append('image', file);
+    const res  = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
+    const data = await res.json();
+
+    if (data.success) {
+        status.textContent = '✓ Imagen subida';
+        status.className = 'img-status ok';
+        return data.data.url;
+    } else {
+        status.textContent = '✗ Error al subir la imagen';
+        status.className = 'img-status err';
+        return null;
+    }
+}
+
+// ── CARGAR ANUNCIOS ───────────────────────────────────────────────
 async function cargar() {
-    const res = await fetch(url);
+    const res  = await fetch(SCRIPT_URL);
     const data = await res.json();
     document.getElementById('loading').style.display = 'none';
     data.sort(() => Math.random() - 0.5);
@@ -155,12 +195,12 @@ function ampliar(src) {
     document.getElementById('modal').style.display = 'flex';
 }
 
+// ── BORRAR ────────────────────────────────────────────────────────
 async function borrarAnuncio(id) {
     const pin = prompt('🗑️ Introduce tu PIN de 6 dígitos para borrar este anuncio:');
     if (!pin) return;
 
-    const params = new URLSearchParams({ action: 'delete', id, pin: pin.trim() });
-    const res = await fetch(url + '?' + params.toString());
+    const res  = await fetch(`${SCRIPT_URL}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
     const data = await res.json();
 
     if (data.status === 'ok') {
@@ -171,51 +211,61 @@ async function borrarAnuncio(id) {
     }
 }
 
+// ── ENVIAR ────────────────────────────────────────────────────────
 async function enviar(e) {
     e.preventDefault();
     const btn = document.getElementById('btn');
-    btn.disabled = true; btn.innerText = "Publicando...";
+    btn.disabled = true;
+    btn.innerText = "Publicando...";
 
-    const reader = new FileReader();
-    reader.readAsDataURL(document.getElementById('imagen').files[0]);
-    reader.onload = async () => {
-        const params = new URLSearchParams({
-            titulo:       document.getElementById('titulo').value,
-            estado:       document.getElementById('estado').value,
-            descripcion:  document.getElementById('descripcion').value,
-            precio:       document.getElementById('precio').value,
-            contacto:     document.getElementById('contacto').value,
-            recogida:     document.getElementById('recogida').value,
-            email:        document.getElementById('email').value.trim(),
-            imagenBase64: reader.result
-        });
+    // 1. Subir imagen a imgBB primero
+    const file = document.getElementById('imagen').files[0];
+    const imagenUrl = await subirImagen(file);
+    if (!imagenUrl) {
+        alert('Error al subir la imagen. Inténtalo de nuevo.');
+        btn.disabled = false;
+        btn.innerText = "ENVIAR ANUNCIO";
+        return;
+    }
 
-        const res = await fetch(url, { method: 'POST', body: params });
-        const data = await res.json();
+    // 2. Enviar datos al AppScript (sin base64, solo la URL)
+    const params = new URLSearchParams({
+        titulo:      document.getElementById('titulo').value,
+        estado:      document.getElementById('estado').value,
+        descripcion: document.getElementById('descripcion').value,
+        precio:      document.getElementById('precio').value,
+        contacto:    document.getElementById('contacto').value,
+        recogida:    document.getElementById('recogida').value,
+        email:       document.getElementById('email').value.trim(),
+        imagenUrl:   imagenUrl
+    });
 
-        if (data.status === 'ok') {
-            const emailIntroducido = document.getElementById('email').value.trim();
-            document.getElementById('pinMostrado').innerHTML = `
-                <div class="pin-box">
-                    <p>🔑 <b>Tu PIN personal es:</b></p>
-                    <div class="pin-num">${data.pin}</div>
-                    <button class="btn-copiar-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
-                    <p class="pin-aviso">
-                        ${emailIntroducido
-                            ? `✅ Te hemos enviado el PIN a <b>${emailIntroducido}</b>`
-                            : '⚠️ Guarda este PIN, no podrás recuperarlo si lo pierdes.'
-                        }<br>Necesitarás el PIN para borrar tu anuncio.
-                    </p>
-                </div>`;
-            btn.innerText = "✅ Publicado";
-            await cargar();
-        } else {
-            alert(data.status === 'ANTIFLOOD'
-                ? 'Antiflood: espera 5 minutos antes de publicar otro anuncio.'
-                : 'Error al publicar. Inténtalo de nuevo.');
-            btn.disabled = false; btn.innerText = "ENVIAR ANUNCIO";
-        }
-    };
+    const res  = await fetch(SCRIPT_URL, { method: 'POST', body: params });
+    const data = await res.json();
+
+    if (data.status === 'ok') {
+        const emailIntroducido = document.getElementById('email').value.trim();
+        document.getElementById('pinMostrado').innerHTML = `
+            <div class="pin-box">
+                <p>🔑 <b>Tu PIN personal es:</b></p>
+                <div class="pin-num">${data.pin}</div>
+                <button class="btn-copiar-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
+                <p class="pin-aviso">
+                    ${emailIntroducido
+                        ? `✅ Te hemos enviado el PIN a <b>${emailIntroducido}</b>`
+                        : '⚠️ Guarda este PIN, no podrás recuperarlo si lo pierdes.'
+                    }<br>Necesitarás el PIN para borrar tu anuncio.
+                </p>
+            </div>`;
+        btn.innerText = "✅ Publicado";
+        await cargar();
+    } else {
+        alert(data.status === 'ANTIFLOOD'
+            ? 'Antiflood: espera 5 minutos antes de publicar otro anuncio.'
+            : 'Error al publicar. Inténtalo de nuevo.');
+        btn.disabled = false;
+        btn.innerText = "ENVIAR ANUNCIO";
+    }
 }
 
 function copiarPin(pin, btn) {
