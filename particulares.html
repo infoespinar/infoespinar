@@ -10,10 +10,64 @@
         :root { --menta: #20a088; --fondo: #f4f6f9; }
         body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; padding-bottom: 50px; }
 
-        .header { background: linear-gradient(135deg, #20a088 0%, #0d7a68 100%); padding: 15px 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.header {
+    background: var(--menta); /* Usamos tu variable nativa de color menta */
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+        .header-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: white;
+}
+        
         .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
-        .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; }
-        .header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+.header-bandera {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.2);
+    object-fit: cover;
+}        .header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        .header-name {
+    font-size: 20px;
+    letter-spacing: 0.02em;
+    font-weight: 700;
+    color: white;
+}
+
+        .hero {
+    background: var(--menta); /* Fondo menta unificado */
+    padding: 40px 24px 65px; 
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+/* El arco recortado que acopla con el fondo gris claro de particulares */
+.hero::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0; right: 0;
+    height: 40px;
+    background: #f8fafc; /* El color gris/azul claro del fondo de particulares (Tailwind slate-50) */
+    clip-path: ellipse(55% 100% at 50% 100%);
+}
+.hero-title {
+    font-size: clamp(24px, 5vw, 36px);
+    color: white;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+.hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    font-weight: 400;
+}
 
         .contenedor-app { max-width: 900px; margin: 0 auto; padding: 20px; }
         h2.titulo-seccion { text-align: center; margin: 20px 0; font-size: 26px; letter-spacing: 0.5px; font-weight: 900; text-transform: uppercase; color: #1e293b; }
@@ -83,15 +137,16 @@
 <body>
 
 <header class="header">
-    <a href="index.html" class="header-logo">
-        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
-        <h1>INFOESPINAR.COM</h1>
+    <a href="/" class="header-link">
+        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo InfoEspinar">
+        <span class="header-name">infoespinar.com</span>
     </a>
 </header>
 
-<div class="contenedor-app">
-    <h2 class="titulo-seccion" style="background: linear-gradient(135deg, #20a088 0%, #0d7a68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anuncios Particulares</h2>
-    <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
+<div class="hero">
+    <h1 class="hero-title">Anuncios de Particulares</h1>
+    <p class="hero-sub">Publica, edita o borra tus anuncios de forma directa y sencilla.</p>
+</div>
     <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">➕ PUBLICAR ANUNCIO</button>
 
     <div id="form">
