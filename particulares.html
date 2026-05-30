@@ -19,18 +19,55 @@
         h2.titulo-seccion { text-align: center; margin: 20px 0; font-size: 26px; letter-spacing: 0.5px; font-weight: 900; text-transform: uppercase; color: #1e293b; }
         .aviso { text-align: center; color: #64748b; font-size: 12px; margin-bottom: 20px; }
 
-        .btn-publicar { display: block; width: 250px; margin: 0 auto 30px; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; }
+        .btn-publicar { display: block; width: 250px; margin: 0 auto 30px; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; font-size: 15px; }
         #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; display: none; }
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 8px; }
-        
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; }
+
+        .email-hint { font-size: 12px; color: #64748b; margin: -8px 0 12px 2px; }
+
+        /* PIN BOX */
+        .pin-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
+        .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #065f46; margin: 10px 0; font-variant-numeric: tabular-nums; }
+        .pin-aviso { font-size: 12px; color: #047857; margin-top: 8px; line-height: 1.6; }
+        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #065f46; color: white; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        .btn-copiar-pin:hover { background: #047857; }
+        .btn-copiar-pin.copiado { background: #1e40af; }
+
+        /* GRID */
         .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-        .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; }
-        .foto-articulo { width: 100%; height: 200px; object-fit: cover; cursor: pointer; }
+
+        /* TARJETA */
+        .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; position: relative; }
+
+        /* Contenedor de imagen con papelera encima */
+        .foto-wrap { position: relative; }
+        .foto-articulo { width: 100%; height: 200px; object-fit: cover; cursor: pointer; display: block; }
+        .btn-borrar-foto {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: rgba(0,0,0,0.55);
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            opacity: 0.75;
+            transition: opacity 0.2s, background 0.2s, transform 0.15s;
+            backdrop-filter: blur(4px);
+        }
+        .btn-borrar-foto:hover { opacity: 1; background: rgba(220,38,38,0.80); transform: scale(1.08); }
+
         .titulo-tarjeta { font-weight: 900; font-size: 16px; padding: 15px 15px 5px; color: #1e293b; }
         .precio { font-weight: 900; font-size: 20px; padding: 0 15px 10px; }
         .burbujas { padding: 0 15px 15px; display: flex; gap: 8px; flex-wrap: wrap; }
         .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
-        .descripcion {font-size: 14px; color: #475569; padding: 0 15px 10px; line-height: 1.5; word-break: break-word; /* Evita que palabras muy largas rompan la tarjeta */}
+        .descripcion { font-size: 14px; color: #475569; padding: 0 15px 10px; line-height: 1.5; word-break: break-word; }
         .botones-contacto { display: flex; gap: 10px; padding: 0 15px 15px; }
         .btn-contacto { flex: 1; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; color: white; }
         .btn-llamar { background: #000; }
@@ -50,10 +87,10 @@
 </header>
 
 <div class="contenedor-app">
-<h2 class="titulo-seccion" style="background: linear-gradient(135deg, #20a088 0%, #0d7a68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anuncios Particulares</h2>
+    <h2 class="titulo-seccion" style="background: linear-gradient(135deg, #20a088 0%, #0d7a68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Anuncios Particulares</h2>
     <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
     <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">➕ PUBLICAR ANUNCIO</button>
-  
+
     <div id="form">
         <form id="publicarForm" onsubmit="enviar(event)">
             <input type="text" id="titulo" placeholder="TÍTULO EN MAYÚSCULAS" required oninput="this.value=this.value.toUpperCase()">
@@ -68,9 +105,14 @@
                 <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
             </select>
             <input type="tel" id="contacto" placeholder="Teléfono (9 cifras)" required pattern="[0-9]{9}" maxlength="9">
+
+            <input type="email" id="email" placeholder="Email (opcional)">
+            <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
+
             <input type="file" id="imagen" accept="image/*" required>
             <button type="submit" id="btn" class="btn-publicar" style="width:100%; margin-bottom:0;">ENVIAR ANUNCIO</button>
         </form>
+        <div id="pinMostrado"></div>
     </div>
 
     <div id="loading" style="text-align:center; padding:40px; font-weight:700; color:#888;">Cargando anuncios...</div>
@@ -83,26 +125,29 @@
 const url = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
 
 async function cargar() {
-  const res = await fetch(url);
-  const data = await res.json();
-  document.getElementById('loading').style.display = 'none'; // Ocultar carga
-  data.sort(() => Math.random() - 0.5); 
-  
-  document.getElementById('tablon').innerHTML = data.map(a => `
-  <div class="tarjeta">
-    <img src="${a.imagen}" class="foto-articulo" onclick="ampliar('${a.imagen}')">
-    <div class="titulo-tarjeta">${a.titulo}</div>
-    <div class="descripcion">${a.descripcion}</div>
-    <div class="precio">${a.precio}€</div>
-    <div class="burbujas">
-      <span class="tag">📍 ${a.recogida}</span>
-      <span class="tag">📦 ${a.estado}</span>
-    </div>
-    <div class="botones-contacto">
-      <a href="tel:${a.contacto}" class="btn-contacto btn-llamar">LLAMAR</a>
-      <a href="https://wa.me/34${a.contacto}" class="btn-contacto btn-wa" target="_blank">WHATSAPP</a>
-    </div>
-  </div>`).join('');
+    const res = await fetch(url);
+    const data = await res.json();
+    document.getElementById('loading').style.display = 'none';
+    data.sort(() => Math.random() - 0.5);
+
+    document.getElementById('tablon').innerHTML = data.map(a => `
+        <div class="tarjeta" id="tarjeta-${a.id}">
+            <div class="foto-wrap">
+                <img src="${a.imagen}" class="foto-articulo" onclick="ampliar('${a.imagen}')">
+                <button class="btn-borrar-foto" onclick="borrarAnuncio('${a.id}')" title="Borrar anuncio">🗑️</button>
+            </div>
+            <div class="titulo-tarjeta">${a.titulo}</div>
+            <div class="descripcion">${a.descripcion}</div>
+            <div class="precio">${a.precio}€</div>
+            <div class="burbujas">
+                <span class="tag">📍 ${a.recogida}</span>
+                <span class="tag">📦 ${a.estado}</span>
+            </div>
+            <div class="botones-contacto">
+                <a href="tel:${a.contacto}" class="btn-contacto btn-llamar">LLAMAR</a>
+                <a href="https://wa.me/34${a.contacto}" class="btn-contacto btn-wa" target="_blank">WHATSAPP</a>
+            </div>
+        </div>`).join('');
 }
 
 function ampliar(src) {
@@ -110,27 +155,77 @@ function ampliar(src) {
     document.getElementById('modal').style.display = 'flex';
 }
 
-async function enviar(e) {
-  e.preventDefault();
-  const btn = document.getElementById('btn');
-  btn.disabled = true; btn.innerText = "Publicando...";
-  const reader = new FileReader();
-  reader.readAsDataURL(document.getElementById('imagen').files[0]);
-  reader.onload = async () => {
-    const params = new URLSearchParams({
-      titulo: document.getElementById('titulo').value,
-      estado: document.getElementById('estado').value,
-      descripcion: document.getElementById('descripcion').value,
-      precio: document.getElementById('precio').value,
-      contacto: document.getElementById('contacto').value,
-      recogida: document.getElementById('recogida').value,
-      imagenBase64: reader.result
-    });
-    const res = await fetch(url, {method: 'POST', body: params});
-    if(await res.text() === "OK") { alert("¡Publicado!"); location.reload(); }
-    else { alert("Error o Antiflood (Espera 5 min)."); btn.disabled = false; btn.innerText = "ENVIAR"; }
-  };
+async function borrarAnuncio(id) {
+    const pin = prompt('🗑️ Introduce tu PIN de 6 dígitos para borrar este anuncio:');
+    if (!pin) return;
+
+    const params = new URLSearchParams({ action: 'delete', id, pin: pin.trim() });
+    const res = await fetch(url + '?' + params.toString());
+    const data = await res.json();
+
+    if (data.status === 'ok') {
+        document.getElementById('tarjeta-' + id)?.remove();
+        alert('✅ Anuncio eliminado correctamente.');
+    } else {
+        alert('❌ PIN incorrecto. El anuncio no se ha borrado.');
+    }
 }
+
+async function enviar(e) {
+    e.preventDefault();
+    const btn = document.getElementById('btn');
+    btn.disabled = true; btn.innerText = "Publicando...";
+
+    const reader = new FileReader();
+    reader.readAsDataURL(document.getElementById('imagen').files[0]);
+    reader.onload = async () => {
+        const params = new URLSearchParams({
+            titulo:       document.getElementById('titulo').value,
+            estado:       document.getElementById('estado').value,
+            descripcion:  document.getElementById('descripcion').value,
+            precio:       document.getElementById('precio').value,
+            contacto:     document.getElementById('contacto').value,
+            recogida:     document.getElementById('recogida').value,
+            email:        document.getElementById('email').value.trim(),
+            imagenBase64: reader.result
+        });
+
+        const res = await fetch(url, { method: 'POST', body: params });
+        const data = await res.json();
+
+        if (data.status === 'ok') {
+            const emailIntroducido = document.getElementById('email').value.trim();
+            document.getElementById('pinMostrado').innerHTML = `
+                <div class="pin-box">
+                    <p>🔑 <b>Tu PIN personal es:</b></p>
+                    <div class="pin-num">${data.pin}</div>
+                    <button class="btn-copiar-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
+                    <p class="pin-aviso">
+                        ${emailIntroducido
+                            ? `✅ Te hemos enviado el PIN a <b>${emailIntroducido}</b>`
+                            : '⚠️ Guarda este PIN, no podrás recuperarlo si lo pierdes.'
+                        }<br>Necesitarás el PIN para borrar tu anuncio.
+                    </p>
+                </div>`;
+            btn.innerText = "✅ Publicado";
+            await cargar();
+        } else {
+            alert(data.status === 'ANTIFLOOD'
+                ? 'Antiflood: espera 5 minutos antes de publicar otro anuncio.'
+                : 'Error al publicar. Inténtalo de nuevo.');
+            btn.disabled = false; btn.innerText = "ENVIAR ANUNCIO";
+        }
+    };
+}
+
+function copiarPin(pin, btn) {
+    navigator.clipboard.writeText(pin).then(() => {
+        btn.textContent = "✅ ¡Copiado!";
+        btn.classList.add('copiado');
+        setTimeout(() => { btn.textContent = "📋 Copiar PIN"; btn.classList.remove('copiado'); }, 2500);
+    });
+}
+
 cargar();
 </script>
 </body>
