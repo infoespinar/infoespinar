@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actividades | infoespinar.com</title>
+    <title>Particulares | infoespinar.com</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
@@ -50,7 +50,7 @@
             align-items: center;
             justify-content: center;
         }
-        .header-logo-link {
+        .header-link {
             display: inline-flex;
             align-items: center;
             gap: 10px;
@@ -58,9 +58,11 @@
             color: white;
         }
         .header-bandera {
-            width: 28px; height: 28px;
+            width: 28px;
+            height: 28px;
             border-radius: 6px;
             border: 1px solid rgba(255,255,255,0.2);
+            object-fit: cover;
         }
         .header-name {
             font-family: 'DM Serif Display', serif;
@@ -79,7 +81,8 @@
         .hero::after {
             content: '';
             position: absolute;
-            bottom: -1px; left: 0; right: 0;
+            bottom: -1px;
+            left: 0; right: 0;
             height: 40px;
             background: var(--surface-2);
             clip-path: ellipse(55% 100% at 50% 100%);
@@ -98,62 +101,39 @@
         }
 
         /* MAIN */
-        .main-container {
+        .main {
             max-width: 860px;
             margin: 0 auto;
             padding: 32px 20px 60px;
         }
 
-        /* BUSCADOR */
-        .buscador-wrap { position: relative; margin-bottom: 10px; }
-        .buscador-wrap span { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; color: var(--ink-light); }
-        .buscador {
-            width: 100%; padding: 14px 16px 14px 44px;
-            border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius);
-            background: var(--surface);
-            font-family: inherit; font-size: 15px; color: var(--ink);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            box-shadow: var(--shadow);
-        }
-        .buscador:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(58,86,232,0.10); }
-        .buscador::placeholder { color: var(--ink-light); }
-
-        /* FILTROS */
-        .filtros-actividad { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-        .filtro-pill {
-            padding: 6px 14px; border-radius: 40px;
-            border: 1.5px solid var(--border-strong); background: var(--surface);
-            font-size: 12px; font-weight: 600; color: var(--ink-mid);
-            cursor: pointer; transition: all 0.18s; font-family: inherit;
-        }
-        .filtro-pill:hover { border-color: var(--accent); color: var(--accent); }
-        .filtro-pill.activo { background: #0d7a68; border-color: var(--accent); color: white; }
-
-        /* LUGAR PILLS (en el formulario) */
-        .lugar-pill {
-            padding: 8px 14px; border-radius: 40px;
-            border: 1.5px solid var(--border-strong); background: var(--surface);
-            font-size: 13px; font-weight: 500; color: var(--ink-mid);
-            cursor: pointer; transition: all 0.18s; font-family: inherit;
-        }
-        .lugar-pill:hover { border-color: var(--accent); color: var(--accent); }
-        .lugar-pill.activo { background: #0d7a68; border-color: var(--accent); color: white; }
-
         /* PUBLISH BUTTON */
-        .btn-toggle {
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-            width: 100%; padding: 15px; background: #0d7a68; color: white;
-            border: none; border-radius: var(--radius); font-family: inherit;
-            font-size: 14px; font-weight: 600; letter-spacing: 0.06em;
-            text-transform: uppercase; cursor: pointer; margin-bottom: 24px;
+        .btn-publicar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 15px;
+            background: #0d7a68;
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 24px;
             transition: background 0.2s, transform 0.15s;
             box-shadow: 0 4px 16px rgba(13,122,104,0.28);
         }
-        .btn-toggle:hover { background: #0a5e52; transform: translateY(-1px); }
+        .btn-publicar:hover { background: #0a5e52; transform: translateY(-1px); }
+        .btn-publicar:active { transform: translateY(0); }
 
         /* FORM */
-        #formActividad {
+        #form {
             background: var(--surface);
             border-radius: var(--radius);
             border: 1.5px solid var(--border);
@@ -165,64 +145,76 @@
         }
         @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
 
-        .form-section {
-            font-size: 12px; font-weight: 600;
-            letter-spacing: 0.08em; text-transform: uppercase;
-            color: var(--ink-light); margin: 20px 0 8px;
+        .form-section-title {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink-light);
+            margin: 20px 0 8px;
         }
-        .form-section:first-child { margin-top: 0; }
+        .form-section-title:first-child { margin-top: 0; }
 
-        select, input[type="text"], input[type="tel"], input[type="email"],
-        input[type="date"], input[type="time"], input[type="number"] {
-            width: 100%; padding: 11px 14px; margin-bottom: 10px;
+        input, select, textarea {
+            width: 100%;
+            padding: 11px 14px;
             border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius-sm); background: var(--surface);
-            font-family: inherit; font-size: 14px; color: var(--ink);
+            border-radius: var(--radius-sm);
+            background: var(--surface);
+            font-family: inherit;
+            font-size: 14px;
+            color: var(--ink);
             transition: border-color 0.2s, box-shadow 0.2s;
+            margin-bottom: 10px;
         }
-        select:focus, input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(58,86,232,0.09); }
-
-        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
-
-        /* FECHA TOGGLE */
-        .fecha-opcional-wrap {
-            display: flex; align-items: center; gap: 10px;
-            background: var(--surface-2); border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius-sm); padding: 10px 14px;
-            margin-bottom: 10px; cursor: pointer;
+        select:focus, input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(58,86,232,0.10);
         }
-        .fecha-opcional-wrap input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--accent); flex-shrink: 0; margin: 0; }
-        .fecha-opcional-wrap label { font-size: 14px; font-weight: 500; color: var(--ink-mid); cursor: pointer; margin: 0; padding: 0; border: none; }
-        .fecha-opcional-wrap.activo { border-color: var(--accent); background: var(--accent-light); }
-        .fecha-opcional-wrap.activo label { color: var(--accent-dark); }
-        #fechaHoraWrap { display: none; }
 
         .email-hint { font-size: 12px; color: var(--ink-light); margin: -6px 0 10px 2px; }
 
+        /* Imagen preview */
+        .img-preview-wrap { margin-bottom: 12px; display: none; }
+        .img-preview-wrap img { width: 100%; max-height: 200px; object-fit: cover; border-radius: var(--radius-sm); border: 1.5px solid var(--border-strong); }
+        .img-status { font-size: 12px; margin: -6px 0 10px 2px; min-height: 16px; }
+        .img-status.loading { color: var(--accent); }
+        .img-status.ok  { color: var(--green); }
+        .img-status.err { color: #dc2626; }
+
         /* PRIVACIDAD */
         .privacy-box {
-            background: var(--surface-2); border: 1px solid var(--border);
-            border-radius: var(--radius-sm); padding: 14px 16px;
-            font-size: 13px; color: var(--ink-mid); margin-bottom: 0; line-height: 1.6;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            font-size: 13px;
+            color: var(--ink-mid);
+            margin-bottom: 16px;
+            line-height: 1.6;
         }
         .privacy-box label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; margin-top: 10px; }
-        .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; margin-bottom: 0; accent-color: var(--accent); }
+        .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: var(--accent); margin-bottom: 0; }
         .privacy-box a { color: var(--accent); }
 
         /* PIN BOX */
         .pin-box {
             background: var(--green-light);
             border: 1.5px solid rgba(15,155,110,0.25);
-            border-radius: var(--radius-sm); padding: 20px;
-            margin-top: 16px; text-align: center;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-top: 16px;
+            text-align: center;
         }
+        .pin-label { font-size: 13px; color: var(--green-dark); font-weight: 500; margin-bottom: 6px; }
         .pin-num {
             font-family: 'DM Serif Display', serif;
-            font-size: 42px; letter-spacing: 12px;
-            color: var(--green-dark); margin: 4px 0 10px;
+            font-size: 42px;
+            letter-spacing: 12px;
+            color: var(--green-dark);
+            margin: 4px 0 10px;
         }
-        .pin-aviso { font-size: 12px; color: var(--green-dark); margin-top: 10px; opacity: 0.85; line-height: 1.6; }
         .btn-copiar-pin {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px; background: var(--green-dark); color: white;
@@ -231,25 +223,26 @@
         }
         .btn-copiar-pin:hover { background: var(--green); }
         .btn-copiar-pin.copiado { background: #0d7a68; }
+        .pin-aviso { font-size: 12px; color: var(--green-dark); margin-top: 10px; opacity: 0.85; line-height: 1.6; }
 
-        /* BTN PUBLICAR */
-        .btn-publicar {
+        /* BTN SUBMIT */
+        .btn-submit {
             display: block; width: 100%; padding: 13px;
             background: var(--ink); color: white; border: none;
             border-radius: var(--radius-sm); font-family: inherit;
             font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
-            text-transform: uppercase; cursor: pointer; margin-top: 16px;
+            text-transform: uppercase; cursor: pointer; margin-top: 4px;
             transition: background 0.2s;
         }
-        .btn-publicar:hover { background: #0a5e52; }
-        .btn-publicar:disabled { background: var(--ink-light); cursor: not-allowed; }
+        .btn-submit:hover { background: #0a5e52; }
+        .btn-submit:disabled { background: var(--ink-light); cursor: not-allowed; }
 
         /* GRID */
         .section-label {
             font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
             text-transform: uppercase; color: var(--ink-light); margin-bottom: 14px;
         }
-        .grid {
+        .grid-anuncios {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 16px;
@@ -257,56 +250,81 @@
         }
 
         /* TARJETA */
-        .card {
+        .tarjeta {
             background: var(--surface);
             border-radius: var(--radius);
             border: 1.5px solid var(--border);
             box-shadow: var(--shadow);
-            padding: 22px;
+            overflow: hidden;
             position: relative;
             transition: box-shadow 0.2s, transform 0.2s;
         }
-        .card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .tarjeta:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
-        .card-actividad-badge {
-            display: inline-flex; align-items: center; gap: 5px;
-            font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-            text-transform: uppercase; padding: 4px 10px;
-            border-radius: 40px; margin-bottom: 12px;
-            background: var(--accent-light); color: var(--accent-dark);
+        .foto-wrap { position: relative; }
+        .foto-articulo { width: 100%; height: 200px; object-fit: cover; cursor: pointer; display: block; }
+        .btn-borrar-foto {
+            position: absolute; top: 10px; right: 10px;
+            width: 34px; height: 34px; border-radius: 50%;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.5);
+            cursor: pointer; font-size: 16px;
+            display: flex; align-items: center; justify-content: center;
+            color: white; opacity: 0.75;
+            transition: opacity 0.2s, background 0.2s, transform 0.15s;
+            backdrop-filter: blur(2px);
         }
+        .btn-borrar-foto:hover { opacity: 1; background: rgba(248,113,113,0.9); transform: scale(1.08); }
 
-        .card-titulo {
+        .tarjeta-body { padding: 18px; }
+
+        .titulo-tarjeta {
             font-family: 'DM Serif Display', serif;
-            font-size: 18px; color: var(--ink);
-            margin-bottom: 12px; padding-right: 30px; line-height: 1.2;
+            font-size: 18px;
+            color: var(--ink);
+            margin-bottom: 4px;
+            padding-right: 10px;
+            line-height: 1.2;
         }
-
-        .card-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
-        .card-meta-row {
-            display: flex; align-items: center; gap: 8px;
-            font-size: 14px; color: var(--ink-mid);
+        .precio {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
         }
-        .card-meta-row b { color: var(--ink); }
-
-        .btn-wa-card {
-            display: flex; align-items: center; justify-content: center; gap: 7px;
-            width: 100%; padding: 11px; background: var(--wa); color: white;
+        .burbujas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+        .tag {
+            background: var(--surface-3);
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--ink-mid);
+            border: 1px solid var(--border-strong);
+        }
+        .descripcion { font-size: 14px; color: var(--ink-mid); margin-bottom: 14px; line-height: 1.5; word-break: break-word; }
+        .botones-contacto { display: flex; gap: 8px; }
+        .btn-contacto {
+            flex: 1; text-align: center; padding: 10px;
             border-radius: var(--radius-sm); text-decoration: none;
-            font-size: 14px; font-weight: 600; transition: background 0.2s;
+            font-weight: 600; font-size: 13px; color: white;
+            transition: opacity 0.2s;
         }
-        .btn-wa-card:hover { background: var(--wa-dark); }
+        .btn-contacto:hover { opacity: 0.85; }
+        .btn-llamar { background: var(--ink); }
+        .btn-wa { background: var(--wa); }
 
-        .btn-borrar {
-            position: absolute; top: 14px; right: 14px;
-            width: 30px; height: 30px; border-radius: 50%;
-            background: transparent; border: none; cursor: pointer;
-            font-size: 16px; display: flex; align-items: center; justify-content: center;
-            opacity: 0.35; transition: opacity 0.2s, background 0.2s, transform 0.15s;
+        #modal {
+            display: none; position: fixed; z-index: 999;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); justify-content: center; align-items: center;
         }
-        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); transform: scale(1.1); }
+        #modal img { max-width: 90%; max-height: 80%; border-radius: var(--radius-sm); }
 
-        .empty-state { grid-column: 1/-1; text-align: center; padding: 48px 20px; color: var(--ink-light); font-size: 15px; }
+        .empty-state {
+            grid-column: 1/-1; text-align: center;
+            padding: 48px 20px; color: var(--ink-light); font-size: 15px;
+        }
         .empty-icon { font-size: 32px; margin-bottom: 10px; }
 
         .footer {
@@ -319,400 +337,208 @@
 
 <div class="hero">
     <header class="header">
-        <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera">
+        <a href="/" class="header-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Logo InfoEspinar">
             <span class="header-name">infoespinar.com</span>
         </a>
     </header>
-    <h1 class="hero-title">¿Quién Se Apunta?</h1>
-    <p class="hero-sub">Encuentra gente para hacer deporte y actividades en la zona</p>
+    <h1 class="hero-title">Anuncios de Particulares</h1>
+    <p class="hero-sub">Publica, edita o borra tus anuncios de forma directa y sencilla.</p>
 </div>
 
-<main class="main-container">
+<main class="main">
 
-    <div class="buscador-wrap">
-        <span>🔍</span>
-        <input id="buscador" class="buscador" type="text" placeholder="Buscar actividad, lugar, nombre..." oninput="filtrar()">
-    </div>
+    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">＋ Publicar anuncio</button>
 
-    <div class="filtros-actividad" id="filtrosActividad"></div>
+    <div id="form">
+        <p class="form-section-title">Título</p>
+        <input type="text" id="titulo" placeholder="TÍTULO EN MAYÚSCULAS" required oninput="this.value=this.value.toUpperCase()">
 
-    <button class="btn-toggle" onclick="toggleFormulario()">➕ Publicar propuesta</button>
-
-    <div id="formActividad">
-        <p class="form-section">Actividad</p>
-        <select id="actividad" onchange="toggleOtraActividad()">
-            <option value="">Elige una actividad...</option>
-            <option>⚽ Fútbol</option>
-            <option>🎾 Tenis</option>
-            <option>🏓 Pádel</option>
-            <option>🏀 Baloncesto</option>
-            <option>🚵 Ciclismo</option>
-            <option>🥾 Senderismo</option>
-            <option>🏋️ Calistenia</option>
-            <option>🏃‍♂️ Running</option>
-            <option>🧘 Yoga / Pilates</option>
-            <option>🎴​ Juegos de mesa/ Cartas</option>
-            <option>🏐 Voleibol</option>
-            <option>🎯 Otra actividad</option>
+        <p class="form-section-title">Estado</p>
+        <select id="estado" required>
+            <option value="">Estado...</option>
+            <option>A ESTRENAR</option><option>COMO NUEVO</option><option>BUEN ESTADO</option><option>USADO</option><option>PARA RESTAURAR</option>
         </select>
-        <input type="text" id="otraActividad" placeholder="¿Cuál? Escribe la actividad..." style="display:none; margin-top:-4px;">
 
-        <div class="field-row">
-            <div>
-                <p class="form-section">Nivel</p>
-                <select id="nivel">
-                    <option value="">Selecciona el nivel...</option>
-                    <option>🟢 Iniciación</option>
-                    <option>🟡 Intermedio</option>
-                    <option>🟠 Avanzado</option>
-                    <option>🔴 Pro</option>
-                </select>
-            </div>
-            <div>
-                <p class="form-section">Rango de Edad</p>
-                <select id="edad">
-                    <option value="">Selecciona edad...</option>
-                    <option>18-25 años</option>
-                    <option>26-35 años</option>
-                    <option>36-45 años</option>
-                    <option>46-55 años</option>
-                    <option>+56 años</option>
-                    <option>Cualquier edad</option>
-                </select>
-            </div>
-        </div>
+        <p class="form-section-title">Descripción</p>
+        <textarea id="descripcion" placeholder="Descripción" required rows="3"></textarea>
 
-        <p class="form-section">¿Cuántas personas buscas?</p>
-        <input type="number" id="personas" placeholder="Número de personas (ej: 2)" min="1" max="50">
+        <p class="form-section-title">Precio</p>
+        <input type="number" id="precio" placeholder="Precio (€)" required>
 
-        <p class="form-section">Lugar</p>
-        <div id="lugarPills" style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
-            <button type="button" class="lugar-pill" data-lugar="El Espinar">El Espinar</button>
-            <button type="button" class="lugar-pill" data-lugar="San Rafael">San Rafael</button>
-            <button type="button" class="lugar-pill" data-lugar="LASR">LASR</button>
-            <button type="button" class="lugar-pill" data-lugar="La Estación">La Estación</button>
-        </div>
+        <p class="form-section-title">Zona de recogida</p>
+        <select id="recogida" required>
+            <option value="">Zona de recogida...</option>
+            <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
+        </select>
 
-        <p class="form-section">Fecha y hora</p>
-        <div class="fecha-opcional-wrap" id="fechaToggleWrap" onclick="toggleFecha()">
-            <input type="checkbox" id="conFecha" onclick="event.stopPropagation(); toggleFecha()">
-            <label for="conFecha" onclick="event.stopPropagation(); toggleFecha()">📅 Tengo una fecha concreta</label>
-        </div>
-        <div id="fechaHoraWrap">
-            <div class="field-row">
-                <input type="date" id="fecha">
-                <input type="time" id="hora">
-            </div>
-        </div>
-
-        <p class="form-section">Tus datos</p>
-        <div class="field-row">
-            <input type="text" id="nombre" placeholder="Nombre">
-            <input type="tel" id="telefono" placeholder="Teléfono" maxlength="9">
-        </div>
+        <p class="form-section-title">Contacto</p>
+        <input type="tel" id="contacto" placeholder="Teléfono (9 cifras)" required pattern="[0-9]{9}" maxlength="9">
         <input type="email" id="email" placeholder="Email (opcional)">
-        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por escrito.</p>
+        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
+
+        <p class="form-section-title">Imagen</p>
+        <input type="file" id="imagen" accept="image/*" required onchange="previsualizarImagen(this)">
+        <div class="img-preview-wrap" id="imgPreviewWrap">
+            <img id="imgPreview" src="" alt="Vista previa">
+        </div>
+        <p class="img-status" id="imgStatus"></p>
 
         <div class="privacy-box">
             ⚠️ Revisa que todos los datos sean correctos antes de publicar.
             <label>
-                <input type="checkbox" id="aceptaPrivacidad">
-                <span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a> y autorizo el uso de mis datos.</span>
+                <input type="checkbox" id="privacidad">
+                <span>Acepto la <a href="/privacidad" target="_blank">política de privacidad</a> y confirmo que soy un particular.</span>
             </label>
         </div>
 
+        <button type="button" id="btn" class="btn-submit" onclick="enviar()">Enviar anuncio</button>
         <div id="pinMostrado"></div>
-        <button class="btn-publicar" id="btnPublicar" onclick="publicar()">Publicar propuesta</button>
     </div>
 
-    <p class="section-label">Propuestas activas</p>
-    <div id="grid" class="grid">
-        <div class="empty-state"><div class="empty-icon">🏃</div>Cargando propuestas...</div>
-    </div>
+    <p class="section-label">Anuncios publicados</p>
+    <div id="loading" style="text-align:center; padding:40px; font-weight:600; color:var(--ink-light);">Cargando anuncios...</div>
+    <div id="tablon" class="grid-anuncios"></div>
+
 </main>
+
+<div id="modal" onclick="this.style.display='none'"><img id="imgGrande" src=""></div>
 
 <footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
-const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbxCXCvJWyr25hr9pUf3i5dKbKXqJDDEuZVAs6-mWeFhba6uXVUmRgT1GAiZ_P8_T_7zYw/exec";
-let todasLasPropuestas = [];
-let filtroActivo = null;
+const SCRIPT_URL   = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
+const IMGBB_KEY    = "889d9ccbbcd91efdb92e1cdaee18b11d";
 
-const ACTIVIDADES_EMOJI = {
-    'fútbol': '⚽', 'tenis': '🎾', 'pádel': '🏓', 'baloncesto': '🏀',
-    'ciclismo': '🚵', 'senderismo': '🥾', 'calistenia': '🏋️', 'running': '🏃‍♂️',
-    'yoga / pilates': '🧘', 'juegos de mesa': '🎲', 'voleibol': '🏐', 'otra actividad': '🎯'
-};
+function previsualizarImagen(input) {
+    const file = input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => {
+        const wrap = document.getElementById('imgPreviewWrap');
+        document.getElementById('imgPreview').src = e.target.result;
+        wrap.style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+}
 
-function emojiActividad(nombre) {
-    const clave = nombre.replace(/^[^\w]*/, '').toLowerCase().trim();
-    for (const [k, v] of Object.entries(ACTIVIDADES_EMOJI)) {
-        if (clave.includes(k)) return v;
+async function subirImagen(file) {
+    const status = document.getElementById('imgStatus');
+    status.textContent = 'Subiendo imagen…';
+    status.className = 'img-status loading';
+    const formData = new FormData();
+    formData.append('image', file);
+    const res  = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: formData });
+    const data = await res.json();
+    if (data.success) {
+        status.textContent = '✓ Imagen subida';
+        status.className = 'img-status ok';
+        return data.data.url;
+    } else {
+        status.textContent = '✗ Error al subir la imagen';
+        status.className = 'img-status err';
+        return null;
     }
-    return '🏃';
-}
-
-function toggleFormulario() {
-    const f = document.getElementById('formActividad');
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
-}
-
-function toggleFecha() {
-    const cb   = document.getElementById('conFecha');
-    const wrap = document.getElementById('fechaHoraWrap');
-    const tog  = document.getElementById('fechaToggleWrap');
-    wrap.style.display = cb.checked ? 'block' : 'none';
-    tog.classList.toggle('activo', cb.checked);
-}
-
-function construirFiltros(data) {
-    const actividades = [...new Set(data.map(p => p.actividad).filter(Boolean))];
-    const container = document.getElementById('filtrosActividad');
-    container.innerHTML = '';
-    const todos = document.createElement('button');
-    todos.className = 'filtro-pill activo';
-    todos.textContent = 'Todas';
-    todos.onclick = () => { filtroActivo = null; actualizarPills(todos); filtrar(); };
-    container.appendChild(todos);
-    actividades.forEach(act => {
-        const pill = document.createElement('button');
-        pill.className = 'filtro-pill';
-        pill.textContent = act;
-        pill.onclick = () => { filtroActivo = act; actualizarPills(pill); filtrar(); };
-        container.appendChild(pill);
-    });
-}
-
-function actualizarPills(activo) {
-    document.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo'));
-    activo.classList.add('activo');
-}
-
-function filtrar() {
-    const texto = document.getElementById('buscador').value.toLowerCase();
-    const filtrados = todasLasPropuestas.filter(p => {
-        const coincideTexto = [p.actividad, p.nivel, p.edad, p.lugar, p.nombre, p.fecha]
-            .some(c => String(c || '').toLowerCase().includes(texto));
-        const coincideActividad = !filtroActivo || p.actividad === filtroActivo;
-        return coincideTexto && coincideActividad;
-    });
-    renderizar(filtrados);
 }
 
 async function cargar() {
-    try {
-        const res  = await fetch(URL_SCRIPT);
-        const text = await res.text();
-        todasLasPropuestas = JSON.parse(text);
-        todasLasPropuestas.sort((a, b) => {
-            if (a.fecha && b.fecha) {
-                const horaA = a.hora || '00:00';
-                const horaB = b.hora || '00:00';
-                return new Date(a.fecha + 'T' + horaA) - new Date(b.fecha + 'T' + horaB);
-            }
-            if (a.fecha) return -1;
-            if (b.fecha) return 1;
-            return Math.random() - 0.5;
-        });
-        construirFiltros(todasLasPropuestas);
-        renderizar(todasLasPropuestas);
-    } catch(e) {
-        document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar las propuestas.</div>';
-    }
-}
-
-function renderizar(data) {
-    if (!data.length) {
-        document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="empty-icon">🏃</div>No se encontraron propuestas.</div>';
-        return;
-    }
-    document.getElementById('grid').innerHTML = data.map(p => {
-        const tel = String(p.telefono).replace(/\s+/g, '');
-        const numWA = tel.startsWith('34') ? tel : '34' + tel;
-        const emoji = emojiActividad(p.actividad || '');
-        const numPersonas = parseInt(p.personas) || 1;
-        const repeticiones = Math.max(0, Math.min(numPersonas - 1, 4));
-        let bloqueEmojis = emoji.repeat(repeticiones);
-        if (numPersonas > 5) bloqueEmojis = emoji.repeat(4) + '...';
-
-        let fechaHtml = '';
-        if (p.fecha) {
-            const fechaFmt = p.fecha.split('-').reverse().join('/');
-            const dias = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-            const d = new Date(p.fecha + 'T12:00:00');
-            fechaHtml = `<div class="card-meta-row">📅 <b>${fechaFmt}</b> (${dias[d.getDay()]})${p.hora ? ' · ⏰ ' + p.hora : ''}</div>`;
-        } else {
-            fechaHtml = `<div class="card-meta-row" style="color:var(--ink-light);">📅 Sin fecha fija</div>`;
-        }
-
-        return `
-        <div class="card" id="card-${p.id}">
-            <button class="btn-borrar" onclick="borrar('${p.id}')" title="Borrar propuesta">🗑️</button>
-            <div class="card-actividad-badge">${bloqueEmojis} ${p.actividad}</div>
-            <div class="card-titulo">Propuesta de ${p.nombre}</div>
-            <div class="card-meta">
-                ${fechaHtml}
-                ${p.nivel ? `<div class="card-meta-row">🎯 Nivel: <b>${p.nivel}</b></div>` : ''}
-                ${p.edad ? `<div class="card-meta-row">🎂 Edad: <b>${p.edad}</b></div>` : ''}
-                <div class="card-meta-row">📍 <b>${p.lugar}</b></div>
-                ${p.personas ? `<div class="card-meta-row">👥 Busca <b>${p.personas} ${p.personas == 1 ? 'persona' : 'personas'}</b></div>` : ''}
+    const res  = await fetch(SCRIPT_URL);
+    const data = await res.json();
+    document.getElementById('loading').style.display = 'none';
+    data.sort(() => Math.random() - 0.5);
+    document.getElementById('tablon').innerHTML = data.map(a => `
+        <div class="tarjeta" id="tarjeta-${a.id}">
+            <div class="foto-wrap">
+                <img src="${a.imagen}" class="foto-articulo" onclick="ampliar('${a.imagen}')">
+                <button class="btn-borrar-foto" onclick="borrarAnuncio('${a.id}')" title="Borrar anuncio">🗑️</button>
             </div>
-            <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
-                💬 Apuntarme con ${p.nombre}
-            </a>
-        </div>`;
-    }).join('');
+            <div class="tarjeta-body">
+                <div class="titulo-tarjeta">${a.titulo}</div>
+                <div class="precio">${a.precio}€</div>
+                <div class="descripcion">${a.descripcion}</div>
+                <div class="burbujas">
+                    <span class="tag">📍 ${a.recogida}</span>
+                    <span class="tag">📦 ${a.estado}</span>
+                </div>
+                <div class="botones-contacto">
+                    <a href="tel:${a.contacto}" class="btn-contacto btn-llamar">Llamar</a>
+                    <a href="https://wa.me/34${a.contacto}" class="btn-contacto btn-wa" target="_blank">WhatsApp</a>
+                </div>
+            </div>
+        </div>`).join('');
 }
 
-async function borrar(id) {
-    const pin = prompt('🗑️ Introduce tu PIN de 5 dígitos para borrar esta propuesta:');
+function ampliar(src) {
+    document.getElementById('imgGrande').src = src;
+    document.getElementById('modal').style.display = 'flex';
+}
+
+async function borrarAnuncio(id) {
+    const pin = prompt('🗑️ Introduce tu PIN de 6 dígitos para borrar este anuncio:');
     if (!pin) return;
-    try {
-        const res  = await fetch(`${URL_SCRIPT}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-        const data = await res.json();
-        if (data.status === 'ok') {
-            document.getElementById('card-' + id)?.remove();
-            todasLasPropuestas = todasLasPropuestas.filter(p => p.id !== id);
-            alert('✅ Propuesta eliminada correctamente.');
-        } else {
-            alert('❌ PIN incorrecto. La propuesta no se ha borrado.');
-        }
-    } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
+    const res  = await fetch(`${SCRIPT_URL}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+    const data = await res.json();
+    if (data.status === 'ok') {
+        document.getElementById('tarjeta-' + id)?.remove();
+        alert('✅ Anuncio eliminado correctamente.');
+    } else {
+        alert('❌ PIN incorrecto. El anuncio no se ha borrado.');
+    }
 }
 
-async function publicar() {
-    if (!document.getElementById('aceptaPrivacidad').checked) {
-        alert('Debes aceptar la política de privacidad.'); return;
+async function enviar() {
+    const btn = document.getElementById('btn');
+    if (!document.getElementById('privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
+    btn.disabled = true; btn.innerText = "Publicando...";
+    const file = document.getElementById('imagen').files[0];
+    const imagenUrl = await subirImagen(file);
+    if (!imagenUrl) {
+        alert('Error al subir la imagen. Inténtalo de nuevo.');
+        btn.disabled = false; btn.innerText = "Enviar anuncio"; return;
     }
-    const actividadSel = document.getElementById('actividad').value;
-    const esOtra = actividadSel.includes('Otra actividad');
-    const otraActividad = document.getElementById('otraActividad').value.trim();
-    const actividad = esOtra ? (otraActividad || '') : actividadSel;
-    const nivel      = document.getElementById('nivel').value;
-    const edad       = document.getElementById('edad').value;
-    const personas   = document.getElementById('personas').value;
-    const lugar      = getLugares();
-    const nombre     = document.getElementById('nombre').value.trim();
-    const telefono   = document.getElementById('telefono').value.trim();
-    const email      = document.getElementById('email').value.trim();
-    const conFecha   = document.getElementById('conFecha').checked;
-    const fecha      = conFecha ? document.getElementById('fecha').value : '';
-    const hora       = conFecha ? document.getElementById('hora').value : '';
-
-    if (!actividadSel) { alert('Selecciona una actividad.'); return; }
-    if (esOtra && !otraActividad) { alert('Escribe el nombre de la actividad.'); return; }
-    if (!nivel)      { alert('Selecciona el nivel.'); return; }
-    if (!edad)       { alert('Selecciona un rango de edad.'); return; }
-    if (!lugar)      { alert('Selecciona una zona.'); return; }
-    if (!nombre)     { alert('Introduce tu nombre.'); return; }
-    if (!telefono)   { alert('Introduce tu teléfono.'); return; }
-    if (conFecha && !fecha) { alert('Selecciona una fecha.'); return; }
-    if (conFecha) {
-        const hoy = new Date(); hoy.setHours(0,0,0,0);
-        if (new Date(fecha + 'T00:00:00') < hoy) { alert('¡No puedes viajar en el tiempo! Selecciona una fecha correcta.'); return; }
-    }
-
-    const btn = document.getElementById('btnPublicar');
-    btn.disabled = true; btn.textContent = 'Publicando...';
-
-    const pinDeCincoCifras = String(Math.floor(10000 + Math.random() * 90000));
     const params = new URLSearchParams({
-        actividad, nivel, edad, personas, lugar, nombre, telefono, email, fecha, hora,
-        pin: pinDeCincoCifras
+        titulo:      document.getElementById('titulo').value,
+        estado:      document.getElementById('estado').value,
+        descripcion: document.getElementById('descripcion').value,
+        precio:      document.getElementById('precio').value,
+        contacto:    document.getElementById('contacto').value,
+        recogida:    document.getElementById('recogida').value,
+        email:       document.getElementById('email').value.trim(),
+        imagenUrl:   imagenUrl
     });
-
-    try {
-        await fetch(URL_SCRIPT, {
-            method: 'POST', body: params, mode: 'no-cors',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-        btn.textContent = '✅ Publicado';
+    const res  = await fetch(SCRIPT_URL, { method: 'POST', body: params, redirect: 'follow' });
+    const text = await res.text();
+    const data = JSON.parse(text);
+    if (data.status === 'ok') {
+        const emailIntroducido = document.getElementById('email').value.trim();
         document.getElementById('pinMostrado').innerHTML = `
             <div class="pin-box">
-                <p style="font-weight:700; color:var(--green-dark); font-size:15px;">¡PROPUESTA GUARDADA CON ÉXITO!</p>
-                <div class="pin-num" id="codigoPinTexto">${pinDeCincoCifras}</div>
-                <button class="btn-copiar-pin" onclick="copiarPin('${pinDeCincoCifras}', this)">📋 Copiar PIN</button>
+                <p class="pin-label">🔑 Tu PIN personal es:</p>
+                <div class="pin-num">${data.pin}</div>
+                <button class="btn-copiar-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
                 <p class="pin-aviso">
-                    ${email
-                        ? `Tu PIN de 5 cifras ha sido enviado a <b>${email}</b>. Úsalo para borrar la tarjeta cuando quieras.`
-                        : 'Apunta este PIN. Lo necesitarás si decides dar de baja o eliminar la propuesta.'
-                    }
+                    ${emailIntroducido
+                        ? `✅ Te hemos enviado el PIN a <b>${emailIntroducido}</b>`
+                        : '⚠️ Guarda este PIN, no podrás recuperarlo si lo pierdes.'
+                    }<br>Necesitarás el PIN para borrar tu anuncio.
                 </p>
             </div>`;
-
-        document.getElementById('otraActividad').value = '';
-        document.getElementById('personas').value = '';
-        document.getElementById('fecha').value = '';
-        document.getElementById('hora').value = '';
-        document.getElementById('nombre').value = '';
-        document.getElementById('telefono').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('actividad').value = '';
-        document.getElementById('nivel').value = '';
-        document.getElementById('edad').value = '';
-        document.getElementById('conFecha').checked = false;
-        document.getElementById('aceptaPrivacidad').checked = false;
-        document.getElementById('fechaHoraWrap').style.display = 'none';
-        document.getElementById('fechaToggleWrap').classList.remove('activo');
-        document.getElementById('otraActividad').style.display = 'none';
-        document.querySelectorAll('.lugar-pill').forEach(p => p.classList.remove('activo'));
-
-        setTimeout(async () => {
-            await cargar();
-            document.getElementById('formActividad').style.display = 'none';
-            btn.disabled = false;
-            btn.textContent = 'Publicar propuesta';
-            document.getElementById('pinMostrado').innerHTML = '';
-        }, 5000);
-
-    } catch(err) {
-        alert('Error inesperado al conectar con el servidor.');
-        btn.disabled = false; btn.textContent = 'Publicar propuesta';
+        btn.innerText = "✅ Publicado";
+        await cargar();
+    } else {
+        alert(data.status === 'ANTIFLOOD'
+            ? 'Antiflood: espera 5 minutos antes de publicar otro anuncio.'
+            : 'Error al publicar. Inténtalo de nuevo.');
+        btn.disabled = false; btn.innerText = "Enviar anuncio";
     }
 }
 
 function copiarPin(pin, btn) {
     navigator.clipboard.writeText(pin).then(() => {
-        btn.textContent = '✅ ¡Copiado!';
-        btn.classList.add('copiado');
-        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
+        btn.textContent = "✅ ¡Copiado!"; btn.classList.add('copiado');
+        setTimeout(() => { btn.textContent = "📋 Copiar PIN"; btn.classList.remove('copiado'); }, 2500);
     });
 }
-
-function toggleOtraActividad() {
-    const sel = document.getElementById('actividad');
-    const input = document.getElementById('otraActividad');
-    const esOtra = sel.value.includes('Otra actividad');
-    input.style.display = esOtra ? 'block' : 'none';
-    if (esOtra) input.focus();
-}
-
-function getLugares() {
-    return [...document.querySelectorAll('.lugar-pill.activo')]
-        .map(p => p.dataset.lugar)
-        .join(', ');
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const contenedorLugares = document.getElementById('lugarPills');
-    if (contenedorLugares) {
-        contenedorLugares.addEventListener('click', e => {
-            const pill = e.target.closest('.lugar-pill');
-            if (pill) { e.preventDefault(); pill.classList.toggle('activo'); }
-        });
-    }
-    const contenedorFecha = document.getElementById('fechaToggleWrap');
-    const checkboxFecha = document.getElementById('conFecha');
-    if (contenedorFecha && checkboxFecha) {
-        contenedorFecha.addEventListener('click', (e) => {
-            if (e.target !== checkboxFecha && e.target.tagName !== 'LABEL') {
-                checkboxFecha.checked = !checkboxFecha.checked;
-            }
-            toggleFecha();
-        });
-    }
-});
 
 cargar();
 </script>
