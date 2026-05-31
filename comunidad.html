@@ -9,7 +9,6 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
 
-        /* ── HERO ── */
         .hero { background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%); padding: 0 24px 50px; text-align: center; position: relative; overflow: hidden; }
         .hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px; background: #f4f6f9; clip-path: ellipse(55% 100% at 50% 100%); }
         .header { padding: 18px 24px; display: flex; justify-content: center; }
@@ -19,10 +18,8 @@
         .hero-title { font-size: clamp(24px, 5vw, 36px); font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
         .hero-sub { font-size: 14px; color: rgba(255,255,255,0.6); }
 
-        /* ── MAIN ── */
         .main-container { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
 
-        /* ── TABS ── */
         .tabs { display: flex; background: white; padding: 6px; border-radius: 14px; border: 1px solid #e2e8f0; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); overflow-x: auto; scrollbar-width: none; gap: 4px; }
         .tabs::-webkit-scrollbar { display: none; }
         .tab-btn { flex: 1; min-width: 110px; padding: 11px 8px; border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 700; color: #64748b; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s; letter-spacing: 0.3px; text-transform: uppercase; }
@@ -30,22 +27,18 @@
         .tab-btn:hover { color: #0d7a68; background: #f0fdf9; }
         .tab-btn.active { background: linear-gradient(135deg, #0d7a68 0%, #0f4a3f 100%); color: white; box-shadow: 0 4px 12px rgba(13,122,104,0.25); }
 
-        /* ── PANELES ── */
         .panel { display: none; animation: fadeIn 0.25s ease; }
         .panel.active { display: block; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
 
-        /* ── BUSCADOR ── */
         .buscador-wrap { position: relative; margin-bottom: 12px; }
         .buscador-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
         .buscador { width: 100%; padding: 13px 14px 13px 42px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 15px; font-family: inherit; background: white; }
         .buscador:focus { outline: none; border-color: #0d7a68; box-shadow: 0 0 0 3px rgba(13,122,104,0.1); }
 
-        /* ── BTN PUBLICAR ── */
         .btn-publicar { display: block; width: 100%; padding: 14px; background: white; color: #0d7a68; border: 2px dashed #a7d9d0; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 20px; font-size: 14px; font-family: inherit; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
         .btn-publicar:hover { background: #f0fdf9; border-color: #0d7a68; }
 
-        /* ── FORMULARIOS ── */
         .form-card { background: white; padding: 24px; border-radius: 14px; border: 1px solid #e2e8f0; margin-bottom: 24px; display: none; }
         .form-section-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin: 16px 0 8px; }
         .form-section-title:first-child { margin-top: 0; }
@@ -53,11 +46,9 @@
         .field { width: 100%; padding: 11px 14px; margin-bottom: 10px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #334155; transition: border-color 0.2s; }
         .field:focus { outline: none; border-color: #0d7a68; box-shadow: 0 0 0 3px rgba(13,122,104,0.09); }
         textarea.field { resize: vertical; }
-
         .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
         .field-row .field { margin-bottom: 0; }
         @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
-
         .email-hint { font-size: 12px; color: #64748b; margin: -6px 0 10px 2px; }
 
         .privacy-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #475569; }
@@ -65,7 +56,6 @@
         .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: #0d7a68; }
         .privacy-box a { color: #0d7a68; }
 
-        /* ── PIN BOX ── */
         .pin-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
         .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #065f46; margin: 10px 0; font-variant-numeric: tabular-nums; }
         .pin-aviso { font-size: 12px; color: #047857; margin-top: 8px; line-height: 1.6; }
@@ -73,24 +63,26 @@
         .btn-copiar-pin:hover { background: #047857; }
         .btn-copiar-pin.copiado { background: #1e40af; }
 
-        /* ── BTN SUBMIT ── */
         .btn-submit { display: block; width: 100%; padding: 13px; background: #0d7a68; color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 16px; transition: background 0.2s; text-transform: uppercase; letter-spacing: 0.04em; }
         .btn-submit:hover { background: #0a5c4f; }
         .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
 
-        /* ── GRIDS Y TARJETAS ── */
         .section-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 14px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 
-        /* Viajes */
+        /* VIAJES */
         .card-viaje { background: white; padding: 22px; border-radius: 16px; border-top: 5px solid #10b981; border-left: 1.5px solid #e2e8f0; border-right: 1.5px solid #e2e8f0; border-bottom: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
         .card-viaje:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
         .card-viaje-tipo { font-weight: 900; font-size: 12px; text-transform: uppercase; color: #10b981; margin-bottom: 8px; }
-        .card-viaje-ruta { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 12px; }
-        .card-viaje-meta { font-size: 14px; color: #475569; margin-bottom: 4px; }
-        .card-viaje-meta b { color: #1e293b; }
+        .card-viaje-ruta { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 10px; }
+        .card-viaje-nombre { font-size: 14px; color: #475569; margin-bottom: 10px; }
+        .card-viaje-fechas { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; max-height: 180px; overflow-y: auto; }
+        .card-viaje-fecha-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; background: #f8fafc; border-radius: 6px; padding: 5px 9px; }
+        .card-viaje-fecha-row .fecha { color: #1e293b; font-weight: 700; }
+        .card-viaje-fecha-row .dia { color: #94a3b8; font-size: 12px; }
+        .card-viaje-fecha-row .hora { color: #475569; }
 
-        /* Actividades */
+        /* ACTIVIDADES */
         .card-act { background: white; padding: 22px; border-radius: 16px; border: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
         .card-act:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
         .card-act-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
@@ -98,36 +90,40 @@
         .card-act-meta { font-size: 13px; color: #475569; display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
         .card-act-meta b { color: #1e293b; }
 
-        /* Particulares */
+        /* PARTICULARES */
         .card-part { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
         .card-part:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
         .foto-wrap { position: relative; }
         .foto-articulo { width: 100%; height: 180px; object-fit: cover; cursor: pointer; display: block; }
+        .foto-placeholder { width: 100%; height: 180px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #cbd5e1; }
         .btn-borrar-foto { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.55); border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; color: white; opacity: 0.75; transition: opacity 0.2s, background 0.2s, transform 0.15s; backdrop-filter: blur(4px); }
         .btn-borrar-foto:hover { opacity: 1; background: rgba(220,38,38,0.80); transform: scale(1.08); }
         .card-part-body { padding: 14px; }
         .card-part-titulo { font-weight: 900; font-size: 15px; color: #1e293b; margin-bottom: 5px; }
         .card-part-desc { font-size: 13px; color: #475569; margin-bottom: 8px; line-height: 1.5; word-break: break-word; }
-        .card-part-precio { font-weight: 900; font-size: 18px; margin-bottom: 8px; }
+        .card-part-precio { font-weight: 900; font-size: 20px; margin-bottom: 8px; color: #0d7a68; }
         .burbujas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
         .tag { background: #f1f5f9; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
         .botones-contacto { display: flex; gap: 8px; }
         .btn-llamar { flex: 1; text-align: center; padding: 9px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 12px; color: white; background: #000; }
         .btn-wa-part { flex: 1; text-align: center; padding: 9px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 12px; color: white; background: #25d366; }
 
-        /* Empleo */
+        /* EMPLEO */
         .card-emp { background: white; padding: 20px; border-radius: 16px; border: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
         .card-emp:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+        .card-emp-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; margin-bottom: 8px; }
+        .badge-busco   { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .badge-ofrezco { background: #fef9c3; color: #854d0e; border: 1px solid #fde68a; }
         .card-emp-titulo { font-weight: 900; font-size: 15px; color: #1e293b; margin-bottom: 8px; padding-right: 28px; }
         .card-emp-desc { font-size: 13px; color: #475569; margin-bottom: 10px; line-height: 1.5; white-space: pre-line; }
 
-        /* Compartidos */
+        /* COMPARTIDOS */
         .btn-wa-card { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px; background: #25d366; color: white; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; transition: background 0.2s; margin-top: 12px; }
         .btn-wa-card:hover { background: #128c7e; }
         .btn-borrar { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: all 0.2s; }
         .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); }
 
-        /* Viajes: recurrencia */
+        /* RECURRENCIA VIAJES */
         .recur-opts { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
         .recur-opts label { display: flex; align-items: center; gap: 5px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
         .recur-opts input[type="radio"] { width: auto; margin: 0; accent-color: #0d7a68; }
@@ -137,19 +133,19 @@
         .dias-semana input[type="checkbox"] { width: auto; margin: 0; accent-color: #0d7a68; }
         .dias-semana label:has(input:checked) { background: #dcfdf4; border-color: #0d7a68; color: #0a5c4f; }
 
-        /* Actividades: fecha opcional */
+        /* FECHA ACTIVIDADES */
         .fecha-toggle { display: flex; align-items: center; gap: 10px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; cursor: pointer; }
         .fecha-toggle input[type="checkbox"] { width: 16px; height: 16px; accent-color: #0d7a68; flex-shrink: 0; margin: 0; }
         .fecha-toggle label { font-size: 14px; font-weight: 500; color: #64748b; cursor: pointer; }
         .fecha-toggle.activo { border-color: #0d7a68; background: #f0fdf9; }
         .fecha-toggle.activo label { color: #0a5c4f; }
 
-        /* Filtros actividades */
+        /* FILTROS ACTIVIDADES */
         .filtros-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
         .filtro-pill { padding: 6px 14px; border-radius: 20px; border: 1.5px solid #e2e8f0; background: white; font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.15s; }
         .filtro-pill:hover, .filtro-pill.activo { border-color: #0d7a68; color: white; background: #0d7a68; }
 
-        /* img status */
+        /* IMG PARTICULARES */
         .img-status { font-size: 12px; margin: -6px 0 10px 2px; min-height: 16px; }
         .img-status.loading { color: #0d7a68; }
         .img-status.ok  { color: #059669; }
@@ -157,17 +153,13 @@
         .img-preview-wrap { margin-bottom: 10px; display: none; }
         .img-preview-wrap img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0; }
 
-        /* oculto */
         .oculto { display: none !important; }
-
-        /* modal foto */
         #modalFoto { display:none; position:fixed; z-index:999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; }
         #modalFoto img { max-width:90%; max-height:80%; border-radius:8px; }
-
         .empty-state { grid-column:1/-1; text-align:center; padding:40px 20px; color:#94a3b8; font-size:15px; }
         .empty-icon { font-size:30px; margin-bottom:8px; }
-
         .footer { text-align:center; padding:25px; color:#64748b; font-size:12px; border-top:1px solid #e2e8f0; margin-top:40px; }
+        .aviso-dias { color: #64748b; font-size: 12px; margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -185,7 +177,6 @@
 
 <main class="main-container">
 
-    <!-- TABS -->
     <div class="tabs">
         <button class="tab-btn active" onclick="cambiarTab('coche', this)">
             <span class="tab-icon">🚗</span>Cocoche
@@ -201,9 +192,7 @@
         </button>
     </div>
 
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- PANEL: COCOCHE                                 -->
-    <!-- ══════════════════════════════════════════════ -->
+    <!-- COCOCHE -->
     <div id="panel-coche" class="panel active">
         <div class="buscador-wrap">
             <span class="buscador-icon">🔍</span>
@@ -250,9 +239,9 @@
                 <label><input type="radio" name="c-recur" value="custom" onchange="cambiarRecurViaje()"> ✏️ Personalizada</label>
             </div>
             <div id="c-sec-unica"><input id="c-fecha" type="date" class="field"></div>
-            <div id="c-sec-lv" class="oculto"><p style="font-size:12px;color:#64748b;margin-bottom:10px;">Próximas 2 semanas, lunes a viernes.</p></div>
+            <div id="c-sec-lv" class="oculto"><p class="aviso-dias">Próximas 2 semanas, lunes a viernes.</p></div>
             <div id="c-sec-custom" class="oculto">
-                <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Selecciona días (próximas 2 semanas):</p>
+                <p class="aviso-dias">Selecciona días (próximas 2 semanas):</p>
                 <div class="dias-semana">
                     <label><input type="checkbox" value="1"> Lun</label>
                     <label><input type="checkbox" value="2"> Mar</label>
@@ -271,7 +260,6 @@
             </div>
             <input id="c-email" type="email" class="field" style="margin-top:10px" placeholder="Email (opcional)">
             <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
-
             <div class="privacy-box">
                 ⚠️ Revisa los datos antes de publicar.
                 <label><input type="checkbox" id="c-privacidad"><span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span></label>
@@ -284,9 +272,7 @@
         <div id="grid-coche" class="grid"><div class="empty-state"><div class="empty-icon">🚗</div>Cargando viajes...</div></div>
     </div>
 
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- PANEL: ACTIVIDADES                             -->
-    <!-- ══════════════════════════════════════════════ -->
+    <!-- ACTIVIDADES -->
     <div id="panel-actividades" class="panel">
         <div class="buscador-wrap">
             <span class="buscador-icon">🔍</span>
@@ -337,7 +323,6 @@
             </div>
             <input id="a-email" type="email" class="field" style="margin-top:10px" placeholder="Email (opcional)">
             <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
-
             <div class="privacy-box">
                 ⚠️ Revisa los datos antes de publicar.
                 <label><input type="checkbox" id="a-privacidad"><span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span></label>
@@ -350,15 +335,13 @@
         <div id="grid-act" class="grid"><div class="empty-state"><div class="empty-icon">🏃</div>Cargando propuestas...</div></div>
     </div>
 
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- PANEL: PARTICULARES                            -->
-    <!-- ══════════════════════════════════════════════ -->
+    <!-- PARTICULARES -->
     <div id="panel-particulares" class="panel">
         <p style="text-align:center;color:#64748b;font-size:12px;margin-bottom:14px;">* Los anuncios se eliminan automáticamente tras 20 días.</p>
         <button class="btn-publicar" onclick="toggleForm('form-part')">🤝 PUBLICAR ANUNCIO</button>
 
         <div id="form-part" class="form-card">
-            <input id="p-titulo" type="text" class="field" placeholder="TÍTULO EN MAYÚSCULAS" required oninput="this.value=this.value.toUpperCase()">
+            <input id="p-titulo" type="text" class="field" placeholder="TÍTULO EN MAYÚSCULAS" oninput="this.value=this.value.toUpperCase()">
             <select id="p-estado" class="field">
                 <option value="">Estado...</option>
                 <option>A ESTRENAR</option><option>COMO NUEVO</option><option>BUEN ESTADO</option><option>USADO</option><option>PARA RESTAURAR</option>
@@ -369,7 +352,7 @@
                 <option value="">Zona de recogida...</option>
                 <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
             </select>
-            <input id="p-contacto" type="tel" class="field" placeholder="Teléfono (9 cifras)" pattern="[0-9]{9}" maxlength="9">
+            <input id="p-contacto" type="tel" class="field" placeholder="Teléfono (9 cifras)" maxlength="9">
             <input id="p-email" type="email" class="field" placeholder="Email (opcional)">
             <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
             <input id="p-imagen" type="file" class="field" accept="image/*" onchange="previsualizarImg(this)">
@@ -387,9 +370,7 @@
         <div id="grid-part" class="grid"><div class="empty-state"><div class="empty-icon">🤝</div>Cargando anuncios...</div></div>
     </div>
 
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- PANEL: EMPLEO                                  -->
-    <!-- ══════════════════════════════════════════════ -->
+    <!-- EMPLEO -->
     <div id="panel-empleo" class="panel">
         <div class="buscador-wrap">
             <span class="buscador-icon">🔍</span>
@@ -404,34 +385,28 @@
                 <option value="BUSCO">Busco empleo</option>
                 <option value="OFREZCO">Busco personal</option>
             </select>
-
             <p class="form-section-title">Puesto</p>
             <input id="e-titulo" type="text" class="field" placeholder="EJ: CAMARERO/A" oninput="this.value=this.value.toUpperCase()">
-
             <p class="form-section-title">Lugar de trabajo</p>
             <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:10px;">
                 <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="El Espinar" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> El Espinar</label>
                 <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="San Rafael" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> San Rafael</label>
                 <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="LASR" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> LASR</label>
                 <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="La Estación" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> La Estación</label>
-                <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="Otro" class="e-lugar" onchange="checkLugarEmp()" style="width:auto;margin:0;accent-color:#0d7a68"> Otro</label>
-                <input id="e-lugar-otro" class="field oculto" style="margin-top:6px;margin-bottom:0" placeholder="Escribe el lugar">
+                <label style="display:flex;gap:8px;align-items:center;font-size:14px;"><input type="checkbox" value="Otro" class="e-lugar" onchange="checkLugarEmp()" style="width:auto;margin:0;accent-color:#0d7a68"> Otro</label>
+                <input id="e-lugar-otro" class="field oculto" style="margin-top:8px;margin-bottom:0" placeholder="Escribe el lugar">
             </div>
-
             <p class="form-section-title">Jornada</p>
             <select id="e-jornada" class="field">
                 <option>Jornada Completa</option><option>Jornada Parcial</option>
                 <option>Fines de Semana</option><option>A Convenir</option>
             </select>
-
             <p class="form-section-title">Descripción</p>
             <textarea id="e-descripcion" class="field" placeholder="Descripción del puesto o perfil" rows="3"></textarea>
-
             <p class="form-section-title">Contacto</p>
-            <input id="e-telefono" type="tel" class="field" placeholder="Teléfono (9 cifras)" pattern="[0-9]{9}" maxlength="9">
+            <input id="e-telefono" type="tel" class="field" placeholder="Teléfono (9 cifras)" maxlength="9">
             <input id="e-email" type="email" class="field" placeholder="Email (opcional)">
             <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
-
             <div class="privacy-box">
                 ⚠️ Revisa los datos antes de publicar.
                 <label><input type="checkbox" id="e-privacidad"><span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span></label>
@@ -447,24 +422,22 @@
 </main>
 
 <div id="modalFoto" onclick="this.style.display='none'"><img id="modalFotoImg" src=""></div>
-
 <footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
-/* ══════════════════════════════════════════════════════════════════
-   URLs DE APPSCRIPT — SUSTITUYE CON LAS TUYAS
-══════════════════════════════════════════════════════════════════ */
-const URL_COCHE       = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
-const URL_ACTIVIDADES = "PEGA_URL_APPSCRIPT_ACTIVIDADES";
-const URL_PARTICULARES= "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
-const URL_EMPLEO      = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
-const IMGBB_KEY       = "889d9ccbbcd91efdb92e1cdaee18b11d";
+/* ══════════════════════════════════════════════════
+   URLs APPSCRIPT — verificadas con JSON real
+══════════════════════════════════════════════════ */
+const URL_COCHE        = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
+const URL_ACTIVIDADES  = "https://script.google.com/macros/s/AKfycbxCXCvJWyr25hr9pUf3i5dKbKXqJDDEuZVAs6-mWeFhba6uXVUmRgT1GAiZ_P8_T_7zYw/exec";
+const URL_PARTICULARES = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
+const URL_EMPLEO       = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
+const IMGBB_KEY        = "889d9ccbbcd91efdb92e1cdaee18b11d";
 
-/* ── ESTADO LAZY ── */
 const cargado = { coche: false, actividades: false, particulares: false, empleo: false };
 let viajesData = [], actData = [], empData = [], filtroAct = null;
 
-/* ── TABS ── */
+/* ── Helpers ── */
 function cambiarTab(id, btn) {
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
@@ -472,29 +445,33 @@ function cambiarTab(id, btn) {
     document.getElementById('panel-' + id).classList.add('active');
     if (!cargado[id]) { cargado[id] = true; cargarSeccion(id); }
 }
-
 function cargarSeccion(id) {
-    if (id === 'coche')        cargarViajes();
-    else if (id === 'actividades') cargarActividades();
+    if      (id === 'coche')        cargarViajes();
+    else if (id === 'actividades')  cargarActividades();
     else if (id === 'particulares') cargarParticulares();
-    else if (id === 'empleo')  cargarEmpleo();
+    else if (id === 'empleo')       cargarEmpleo();
 }
-
 function toggleForm(id) {
     const f = document.getElementById(id);
     f.style.display = f.style.display === 'block' ? 'none' : 'block';
 }
+// Normaliza teléfono a formato WA internacional (34XXXXXXXXX)
+function wa(tel) {
+    const t = String(tel).replace(/\D/g, '');
+    return t.startsWith('34') ? t : '34' + t;
+}
+const DIAS_ES = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+function formatFecha(f) { return f ? f.split('-').reverse().join('/') : ''; }
+function nombreDia(f)   { return f ? DIAS_ES[new Date(f + 'T12:00:00').getDay()] : ''; }
 
-/* ── PIN BOX ── */
 function pinHTML(pin, email, extra) {
     return `<div class="pin-box">
         <p>🔑 <b>Tu PIN personal es:</b></p>
         <div class="pin-num">${pin}</div>
         <button class="btn-copiar-pin" onclick="copiarPin('${pin}',this)">📋 Copiar PIN</button>
-        <p class="pin-aviso">${email ? `✅ PIN enviado a <b>${email}</b>` : '⚠️ Guarda este PIN, no podrás recuperarlo.'}<br>${extra||''}</p>
+        <p class="pin-aviso">${email ? `✅ PIN enviado a <b>${email}</b>` : '⚠️ Guarda este PIN, no podrás recuperarlo.'}<br>${extra || ''}</p>
     </div>`;
 }
-
 function copiarPin(pin, btn) {
     navigator.clipboard.writeText(pin).then(() => {
         btn.textContent = '✅ ¡Copiado!'; btn.classList.add('copiado');
@@ -502,17 +479,19 @@ function copiarPin(pin, btn) {
     });
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    COCOCHE
-════════════════════════════════════════════════════════════════ */
+   Campos reales: tipo, desde, hasta, fecha, hora,
+                  nombre, telefono, email, pin, id, anuncio
+══════════════════════════════════════════════════ */
 function checkOtroViaje(campo) {
     const val = document.getElementById('c-' + campo).value;
     document.getElementById('c-' + campo + '-otro').classList.toggle('oculto', val !== 'Otro');
 }
 function cambiarRecurViaje() {
     const val = document.querySelector('input[name="c-recur"]:checked').value;
-    document.getElementById('c-sec-unica').classList.toggle('oculto', val !== 'unica');
-    document.getElementById('c-sec-lv').classList.toggle('oculto', val !== 'lv');
+    document.getElementById('c-sec-unica').classList.toggle('oculto',  val !== 'unica');
+    document.getElementById('c-sec-lv').classList.toggle('oculto',     val !== 'lv');
     document.getElementById('c-sec-custom').classList.toggle('oculto', val !== 'custom');
 }
 function generarFechas(dias) {
@@ -523,320 +502,438 @@ function generarFechas(dias) {
     }
     return r;
 }
-function filtrarViajes() {
-    const t = document.getElementById('busca-coche').value.toLowerCase();
-    renderViajes(viajesData.filter(v => [v.desde,v.hasta,v.fecha,v.hora,v.nombre,v.tipo].some(c => String(c||'').toLowerCase().includes(t))));
-}
+
 async function cargarViajes() {
     try {
         const r = await fetch(URL_COCHE);
         viajesData = await r.json();
-        viajesData.sort((a,b) => new Date(a.fecha+'T'+a.hora) - new Date(b.fecha+'T'+b.hora));
+        viajesData.sort((a, b) => {
+            const da = new Date((a.fecha || '9999-12-31') + 'T' + (a.hora || '00:00'));
+            const db = new Date((b.fecha || '9999-12-31') + 'T' + (b.hora || '00:00'));
+            return da - db;
+        });
         renderViajes(viajesData);
-    } catch { document.getElementById('grid-coche').innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+    } catch {
+        document.getElementById('grid-coche').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes.</div>';
+    }
 }
-function renderizar(data) {
+function filtrarViajes() {
+    const t = document.getElementById('busca-coche').value.toLowerCase();
+    renderViajes(viajesData.filter(v =>
+        [v.desde, v.hasta, v.fecha, v.hora, v.nombre, v.tipo]
+            .some(c => String(c || '').toLowerCase().includes(t))
+    ));
+}
+function renderViajes(data) {
+    const grid = document.getElementById('grid-coche');
     if (!data.length) {
-        document.getElementById('grid').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">🚗</div>No se encontraron viajes.</div>';
+        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🚗</div>No hay viajes disponibles.</div>';
         return;
     }
-
+    // Agrupar por campo "anuncio" (UUID compartido entre fechas del mismo viaje)
     const grupos = {};
     data.forEach(v => {
-        if (!grupos[v.anuncio]) grupos[v.anuncio] = [];
-        grupos[v.anuncio].push(v);
+        const key = v.anuncio || v.id || (v.nombre + v.desde + v.hasta);
+        if (!grupos[key]) grupos[key] = [];
+        grupos[key].push(v);
     });
 
-    document.getElementById('grid').innerHTML =
-        Object.values(grupos).map(viajes => {
+    grid.innerHTML = Object.entries(grupos).map(([anuncioId, viajes]) => {
+        const base = viajes[0];
+        const esConductor = String(base.tipo).toLowerCase().includes('conductor');
+        const safeId = anuncioId.replace(/[^a-z0-9\-]/gi, '_');
+        const fechasHtml = viajes.map(v =>
+            `<div class="card-viaje-fecha-row">
+                <span><span class="fecha">${formatFecha(v.fecha)}</span> <span class="dia">(${nombreDia(v.fecha)})</span></span>
+                <span class="hora">⏰ ${v.hora || '–'}</span>
+            </div>`
+        ).join('');
 
-            const base = viajes[0];
-            const tel = String(base.telefono).replace(/\s+/g,'');
-            const numWA = tel.startsWith('34') ? tel : '34' + tel;
-            const esConductor = base.tipo.includes('Conductor');
-
-            return `
-            <div class="card">
-                <button class="btn-delete" onclick="borrarViaje('${base.anuncio}')">🗑️</button>
-
-                <div class="card-badge ${esConductor ? 'badge-conductor' : 'badge-pasajero'}">
-                    ${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}
-                </div>
-
-                <div class="card-route">
-                    ${base.desde} → ${base.hasta}
-                </div>
-
-                <div style="font-size:12px;color:var(--ink-light);margin-bottom:10px;">
-                    ${viajes.length} viajes publicados
-                </div>
-
-                <div class="card-meta">
-                    ${viajes.map(v => `
-                        <div class="card-meta-row">
-                            <div class="card-meta-left">
-                                <div class="card-meta-icon">📅</div>
-                                <span class="card-meta-val">${formatFecha(v.fecha)}</span>
-                                <span style="color:var(--ink-light); font-size:13px">
-                                    (${nombreDia(v.fecha)})
-                                </span>
-                            </div>
-                            <span class="card-meta-hora">⏰ ${v.hora}</span>
-                        </div>
-                    `).join('')}
-                </div>
-
-                <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
-                    💬 Escribir a ${base.nombre}
-                </a>
-            </div>`;
-        }).join('');
+        return `<div class="card-viaje" id="card-v-${safeId}">
+            <button class="btn-borrar" onclick="borrarViaje('${anuncioId}','card-v-${safeId}')">🗑️</button>
+            <div class="card-viaje-tipo">${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}</div>
+            <div class="card-viaje-ruta">${base.desde} → ${base.hasta}</div>
+            <div class="card-viaje-nombre">👤 <b>${base.nombre}</b></div>
+            <div class="card-viaje-fechas">${fechasHtml}</div>
+            <a class="btn-wa-card" href="https://wa.me/${wa(base.telefono)}" target="_blank">💬 Contactar con ${base.nombre}</a>
+        </div>`;
+    }).join('');
 }
-async function borrarViaje(id) {
-    const pin = prompt('🗑️ Introduce tu PIN para borrar este viaje:'); if (!pin) return;
-    const r = await fetch(`${URL_COCHE}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-    const d = await r.json();
-    if (d.status==='ok') { document.getElementById('card-v-'+id)?.remove(); viajesData=viajesData.filter(v=>v.id!==id); alert('✅ Viaje eliminado.'); }
-    else alert('❌ PIN incorrecto.');
+async function borrarViaje(anuncioId, cardId) {
+    const pin = prompt('🗑️ Introduce tu PIN para borrar este viaje:');
+    if (!pin) return;
+    try {
+        const r = await fetch(`${URL_COCHE}?action=delete&id=${encodeURIComponent(anuncioId)}&pin=${encodeURIComponent(pin.trim())}`);
+        const d = await r.json();
+        if (d.status === 'ok') {
+            viajesData = viajesData.filter(v => v.anuncio !== anuncioId && v.id !== anuncioId);
+            renderViajes(viajesData);
+            alert('✅ Viaje eliminado.');
+        } else { alert('❌ PIN incorrecto.'); }
+    } catch { alert('Error al conectar.'); }
 }
 async function publicarViaje() {
     if (!document.getElementById('c-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
-    const desde = document.getElementById('c-desde').value === 'Otro' ? document.getElementById('c-desde-otro').value : document.getElementById('c-desde').value;
-    const hasta = document.getElementById('c-hasta').value === 'Otro' ? document.getElementById('c-hasta-otro').value : document.getElementById('c-hasta').value;
-    if (!desde||!hasta) { alert('Selecciona origen y destino.'); return; }
-    if (desde===hasta) { alert('Origen y destino no pueden ser iguales.'); return; }
+    const desde = document.getElementById('c-desde').value === 'Otro'
+        ? document.getElementById('c-desde-otro').value : document.getElementById('c-desde').value;
+    const hasta = document.getElementById('c-hasta').value === 'Otro'
+        ? document.getElementById('c-hasta-otro').value : document.getElementById('c-hasta').value;
+    if (!desde || !hasta) { alert('Selecciona origen y destino.'); return; }
+    if (desde === hasta)  { alert('Origen y destino no pueden ser iguales.'); return; }
+    const nombre   = document.getElementById('c-nombre').value.trim();
+    const telefono = document.getElementById('c-telefono').value.trim();
+    if (!nombre)   { alert('Introduce tu nombre.'); return; }
+    if (!telefono) { alert('Introduce tu teléfono.'); return; }
+
     const recur = document.querySelector('input[name="c-recur"]:checked').value;
     let fechas = [];
-    if (recur==='unica') {
+    if (recur === 'unica') {
         const f = document.getElementById('c-fecha').value;
         if (!f) { alert('Selecciona una fecha.'); return; }
         const hoy = new Date(); hoy.setHours(0,0,0,0);
-        if (new Date(f+'T00:00:00') < hoy) { alert('No puedes usar una fecha pasada.'); return; }
+        if (new Date(f + 'T00:00:00') < hoy) { alert('No puedes usar una fecha pasada.'); return; }
         fechas = [f];
-    } else if (recur==='lv') {
+    } else if (recur === 'lv') {
         fechas = generarFechas([1,2,3,4,5]);
     } else {
         const ch = [...document.querySelectorAll('#c-sec-custom input:checked')];
         if (!ch.length) { alert('Selecciona al menos un día.'); return; }
         fechas = generarFechas(ch.map(c => parseInt(c.value)));
     }
-    const btn = document.getElementById('c-btn'); btn.disabled=true; btn.textContent='Publicando...';
-    const base = { tipo: document.getElementById('c-tipo').value, desde, hasta, hora: document.getElementById('c-hora').value, nombre: document.getElementById('c-nombre').value, telefono: document.getElementById('c-telefono').value, email: document.getElementById('c-email').value.trim() };
-    const payload = fechas.map(f => ({...base, fecha: f}));
+
+    const btn = document.getElementById('c-btn');
+    btn.disabled = true; btn.textContent = 'Publicando...';
+    const base = {
+        tipo: document.getElementById('c-tipo').value,
+        desde, hasta, hora: document.getElementById('c-hora').value,
+        nombre, telefono, email: document.getElementById('c-email').value.trim()
+    };
+    const payload = fechas.map(f => ({ ...base, fecha: f }));
     try {
-        const r = await fetch(URL_COCHE, { method:'POST', body: JSON.stringify(payload.length===1 ? payload[0] : payload) });
+        const body = payload.length === 1 ? payload[0] : payload;
+        const r = await fetch(URL_COCHE, { method: 'POST', body: JSON.stringify(body) });
         const d = await r.json();
-        document.getElementById('c-pin').innerHTML = pinHTML(d.pin, base.email, d.total>1 ? `Se publicaron <b>${d.total} viajes</b>.` : '');
-        btn.textContent='✅ Publicado'; await cargarViajes();
-    } catch { alert('Error al publicar.'); btn.disabled=false; btn.textContent='PUBLICAR VIAJE'; }
+        document.getElementById('c-pin').innerHTML = pinHTML(d.pin, base.email,
+            d.total > 1 ? `Se publicaron <b>${d.total} viajes</b>.` : '');
+        btn.textContent = '✅ Publicado';
+        await cargarViajes();
+    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR VIAJE'; }
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    ACTIVIDADES
-════════════════════════════════════════════════════════════════ */
-const EMOJI_ACT = {'fútbol':'⚽','tenis':'🎾','pádel':'🏓','baloncesto':'🏀','ciclismo':'🚵','senderismo':'🥾','calistenia':'🏋️','natación':'🏊','yoga / pilates':'🧘','juegos de mesa':'🎲','voleibol':'🏐','otra actividad':'🎯'};
-function emojiAct(n) { const k=n.replace(/^[^\w]*/,'').toLowerCase().trim(); for(const[a,e] of Object.entries(EMOJI_ACT)) if(k.includes(a)) return e; return '🏃'; }
-
+   Campos reales: actividad, nivel, edad, personas,
+                  lugar, fecha, hora, nombre, telefono, id
+══════════════════════════════════════════════════ */
+const EMOJI_ACT = {
+    'fútbol':'⚽','tenis':'🎾','pádel':'🏓','baloncesto':'🏀','ciclismo':'🚵',
+    'senderismo':'🥾','calistenia':'🏋️','natación':'🏊','yoga / pilates':'🧘',
+    'juegos de mesa':'🎲','voleibol':'🏐','otra actividad':'🎯'
+};
+function emojiAct(nombre) {
+    const k = String(nombre).replace(/^[^\w]*/,'').toLowerCase().trim();
+    for (const [a, e] of Object.entries(EMOJI_ACT)) if (k.includes(a)) return e;
+    return '🏃';
+}
 function toggleFechaAct() {
     const cb = document.getElementById('a-con-fecha');
     document.getElementById('a-fecha-wrap').classList.toggle('oculto', !cb.checked);
     document.getElementById('a-fecha-toggle').classList.toggle('activo', cb.checked);
 }
-function filtrarActividades() {
-    const t = document.getElementById('busca-act').value.toLowerCase();
-    const f = actData.filter(p => {
-        const txt = [p.actividad,p.descripcion,p.lugar,p.nombre].some(c=>String(c||'').toLowerCase().includes(t));
-        return txt && (!filtroAct || p.actividad===filtroAct);
-    });
-    renderActividades(f);
+async function cargarActividades() {
+    try {
+        const r = await fetch(URL_ACTIVIDADES);
+        actData = JSON.parse(await r.text());
+        actData.sort((a, b) => {
+            if (a.fecha && b.fecha) return new Date(a.fecha + 'T' + (a.hora || '00:00')) - new Date(b.fecha + 'T' + (b.hora || '00:00'));
+            if (a.fecha) return -1; if (b.fecha) return 1; return 0;
+        });
+        construirFiltrosAct(actData);
+        renderActividades(actData);
+    } catch {
+        document.getElementById('grid-act').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar las propuestas.</div>';
+    }
 }
 function construirFiltrosAct(data) {
-    const acts = [...new Set(data.map(p=>p.actividad).filter(Boolean))];
-    const c = document.getElementById('filtros-act'); c.innerHTML='';
-    const todos = document.createElement('button'); todos.className='filtro-pill activo'; todos.textContent='Todas';
-    todos.onclick = () => { filtroAct=null; c.querySelectorAll('.filtro-pill').forEach(p=>p.classList.remove('activo')); todos.classList.add('activo'); filtrarActividades(); };
+    const acts = [...new Set(data.map(p => p.actividad).filter(Boolean))];
+    const c = document.getElementById('filtros-act'); c.innerHTML = '';
+    const todos = document.createElement('button');
+    todos.className = 'filtro-pill activo'; todos.textContent = 'Todas';
+    todos.onclick = () => { filtroAct = null; c.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo')); todos.classList.add('activo'); filtrarActividades(); };
     c.appendChild(todos);
     acts.forEach(a => {
-        const pill = document.createElement('button'); pill.className='filtro-pill'; pill.textContent=a;
-        pill.onclick = () => { filtroAct=a; c.querySelectorAll('.filtro-pill').forEach(p=>p.classList.remove('activo')); pill.classList.add('activo'); filtrarActividades(); };
+        const pill = document.createElement('button'); pill.className = 'filtro-pill'; pill.textContent = a;
+        pill.onclick = () => { filtroAct = a; c.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo')); pill.classList.add('activo'); filtrarActividades(); };
         c.appendChild(pill);
     });
 }
-async function cargarActividades() {
-    try {
-        const r = await fetch(URL_ACTIVIDADES); const text = await r.text(); actData = JSON.parse(text);
-        actData.sort((a,b) => { if(a.fecha&&b.fecha) return new Date(a.fecha+'T'+(a.hora||'00:00'))-new Date(b.fecha+'T'+(b.hora||'00:00')); if(a.fecha) return -1; if(b.fecha) return 1; return 0; });
-        construirFiltrosAct(actData); renderActividades(actData);
-    } catch { document.getElementById('grid-act').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+function filtrarActividades() {
+    const t = document.getElementById('busca-act').value.toLowerCase();
+    renderActividades(actData.filter(p => {
+        const txt = [p.actividad, p.descripcion, p.lugar, p.nombre, p.nivel, p.edad]
+            .some(c => String(c || '').toLowerCase().includes(t));
+        return txt && (!filtroAct || p.actividad === filtroAct);
+    }));
 }
 function renderActividades(data) {
-    const DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-    document.getElementById('grid-act').innerHTML = data.length ? data.map(p => {
-        const tel=String(p.telefono).replace(/\s+/g,''); const wa=tel.startsWith('34')?tel:'34'+tel;
-        const emoji=emojiAct(p.actividad||'');
-        const fechaHtml = p.fecha ? `<div>📅 <b>${p.fecha.split('-').reverse().join('/')}</b> (${DIAS[new Date(p.fecha+'T12:00:00').getDay()]})${p.hora?' · ⏰ '+p.hora:''}</div>` : `<div style="color:#94a3b8">📅 Sin fecha fija</div>`;
+    const grid = document.getElementById('grid-act');
+    if (!data.length) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🏃</div>No hay propuestas activas.</div>';
+        return;
+    }
+    grid.innerHTML = data.map(p => {
+        const emoji = emojiAct(p.actividad || '');
+        const fechaHtml = p.fecha
+            ? `<div>📅 <b>${formatFecha(p.fecha)}</b> <span style="color:#94a3b8">(${nombreDia(p.fecha)})</span>${p.hora ? ' · ⏰ ' + p.hora : ''}</div>`
+            : `<div style="color:#94a3b8">📅 Sin fecha fija</div>`;
+        // nivel y edad: solo si tienen valor
+        const nivelHtml = p.nivel ? `<div>📊 <b>${p.nivel}</b></div>` : '';
+        const edadHtml  = p.edad  ? `<div>🎂 <b>${p.edad}</b></div>`  : '';
         return `<div class="card-act" id="card-a-${p.id}">
             <button class="btn-borrar" onclick="borrarActividad('${p.id}')">🗑️</button>
             <div class="card-act-badge">${emoji} ${p.actividad}</div>
-            <div class="card-act-titulo">${p.descripcion||p.actividad}</div>
+            <div class="card-act-titulo">${p.descripcion || p.actividad}</div>
             <div class="card-act-meta">
                 ${fechaHtml}
                 <div>📍 <b>${p.lugar}</b></div>
-                ${p.personas?`<div>👥 Busca <b>${p.personas} ${p.personas==1?'persona':'personas'}</b></div>`:''}
+                ${p.personas ? `<div>👥 Busca <b>${p.personas} ${p.personas == 1 ? 'persona' : 'personas'}</b></div>` : ''}
+                ${nivelHtml}${edadHtml}
                 <div>👤 <b>${p.nombre}</b></div>
             </div>
-            <a class="btn-wa-card" href="https://wa.me/${wa}" target="_blank">💬 Apuntarme con ${p.nombre}</a>
+            <a class="btn-wa-card" href="https://wa.me/${wa(p.telefono)}" target="_blank">💬 Apuntarme con ${p.nombre}</a>
         </div>`;
-    }).join('') : '<div class="empty-state"><div class="empty-icon">🏃</div>No hay propuestas activas.</div>';
+    }).join('');
 }
 async function borrarActividad(id) {
-    const pin=prompt('🗑️ Introduce tu PIN para borrar esta propuesta:'); if(!pin) return;
-    const r=await fetch(`${URL_ACTIVIDADES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-    const d=await r.json();
-    if(d.status==='ok'){document.getElementById('card-a-'+id)?.remove();actData=actData.filter(p=>p.id!==id);alert('✅ Propuesta eliminada.');}
-    else alert('❌ PIN incorrecto.');
+    const pin = prompt('🗑️ Introduce tu PIN para borrar esta propuesta:');
+    if (!pin) return;
+    try {
+        const r = await fetch(`${URL_ACTIVIDADES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+        const d = await r.json();
+        if (d.status === 'ok') { document.getElementById('card-a-' + id)?.remove(); actData = actData.filter(p => p.id !== id); alert('✅ Propuesta eliminada.'); }
+        else { alert('❌ PIN incorrecto.'); }
+    } catch { alert('Error al conectar.'); }
 }
 async function publicarActividad() {
     if (!document.getElementById('a-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
-    const actividad=document.getElementById('a-actividad').value; if(!actividad){alert('Selecciona una actividad.');return;}
-    const lugar=document.getElementById('a-lugar').value; if(!lugar){alert('Selecciona una zona.');return;}
-    const nombre=document.getElementById('a-nombre').value.trim(); if(!nombre){alert('Introduce tu nombre.');return;}
-    const telefono=document.getElementById('a-telefono').value.trim(); if(!telefono){alert('Introduce tu teléfono.');return;}
-    const conFecha=document.getElementById('a-con-fecha').checked;
-    const fecha=conFecha?document.getElementById('a-fecha').value:'';
-    const hora=conFecha?document.getElementById('a-hora').value:'';
-    if(conFecha&&!fecha){alert('Selecciona una fecha.');return;}
-    if(conFecha){const hoy=new Date();hoy.setHours(0,0,0,0);if(new Date(fecha+'T00:00:00')<hoy){alert('No puedes usar una fecha pasada.');return;}}
-    const btn=document.getElementById('a-btn'); btn.disabled=true; btn.textContent='Publicando...';
-    const email=document.getElementById('a-email').value.trim();
-    const params=new URLSearchParams({actividad,descripcion:document.getElementById('a-descripcion').value.trim(),personas:document.getElementById('a-personas').value,lugar,nombre,telefono,email,fecha,hora});
+    const actividad = document.getElementById('a-actividad').value; if (!actividad) { alert('Selecciona una actividad.'); return; }
+    const lugar = document.getElementById('a-lugar').value; if (!lugar) { alert('Selecciona una zona.'); return; }
+    const nombre = document.getElementById('a-nombre').value.trim(); if (!nombre) { alert('Introduce tu nombre.'); return; }
+    const telefono = document.getElementById('a-telefono').value.trim(); if (!telefono) { alert('Introduce tu teléfono.'); return; }
+    const conFecha = document.getElementById('a-con-fecha').checked;
+    const fecha = conFecha ? document.getElementById('a-fecha').value : '';
+    const hora  = conFecha ? document.getElementById('a-hora').value  : '';
+    if (conFecha && !fecha) { alert('Selecciona una fecha.'); return; }
+    if (conFecha) { const hoy = new Date(); hoy.setHours(0,0,0,0); if (new Date(fecha + 'T00:00:00') < hoy) { alert('No puedes usar una fecha pasada.'); return; } }
+    const btn = document.getElementById('a-btn'); btn.disabled = true; btn.textContent = 'Publicando...';
+    const email = document.getElementById('a-email').value.trim();
+    const params = new URLSearchParams({ actividad, descripcion: document.getElementById('a-descripcion').value.trim(), personas: document.getElementById('a-personas').value, lugar, nombre, telefono, email, fecha, hora });
     try {
-        const r=await fetch(URL_ACTIVIDADES,{method:'POST',body:params,redirect:'follow'});
-        const d=JSON.parse(await r.text());
-        if(d.status==='ok'){document.getElementById('a-pin').innerHTML=pinHTML(d.pin,email,'');btn.textContent='✅ Publicado';await cargarActividades();}
-        else{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR PROPUESTA';}
-    } catch{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR PROPUESTA';}
+        const r = await fetch(URL_ACTIVIDADES, { method: 'POST', body: params, redirect: 'follow' });
+        const d = JSON.parse(await r.text());
+        if (d.status === 'ok') { document.getElementById('a-pin').innerHTML = pinHTML(d.pin, email, ''); btn.textContent = '✅ Publicado'; await cargarActividades(); }
+        else { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA'; }
+    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA'; }
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    PARTICULARES
-════════════════════════════════════════════════════════════════ */
+   Campos reales: titulo, estado, descripcion, precio,
+                  contacto, recogida, imagen, id
+   NOTA: id viene vacío en registros antiguos → el borrado
+         puede fallar en esos; es limitación del backend.
+══════════════════════════════════════════════════ */
 function previsualizarImg(input) {
-    const file=input.files[0]; if(!file) return;
-    const reader=new FileReader();
-    reader.onload=e=>{document.getElementById('p-img-prev').src=e.target.result;document.getElementById('p-img-wrap').style.display='block';};
+    const file = input.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = e => { document.getElementById('p-img-prev').src = e.target.result; document.getElementById('p-img-wrap').style.display = 'block'; };
     reader.readAsDataURL(file);
 }
 async function subirImgBB(file) {
-    const st=document.getElementById('p-img-status'); st.textContent='Subiendo imagen…'; st.className='img-status loading';
-    const fd=new FormData(); fd.append('image',file);
-    const r=await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,{method:'POST',body:fd});
-    const d=await r.json();
-    if(d.success){st.textContent='✓ Imagen subida';st.className='img-status ok';return d.data.url;}
-    st.textContent='✗ Error al subir';st.className='img-status err'; return null;
+    const st = document.getElementById('p-img-status');
+    st.textContent = 'Subiendo imagen…'; st.className = 'img-status loading';
+    const fd = new FormData(); fd.append('image', file);
+    const r = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: fd });
+    const d = await r.json();
+    if (d.success) { st.textContent = '✓ Imagen subida'; st.className = 'img-status ok'; return d.data.url; }
+    st.textContent = '✗ Error al subir imagen'; st.className = 'img-status err'; return null;
 }
 async function cargarParticulares() {
     try {
-        const r=await fetch(URL_PARTICULARES); const d=await r.json();
-        d.sort(()=>Math.random()-0.5);
-        document.getElementById('grid-part').innerHTML = d.length ? d.map(a=>`
-            <div class="card-part" id="card-p-${a.id}">
-                <div class="foto-wrap">
-                    <img src="${a.imagen}" class="foto-articulo" onclick="ampliarFoto('${a.imagen}')">
-                    <button class="btn-borrar-foto" onclick="borrarParticular('${a.id}')">🗑️</button>
-                </div>
-                <div class="card-part-body">
-                    <div class="card-part-titulo">${a.titulo}</div>
-                    <div class="card-part-desc">${a.descripcion}</div>
-                    <div class="card-part-precio">${a.precio}€</div>
-                    <div class="burbujas"><span class="tag">📍 ${a.recogida}</span><span class="tag">📦 ${a.estado}</span></div>
-                    <div class="botones-contacto">
-                        <a href="tel:${a.contacto}" class="btn-llamar">LLAMAR</a>
-                        <a href="https://wa.me/34${a.contacto}" class="btn-wa-part" target="_blank">WHATSAPP</a>
-                    </div>
-                </div>
-            </div>`).join('') : '<div class="empty-state"><div class="empty-icon">🤝</div>No hay anuncios.</div>';
-    } catch { document.getElementById('grid-part').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+        const r = await fetch(URL_PARTICULARES);
+        const data = await r.json();
+        // Orden aleatorio para dar visibilidad equitativa
+        renderParticulares(data.sort(() => Math.random() - 0.5));
+    } catch {
+        document.getElementById('grid-part').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los anuncios.</div>';
+    }
 }
-function ampliarFoto(src){document.getElementById('modalFotoImg').src=src;document.getElementById('modalFoto').style.display='flex';}
+function renderParticulares(data) {
+    const grid = document.getElementById('grid-part');
+    if (!data.length) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🤝</div>No hay anuncios activos.</div>';
+        return;
+    }
+    grid.innerHTML = data.map(a => {
+        const fotoHtml = a.imagen
+            ? `<img src="${a.imagen}" class="foto-articulo" onclick="ampliarFoto('${a.imagen}')" loading="lazy">`
+            : `<div class="foto-placeholder">📷</div>`;
+        const btnBorrar = a.id
+            ? `<button class="btn-borrar-foto" onclick="borrarParticular('${a.id}')">🗑️</button>`
+            : '';  // sin id no se puede borrar desde el frontend
+        return `<div class="card-part" id="card-p-${a.id || Math.random()}">
+            <div class="foto-wrap">
+                ${fotoHtml}
+                ${btnBorrar}
+            </div>
+            <div class="card-part-body">
+                <div class="card-part-titulo">${a.titulo}</div>
+                <div class="card-part-desc">${a.descripcion}</div>
+                <div class="card-part-precio">${a.precio != null ? a.precio + ' €' : 'Consultar'}</div>
+                <div class="burbujas">
+                    ${a.recogida ? `<span class="tag">📍 ${a.recogida}</span>` : ''}
+                    ${a.estado   ? `<span class="tag">📦 ${a.estado}</span>`   : ''}
+                </div>
+                <div class="botones-contacto">
+                    <a href="tel:${a.contacto}" class="btn-llamar">LLAMAR</a>
+                    <a href="https://wa.me/34${String(a.contacto).replace(/\D/g,'')}" class="btn-wa-part" target="_blank">WHATSAPP</a>
+                </div>
+            </div>
+        </div>`;
+    }).join('');
+}
+function ampliarFoto(src) {
+    document.getElementById('modalFotoImg').src = src;
+    document.getElementById('modalFoto').style.display = 'flex';
+}
 async function borrarParticular(id) {
-    const pin=prompt('🗑️ Introduce tu PIN para borrar este anuncio:'); if(!pin) return;
-    const r=await fetch(`${URL_PARTICULARES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-    const d=await r.json();
-    if(d.status==='ok'){document.getElementById('card-p-'+id)?.remove();alert('✅ Anuncio eliminado.');}
-    else alert('❌ PIN incorrecto.');
+    const pin = prompt('🗑️ Introduce tu PIN para borrar este anuncio:');
+    if (!pin) return;
+    try {
+        const r = await fetch(`${URL_PARTICULARES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+        const d = await r.json();
+        if (d.status === 'ok') { document.getElementById('card-p-' + id)?.remove(); alert('✅ Anuncio eliminado.'); }
+        else { alert('❌ PIN incorrecto.'); }
+    } catch { alert('Error al conectar.'); }
 }
 async function publicarParticular() {
-    if(!document.getElementById('p-privacidad').checked){alert('Acepta la política de privacidad.');return;}
-    const btn=document.getElementById('p-btn'); btn.disabled=true; btn.textContent='Publicando...';
-    const file=document.getElementById('p-imagen').files[0];
-    if(!file){alert('Selecciona una imagen.');btn.disabled=false;btn.textContent='ENVIAR ANUNCIO';return;}
-    const imagenUrl=await subirImgBB(file);
-    if(!imagenUrl){btn.disabled=false;btn.textContent='ENVIAR ANUNCIO';return;}
-    const email=document.getElementById('p-email').value.trim();
-    const params=new URLSearchParams({titulo:document.getElementById('p-titulo').value,estado:document.getElementById('p-estado').value,descripcion:document.getElementById('p-descripcion').value,precio:document.getElementById('p-precio').value,contacto:document.getElementById('p-contacto').value,recogida:document.getElementById('p-recogida').value,email,imagenUrl});
-    const r=await fetch(URL_PARTICULARES,{method:'POST',body:params,redirect:'follow'});
-    const d=JSON.parse(await r.text());
-    if(d.status==='ok'){document.getElementById('p-pin').innerHTML=pinHTML(d.pin,email,'');btn.textContent='✅ Publicado';await cargarParticulares();}
-    else{alert(d.status==='ANTIFLOOD'?'Antiflood: espera 5 minutos.':'Error al publicar.');btn.disabled=false;btn.textContent='ENVIAR ANUNCIO';}
+    if (!document.getElementById('p-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
+    const titulo   = document.getElementById('p-titulo').value.trim();   if (!titulo)   { alert('Introduce un título.'); return; }
+    const contacto = document.getElementById('p-contacto').value.trim(); if (!contacto) { alert('Introduce un teléfono.'); return; }
+    const btn = document.getElementById('p-btn'); btn.disabled = true; btn.textContent = 'Publicando...';
+    const file = document.getElementById('p-imagen').files[0];
+    if (!file) { alert('Selecciona una imagen.'); btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; return; }
+    const imagenUrl = await subirImgBB(file);
+    if (!imagenUrl) { btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; return; }
+    const email = document.getElementById('p-email').value.trim();
+    const params = new URLSearchParams({
+        titulo, estado: document.getElementById('p-estado').value, descripcion: document.getElementById('p-descripcion').value,
+        precio: document.getElementById('p-precio').value, contacto, recogida: document.getElementById('p-recogida').value, email, imagenUrl
+    });
+    try {
+        const r = await fetch(URL_PARTICULARES, { method: 'POST', body: params, redirect: 'follow' });
+        const d = JSON.parse(await r.text());
+        if (d.status === 'ok') { document.getElementById('p-pin').innerHTML = pinHTML(d.pin, email, ''); btn.textContent = '✅ Publicado'; await cargarParticulares(); }
+        else { alert(d.status === 'ANTIFLOOD' ? 'Antiflood: espera 5 minutos.' : 'Error al publicar.'); btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; }
+    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; }
 }
 
-/* ════════════════════════════════════════════════════════════════
+/* ══════════════════════════════════════════════════
    EMPLEO
-════════════════════════════════════════════════════════════════ */
+   Campos reales: buscasUOfreces ("OFREZCO" | "BUSCO EMPLEO"),
+                  actividad (≡ puesto/título),
+                  lugar, jornada, descripcion, telefono, id
+══════════════════════════════════════════════════ */
 function checkLugarEmp() {
-    const otro=document.querySelector('.e-lugar[value="Otro"]').checked;
-    document.getElementById('e-lugar-otro').classList.toggle('oculto',!otro);
+    const otro = document.querySelector('.e-lugar[value="Otro"]').checked;
+    document.getElementById('e-lugar-otro').classList.toggle('oculto', !otro);
 }
 function filtrarEmpleo() {
-    const t=document.getElementById('busca-emp').value.toLowerCase();
-    renderEmpleo(empData.filter(a=>[a.titulo,a.descripcion,a.jornada,a.lugar].some(c=>String(c||'').toLowerCase().includes(t))));
+    const t = document.getElementById('busca-emp').value.toLowerCase();
+    renderEmpleo(empData.filter(a =>
+        [a.actividad, a.descripcion, a.jornada, a.lugar, a.buscasUOfreces]
+            .some(c => String(c || '').toLowerCase().includes(t))
+    ));
 }
 async function cargarEmpleo() {
     try {
-        const r=await fetch(URL_EMPLEO); const d=await r.json();
-        empData=d.reverse(); renderEmpleo(empData);
-    } catch { document.getElementById('grid-emp').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+        const r = await fetch(URL_EMPLEO);
+        const d = await r.json();
+        empData = d.reverse();
+        renderEmpleo(empData);
+    } catch {
+        document.getElementById('grid-emp').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar las ofertas.</div>';
+    }
 }
 function renderEmpleo(data) {
-    document.getElementById('grid-emp').innerHTML = data.length ? data.map(a=>`
-        <div class="card-emp" id="card-e-${a.id}">
-            <button class="btn-borrar" onclick="borrarEmpleo('${a.id}')">🗑️</button>
-            <div class="card-emp-titulo">${a.titulo}</div>
-            <div class="card-emp-desc">${a.descripcion}</div>
+    const grid = document.getElementById('grid-emp');
+    if (!data.length) {
+        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">💼</div>No hay ofertas disponibles.</div>';
+        return;
+    }
+    grid.innerHTML = data.map(a => {
+        // "BUSCO EMPLEO" o "BUSCO" → busca trabajo; "OFREZCO" → ofrece trabajo
+        const tipo = String(a.buscasUOfreces || '').toUpperCase();
+        const esBusco = tipo.includes('BUSCO');
+        const badgeClass = esBusco ? 'badge-busco' : 'badge-ofrezco';
+        const badgeLabel = esBusco ? '🙋 Busca empleo' : '🏢 Busca personal';
+        // El campo "titulo" en el formulario se guarda como "actividad" en el backend
+        const titulo = a.actividad || a.titulo || '–';
+        const lugares = String(a.lugar || '').split(',').map(l => l.trim()).filter(Boolean);
+        const btnBorrar = a.id ? `<button class="btn-borrar" onclick="borrarEmpleo('${a.id}')">🗑️</button>` : '';
+        return `<div class="card-emp" id="card-e-${a.id || Math.random()}">
+            ${btnBorrar}
+            <div class="card-emp-badge ${badgeClass}">${badgeLabel}</div>
+            <div class="card-emp-titulo">${titulo}</div>
+            <div class="card-emp-desc">${a.descripcion || ''}</div>
             <div class="burbujas">
-                <span class="tag">⏱️ ${a.jornada}</span>
-                ${a.lugar.split(', ').map(l=>`<span class="tag">📍 ${l}</span>`).join('')}
+                <span class="tag">⏱️ ${a.jornada || '–'}</span>
+                ${lugares.map(l => `<span class="tag">📍 ${l}</span>`).join('')}
             </div>
-            <a class="btn-wa-card" href="https://wa.me/34${a.telefono}" target="_blank">💬 Contactar</a>
-        </div>`).join('') : '<div class="empty-state"><div class="empty-icon">💼</div>No hay ofertas.</div>';
+            <a class="btn-wa-card" href="https://wa.me/${wa(a.telefono)}" target="_blank">💬 Contactar</a>
+        </div>`;
+    }).join('');
 }
 async function borrarEmpleo(id) {
-    const pin=prompt('🗑️ Introduce tu PIN para borrar este anuncio:'); if(!pin) return;
-    const r=await fetch(`${URL_EMPLEO}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-    const d=await r.json();
-    if(d.status==='ok'){document.getElementById('card-e-'+id)?.remove();empData=empData.filter(a=>a.id!==id);alert('✅ Anuncio eliminado.');}
-    else alert('❌ PIN incorrecto.');
+    const pin = prompt('🗑️ Introduce tu PIN para borrar este anuncio:');
+    if (!pin) return;
+    try {
+        const r = await fetch(`${URL_EMPLEO}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+        const d = await r.json();
+        if (d.status === 'ok') { document.getElementById('card-e-' + id)?.remove(); empData = empData.filter(a => a.id !== id); alert('✅ Anuncio eliminado.'); }
+        else { alert('❌ PIN incorrecto.'); }
+    } catch { alert('Error al conectar.'); }
 }
 async function publicarEmpleo() {
-    if(!document.getElementById('e-privacidad').checked){alert('Acepta la política de privacidad.');return;}
-    const titulo=document.getElementById('e-titulo').value.trim(); if(!titulo){alert('Introduce el puesto.');return;}
-    const telefono=document.getElementById('e-telefono').value.trim(); if(!telefono){alert('Introduce el teléfono.');return;}
-    const lugares=[...document.querySelectorAll('.e-lugar:checked')].map(c=>c.value==='Otro'?document.getElementById('e-lugar-otro').value:c.value);
-    if(!lugares.length){alert('Selecciona al menos un lugar.');return;}
-    const btn=document.getElementById('e-btn'); btn.disabled=true; btn.textContent='Publicando...';
-    const email=document.getElementById('e-email').value.trim();
-    const payload={buscasUOfreces:document.getElementById('e-tipo').value,titulo,lugar:lugares.join(', '),jornada:document.getElementById('e-jornada').value,descripcion:document.getElementById('e-descripcion').value,telefono,email};
+    if (!document.getElementById('e-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
+    const titulo = document.getElementById('e-titulo').value.trim(); if (!titulo) { alert('Introduce el puesto.'); return; }
+    const telefono = document.getElementById('e-telefono').value.trim(); if (!telefono) { alert('Introduce el teléfono.'); return; }
+    const lugares = [...document.querySelectorAll('.e-lugar:checked')].map(c =>
+        c.value === 'Otro' ? document.getElementById('e-lugar-otro').value : c.value
+    );
+    if (!lugares.length) { alert('Selecciona al menos un lugar.'); return; }
+    const btn = document.getElementById('e-btn'); btn.disabled = true; btn.textContent = 'Publicando...';
+    const email = document.getElementById('e-email').value.trim();
+    // Se envía "titulo" como campo; el backend lo guarda en "actividad"
+    const payload = {
+        buscasUOfreces: document.getElementById('e-tipo').value,
+        titulo, lugar: lugares.join(', '), jornada: document.getElementById('e-jornada').value,
+        descripcion: document.getElementById('e-descripcion').value, telefono, email
+    };
     try {
-        const r=await fetch(URL_EMPLEO,{method:'POST',body:JSON.stringify(payload),redirect:'follow'});
-        const d=JSON.parse(await r.text());
-        if(d.resultado==='ok'||d.status==='ok'){document.getElementById('e-pin').innerHTML=pinHTML(d.pin,email,'');btn.textContent='✅ Publicado';await cargarEmpleo();}
-        else{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR ANUNCIO';}
-    } catch{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR ANUNCIO';}
+        const r = await fetch(URL_EMPLEO, { method: 'POST', body: JSON.stringify(payload), redirect: 'follow' });
+        const d = JSON.parse(await r.text());
+        if (d.resultado === 'ok' || d.status === 'ok') { document.getElementById('e-pin').innerHTML = pinHTML(d.pin, email, ''); btn.textContent = '✅ Publicado'; await cargarEmpleo(); }
+        else { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO'; }
+    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO'; }
 }
 
-/* ── INICIO: carga pestaña activa (coche) ── */
+/* ── Arranque ── */
+cargado.coche = true;
 cargarViajes();
 </script>
 </body>
