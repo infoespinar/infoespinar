@@ -69,15 +69,15 @@
         .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
 
         .section-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 14px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; position: relative; z-index: 0; }
 
         /* VIAJES */
-        .card-viaje { background: white; padding: 22px; border-radius: 16px; border-top: 5px solid #10b981; border-left: 1.5px solid #e2e8f0; border-right: 1.5px solid #e2e8f0; border-bottom: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .card-viaje { background: white; padding: 22px; z-index: 1; border-radius: 16px; border-top: 5px solid #10b981; border-left: 1.5px solid #e2e8f0; border-right: 1.5px solid #e2e8f0; border-bottom: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
         .card-viaje:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
         .card-viaje-tipo { font-weight: 900; font-size: 12px; text-transform: uppercase; color: #10b981; margin-bottom: 8px; }
         .card-viaje-ruta { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 10px; }
         .card-viaje-nombre { font-size: 14px; color: #475569; margin-bottom: 10px; }
-        .card-viaje-fechas { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; max-height: 180px; overflow-y: auto; }
+        .card-viaje-fechas { display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; max-height: 180px; overflow-y: auto; position: relative; z-index: 2; }
         .card-viaje-fecha-row { display: flex; justify-content: space-between; align-items: center; font-size: 13px; background: #f8fafc; border-radius: 6px; padding: 5px 9px; }
         .card-viaje-fecha-row .fecha { color: #1e293b; font-weight: 700; }
         .card-viaje-fecha-row .dia { color: #94a3b8; font-size: 12px; }
@@ -119,7 +119,7 @@
         .card-emp-desc { font-size: 13px; color: #475569; margin-bottom: 10px; line-height: 1.5; white-space: pre-line; }
 
         /* COMPARTIDOS */
-        .btn-wa-card { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px; background: #25d366; color: white; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; transition: background 0.2s; margin-top: 12px; }
+        .btn-wa-card { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px; background: #25d366; color: white; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; transition: background 0.2s; margin-top: 12px; position: relative; z-index: 5; }
         .btn-wa-card:hover { background: #128c7e; }
         .btn-borrar { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: all 0.2s; }
         .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); }
@@ -684,6 +684,24 @@ function cargarEmpleo(){
             document.getElementById('grid-emp').innerHTML =
                 '<div class="empty-state">Error cargando empleo</div>';
         });
+}
+
+function cambiarTab(tab, btn) {
+    // ocultar todos los paneles
+    document.querySelectorAll('.panel').forEach(p => {
+        p.classList.remove('active');
+    });
+
+    // quitar active a todos los botones
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+    });
+
+    // activar panel correcto
+    document.getElementById('panel-' + tab).classList.add('active');
+
+    // activar botón pulsado
+    btn.classList.add('active');
 }
  
 </script>
