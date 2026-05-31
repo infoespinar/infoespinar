@@ -9,335 +9,33 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
 
 <style>
+/* --- TU CSS (sin cambios importantes) --- */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
     --ink: #1a1a2e;
-    --ink-mid: #4a4a6a;
     --ink-light: #8888aa;
-
     --surface: #ffffff;
     --surface-2: #f7f7fb;
-    --surface-3: #eeeef8;
-
-    --accent: #3a56e8;
-    --accent-light: #eef0fd;
-    --accent-dark: #2840cc;
-
-    --green-light: #edfaf4;
-    --green-dark: #0a7554;
-
     --border: rgba(60,60,120,0.10);
     --border-strong: rgba(60,60,120,0.18);
-
+    --accent: #3a56e8;
+    --green-light: #edfaf4;
+    --green-dark: #0a7554;
     --radius: 14px;
     --radius-sm: 8px;
-
     --shadow: 0 2px 16px rgba(30,30,80,0.07);
     --shadow-md: 0 4px 24px rgba(30,30,80,0.10);
 }
 
-body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--surface-2);
-    color: var(--ink);
-}
+body { font-family: 'DM Sans', sans-serif; background: var(--surface-2); color: var(--ink); }
 
-/* HEADER */
-.header {
-    background: var(--ink);
-    padding: 18px 24px;
-    display: flex;
-    justify-content: center;
-}
+/* (recortado: mantienes tu CSS tal cual) */
 
-.header-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color: white;
-}
-
-.header-bandera {
-    width: 28px;
-    height: 28px;
-    border-radius: 6px;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-
-.header-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-}
-
-/* HERO */
-.hero {
-    background: var(--ink);
-    padding: 40px 24px 56px;
-    text-align: center;
-    position: relative;
-}
-
-.hero::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0; right: 0;
-    height: 40px;
-    background: var(--surface-2);
-    clip-path: ellipse(55% 100% at 50% 100%);
-}
-
-.hero-title {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(24px,5vw,36px);
-    color: white;
-}
-
-.hero-sub {
-    font-size: 14px;
-    color: rgba(255,255,255,0.55);
-}
-
-/* CONTAINER */
-.contenedor-app {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 24px;
-}
-
-.aviso {
-    text-align: center;
-    font-size: 12px;
+#loading {
+    text-align:center;
+    padding:40px;
     color: var(--ink-light);
-    margin-bottom: 16px;
-}
-
-/* BTN PUBLICAR */
-.btn-publicar {
-    width: 100%;
-    padding: 14px;
-    background: var(--surface);
-    border: 1.5px dashed var(--border-strong);
-    border-radius: var(--radius);
-    font-weight: 600;
-    text-transform: uppercase;
-    cursor: pointer;
-    margin-bottom: 24px;
-    transition: 0.2s;
-}
-
-.btn-publicar:hover {
-    border-color: var(--accent);
-    background: var(--accent-light);
-}
-
-/* FORM */
-#form {
-    background: var(--surface);
-    border-radius: var(--radius);
-    border: 1.5px solid var(--border);
-    box-shadow: var(--shadow-md);
-    padding: 24px;
-    margin-bottom: 40px;
-    display: none;
-}
-
-.form-section {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-light);
-    margin: 14px 0 6px;
-}
-
-input, select, textarea {
-    width: 100%;
-    padding: 11px 14px;
-    border: 1.5px solid var(--border-strong);
-    border-radius: var(--radius-sm);
-    font-family: inherit;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(58,86,232,0.09);
-}
-
-/* PRIVACY */
-.privacy-box {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 12px;
-    font-size: 13px;
-    color: var(--ink-mid);
-}
-
-.privacy-box label {
-    display: flex;
-    gap: 8px;
-    margin-top: 8px;
-}
-
-/* PIN */
-.pin-box {
-    background: var(--green-light);
-    border: 1.5px solid rgba(15,155,110,0.2);
-    border-radius: var(--radius-sm);
-    padding: 20px;
-    text-align: center;
-    margin: 20px 0;
-}
-
-.pin-num {
-    font-family: 'DM Serif Display', serif;
-    font-size: 38px;
-    letter-spacing: 10px;
-    color: var(--green-dark);
-}
-
-.btn-copiar-pin {
-    margin-top: 10px;
-    padding: 10px 16px;
-    background: var(--green-dark);
-    color: white;
-    border: none;
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-}
-
-/* GRID */
-.section-label {
-    font-size: 12px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--ink-light);
-    margin-bottom: 14px;
-}
-
-.grid-anuncios {
-    display: grid;
-    grid-template-columns: repeat(auto-fill,minmax(300px,1fr));
-    gap: 16px;
-}
-
-/* CARD (CLAVE) */
-.tarjeta {
-    background: var(--surface);
-    border-radius: var(--radius);
-    border: 1.5px solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 22px;
-    position: relative;
-    transition: 0.2s;
-}
-
-.tarjeta:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-md);
-}
-
-/* BADGES */
-.card-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border-radius: 40px;
-    margin-bottom: 12px;
-}
-
-.badge-busco {
-    background: var(--accent-light);
-    color: var(--accent-dark);
-}
-
-.badge-ofrezco {
-    background: var(--green-light);
-    color: var(--green-dark);
-}
-
-/* TEXTOS */
-.titulo-tarjeta {
-    font-family: 'DM Serif Display', serif;
-    font-size: 20px;
-    margin-bottom: 12px;
-}
-
-.descripcion {
-    font-size: 14px;
-    color: var(--ink-mid);
-    margin-bottom: 14px;
-    line-height: 1.5;
-}
-
-/* TAGS */
-.tag {
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    padding: 6px 10px;
-    border-radius: 40px;
-    font-size: 12px;
-}
-
-/* BOTÓN */
-.btn-wa {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-    padding: 11px;
-    background: #25d366;
-    color: white;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    font-weight: 600;
-}
-
-.btn-wa:hover {
-    background: #1aad55;
-}
-
-/* BORRAR */
-.btn-borrar {
-    position: absolute;
-    top: 14px;
-    right: 14px;
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    opacity: 0.5;
-}
-
-.btn-borrar:hover {
-    opacity: 1;
-}
-
-/* EMPTY */
-.empty-state {
-    text-align: center;
-    padding: 40px;
-    color: var(--ink-light);
-}
-
-/* FOOTER */
-.footer {
-    text-align: center;
-    padding: 28px;
-    font-size: 12px;
-    color: var(--ink-light);
-    border-top: 1px solid var(--border);
-    margin-top: 40px;
 }
 </style>
 </head>
@@ -364,7 +62,7 @@ input:focus, select:focus, textarea:focus {
 💼 PUBLICAR
 </button>
 
-<div id="form">
+<div id="form" style="display:none">
     <p class="form-section">Tipo</p>
     <select id="buscasUOfreces">
         <option value="BUSCO">Busco empleo</option>
@@ -374,7 +72,7 @@ input:focus, select:focus, textarea:focus {
     <p class="form-section">Puesto</p>
     <input id="titulo" oninput="this.value=this.value.toUpperCase()">
 
-    <p class="form-section">Lugar</p>
+    <p class="form-section">Descripción</p>
     <textarea id="descripcion"></textarea>
 
     <p class="form-section">Contacto</p>
@@ -388,17 +86,71 @@ input:focus, select:focus, textarea:focus {
         </label>
     </div>
 
-    <div id="pinMostrado"></div>
     <button class="btn-submit" id="btn" onclick="enviar()">PUBLICAR</button>
+    <div id="pinMostrado"></div>
 </div>
 
 <p class="section-label">Anuncios</p>
-<div id="loading">Cargando...</div>
+
+<div id="loading">Cargando anuncios...</div>
 <div id="tablon" class="grid-anuncios"></div>
 
 </div>
 
-<footer class="footer">© 2026 InfoEspinar</footer>
+<script>
+const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
+
+async function cargar() {
+    try {
+        const res = await fetch(urlScript);
+        const data = await res.json();
+
+        document.getElementById("loading").style.display = "none";
+
+        const cont = document.getElementById("tablon");
+
+        if (!data || !data.length) {
+            cont.innerHTML = "<div class='empty-state'>No hay anuncios</div>";
+            return;
+        }
+
+        cont.innerHTML = data.reverse().map(a => `
+            <div class="tarjeta">
+                <div class="titulo-tarjeta">${a.actividad || ''}</div>
+                <div class="descripcion">${a.descripcion || ''}</div>
+                <div class="tag">📍 ${a.lugar || ''}</div>
+                <div class="tag">⏱️ ${a.jornada || ''}</div>
+                <a class="btn-wa" href="https://wa.me/34${a.telefono}" target="_blank">Contactar</a>
+            </div>
+        `).join("");
+
+    } catch (e) {
+        document.getElementById("loading").innerText = "Error cargando anuncios";
+    }
+}
+
+function enviar() {
+    if (!document.getElementById('aceptaPrivacidad').checked) return alert("Acepta privacidad");
+
+    const params = new URLSearchParams();
+    params.append("buscasUOfreces", document.getElementById("buscasUOfreces").value);
+    params.append("actividad", document.getElementById("titulo").value);
+    params.append("descripcion", document.getElementById("descripcion").value);
+    params.append("telefono", document.getElementById("telefono").value);
+    params.append("email", document.getElementById("email").value);
+
+    fetch(urlScript, {
+        method: "POST",
+        body: params,
+        mode: "no-cors"
+    });
+
+    alert("Publicado (puede tardar unos segundos en aparecer)");
+    cargar();
+}
+
+cargar();
+</script>
 
 </body>
 </html>
