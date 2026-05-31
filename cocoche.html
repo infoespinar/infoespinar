@@ -863,8 +863,8 @@ function actualizarHintVuelta() {
 /* ── FECHAS ── */
 function generarFechas(diasSemana, fechaInicio, maxViajes) {
     const fechas = [];
-    const inicio = new Date(fechaInicio);
-    inicio.setHours(0,0,0,0);
+    // Anclar al mediodía para evitar desfase UTC+2 al parsear fechas ISO sin hora
+    const inicio = new Date(fechaInicio + 'T12:00:00');
     let cursor = new Date(inicio);
 
     while (fechas.length < maxViajes) {
@@ -1054,7 +1054,7 @@ async function publicarViaje() {
         // FIX 1: validar que la fecha esté dentro de los próximos 15 días
         const limite = new Date(hoy);
         limite.setDate(limite.getDate() + 15);
-        const fechaInicio = new Date(inicio + 'T00:00:00');
+        const fechaInicio = new Date(inicio + 'T12:00:00');
 
         if (fechaInicio < hoy) {
             alert('La fecha de inicio no puede ser anterior a hoy.'); return;
@@ -1074,7 +1074,7 @@ async function publicarViaje() {
         // FIX 1: misma validación de 15 días para personalizada
         const limite = new Date(hoy);
         limite.setDate(limite.getDate() + 15);
-        const fechaInicio = new Date(inicio + 'T00:00:00');
+        const fechaInicio = new Date(inicio + 'T12:00:00');
 
         if (fechaInicio < hoy) {
             alert('La fecha de inicio no puede ser anterior a hoy.'); return;
