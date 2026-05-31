@@ -10,93 +10,145 @@
         :root { --menta: #20a088; --fondo: #f4f6f9; }
         body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; padding-bottom: 50px; }
 
-        /* Header igual al de particulares */
-        .header { background: var(--menta); padding: 15px 20px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .header-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
-        .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; }
-        .header h1 { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        .header { background: linear-gradient(135deg, #20a088 0%, #0f2027 100%); padding: 18px 24px; display: flex; justify-content: center; }
+        .header-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
+        .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); }
+        .header-name { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+
+        .hero { background: linear-gradient(135deg, #20a088 0%, #0f2027 100%); padding: 32px 24px 58px; text-align: center; position: relative; overflow: hidden; }
+        .hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px; background: var(--fondo); clip-path: ellipse(55% 100% at 50% 100%); }
+        .hero-title { font-size: clamp(22px, 5vw, 34px); font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .hero-sub { font-size: 14px; color: rgba(255,255,255,0.55); }
 
         .contenedor-app { max-width: 900px; margin: 0 auto; padding: 20px; }
-        h2.titulo-seccion { text-align: center; margin: 20px 0; font-size: 26px; letter-spacing: 0.5px; font-weight: 900; text-transform: uppercase; color: #1e293b; }
         .aviso { text-align: center; color: #64748b; font-size: 12px; margin-bottom: 20px; }
 
-        .btn-publicar { display: block; width: 250px; margin: 0 auto 30px; padding: 14px; background: var(--menta); color: white; border: none; border-radius: 30px; font-weight: 700; cursor: pointer; }
+        .btn-publicar { display: block; width: 100%; padding: 14px; background: white; color: var(--menta); border: 2px dashed #a7d9d0; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 24px; font-size: 14px; font-family: inherit; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-publicar:hover { background: #f0fdf9; border-color: var(--menta); }
+
         #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; display: none; }
-        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-family: inherit; }
-        
+
+        .form-section { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin: 16px 0 8px; }
+        .form-section:first-child { margin-top: 0; }
+
+        input, select, textarea { width: 100%; padding: 11px 14px; margin-bottom: 10px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #334155; transition: border-color 0.2s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--menta); box-shadow: 0 0 0 3px rgba(32,160,136,0.09); }
+
+        .oculto { display: none !important; }
+        .email-hint { font-size: 12px; color: #64748b; margin: -6px 0 10px 2px; }
+
+        .privacy-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #475569; margin-bottom: 0; }
+        .privacy-box label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; margin-top: 8px; }
+        .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; margin-bottom: 0; accent-color: var(--menta); }
+        .privacy-box a { color: var(--menta); }
+
+        /* PIN BOX */
+        .pin-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
+        .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #065f46; margin: 10px 0; font-variant-numeric: tabular-nums; }
+        .pin-aviso { font-size: 12px; color: #047857; margin-top: 8px; line-height: 1.6; }
+        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #065f46; color: white; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        .btn-copiar-pin:hover { background: #047857; }
+        .btn-copiar-pin.copiado { background: #1e40af; }
+
+        .btn-submit { display: block; width: 100%; padding: 13px; background: var(--menta); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 16px; transition: background 0.2s; text-transform: uppercase; }
+        .btn-submit:hover { background: #0d7a68; }
+        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        /* GRID */
+        .section-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 14px; }
         .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-        .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; padding: 15px; }
-        .titulo-tarjeta { font-weight: 900; font-size: 16px; margin-bottom: 8px; color: #1e293b; }
-        .descripcion { font-size: 14px; color: #475569; margin-bottom: 15px; line-height: 1.5; white-space: pre-line; }
-        .burbujas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px; }
+
+        .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 18px; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .tarjeta:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+        .titulo-tarjeta { font-weight: 900; font-size: 15px; margin-bottom: 8px; color: #1e293b; padding-right: 28px; }
+        .descripcion { font-size: 14px; color: #475569; margin-bottom: 12px; line-height: 1.5; white-space: pre-line; }
+        .burbujas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
         .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
-        .btn-wa { display: block; width: 100%; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; color: white; background: #25d366; }
+
+        .btn-wa { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; color: white; background: #25d366; transition: background 0.2s; }
+        .btn-wa:hover { background: #128c7e; }
+
+        .btn-borrar { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: all 0.2s; }
+        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); }
+
+        .empty-state { grid-column: 1/-1; text-align: center; padding: 40px 20px; color: #94a3b8; }
+        .empty-icon { font-size: 30px; margin-bottom: 8px; }
+
+        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; border-top: 1px solid #e2e8f0; margin-top: 40px; }
     </style>
 </head>
 <body>
 
-<header class="header">
-    <a href="index.html" class="header-logo">
-        <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
-        <h1>INFOESPINAR.COM</h1>
-    </a>
-</header>
+<div class="hero">
+    <header class="header">
+        <a href="index.html" class="header-logo">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
+            <span class="header-name">INFOESPINAR.COM</span>
+        </a>
+    </header>
+    <h1 class="hero-title">Empleo Local</h1>
+    <p class="hero-sub">Ofertas de trabajo y búsqueda de empleo en el municipio</p>
+</div>
 
 <div class="contenedor-app">
-    <h2 class="titulo-seccion" style="background: linear-gradient(135deg, #20a088 0%, #0d7a68 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Empleo Local</h2>
     <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
-    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">➕ PUBLICAR ANUNCIO</button>
-  
+    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">💼 PUBLICAR OFERTA / BUSCAR EMPLEO</button>
+
     <div id="form">
-        <form id="publicarForm" onsubmit="enviar(event)">
-            <select id="buscasUOfreces" required>
-                <option value="BUSCO">Busco empleo</option>
-                <option value="OFREZCO">Busco personal</option>
-            </select>
-            <input type="text" id="titulo" placeholder="TÍTULO (EJ: CAMARERO/A)" required oninput="this.value=this.value.toUpperCase()">
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:12px;">
-    <p style="font-size:13px; color:#475569; margin-bottom:8px; font-weight:700;">Lugar de trabajo:</p>
-    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
-        <input type="checkbox" value="El Espinar" class="chk-lugar" style="width:auto; margin:0;"> El Espinar
-    </label>
-    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
-        <input type="checkbox" value="San Rafael" class="chk-lugar" style="width:auto; margin:0;"> San Rafael
-    </label>
-    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
-        <input type="checkbox" value="LASR" class="chk-lugar" style="width:auto; margin:0;"> LASR
-    </label>
-    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
-        <input type="checkbox" value="La Estación" class="chk-lugar" style="width:auto; margin:0;"> La Estación
-    </label>
-    <label style="display:flex; gap:8px; align-items:center; margin-bottom:6px; font-size:14px;">
-        <input type="checkbox" value="Otro" class="chk-lugar" onchange="checkLugar()" style="width:auto; margin:0;"> Otro
-    </label>
-    <input id="lugarOtro" class="oculto" placeholder="Escribe el lugar" style="margin-top:6px;">
-</div>
-            <select id="jornada" required>
-                <option value="Jornada Completa">Jornada Completa</option>
-                <option value="Jornada Parcial">Jornada Parcial</option>
-                <option value="Fines de Semana">Fines de Semana</option>
-                <option value="Fines de Semana">A Convenir</option>
-            </select>
-            <textarea id="descripcion" placeholder="Descripción del puesto o perfil" required rows="3"></textarea>
-            <input type="tel" id="telefono" placeholder="Teléfono (9 cifras)" required pattern="[0-9]{9}" maxlength="9">
-            <input type="email" id="email" placeholder="Email (opcional)">
-            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin:10px 0; font-size:13px; color:#475569;">
-    ⚠️ Revisa que todos los datos sean correctos antes de publicar.
-    <br><br>
-    <label style="display:flex; align-items:flex-start; gap:8px; cursor:pointer;">
-        <input type="checkbox" id="aceptaPrivacidad" required style="width:auto; margin-top:3px; flex-shrink:0;">
-        <span>He leído y acepto la <a href="/privacidad" target="_blank" style="color:#1e40af;">política de privacidad</a> y autorizo el uso de mis datos para la gestión del anuncio de empleo.</span>
-    </label>
-</div>
-            <button type="submit" id="btn" class="btn-publicar" style="width:100%; margin-bottom:0;">ENVIAR ANUNCIO</button>
-        </form>
+        <p class="form-section">Tipo de anuncio</p>
+        <select id="buscasUOfreces">
+            <option value="BUSCO">Busco empleo</option>
+            <option value="OFREZCO">Busco personal</option>
+        </select>
+
+        <p class="form-section">Puesto</p>
+        <input type="text" id="titulo" placeholder="EJ: CAMARERO/A" oninput="this.value=this.value.toUpperCase()">
+
+        <p class="form-section">Lugar de trabajo</p>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:10px;">
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="El Espinar" class="chk-lugar" style="width:auto;margin:0;accent-color:#20a088"> El Espinar</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="San Rafael" class="chk-lugar" style="width:auto;margin:0;accent-color:#20a088"> San Rafael</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="LASR" class="chk-lugar" style="width:auto;margin:0;accent-color:#20a088"> LASR</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="La Estación" class="chk-lugar" style="width:auto;margin:0;accent-color:#20a088"> La Estación</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="Otro" class="chk-lugar" onchange="checkLugar()" style="width:auto;margin:0;accent-color:#20a088"> Otro</label>
+            <input id="lugarOtro" class="oculto" placeholder="Escribe el lugar" style="margin-top:6px;margin-bottom:0">
+        </div>
+
+        <p class="form-section">Jornada</p>
+        <select id="jornada">
+            <option>Jornada Completa</option>
+            <option>Jornada Parcial</option>
+            <option>Fines de Semana</option>
+            <option>A Convenir</option>
+        </select>
+
+        <p class="form-section">Descripción</p>
+        <textarea id="descripcion" placeholder="Descripción del puesto o perfil" rows="3"></textarea>
+
+        <p class="form-section">Contacto</p>
+        <input type="tel" id="telefono" placeholder="Teléfono (9 cifras)" pattern="[0-9]{9}" maxlength="9">
+        <input type="email" id="email" placeholder="Email (opcional)">
+        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
+
+        <div class="privacy-box">
+            ⚠️ Revisa que todos los datos sean correctos antes de publicar.
+            <label>
+                <input type="checkbox" id="aceptaPrivacidad">
+                <span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a> y autorizo el uso de mis datos para la gestión del anuncio.</span>
+            </label>
+        </div>
+
+        <div id="pinMostrado"></div>
+        <button class="btn-submit" id="btn" onclick="enviar()">PUBLICAR ANUNCIO</button>
     </div>
 
+    <p class="section-label">Ofertas disponibles</p>
     <div id="loading" style="text-align:center; padding:40px; font-weight:700; color:#888;">Cargando anuncios...</div>
     <div id="tablon" class="grid-anuncios"></div>
 </div>
+
+<footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
 const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
@@ -105,46 +157,107 @@ function checkLugar() {
     const otro = document.querySelector('.chk-lugar[value="Otro"]').checked;
     document.getElementById('lugarOtro').classList.toggle('oculto', !otro);
 }
-    
+
 async function cargar() {
-    const res = await fetch(urlScript);
+    try {
+        const res  = await fetch(urlScript);
+        const data = await res.json();
+        document.getElementById('loading').style.display = 'none';
+
+        document.getElementById('tablon').innerHTML = data.length
+            ? data.reverse().map(a => `
+                <div class="tarjeta" id="tarjeta-${a.id}">
+                    <button class="btn-borrar" onclick="borrar('${a.id}')" title="Borrar anuncio">🗑️</button>
+                    <div class="titulo-tarjeta">${a.titulo}</div>
+                    <div class="descripcion">${a.descripcion}</div>
+                    <div class="burbujas">
+                        <span class="tag">⏱️ ${a.jornada}</span>
+                        ${a.lugar.split(', ').map(l => `<span class="tag">📍 ${l}</span>`).join('')}
+                    </div>
+                    <a href="https://wa.me/34${a.telefono}" class="btn-wa" target="_blank">💬 Contactar</a>
+                </div>`).join('')
+            : '<div class="empty-state"><div class="empty-icon">💼</div>No hay anuncios publicados.</div>';
+    } catch {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('tablon').innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>';
+    }
+}
+
+async function borrar(id) {
+    const pin = prompt('🗑️ Introduce tu PIN de 6 dígitos para borrar este anuncio:');
+    if (!pin) return;
+    const res  = await fetch(`${urlScript}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
     const data = await res.json();
-    document.getElementById('loading').style.display = 'none';
-    
-    document.getElementById('tablon').innerHTML = data.reverse().map(a => `
-    <div class="tarjeta">
-        <div class="titulo-tarjeta">${a.titulo}</div>
-        <div class="descripcion">${a.descripcion}</div>
-        <div class="burbujas">
-            <span class="tag">⏱️ ${a.jornada}</span>
-            ${a.lugar.split(', ').map(l => `<span class="tag">📍 ${l}</span>`).join('')}
-
-        </div>
-        <a href="https://wa.me/34${a.telefono}" class="btn-wa" target="_blank">WHATSAPP</a>
-    </div>`).join('');
+    if (data.status === 'ok') {
+        document.getElementById('tarjeta-' + id)?.remove();
+        alert('✅ Anuncio eliminado correctamente.');
+    } else {
+        alert('❌ PIN incorrecto. El anuncio no se ha borrado.');
+    }
 }
 
-async function enviar(e) {
-    e.preventDefault();
-    const btn = document.getElementById('btn');
-    btn.disabled = true; btn.innerText = "Publicando...";
-    const payload = {
-        buscasUOfreces: document.getElementById("buscasUOfreces").value,
-    lugar: (() => {
-    const seleccionados = [...document.querySelectorAll('.chk-lugar:checked')]
+async function enviar() {
+    if (!document.getElementById('aceptaPrivacidad').checked) { alert('Acepta la política de privacidad.'); return; }
+
+    const titulo   = document.getElementById('titulo').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    if (!titulo)   { alert('Introduce el puesto.'); return; }
+    if (!telefono) { alert('Introduce el teléfono.'); return; }
+
+    const lugares = [...document.querySelectorAll('.chk-lugar:checked')]
         .map(c => c.value === 'Otro' ? document.getElementById('lugarOtro').value : c.value);
-    return seleccionados.join(', ');
-})(),        
-        titulo: document.getElementById("titulo").value,
-        jornada: document.getElementById("jornada").value,
-        descripcion: document.getElementById("descripcion").value,
-        telefono: document.getElementById("telefono").value,
-        email: document.getElementById("email").value
+    if (!lugares.length) { alert('Selecciona al menos un lugar.'); return; }
+
+    const btn = document.getElementById('btn');
+    btn.disabled = true; btn.textContent = 'Publicando...';
+
+    const payload = {
+        buscasUOfreces: document.getElementById('buscasUOfreces').value,
+        titulo,
+        lugar:       lugares.join(', '),
+        jornada:     document.getElementById('jornada').value,
+        descripcion: document.getElementById('descripcion').value,
+        telefono,
+        email
     };
-    const res = await fetch(urlScript, { method: "POST", body: JSON.stringify(payload) });
-    if((await res.json()).resultado === "ok") { alert("¡Publicado!"); location.reload(); }
-    else { alert("Error al publicar."); btn.disabled = false; btn.innerText = "ENVIAR ANUNCIO"; }
+
+    try {
+        const res  = await fetch(urlScript, { method: 'POST', body: JSON.stringify(payload), redirect: 'follow' });
+        const data = JSON.parse(await res.text());
+
+        if (data.status === 'ok' || data.resultado === 'ok') {
+            document.getElementById('pinMostrado').innerHTML = `
+                <div class="pin-box">
+                    <p>🔑 <b>Tu PIN personal es:</b></p>
+                    <div class="pin-num">${data.pin}</div>
+                    <button class="btn-copiar-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
+                    <p class="pin-aviso">
+                        ${email
+                            ? `✅ Te hemos enviado el PIN a <b>${email}</b>`
+                            : '⚠️ Guarda este PIN, no podrás recuperarlo si lo pierdes.'
+                        }<br>Necesitarás el PIN para borrar tu anuncio.
+                    </p>
+                </div>`;
+            btn.textContent = '✅ Publicado';
+            await cargar();
+        } else {
+            alert(data.status === 'ANTIFLOOD' ? 'Antiflood: espera 5 minutos.' : 'Error al publicar.');
+            btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO';
+        }
+    } catch {
+        alert('Error al publicar. Comprueba tu conexión.');
+        btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO';
+    }
 }
+
+function copiarPin(pin, btn) {
+    navigator.clipboard.writeText(pin).then(() => {
+        btn.textContent = '✅ ¡Copiado!'; btn.classList.add('copiado');
+        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
+    });
+}
+
 cargar();
 </script>
 </body>
