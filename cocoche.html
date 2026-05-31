@@ -996,6 +996,11 @@ async function borrarViaje(id) {
     } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
 }
 
+/* ── GENERAR PIN EN CLIENTE (Opción C) ── */
+function generarPIN() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
 /* ── VALIDAR TELÉFONO (FIX 3) ── */
 function validarTelefono(tel) {
     return /^\d{9}$/.test(tel.trim());
@@ -1102,10 +1107,13 @@ async function publicarViaje() {
         email:    document.getElementById('email').value.trim()
     };
 
-    const payload = fechas.map(f => ({ ...base, fecha: f }));
+    // OPCIÓN C: el HTML genera el PIN una vez y lo pasa en ambos POSTs
+    const pinCompartido = generarPIN();
+
+    const payload = fechas.map(f => ({ ...base, fecha: f, pin: pinCompartido }));
 
     try {
-        // Primera llamada: ida
+        // Primera llamada: ida (con email → el script lo envía)
         const resIda = await fetch(URL_SCRIPT, {
             method: 'POST',
             mode: 'cors',
@@ -1116,25 +1124,23 @@ async function publicarViaje() {
         });
         const dataIda = await resIda.json();
 
-        // Segunda llamada: vuelta (anuncio independiente)
-        let pinVuelta = null;
+        // Segunda llamada: vuelta (sendEmail:false → el script no reenvía el email)
         if (conVuelta) {
             const vuelta = {
                 ...base,
                 desde: hasta,
                 hasta: desde,
                 hora: horaVuelta,
-                fecha: fechas[0]
+                fecha: fechas[0],
+                pin: pinCompartido,
+                sendEmail: false   // ← suprime el email en la vuelta
             };
-            const resVuelta = await fetch(URL_SCRIPT, {
+            await fetch(URL_SCRIPT, {
                 method: 'POST',
                 mode: 'cors',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({ payload: JSON.stringify(vuelta) })
             });
-            const dataVuelta = await resVuelta.json();
-            // FIX 5: guardar el PIN de la vuelta para mostrarlo
-            pinVuelta = dataVuelta.pin;
         }
 
         const pinBox = document.getElementById('pinMostrado');
@@ -1144,27 +1150,18 @@ async function publicarViaje() {
 
         let textoViajes = '';
         if (conVuelta) {
-            textoViajes = `Se han publicado <b>2 anuncios</b>: ida (${desde} → ${hasta}) y vuelta (${hasta} → ${desde}).`;
+            textoViajes = `Se han publicado <b>2 anuncios</b>: ida (${desde} → ${hasta}) y vuelta (${hasta} → ${desde}). Ambos se borran con el mismo PIN.`;
         } else if (numViajes > 1) {
             textoViajes = `Se han publicado <b>${numViajes} viajes</b>.`;
         } else {
             textoViajes = 'Se ha publicado <b>1 viaje</b>.';
         }
 
-        // FIX 5: mostrar ambos PINes si hay vuelta
-        const pinVueltaHTML = conVuelta && pinVuelta ? `
-            <div style="margin-top:14px;padding-top:14px;border-top:1px dashed rgba(10,117,84,0.3)">
-                <p class="pin-label">🔑 PIN de la vuelta (${hasta} → ${desde}):</p>
-                <div class="pin-num">${pinVuelta}</div>
-                <button class="btn-copy-pin" onclick="copiarPin('${pinVuelta}', this)">📋 Copiar PIN vuelta</button>
-            </div>` : '';
-
         pinBox.innerHTML = `
             <div class="pin-box">
                 <p class="pin-label">🔑 Tu PIN personal es:</p>
-                <div class="pin-num">${dataIda.pin}</div>
-                <button class="btn-copy-pin" onclick="copiarPin('${dataIda.pin}', this)">📋 Copiar PIN</button>
-                ${pinVueltaHTML}
+                <div class="pin-num">${pinCompartido}</div>
+                <button class="btn-copy-pin" onclick="copiarPin('${pinCompartido}', this)">📋 Copiar PIN</button>
                 <p class="pin-aviso">
                     ${base.email
                         ? `✅ Te hemos enviado el PIN a ${base.email}`
