@@ -425,7 +425,7 @@ async function publicar() {
     const btn = document.getElementById('btnPublicar');
     btn.disabled = true; btn.textContent = 'Publicando...';
 
-    // Generamos un PIN matemático de 5 cifras exactas (Entre 10000 y 99999) de forma síncrona
+    // 1. Generamos el PIN de 5 cifras exactas de forma local
     const pinDeCincoCifras = String(Math.floor(10000 + Math.random() * 90000));
 
     const params = new URLSearchParams({ 
@@ -434,6 +434,7 @@ async function publicar() {
     });
 
     try {
+        // 2. Encriptamos / enviamos los parámetros a Google Sheets
         await fetch(URL_SCRIPT, { 
             method: 'POST', 
             body: params,
@@ -443,10 +444,10 @@ async function publicar() {
         
         btn.textContent = '✅ Publicado';
         
-        // Se dibuja el recuadro idéntico a tus plataformas de compartir coche
+        // 3. Pintamos la caja del PIN en los tonos verdes corporativos
         document.getElementById('pinMostrado').innerHTML = `
             <div class="pin-box">
-                <p style="font-weight:900; color:#78350f; font-size:15px;">¡PROPUESTA GUARDADA CON ÉXITO!</p>
+                <p style="font-weight:900; color:#0f4a3f; font-size:15px;">¡PROPUESTA GUARDADA CON ÉXITO!</p>
                 <div class="pin-num" id="codigoPinTexto">${pinDeCincoCifras}</div>
                 <button class="btn-copiar-pin" onclick="copiarPin('${pinDeCincoCifras}', this)">📋 Copiar PIN</button>
                 <p class="pin-aviso">
@@ -457,12 +458,35 @@ async function publicar() {
                 </p>
             </div>`;
         
-        // Espera un poco más para que el usuario pueda darle a copiar con calma
+        // 4. LÓGICA DE BORRADO: Limpiamos todos los inputs y estados del formulario inmediatamente
+        document.getElementById('otraActividad').value = '';
+        document.getElementById('personas').value = '';
+        document.getElementById('fecha').value = '';
+        document.getElementById('hora').value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('telefono').value = '';
+        document.getElementById('email').value = '';
+        
+        document.getElementById('actividad').value = '';
+        document.getElementById('nivel').value = '';
+        document.getElementById('edad').value = '';
+        
+        document.getElementById('conFecha').checked = false;
+        document.getElementById('aceptaPrivacidad').checked = false;
+        
+        document.getElementById('fechaHoraWrap').style.display = 'none';
+        document.getElementById('fechaToggleWrap').classList.remove('activo');
+        document.getElementById('otraActividad').style.display = 'none';
+        
+        document.querySelectorAll('.lugar-pill').forEach(p => p.classList.remove('activo'));
+
+        // 5. Dejamos el PIN visible durante 5 segundos antes de cerrar el bloque por completo
         setTimeout(async () => {
-            await cargar();
-            document.getElementById('formActividad').style.display = 'none';
-            btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
-            document.getElementById('pinMostrado').innerHTML = '';
+            await cargar(); 
+            document.getElementById('formActividad').style.display = 'none'; 
+            btn.disabled = false; 
+            btn.textContent = 'PUBLICAR PROPUESTA';
+            document.getElementById('pinMostrado').innerHTML = ''; 
         }, 5000);
 
     } catch(err) {
