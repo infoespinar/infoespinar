@@ -19,6 +19,38 @@
 
         .main-container { max-width: 1200px; width: 100%; margin: 0 auto; padding: 15px 12px; flex-grow: 1; }
         .titulo-seccion { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 20px 0 12px 4px; font-weight: 700; }
+        
+        /* TABLÓN COMUNITARIO / VECINAL */
+        .grid-comunidad { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
+        .card-comunidad { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            padding: 18px 12px; 
+            border-radius: 16px; 
+            text-decoration: none; 
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); 
+            border: 2px solid; 
+            transition: all 0.2s ease;
+        }
+        .card-comunidad:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -5px rgba(0,0,0,0.08); }
+        .comunidad-icono { font-size: 28px; margin-bottom: 4px; }
+        
+        /* Colores específicos por sección (Jerarquía y dinamismo) */
+        .comunidad-empleo { background-color: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+        .comunidad-empleo:hover { border-color: #3b82f6; }
+        .comunidad-anuncios { background-color: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+        .comunidad-anuncios:hover { border-color: #22c55e; }
+        .comunidad-coche { background-color: #fffbeb; border-color: #fef08a; color: #854d0e; }
+        .comunidad-coche:hover { border-color: #eab308; }
+        .comunidad-actividades { background-color: #faf5ff; border-color: #e9d5ff; color: #6b21a8; }
+        .comunidad-actividades:hover { border-color: #a855f7; }
+
+        @media screen and (min-width: 768px) {
+            .grid-comunidad { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        }
 
         /* CARRUSEL */
         .contenedor-ofertas { width: 100%; overflow: hidden; position: relative; }
@@ -149,7 +181,7 @@
         <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
         <h1>infoespinar.com</h1>
     </a>
-    <p>La Comunidad que siempre quisiste, en tu mano.</p>
+    <p>Tu guía local de comercios, servicios y teléfonos de interés</p>
 </header>
 
 <main class="main-container">
@@ -237,11 +269,49 @@
             </a>
             <button onclick="llamarTaxiAzar()" class="taxi-mitad-azar" title="Llamar a un taxi aleatorio">
                 <span style="font-size:24px;margin-bottom:4px;">🎲</span>
-                <span style="font-size:11px;font-weight:900;color:#a16207;letter-spacing:0.5px;">AZAR</span>
+                <span style="font-size:11px;font-weight:900;color:#a16207;letter-spacing:0.5px;">TAXI AL AZAR</span>
             </button>
         </div>
 
     </div>
+
+<!-- TABLÓN VECINAL -->
+    <div class="titulo-seccion" style="color: #1e3a8a;">🤝 Tablón Vecinal y Comunidad</div>
+    <div class="grid-comunidad">
+        
+         <!-- 4. Compartir Actividades -->
+        <a href="actividades.html" class="card-comunidad comunidad-actividades">
+            <div class="comunidad-icono">🏔️</div>
+            <span class="titulo-boton" style="color: inherit;">PLANES Y OCIO</span>
+            <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Comparte tus aficiones</span>
+        </a>
+        
+        <!-- 3. Compartir Coche -->
+        <a href="compartir-coche.html" class="card-comunidad comunidad-coche">
+            <div class="comunidad-icono">🚗</div>
+            <span class="titulo-boton" style="color: inherit;">COMPARTIR COCHE</span>
+            <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Viajes y carpooling</span>
+        </a>
+        
+        <!-- 1. Empleo -->
+        <a href="empleo.html" class="card-comunidad comunidad-empleo">
+            <div class="comunidad-icono">💼</div>
+            <span class="titulo-boton" style="color: inherit;">EMPLEO LOCAL</span>
+            <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Ofertas de Trabajo en la zona</span>
+        </a>
+
+        <!-- 2. Anuncios Particulares -->
+        <a href="particulares.html" class="card-comunidad comunidad-anuncios">
+            <div class="comunidad-icono">🤝</div>
+            <span class="titulo-boton" style="color: inherit;">COMPRA-VENTA</span>
+            <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Anuncios entre particulares</span>
+        </a>
+
+
+       
+
+    </div>
+
 
     <!-- CATEGORÍAS -->
     <div class="titulo-seccion">Categorías profesionales</div>
@@ -264,9 +334,7 @@
         <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
         <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
         <a href="alimentacion.html" class="card-servicio"><div class="servicio-icono">🍉</div><span class="servicio-texto">Alimentación</span></a>
-        <a href="empleo.html" class="card-servicio texto-rojo"><div class="servicio-icono">💼</div><span class="servicio-texto">Empleo</span></a>
-        <a href="particulares.html" class="card-servicio texto-rojo"><div class="servicio-icono">🤝</div><span class="servicio-texto">Particulares</span></a>
-    </div>
+            </div>
 
     <!-- EMERGENCIAS -->
     <div class="titulo-seccion" style="color:#dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
