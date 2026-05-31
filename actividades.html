@@ -77,8 +77,13 @@
         .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: var(--brand-primary); }
         .privacy-box a { color: var(--brand-primary); }
 
-        .pin-box { background: var(--brand-light); border: 2px solid var(--brand-primary); border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
-        .pin-aviso { font-size: 12px; color: var(--brand-dark); margin-top: 8px; line-height: 1.6; }
+        /* CAJA DEL PIN ESTILO COMPARTIR COCHE / PARTICULARES */
+        .pin-box { background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; box-shadow: 0 4px 12px rgba(245,158,11,0.1); }
+        .pin-num { font-size: 38px; font-weight: 900; letter-spacing: 8px; color: #78350f; margin: 12px 0; font-variant-numeric: tabular-nums; padding-left: 8px; font-family: monospace; }
+        .pin-aviso { font-size: 13px; color: #92400e; margin-top: 8px; line-height: 1.5; font-weight: 500; }
+        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #78350f; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 6px; transition: all 0.2s; font-family: inherit; }
+        .btn-copiar-pin:hover { background: #f59e0b; }
+        .btn-copiar-pin.copiado { background: #0d7a68; }
 
         .btn-publicar { display: block; width: 100%; padding: 13px; background: var(--brand-darker); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 16px; transition: background 0.2s; letter-spacing: 0.04em; text-transform: uppercase; }
         .btn-publicar:hover { background: var(--brand-primary); }
@@ -207,7 +212,7 @@
             <input type="tel" id="telefono" placeholder="Teléfono" maxlength="9">
         </div>
         <input type="email" id="email" placeholder="Email (opcional)">
-        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
+        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por escrito.</p>
 
         <div class="privacy-box">
             ⚠️ Revisa que todos los datos sean correctos antes de publicar.
@@ -261,40 +266,22 @@ function toggleFecha() {
     tog.classList.toggle('activo', cb.checked);
 }
 
+// CORREGIDO: Filtros superiores 100% limpios (solo Actividad con su Emoji original)
 function construirFiltros(data) {
     const actividades = [...new Set(data.map(p => p.actividad).filter(Boolean))];
     const container = document.getElementById('filtrosActividad');
     container.innerHTML = '';
 
-    // 1. Píldora inicial de "Todas"
     const todos = document.createElement('button');
     todos.className = 'filtro-pill activo';
     todos.textContent = 'Todas';
     todos.onclick = () => { filtroActivo = null; actualizarPills(todos); filtrar(); };
     container.appendChild(todos);
 
-    // 2. Píldoras dinámicas por actividad con contador de monigotes
     actividades.forEach(act => {
         const pill = document.createElement('button');
         pill.className = 'filtro-pill';
-        
-        // Buscamos la propuesta de esta actividad que pida más personas para calcular los emojis
-        const propuestasDeAct = data.filter(p => p.actividad === act);
-        // Sacamos el número máximo de personas solicitadas en esta categoría
-        const maxPersonas = Math.max(...propuestasDeAct.map(p => parseInt(p.personas) || 1));
-
-        // Generamos los emojis de personas (máximo 5)
-        const numEmojis = Math.min(maxPersonas, 5);
-        let cadenaEmojis = '👤'.repeat(numEmojis);
-        
-        // Si el límite supera los 5, le metemos el "+" para indicar que se busca más gente
-        if (maxPersonas > 5) {
-            cadenaEmojis += '+';
-        }
-
-        // Estructura final dentro del botón: "⚽ Fútbol (👤👤👤+)"
-        pill.textContent = `${act} (${cadenaEmojis})`;
-        
+        pill.textContent = act; 
         pill.onclick = () => { filtroActivo = act; actualizarPills(pill); filtrar(); };
         container.appendChild(pill);
     });
@@ -343,21 +330,12 @@ function renderizar(data) {
     document.getElementById('grid').innerHTML = data.map(p => {
         const tel = String(p.telefono).replace(/\s+/g, '');
         const numWA = tel.startsWith('34') ? tel : '34' + tel;
-        
-        // 1. Obtenemos el emoji base de la actividad (la pelota, la bota, etc.)
         const emoji = emojiActividad(p.actividad || '');
 
-        // 2. Calculamos cuántas personas busca
         const numPersonas = parseInt(p.personas) || 1;
-        
-        // CORRECCIÓN: Como el nombre ya trae un emoji, restamos 1 al bloque dinámico
-        // Si busca 1 persona, necesitamos 0 emojis extra. Si busca 3, necesitamos 2 extra.
         const repeticiones = Math.max(0, Math.min(numPersonas - 1, 4));
-        
-        // Creamos la tanda de emojis extra
         let bloqueEmojis = emoji.repeat(repeticiones);
         
-        // Si buscan más de 5 personas, limitamos a 4 extras y metemos los puntos suspensivos
         if (numPersonas > 5) {
             bloqueEmojis = emoji.repeat(4) + '...';
         }
@@ -375,7 +353,6 @@ function renderizar(data) {
         return `
         <div class="card" id="card-${p.id}">
             <button class="btn-borrar" onclick="borrar('${p.id}')" title="Borrar propuesta">🗑️</button>
-            
             <div class="card-actividad-badge">${bloqueEmojis} ${p.actividad}</div>
             
             <div class="card-titulo">Propuesta de ${p.nombre}</div>
@@ -395,7 +372,7 @@ function renderizar(data) {
 }
 
 async function borrar(id) {
-    const pin = prompt('🗑️ Introduce tu PIN de 6 dígitos para borrar esta propuesta:');
+    const pin = prompt('🗑️ Introduce tu PIN de 5 dígitos para borrar esta propuesta:');
     if (!pin) return;
     try {
         const res  = await fetch(`${URL_SCRIPT}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
@@ -410,6 +387,7 @@ async function borrar(id) {
     } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
 }
 
+// SOLUCIÓN COMPLETA: Generación local de PIN de 5 cifras y renderizado estilo Cocoche
 async function publicar() {
     if (!document.getElementById('aceptaPrivacidad').checked) {
         alert('Debes aceptar la política de privacidad.'); return;
@@ -446,10 +424,15 @@ async function publicar() {
     const btn = document.getElementById('btnPublicar');
     btn.disabled = true; btn.textContent = 'Publicando...';
 
-    const params = new URLSearchParams({ actividad, nivel, edad, personas, lugar, nombre, telefono, email, fecha, hora });
+    // Generamos un PIN matemático de 5 cifras exactas (Entre 10000 y 99999) de forma síncrona
+    const pinDeCincoCifras = String(Math.floor(10000 + Math.random() * 90000));
+
+    const params = new URLSearchParams({ 
+        actividad, nivel, edad, personas, lugar, nombre, telefono, email, fecha, hora,
+        pin: pinDeCincoCifras 
+    });
 
     try {
-        // Enviamos en modo no-cors para saltar bloqueos de navegador; Google procesa y guarda al 100%
         await fetch(URL_SCRIPT, { 
             method: 'POST', 
             body: params,
@@ -458,28 +441,41 @@ async function publicar() {
         });
         
         btn.textContent = '✅ Publicado';
+        
+        // Se dibuja el recuadro idéntico a tus plataformas de compartir coche
         document.getElementById('pinMostrado').innerHTML = `
             <div class="pin-box">
-                <p>🔑 <b>¡Propuesta guardada con éxito!</b></p>
+                <p style="font-weight:900; color:#78350f; font-size:15px;">¡PROPUESTA GUARDADA CON ÉXITO!</p>
+                <div class="pin-num" id="codigoPinTexto">${pinDeCincoCifras}</div>
+                <button class="btn-copiar-pin" onclick="copiarPin('${pinDeCincoCifras}', this)">📋 Copiar PIN</button>
                 <p class="pin-aviso">
                     ${email 
-                        ? `Te hemos enviado el PIN de borrado automáticamente a <b>${email}</b>.` 
-                        : 'Si has introducido tu email, revisa tu correo para guardar tu PIN de borrado.'
+                        ? `Tu PIN de 5 cifras ha sido enviado a <b>${email}</b>. Úsalo para borrar la tarjeta cuando quieras.` 
+                        : 'Apunta este PIN. Lo necesitarás si decides dar de baja o eliminar la propuesta.'
                     }
                 </p>
             </div>`;
         
+        // Espera un poco más para que el usuario pueda darle a copiar con calma
         setTimeout(async () => {
             await cargar();
             document.getElementById('formActividad').style.display = 'none';
             btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
             document.getElementById('pinMostrado').innerHTML = '';
-        }, 3000);
+        }, 5000);
 
     } catch(err) {
         alert('Error inesperado al conectar con el servidor.');
         btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA';
     }
+}
+
+function copiarPin(pin, btn) {
+    navigator.clipboard.writeText(pin).then(() => {
+        btn.textContent = '✅ ¡Copiado!';
+        btn.classList.add('copiado');
+        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
+    });
 }
 
 function toggleOtraActividad() {
