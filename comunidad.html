@@ -486,9 +486,9 @@ grupos[key].push(v);
 grid.innerHTML=Object.entries(grupos).map(([id,viajes],i)=>{
 const base=viajes[0];
 
-const safeId = (id ? String(id) : (base.nombre+base.desde+base.hasta));
-   ? id
-    : btoa(base.nombre+base.desde+base.hasta).replace(/=/g,'');
+const safeId = id
+    ? String(id)
+    : btoa(base.nombre + base.desde + base.hasta).replace(/=/g, '');
 
 const fechas=viajes.map(v=>`
 <div class="card-viaje-fecha-row">
