@@ -78,12 +78,55 @@
         .privacy-box a { color: var(--brand-primary); }
 
         /* CAJA DEL PIN ESTILO COMPARTIR COCHE / PARTICULARES */
-        .pin-box { background: #fffbeb; border: 2px solid #f59e0b; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; box-shadow: 0 4px 12px rgba(245,158,11,0.1); }
-        .pin-num { font-size: 38px; font-weight: 900; letter-spacing: 8px; color: #78350f; margin: 12px 0; font-variant-numeric: tabular-nums; padding-left: 8px; font-family: monospace; }
-        .pin-aviso { font-size: 13px; color: #92400e; margin-top: 8px; line-height: 1.5; font-weight: 500; }
-        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #78350f; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 6px; transition: all 0.2s; font-family: inherit; }
-        .btn-copiar-pin:hover { background: #f59e0b; }
-        .btn-copiar-pin.copiado { background: #0d7a68; }
+        /* CAJA DEL PIN EN TONOS VERDES (ESTILO PARTICULARES) */
+        .pin-box { 
+            background: #e0f2ee; 
+            border: 2px solid #0d7a68; 
+            border-radius: 12px; 
+            padding: 20px; 
+            margin: 20px 0; 
+            text-align: center; 
+            box-shadow: 0 4px 12px rgba(13,122,104,0.1); 
+        }
+        .pin-num { 
+            font-size: 38px; 
+            font-weight: 900; 
+            letter-spacing: 8px; 
+            color: #0f4a3f; 
+            margin: 12px 0; 
+            font-variant-numeric: tabular-nums; 
+            padding-left: 8px; 
+            font-family: monospace; 
+        }
+        .pin-aviso { 
+            font-size: 13px; 
+            color: #0f4a3f; 
+            margin-top: 8px; 
+            line-height: 1.5; 
+            font-weight: 500; 
+        }
+        .btn-copiar-pin { 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            background: #0f4a3f; 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            padding: 10px 20px; 
+            font-size: 13px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            margin-top: 6px; 
+            transition: all 0.2s; 
+            font-family: inherit; 
+        }
+        .btn-copiar-pin:hover { 
+            background: #0d7a68; 
+        }
+        .btn-copiar-pin.copiado { 
+            background: #0f2027; 
+        }
 
         .btn-publicar { display: block; width: 100%; padding: 13px; background: var(--brand-darker); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 16px; transition: background 0.2s; letter-spacing: 0.04em; text-transform: uppercase; }
         .btn-publicar:hover { background: var(--brand-primary); }
