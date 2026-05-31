@@ -309,12 +309,25 @@ async function cargar() {
         const res  = await fetch(URL_SCRIPT);
         const text = await res.text();
         todasLasPropuestas = JSON.parse(text);
+        
+        // ─── LÓGICA DE ORDENACIÓN DINÁMICA ───
         todasLasPropuestas.sort((a, b) => {
-            if (a.fecha && b.fecha) return new Date(a.fecha + 'T' + (a.hora || '00:00')) - new Date(b.fecha + 'T' + (b.hora || '00:00'));
+            // Caso 1: Ambas tienen fecha -> Ordenamos por proximidad (la más cercana primero)
+            if (a.fecha && b.fecha) {
+                const horaA = a.hora || '00:00';
+                const horaB = b.hora || '00:00';
+                return new Date(a.fecha + 'T' + horaA) - new Date(b.fecha + 'T' + horaB);
+            }
+            
+            // Caso 2: Una tiene fecha y la otra no -> La que tiene fecha va primero arriba
             if (a.fecha) return -1;
             if (b.fecha) return 1;
-            return 0;
+            
+            // Caso 3: Ninguna tiene fecha -> Ordenación aleatoria (Shuffle)
+            return Math.random() - 0.5;
         });
+        // ─────────────────────────────────────
+        
         construirFiltros(todasLasPropuestas);
         renderizar(todasLasPropuestas);
     } catch(e) {
