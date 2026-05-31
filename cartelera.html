@@ -483,8 +483,9 @@ async function cargarEventos() {
             document.querySelector('.filtrar-toggle-wrap').style.display = 'none';
         }
 
-        marquee.innerHTML = marqueeHTML ? marqueeHTML + marqueeHTML : "<span>No hay eventos próximos programados</span>";
-
+        marquee.innerHTML = marqueeHTML
+    ? [...new Set(ordenados.map(ev => ev.titulo))].map(t => `<span>${t}</span>`).join('') .repeat(2)
+    : "<span>No hay eventos próximos programados</span>";
         document.querySelectorAll('.cartel-img-wrap img').forEach(img => {
             img.addEventListener('click', (e) => {
                 e.preventDefault();
