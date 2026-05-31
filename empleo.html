@@ -4,99 +4,304 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Empleo Local | infoespinar.com</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        :root { --menta: #0d7a68; --fondo: #f4f6f9; }
-        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; padding-bottom: 50px; }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        .header { background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%); padding: 18px 24px; display: flex; justify-content: center; }
-        .header-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
-        .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); }
-        .header-name { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
+        :root {
+            --ink: #1a1a2e;
+            --ink-mid: #4a4a6a;
+            --ink-light: #8888aa;
+            --surface: #ffffff;
+            --surface-2: #f7f7fb;
+            --surface-3: #eeeef8;
+            --accent: #3a56e8;
+            --accent-light: #eef0fd;
+            --accent-dark: #2840cc;
+            --green: #0f9b6e;
+            --green-light: #edfaf4;
+            --green-dark: #0a7554;
+            --border: rgba(60,60,120,0.10);
+            --border-strong: rgba(60,60,120,0.18);
+            --radius: 14px;
+            --radius-sm: 8px;
+            --shadow: 0 2px 16px rgba(30,30,80,0.07);
+            --shadow-md: 0 4px 24px rgba(30,30,80,0.10);
+            --wa: #25d366;
+            --wa-dark: #1aad55;
+        }
 
-        .hero { background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%); padding: 32px 24px 58px; text-align: center; position: relative; overflow: hidden; }
-        .hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px; background: var(--fondo); clip-path: ellipse(55% 100% at 50% 100%); }
-        .hero-title { font-size: clamp(22px, 5vw, 34px); font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-        .hero-sub { font-size: 14px; color: rgba(255,255,255,0.55); }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--surface-2);
+            color: var(--ink);
+            min-height: 100vh;
+            font-size: 15px;
+            line-height: 1.6;
+        }
 
-        .contenedor-app { max-width: 900px; margin: 0 auto; padding: 20px; }
-        .aviso { text-align: center; color: #64748b; font-size: 12px; margin-bottom: 20px; }
+        /* HEADER */
+        .header {
+            background: transparent;
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+        }
+        .header-bandera {
+            width: 28px; height: 28px;
+            border-radius: 6px;
+            border: 1px solid rgba(255,255,255,0.2);
+            object-fit: cover;
+        }
+        .header-name {
+            font-family: 'DM Serif Display', serif;
+            font-size: 20px;
+            letter-spacing: 0.02em;
+        }
 
-        .btn-publicar { display: block; width: 100%; padding: 14px; background: white; color: var(--menta); border: 2px dashed #b2dfd6; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 24px; font-size: 14px; font-family: inherit; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-publicar:hover { background: #e0f2ee; border-color: var(--menta); }
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%);
+            padding: 0 24px 56px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; right: 0;
+            height: 40px;
+            background: var(--surface-2);
+            clip-path: ellipse(55% 100% at 50% 100%);
+        }
+        .hero-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: clamp(26px, 5vw, 38px);
+            color: white;
+            margin-bottom: 8px;
+            letter-spacing: 0.01em;
+        }
+        .hero-sub {
+            font-size: 14px;
+            color: rgba(255,255,255,0.52);
+            font-weight: 400;
+        }
 
-        #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; display: none; }
+        /* MAIN */
+        .main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
 
-        .form-section { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin: 16px 0 8px; }
+        .aviso { text-align: center; color: var(--ink-light); font-size: 12px; margin-bottom: 20px; }
+
+        /* PUBLISH BUTTON */
+        .btn-publicar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 15px;
+            background: #0d7a68;
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 4px 16px rgba(13,122,104,0.28);
+        }
+        .btn-publicar:hover { background: #0a5e52; transform: translateY(-1px); }
+
+        /* FORM */
+        #form {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow-md);
+            padding: 28px 24px;
+            margin-bottom: 32px;
+            display: none;
+            animation: slideDown 0.25s ease;
+        }
+        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+
+        .form-section {
+            font-size: 12px; font-weight: 600;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            color: var(--ink-light); margin: 20px 0 8px;
+        }
         .form-section:first-child { margin-top: 0; }
 
-        input, select, textarea { width: 100%; padding: 11px 14px; margin-bottom: 10px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #334155; transition: border-color 0.2s; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--menta); box-shadow: 0 0 0 3px rgba(13,122,104,0.09); }
+        input, select, textarea {
+            width: 100%; padding: 11px 14px; margin-bottom: 10px;
+            border: 1.5px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            background: var(--surface); font-family: inherit;
+            font-size: 14px; color: var(--ink);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none; border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(58,86,232,0.09);
+        }
 
         .oculto { display: none !important; }
-        .email-hint { font-size: 12px; color: #64748b; margin: -6px 0 10px 2px; }
+        .email-hint { font-size: 12px; color: var(--ink-light); margin: -6px 0 10px 2px; }
 
-        .privacy-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #475569; margin-bottom: 0; }
-        .privacy-box label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; margin-top: 8px; }
-        .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; margin-bottom: 0; accent-color: var(--menta); }
-        .privacy-box a { color: var(--menta); }
+        /* PRIVACIDAD */
+        .privacy-box {
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: var(--radius-sm); padding: 14px 16px;
+            font-size: 13px; color: var(--ink-mid); margin-bottom: 0; line-height: 1.6;
+        }
+        .privacy-box label { display: flex; align-items: flex-start; gap: 10px; cursor: pointer; margin-top: 10px; }
+        .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; margin-bottom: 0; accent-color: var(--accent); }
+        .privacy-box a { color: var(--accent); }
 
-        .pin-box { background: #e0f2ee; border: 2px solid #0d7a68; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; box-shadow: 0 4px 12px rgba(13,122,104,0.1); }
-        .pin-num { font-size: 38px; font-weight: 900; letter-spacing: 8px; color: #0f4a3f; margin: 12px 0; font-variant-numeric: tabular-nums; padding-left: 8px; font-family: monospace; }
-        .pin-aviso { font-size: 13px; color: #0f4a3f; margin-top: 8px; line-height: 1.5; font-weight: 500; }
-        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #0f4a3f; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 6px; transition: all 0.2s; font-family: inherit; }
-        .btn-copiar-pin:hover { background: #0d7a68; }
-        .btn-copiar-pin.copiado { background: #0f2027; }
+        /* PIN BOX */
+        .pin-box {
+            background: var(--green-light);
+            border: 1.5px solid rgba(15,155,110,0.25);
+            border-radius: var(--radius-sm); padding: 20px;
+            margin-top: 16px; text-align: center;
+        }
+        .pin-label { font-size: 13px; color: var(--green-dark); font-weight: 500; margin-bottom: 6px; }
+        .pin-num {
+            font-family: 'DM Serif Display', serif;
+            font-size: 42px; letter-spacing: 12px;
+            color: var(--green-dark); margin: 4px 0 10px;
+        }
+        .btn-copiar-pin {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 8px 18px; background: var(--green-dark); color: white;
+            border: none; border-radius: var(--radius-sm); font-family: inherit;
+            font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+        }
+        .btn-copiar-pin:hover { background: var(--green); }
+        .btn-copiar-pin.copiado { background: #0d7a68; }
+        .pin-aviso { font-size: 12px; color: var(--green-dark); margin-top: 10px; opacity: 0.85; line-height: 1.6; }
 
-        .btn-submit { display: block; width: 100%; padding: 13px; background: var(--menta); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 16px; transition: background 0.2s; text-transform: uppercase; }
-        .btn-submit:hover { background: #0f4a3f; }
-        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+        /* BTN SUBMIT */
+        .btn-submit {
+            display: block; width: 100%; padding: 13px;
+            background: var(--ink); color: white; border: none;
+            border-radius: var(--radius-sm); font-family: inherit;
+            font-size: 14px; font-weight: 600; letter-spacing: 0.04em;
+            text-transform: uppercase; cursor: pointer; margin-top: 16px;
+            transition: background 0.2s;
+        }
+        .btn-submit:hover { background: #0a5e52; }
+        .btn-submit:disabled { background: var(--ink-light); cursor: not-allowed; }
 
-        /* BADGES ETIQUETAS DINÁMICAS */
-        .card-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
-        .badge-busco { background: #deb887; color: #5c3a21; } /* Tono marrón/arena suave */
-        .badge-ofrezco { background: #b2dfd6; color: #0f4a3f; } /* Tono menta */
+        /* BADGES */
+        .card-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+            text-transform: uppercase; padding: 4px 10px;
+            border-radius: 40px; margin-bottom: 12px;
+        }
+        .badge-busco { background: #f3e8d8; color: #7c4a1e; }
+        .badge-ofrezco { background: var(--green-light); color: var(--green-dark); }
 
-        .section-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 14px; }
-        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        /* GRID */
+        .section-label {
+            font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: var(--ink-light); margin-bottom: 14px;
+        }
+        .grid-anuncios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            align-items: start;
+        }
 
-        .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 18px; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
-        .tarjeta:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        /* TARJETA */
+        .tarjeta {
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 22px;
+            position: relative;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .tarjeta:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
 
-        .titulo-tarjeta { font-weight: 900; font-size: 16px; margin-bottom: 8px; color: #1e293b; padding-right: 28px; text-transform: uppercase; }
-        .descripcion { font-size: 14px; color: #475569; margin-bottom: 12px; line-height: 1.5; white-space: pre-line; }
-        .burbujas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-        .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
+        .titulo-tarjeta {
+            font-family: 'DM Serif Display', serif;
+            font-size: 18px; color: var(--ink);
+            margin-bottom: 8px; padding-right: 28px; line-height: 1.2;
+        }
+        .descripcion { font-size: 14px; color: var(--ink-mid); margin-bottom: 12px; line-height: 1.5; white-space: pre-line; }
+        .burbujas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+        .tag {
+            background: var(--surface-3); padding: 4px 10px;
+            border-radius: 40px; font-size: 11px; font-weight: 600;
+            color: var(--ink-mid); border: 1px solid var(--border-strong);
+        }
 
-        .btn-wa { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; color: white; background: #25d366; transition: background 0.2s; }
-        .btn-wa:hover { background: #128c7e; }
+        .btn-wa {
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            width: 100%; padding: 10px; border-radius: var(--radius-sm);
+            text-decoration: none; font-weight: 600; font-size: 13px;
+            color: white; background: var(--wa); transition: background 0.2s;
+        }
+        .btn-wa:hover { background: var(--wa-dark); }
 
-        .btn-borrar { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: all 0.2s; }
-        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); }
+        .btn-borrar {
+            position: absolute; top: 12px; right: 12px;
+            width: 30px; height: 30px; border-radius: 50%;
+            background: transparent; border: none; cursor: pointer;
+            font-size: 15px; display: flex; align-items: center; justify-content: center;
+            opacity: 0.35; transition: opacity 0.2s, background 0.2s, transform 0.15s;
+        }
+        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); transform: scale(1.1); }
 
-        .empty-state { grid-column: 1/-1; text-align: center; padding: 40px 20px; color: #94a3b8; }
-        .empty-icon { font-size: 30px; margin-bottom: 8px; }
+        .empty-state { grid-column: 1/-1; text-align: center; padding: 48px 20px; color: var(--ink-light); }
+        .empty-icon { font-size: 32px; margin-bottom: 10px; }
 
-        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; border-top: 1px solid #e2e8f0; margin-top: 40px; }
+        .footer {
+            text-align: center; padding: 28px; color: var(--ink-light);
+            font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px;
+        }
     </style>
 </head>
 <body>
 
 <div class="hero">
     <header class="header">
-        <a href="index.html" class="header-logo">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera">
-            <span class="header-name">INFOESPINAR.COM</span>
+        <a href="index.html" class="header-link">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="InfoEspinar">
+            <span class="header-name">infoespinar.com</span>
         </a>
     </header>
     <h1 class="hero-title">Empleo Local</h1>
     <p class="hero-sub">Ofertas de trabajo y búsqueda de empleo en el municipio</p>
 </div>
 
-<div class="contenedor-app">
+<main class="main">
+
     <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
-    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">💼 PUBLICAR OFERTA / BUSCAR EMPLEO</button>
+    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">💼 Publicar oferta / Buscar empleo</button>
 
     <div id="form">
         <p class="form-section">Tipo de anuncio</p>
@@ -109,12 +314,12 @@
         <input type="text" id="titulo" placeholder="EJ: CAMARERO/A" oninput="this.value=this.value.toUpperCase()">
 
         <p class="form-section">Lugar de trabajo</p>
-        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:10px;">
-            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="El Espinar" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> El Espinar</label>
-            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="San Rafael" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> San Rafael</label>
-            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="LASR" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> LASR</label>
-            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="La Estación" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> La Estación</label>
-            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="Otro" class="chk-lugar" onchange="checkLugar()" style="width:auto;margin:0;accent-color:#0d7a68"> Otro</label>
+        <div style="background:var(--surface-2); border:1.5px solid var(--border-strong); border-radius:var(--radius-sm); padding:12px; margin-bottom:10px;">
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="El Espinar" class="chk-lugar" style="width:auto;margin:0;accent-color:var(--accent)"> El Espinar</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="San Rafael" class="chk-lugar" style="width:auto;margin:0;accent-color:var(--accent)"> San Rafael</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="LASR" class="chk-lugar" style="width:auto;margin:0;accent-color:var(--accent)"> LASR</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="La Estación" class="chk-lugar" style="width:auto;margin:0;accent-color:var(--accent)"> La Estación</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="Otro" class="chk-lugar" onchange="checkLugar()" style="width:auto;margin:0;accent-color:var(--accent)"> Otro</label>
             <input id="lugarOtro" class="oculto" placeholder="Escribe el lugar" style="margin-top:6px;margin-bottom:0">
         </div>
 
@@ -143,13 +348,14 @@
         </div>
 
         <div id="pinMostrado"></div>
-        <button class="btn-submit" id="btn" onclick="enviar()">PUBLICAR ANUNCIO</button>
+        <button class="btn-submit" id="btn" onclick="enviar()">Publicar anuncio</button>
     </div>
 
     <p class="section-label">Ofertas disponibles</p>
-    <div id="loading" style="text-align:center; padding:40px; font-weight:700; color:#888;">Cargando anuncios...</div>
+    <div id="loading" style="text-align:center; padding:40px; font-weight:600; color:var(--ink-light);">Cargando anuncios...</div>
     <div id="tablon" class="grid-anuncios"></div>
-</div>
+
+</main>
 
 <footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
@@ -169,22 +375,16 @@ async function cargar() {
 
         document.getElementById('tablon').innerHTML = data.length
             ? data.reverse().map(a => {
-                // Control seguro del tipo de anuncio para evitar el "undefined"
                 const tipoRaw = String(a.buscasUOfreces || '').toUpperCase().trim();
-                
                 let textoBadge = "BUSCO EMPLEO";
                 let emojiBadge = "🙋‍♂️";
                 let claseBadge = "badge-busco";
-
                 if (tipoRaw === 'OFREZCO' || tipoRaw === 'BUSCO PERSONAL') {
                     textoBadge = "OFERTA EMPLEO";
                     emojiBadge = "🏢";
                     claseBadge = "badge-ofrezco";
                 }
-
-                // Si viene de tu AppScript genérico, el título se guarda en la clave 'actividad'
                 const puestoDeTrabajo = a.actividad || a.titulo || 'PUESTO NO ESPECIFICADO';
-
                 return `
                 <div class="tarjeta" id="tarjeta-${a.id}">
                     <button class="btn-borrar" onclick="borrar('${a.id}')" title="Borrar anuncio">🗑️</button>
@@ -222,48 +422,34 @@ async function borrar(id) {
 
 async function enviar() {
     if (!document.getElementById('aceptaPrivacidad').checked) { alert('Acepta la política de privacidad.'); return; }
-
     const titulo   = document.getElementById('titulo').value.trim();
     const telefono = document.getElementById('telefono').value.trim();
     const email    = document.getElementById('email').value.trim();
     if (!titulo)   { alert('Introduce el puesto.'); return; }
     if (!telefono) { alert('Introduce el teléfono.'); return; }
-
     const lugares = [...document.querySelectorAll('.chk-lugar:checked')]
         .map(c => c.value === 'Otro' ? document.getElementById('lugarOtro').value.trim() : c.value);
     if (!lugares.length || lugares.includes('')) { alert('Selecciona o escribe un lugar válido.'); return; }
-
     const btn = document.getElementById('btn');
     btn.disabled = true; btn.textContent = 'Publicando...';
-
     const pinDeCincoCifras = String(Math.floor(10000 + Math.random() * 90000));
     const tipoSeleccionado = document.getElementById('buscasUOfreces').value;
-
-    // Sincronización exacta de variables para el Apps Script (.gs)
     const params = new URLSearchParams();
     params.append('buscasUOfreces', tipoSeleccionado);
-    params.append('actividad', titulo); // Mapeado a 'actividad' para tu base de datos genérica
+    params.append('actividad', titulo);
     params.append('lugar', lugares.join(', '));
     params.append('jornada', document.getElementById('jornada').value);
     params.append('descripcion', document.getElementById('descripcion').value);
     params.append('telefono', telefono);
     params.append('email', email);
     params.append('pin', pinDeCincoCifras);
-
     try {
-        await fetch(urlScript, { 
-            method: 'POST', 
-            body: params,
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        });
-        
+        await fetch(urlScript, { method: 'POST', body: params, mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } });
         btn.textContent = '✅ Publicado';
-        
         document.getElementById('pinMostrado').innerHTML = `
             <div class="pin-box">
-                <p style="font-weight:900; color:#0f4a3f; font-size:15px;">¡OFERTA PUBLICADA CON ÉXITO!</p>
-                <div class="pin-num" id="codigoPinTexto">${pinDeCincoCifras}</div>
+                <p class="pin-label">🔑 Tu PIN personal es:</p>
+                <div class="pin-num">${pinDeCincoCifras}</div>
                 <button class="btn-copiar-pin" onclick="copiarPin('${pinDeCincoCifras}', this)">📋 Copiar PIN</button>
                 <p class="pin-aviso">
                     ${email
@@ -272,8 +458,6 @@ async function enviar() {
                     }
                 </p>
             </div>`;
-        
-        // Limpieza completa del formulario
         document.getElementById('titulo').value = '';
         document.getElementById('telefono').value = '';
         document.getElementById('email').value = '';
@@ -282,17 +466,15 @@ async function enviar() {
         document.getElementById('lugarOtro').classList.add('oculto');
         document.getElementById('aceptaPrivacidad').checked = false;
         document.querySelectorAll('.chk-lugar').forEach(c => c.checked = false);
-
         setTimeout(async () => {
             await cargar();
             document.getElementById('form').style.display = 'none';
-            btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO';
+            btn.disabled = false; btn.textContent = 'Publicar anuncio';
             document.getElementById('pinMostrado').innerHTML = '';
         }, 5000);
-
     } catch(err) {
         alert('Error inesperado de red al conectar con el servidor.');
-        btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO';
+        btn.disabled = false; btn.textContent = 'Publicar anuncio';
     }
 }
 
@@ -303,7 +485,6 @@ function copiarPin(pin, btn) {
     });
 }
 
-// Carga inicial al entrar a la página
 cargar();
 </script>
 </body>
