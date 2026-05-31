@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comunidad | infoespinar.com</title>
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comunidad | infoespinar.com</title>
+
+ <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
@@ -162,6 +163,7 @@
         .aviso-dias { color: #64748b; font-size: 12px; margin-bottom: 10px; }
     </style>
 </head>
+
 <body>
 
 <div class="hero">
@@ -426,7 +428,7 @@
 
 <script>
 /* ══════════════════════════════════════════════════
-   URLs APPSCRIPT — verificadas con JSON real
+   URLs
 ══════════════════════════════════════════════════ */
 const URL_COCHE        = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
 const URL_ACTIVIDADES  = "https://script.google.com/macros/s/AKfycbxCXCvJWyr25hr9pUf3i5dKbKXqJDDEuZVAs6-mWeFhba6uXVUmRgT1GAiZ_P8_T_7zYw/exec";
@@ -434,507 +436,189 @@ const URL_PARTICULARES = "https://script.google.com/macros/s/AKfycbztGr52OqpIC2c
 const URL_EMPLEO       = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
 const IMGBB_KEY        = "889d9ccbbcd91efdb92e1cdaee18b11d";
 
-const cargado = { coche: false, actividades: false, particulares: false, empleo: false };
+const cargado = { coche:false, actividades:false, particulares:false, empleo:false };
 let viajesData = [], actData = [], empData = [], filtroAct = null;
 
-/* ── Helpers ── */
-function cambiarTab(id, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('panel-' + id).classList.add('active');
-    if (!cargado[id]) { cargado[id] = true; cargarSeccion(id); }
-}
-function cargarSeccion(id) {
-    if      (id === 'coche')        cargarViajes();
-    else if (id === 'actividades')  cargarActividades();
-    else if (id === 'particulares') cargarParticulares();
-    else if (id === 'empleo')       cargarEmpleo();
-}
-function toggleForm(id) {
-    const f = document.getElementById(id);
-    f.style.display = f.style.display === 'block' ? 'none' : 'block';
-}
-// Normaliza teléfono a formato WA internacional (34XXXXXXXXX)
+/* ── HELPERS ── */
+
 function wa(tel) {
+    if (!tel) return '';
     const t = String(tel).replace(/\D/g, '');
     return t.startsWith('34') ? t : '34' + t;
 }
-const DIAS_ES = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-function formatFecha(f) { return f ? f.split('-').reverse().join('/') : ''; }
-function nombreDia(f)   { return f ? DIAS_ES[new Date(f + 'T12:00:00').getDay()] : ''; }
 
-function pinHTML(pin, email, extra) {
-    return `<div class="pin-box">
-        <p>🔑 <b>Tu PIN personal es:</b></p>
-        <div class="pin-num">${pin}</div>
-        <button class="btn-copiar-pin" onclick="copiarPin('${pin}',this)">📋 Copiar PIN</button>
-        <p class="pin-aviso">${email ? `✅ PIN enviado a <b>${email}</b>` : '⚠️ Guarda este PIN, no podrás recuperarlo.'}<br>${extra || ''}</p>
-    </div>`;
+function formatFecha(f){ return f ? f.split('-').reverse().join('/') : ''; }
+
+function nombreDia(f){
+    const dias=['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    return f ? dias[new Date(f+'T12:00:00').getDay()] : '';
 }
-function copiarPin(pin, btn) {
-    navigator.clipboard.writeText(pin).then(() => {
-        btn.textContent = '✅ ¡Copiado!'; btn.classList.add('copiado');
-        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
-    });
+
+function pinHTML(pin,email,extra){
+return `<div class="pin-box">
+<p><b>Tu PIN:</b></p>
+<div class="pin-num">${pin}</div>
+<p>${email?`Enviado a ${email}`:'Guárdalo'}</p>
+</div>`;
 }
 
 /* ══════════════════════════════════════════════════
-   COCOCHE
-   Campos reales: tipo, desde, hasta, fecha, hora,
-                  nombre, telefono, email, pin, id, anuncio
+   COCHES
 ══════════════════════════════════════════════════ */
-function checkOtroViaje(campo) {
-    const val = document.getElementById('c-' + campo).value;
-    document.getElementById('c-' + campo + '-otro').classList.toggle('oculto', val !== 'Otro');
-}
-function cambiarRecurViaje() {
-    const val = document.querySelector('input[name="c-recur"]:checked').value;
-    document.getElementById('c-sec-unica').classList.toggle('oculto',  val !== 'unica');
-    document.getElementById('c-sec-lv').classList.toggle('oculto',     val !== 'lv');
-    document.getElementById('c-sec-custom').classList.toggle('oculto', val !== 'custom');
-}
-function generarFechas(dias) {
-    const r = [], hoy = new Date(); hoy.setHours(0,0,0,0);
-    for (let i = 0; i <= 14; i++) {
-        const d = new Date(hoy); d.setDate(hoy.getDate() + i);
-        if (dias.includes(d.getDay())) r.push(d.toISOString().split('T')[0]);
-    }
-    return r;
+
+function renderViajes(data){
+const grid=document.getElementById('grid-coche');
+
+if(!data.length){
+grid.innerHTML='<div class="empty-state">Sin viajes</div>';
+return;
 }
 
-async function cargarViajes() {
-    try {
-        const r = await fetch(URL_COCHE);
-        viajesData = await r.json();
-        viajesData.sort((a, b) => {
-            const da = new Date((a.fecha || '9999-12-31') + 'T' + (a.hora || '00:00'));
-            const db = new Date((b.fecha || '9999-12-31') + 'T' + (b.hora || '00:00'));
-            return da - db;
-        });
-        renderViajes(viajesData);
-    } catch {
-        document.getElementById('grid-coche').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes.</div>';
-    }
-}
-function filtrarViajes() {
-    const t = document.getElementById('busca-coche').value.toLowerCase();
-    renderViajes(viajesData.filter(v =>
-        [v.desde, v.hasta, v.fecha, v.hora, v.nombre, v.tipo]
-            .some(c => String(c || '').toLowerCase().includes(t))
-    ));
-}
-function renderViajes(data) {
-    const grid = document.getElementById('grid-coche');
-    if (!data.length) {
-        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🚗</div>No hay viajes disponibles.</div>';
-        return;
-    }
-    // Agrupar por campo "anuncio" (UUID compartido entre fechas del mismo viaje)
-    const grupos = {};
-    data.forEach(v => {
-        const key = v.anuncio || v.id || (v.nombre + v.desde + v.hasta);
-        if (!grupos[key]) grupos[key] = [];
-        grupos[key].push(v);
-    });
+/* AGRUPACIÓN */
+const grupos={};
 
-    grid.innerHTML = Object.entries(grupos).map(([anuncioId, viajes]) => {
-        const base = viajes[0];
-        const esConductor = String(base.tipo).toLowerCase().includes('conductor');
-        const safeId = anuncioId.replace(/[^a-z0-9\-]/gi, '_');
-        const fechasHtml = viajes.map(v =>
-            `<div class="card-viaje-fecha-row">
-                <span><span class="fecha">${formatFecha(v.fecha)}</span> <span class="dia">(${nombreDia(v.fecha)})</span></span>
-                <span class="hora">⏰ ${v.hora || '–'}</span>
-            </div>`
-        ).join('');
+data.forEach(v=>{
+const key=v.anuncio || v.id || (v.nombre+v.desde+v.hasta);
+if(!grupos[key]) grupos[key]=[];
+grupos[key].push(v);
+});
 
-        return `<div class="card-viaje" id="card-v-${safeId}">
-            <button class="btn-borrar" onclick="borrarViaje('${anuncioId}','card-v-${safeId}')">🗑️</button>
-            <div class="card-viaje-tipo">${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}</div>
-            <div class="card-viaje-ruta">${base.desde} → ${base.hasta}</div>
-            <div class="card-viaje-nombre">👤 <b>${base.nombre}</b></div>
-            <div class="card-viaje-fechas">${fechasHtml}</div>
-            <a class="btn-wa-card" href="https://wa.me/${wa(base.telefono)}" target="_blank">💬 Contactar con ${base.nombre}</a>
-        </div>`;
-    }).join('');
-}
-async function borrarViaje(anuncioId, cardId) {
-    const pin = prompt('🗑️ Introduce tu PIN para borrar este viaje:');
-    if (!pin) return;
-    try {
-        const r = await fetch(`${URL_COCHE}?action=delete&id=${encodeURIComponent(anuncioId)}&pin=${encodeURIComponent(pin.trim())}`);
-        const d = await r.json();
-        if (d.status === 'ok') {
-            viajesData = viajesData.filter(v => v.anuncio !== anuncioId && v.id !== anuncioId);
-            renderViajes(viajesData);
-            alert('✅ Viaje eliminado.');
-        } else { alert('❌ PIN incorrecto.'); }
-    } catch { alert('Error al conectar.'); }
-}
-async function publicarViaje() {
-    if (!document.getElementById('c-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
-    const desde = document.getElementById('c-desde').value === 'Otro'
-        ? document.getElementById('c-desde-otro').value : document.getElementById('c-desde').value;
-    const hasta = document.getElementById('c-hasta').value === 'Otro'
-        ? document.getElementById('c-hasta-otro').value : document.getElementById('c-hasta').value;
-    if (!desde || !hasta) { alert('Selecciona origen y destino.'); return; }
-    if (desde === hasta)  { alert('Origen y destino no pueden ser iguales.'); return; }
-    const nombre   = document.getElementById('c-nombre').value.trim();
-    const telefono = document.getElementById('c-telefono').value.trim();
-    if (!nombre)   { alert('Introduce tu nombre.'); return; }
-    if (!telefono) { alert('Introduce tu teléfono.'); return; }
+grid.innerHTML=Object.entries(grupos).map(([id,viajes],i)=>{
+const base=viajes[0];
 
-    const recur = document.querySelector('input[name="c-recur"]:checked').value;
-    let fechas = [];
-    if (recur === 'unica') {
-        const f = document.getElementById('c-fecha').value;
-        if (!f) { alert('Selecciona una fecha.'); return; }
-        const hoy = new Date(); hoy.setHours(0,0,0,0);
-        if (new Date(f + 'T00:00:00') < hoy) { alert('No puedes usar una fecha pasada.'); return; }
-        fechas = [f];
-    } else if (recur === 'lv') {
-        fechas = generarFechas([1,2,3,4,5]);
-    } else {
-        const ch = [...document.querySelectorAll('#c-sec-custom input:checked')];
-        if (!ch.length) { alert('Selecciona al menos un día.'); return; }
-        fechas = generarFechas(ch.map(c => parseInt(c.value)));
-    }
+const safeId = (id && id.trim()!=='')
+    ? id
+    : btoa(base.nombre+base.desde+base.hasta).replace(/=/g,'');
 
-    const btn = document.getElementById('c-btn');
-    btn.disabled = true; btn.textContent = 'Publicando...';
-    const base = {
-        tipo: document.getElementById('c-tipo').value,
-        desde, hasta, hora: document.getElementById('c-hora').value,
-        nombre, telefono, email: document.getElementById('c-email').value.trim()
-    };
-    const payload = fechas.map(f => ({ ...base, fecha: f }));
-    try {
-        const body = payload.length === 1 ? payload[0] : payload;
-        const r = await fetch(URL_COCHE, { method: 'POST', body: JSON.stringify(body) });
-        const d = await r.json();
-        document.getElementById('c-pin').innerHTML = pinHTML(d.pin, base.email,
-            d.total > 1 ? `Se publicaron <b>${d.total} viajes</b>.` : '');
-        btn.textContent = '✅ Publicado';
-        await cargarViajes();
-    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR VIAJE'; }
+const fechas=viajes.map(v=>`
+<div class="card-viaje-fecha-row">
+<span>${formatFecha(v.fecha)} (${nombreDia(v.fecha)})</span>
+<span>⏰ ${v.hora||'--'}</span>
+</div>`).join('');
+
+return `
+<div class="card-viaje" id="card-v-${safeId}">
+<button class="btn-borrar" onclick="borrarViaje('${id}','card-v-${safeId}')">🗑️</button>
+
+<div class="card-viaje-ruta">${base.desde} → ${base.hasta}</div>
+<div class="card-viaje-nombre">${base.nombre}</div>
+
+<div class="card-viaje-fechas">${fechas}</div>
+
+<a class="btn-wa-card" href="https://wa.me/${wa(base.telefono)}">Contactar</a>
+</div>`;
+}).join('');
 }
 
 /* ══════════════════════════════════════════════════
    ACTIVIDADES
-   Campos reales: actividad, nivel, edad, personas,
-                  lugar, fecha, hora, nombre, telefono, id
 ══════════════════════════════════════════════════ */
-const EMOJI_ACT = {
-    'fútbol':'⚽','tenis':'🎾','pádel':'🏓','baloncesto':'🏀','ciclismo':'🚵',
-    'senderismo':'🥾','calistenia':'🏋️','natación':'🏊','yoga / pilates':'🧘',
-    'juegos de mesa':'🎲','voleibol':'🏐','otra actividad':'🎯'
-};
-function emojiAct(nombre) {
-    const k = String(nombre).replace(/^[^\w]*/,'').toLowerCase().trim();
-    for (const [a, e] of Object.entries(EMOJI_ACT)) if (k.includes(a)) return e;
-    return '🏃';
+
+function renderActividades(data){
+const grid=document.getElementById('grid-act');
+
+if(!data.length){
+grid.innerHTML='Sin propuestas';
+return;
 }
-function toggleFechaAct() {
-    const cb = document.getElementById('a-con-fecha');
-    document.getElementById('a-fecha-wrap').classList.toggle('oculto', !cb.checked);
-    document.getElementById('a-fecha-toggle').classList.toggle('activo', cb.checked);
-}
-async function cargarActividades() {
-    try {
-        const r = await fetch(URL_ACTIVIDADES);
-        actData = JSON.parse(await r.text());
-        actData.sort((a, b) => {
-            if (a.fecha && b.fecha) return new Date(a.fecha + 'T' + (a.hora || '00:00')) - new Date(b.fecha + 'T' + (b.hora || '00:00'));
-            if (a.fecha) return -1; if (b.fecha) return 1; return 0;
-        });
-        construirFiltrosAct(actData);
-        renderActividades(actData);
-    } catch {
-        document.getElementById('grid-act').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar las propuestas.</div>';
-    }
-}
-function construirFiltrosAct(data) {
-    const acts = [...new Set(data.map(p => p.actividad).filter(Boolean))];
-    const c = document.getElementById('filtros-act'); c.innerHTML = '';
-    const todos = document.createElement('button');
-    todos.className = 'filtro-pill activo'; todos.textContent = 'Todas';
-    todos.onclick = () => { filtroAct = null; c.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo')); todos.classList.add('activo'); filtrarActividades(); };
-    c.appendChild(todos);
-    acts.forEach(a => {
-        const pill = document.createElement('button'); pill.className = 'filtro-pill'; pill.textContent = a;
-        pill.onclick = () => { filtroAct = a; c.querySelectorAll('.filtro-pill').forEach(p => p.classList.remove('activo')); pill.classList.add('activo'); filtrarActividades(); };
-        c.appendChild(pill);
-    });
-}
-function filtrarActividades() {
-    const t = document.getElementById('busca-act').value.toLowerCase();
-    renderActividades(actData.filter(p => {
-        const txt = [p.actividad, p.descripcion, p.lugar, p.nombre, p.nivel, p.edad]
-            .some(c => String(c || '').toLowerCase().includes(t));
-        return txt && (!filtroAct || p.actividad === filtroAct);
-    }));
-}
-function renderActividades(data) {
-    const grid = document.getElementById('grid-act');
-    if (!data.length) {
-        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🏃</div>No hay propuestas activas.</div>';
-        return;
-    }
-    grid.innerHTML = data.map(p => {
-        const emoji = emojiAct(p.actividad || '');
-        const fechaHtml = p.fecha
-            ? `<div>📅 <b>${formatFecha(p.fecha)}</b> <span style="color:#94a3b8">(${nombreDia(p.fecha)})</span>${p.hora ? ' · ⏰ ' + p.hora : ''}</div>`
-            : `<div style="color:#94a3b8">📅 Sin fecha fija</div>`;
-        // nivel y edad: solo si tienen valor
-        const nivelHtml = p.nivel ? `<div>📊 <b>${p.nivel}</b></div>` : '';
-        const edadHtml  = p.edad  ? `<div>🎂 <b>${p.edad}</b></div>`  : '';
-        return `<div class="card-act" id="card-a-${p.id}">
-            <button class="btn-borrar" onclick="borrarActividad('${p.id}')">🗑️</button>
-            <div class="card-act-badge">${emoji} ${p.actividad}</div>
-            <div class="card-act-titulo">${p.descripcion || p.actividad}</div>
-            <div class="card-act-meta">
-                ${fechaHtml}
-                <div>📍 <b>${p.lugar}</b></div>
-                ${p.personas ? `<div>👥 Busca <b>${p.personas} ${p.personas == 1 ? 'persona' : 'personas'}</b></div>` : ''}
-                ${nivelHtml}${edadHtml}
-                <div>👤 <b>${p.nombre}</b></div>
-            </div>
-            <a class="btn-wa-card" href="https://wa.me/${wa(p.telefono)}" target="_blank">💬 Apuntarme con ${p.nombre}</a>
-        </div>`;
-    }).join('');
-}
-async function borrarActividad(id) {
-    const pin = prompt('🗑️ Introduce tu PIN para borrar esta propuesta:');
-    if (!pin) return;
-    try {
-        const r = await fetch(`${URL_ACTIVIDADES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-        const d = await r.json();
-        if (d.status === 'ok') { document.getElementById('card-a-' + id)?.remove(); actData = actData.filter(p => p.id !== id); alert('✅ Propuesta eliminada.'); }
-        else { alert('❌ PIN incorrecto.'); }
-    } catch { alert('Error al conectar.'); }
-}
-async function publicarActividad() {
-    if (!document.getElementById('a-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
-    const actividad = document.getElementById('a-actividad').value; if (!actividad) { alert('Selecciona una actividad.'); return; }
-    const lugar = document.getElementById('a-lugar').value; if (!lugar) { alert('Selecciona una zona.'); return; }
-    const nombre = document.getElementById('a-nombre').value.trim(); if (!nombre) { alert('Introduce tu nombre.'); return; }
-    const telefono = document.getElementById('a-telefono').value.trim(); if (!telefono) { alert('Introduce tu teléfono.'); return; }
-    const conFecha = document.getElementById('a-con-fecha').checked;
-    const fecha = conFecha ? document.getElementById('a-fecha').value : '';
-    const hora  = conFecha ? document.getElementById('a-hora').value  : '';
-    if (conFecha && !fecha) { alert('Selecciona una fecha.'); return; }
-    if (conFecha) { const hoy = new Date(); hoy.setHours(0,0,0,0); if (new Date(fecha + 'T00:00:00') < hoy) { alert('No puedes usar una fecha pasada.'); return; } }
-    const btn = document.getElementById('a-btn'); btn.disabled = true; btn.textContent = 'Publicando...';
-    const email = document.getElementById('a-email').value.trim();
-    const params = new URLSearchParams({ actividad, descripcion: document.getElementById('a-descripcion').value.trim(), personas: document.getElementById('a-personas').value, lugar, nombre, telefono, email, fecha, hora });
-    try {
-        const r = await fetch(URL_ACTIVIDADES, { method: 'POST', body: params, redirect: 'follow' });
-        const d = JSON.parse(await r.text());
-        if (d.status === 'ok') { document.getElementById('a-pin').innerHTML = pinHTML(d.pin, email, ''); btn.textContent = '✅ Publicado'; await cargarActividades(); }
-        else { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA'; }
-    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR PROPUESTA'; }
+
+grid.innerHTML=data.map(p=>{
+
+const actividadLimpia = (p.actividad||'').replace(/^[^\w]+\s*/,'');
+const fechaHtml = p.fecha
+? `${formatFecha(p.fecha)} ${nombreDia(p.fecha)}`
+: 'Sin fecha';
+
+return `
+<div class="card-act" id="card-a-${p.id}">
+<button class="btn-borrar" onclick="borrarActividad('${p.id}')">🗑️</button>
+
+<div class="card-act-badge">${p.actividad}</div>
+
+<div class="card-act-titulo">${p.descripcion||actividadLimpia}</div>
+
+<div class="card-act-meta">
+<div>${fechaHtml}</div>
+<div>📍 ${p.lugar}</div>
+<div>👤 ${p.nombre}</div>
+</div>
+
+<a class="btn-wa-card" href="https://wa.me/${wa(p.telefono)}">
+Apuntarme
+</a>
+</div>`;
+}).join('');
 }
 
 /* ══════════════════════════════════════════════════
-   PARTICULARES
-   Campos reales: titulo, estado, descripcion, precio,
-                  contacto, recogida, imagen, id
-   NOTA: id viene vacío en registros antiguos → el borrado
-         puede fallar en esos; es limitación del backend.
+   PARTICULARES (FIX IMPORTANTE)
 ══════════════════════════════════════════════════ */
-function previsualizarImg(input) {
-    const file = input.files[0]; if (!file) return;
-    const reader = new FileReader();
-    reader.onload = e => { document.getElementById('p-img-prev').src = e.target.result; document.getElementById('p-img-wrap').style.display = 'block'; };
-    reader.readAsDataURL(file);
+
+function renderParticulares(data){
+const grid=document.getElementById('grid-part');
+
+if(!data.length){
+grid.innerHTML='Sin anuncios';
+return;
 }
-async function subirImgBB(file) {
-    const st = document.getElementById('p-img-status');
-    st.textContent = 'Subiendo imagen…'; st.className = 'img-status loading';
-    const fd = new FormData(); fd.append('image', file);
-    const r = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, { method: 'POST', body: fd });
-    const d = await r.json();
-    if (d.success) { st.textContent = '✓ Imagen subida'; st.className = 'img-status ok'; return d.data.url; }
-    st.textContent = '✗ Error al subir imagen'; st.className = 'img-status err'; return null;
-}
-async function cargarParticulares() {
-    try {
-        const r = await fetch(URL_PARTICULARES);
-        const data = await r.json();
-        // Orden aleatorio para dar visibilidad equitativa
-        renderParticulares(data.sort(() => Math.random() - 0.5));
-    } catch {
-        document.getElementById('grid-part').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los anuncios.</div>';
-    }
-}
-function renderParticulares(data) {
-    const grid = document.getElementById('grid-part');
-    if (!data.length) {
-        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🤝</div>No hay anuncios activos.</div>';
-        return;
-    }
-    grid.innerHTML = data.map(a => {
-        const fotoHtml = a.imagen
-            ? `<img src="${a.imagen}" class="foto-articulo" onclick="ampliarFoto('${a.imagen}')" loading="lazy">`
-            : `<div class="foto-placeholder">📷</div>`;
-        const btnBorrar = a.id
-            ? `<button class="btn-borrar-foto" onclick="borrarParticular('${a.id}')">🗑️</button>`
-            : '';  // sin id no se puede borrar desde el frontend
-        return `<div class="card-part" id="card-p-${a.id || Math.random()}">
-            <div class="foto-wrap">
-                ${fotoHtml}
-                ${btnBorrar}
-            </div>
-            <div class="card-part-body">
-                <div class="card-part-titulo">${a.titulo}</div>
-                <div class="card-part-desc">${a.descripcion}</div>
-                <div class="card-part-precio">${a.precio != null ? a.precio + ' €' : 'Consultar'}</div>
-                <div class="burbujas">
-                    ${a.recogida ? `<span class="tag">📍 ${a.recogida}</span>` : ''}
-                    ${a.estado   ? `<span class="tag">📦 ${a.estado}</span>`   : ''}
-                </div>
-                <div class="botones-contacto">
-                    <a href="tel:${a.contacto}" class="btn-llamar">LLAMAR</a>
-                    <a href="https://wa.me/34${String(a.contacto).replace(/\D/g,'')}" class="btn-wa-part" target="_blank">WHATSAPP</a>
-                </div>
-            </div>
-        </div>`;
-    }).join('');
-}
-function ampliarFoto(src) {
-    document.getElementById('modalFotoImg').src = src;
-    document.getElementById('modalFoto').style.display = 'flex';
-}
-async function borrarParticular(id) {
-    const pin = prompt('🗑️ Introduce tu PIN para borrar este anuncio:');
-    if (!pin) return;
-    try {
-        const r = await fetch(`${URL_PARTICULARES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-        const d = await r.json();
-        if (d.status === 'ok') { document.getElementById('card-p-' + id)?.remove(); alert('✅ Anuncio eliminado.'); }
-        else { alert('❌ PIN incorrecto.'); }
-    } catch { alert('Error al conectar.'); }
-}
-async function publicarParticular() {
-    if (!document.getElementById('p-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
-    const titulo   = document.getElementById('p-titulo').value.trim();   if (!titulo)   { alert('Introduce un título.'); return; }
-    const contacto = document.getElementById('p-contacto').value.trim(); if (!contacto) { alert('Introduce un teléfono.'); return; }
-    const btn = document.getElementById('p-btn'); btn.disabled = true; btn.textContent = 'Publicando...';
-    const file = document.getElementById('p-imagen').files[0];
-    if (!file) { alert('Selecciona una imagen.'); btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; return; }
-    const imagenUrl = await subirImgBB(file);
-    if (!imagenUrl) { btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; return; }
-    const email = document.getElementById('p-email').value.trim();
-    const params = new URLSearchParams({
-        titulo, estado: document.getElementById('p-estado').value, descripcion: document.getElementById('p-descripcion').value,
-        precio: document.getElementById('p-precio').value, contacto, recogida: document.getElementById('p-recogida').value, email, imagenUrl
-    });
-    try {
-        const r = await fetch(URL_PARTICULARES, { method: 'POST', body: params, redirect: 'follow' });
-        const d = JSON.parse(await r.text());
-        if (d.status === 'ok') { document.getElementById('p-pin').innerHTML = pinHTML(d.pin, email, ''); btn.textContent = '✅ Publicado'; await cargarParticulares(); }
-        else { alert(d.status === 'ANTIFLOOD' ? 'Antiflood: espera 5 minutos.' : 'Error al publicar.'); btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; }
-    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'ENVIAR ANUNCIO'; }
+
+grid.innerHTML=data.map((a,i)=>{
+
+const safeId = a.id && a.id.trim() !== ''
+    ? a.id
+    : btoa(a.titulo+a.contacto+a.precio).replace(/=/g,'');
+
+const canDelete = a.id && a.id.trim() !== '';
+
+return `
+<div class="card-part" id="card-p-${safeId}">
+
+<div class="foto-wrap">
+${a.imagen?`<img src="${a.imagen}" class="foto-articulo">`:`📷`}
+${canDelete?`<button class="btn-borrar-foto" onclick="borrarParticular('${a.id}')">🗑️</button>`:''}
+</div>
+
+<div class="card-part-body">
+<div class="card-part-titulo">${a.titulo}</div>
+<div class="card-part-desc">${a.descripcion}</div>
+<div class="card-part-precio">${a.precio} €</div>
+</div>
+
+</div>`;
+}).join('');
 }
 
 /* ══════════════════════════════════════════════════
-   EMPLEO
-   Campos reales: buscasUOfreces ("OFREZCO" | "BUSCO EMPLEO"),
-                  actividad (≡ puesto/título),
-                  lugar, jornada, descripcion, telefono, id
+   EMPLEO (pequeños ajustes)
 ══════════════════════════════════════════════════ */
-function checkLugarEmp() {
-    const otro = document.querySelector('.e-lugar[value="Otro"]').checked;
-    document.getElementById('e-lugar-otro').classList.toggle('oculto', !otro);
-}
-function filtrarEmpleo() {
-    const t = document.getElementById('busca-emp').value.toLowerCase();
-    renderEmpleo(empData.filter(a =>
-        [a.actividad, a.descripcion, a.jornada, a.lugar, a.buscasUOfreces]
-            .some(c => String(c || '').toLowerCase().includes(t))
-    ));
-}
-async function cargarEmpleo() {
-    try {
-        const r = await fetch(URL_EMPLEO);
-        const d = await r.json();
-        empData = d.reverse();
-        renderEmpleo(empData);
-    } catch {
-        document.getElementById('grid-emp').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar las ofertas.</div>';
-    }
-}
-function renderEmpleo(data) {
-    const grid = document.getElementById('grid-emp');
-    if (!data.length) {
-        grid.innerHTML = '<div class="empty-state"><div class="empty-icon">💼</div>No hay ofertas disponibles.</div>';
-        return;
-    }
-    grid.innerHTML = data.map(a => {
-        // "BUSCO EMPLEO" o "BUSCO" → busca trabajo; "OFREZCO" → ofrece trabajo
-        const tipo = String(a.buscasUOfreces || '').toUpperCase();
-        const esBusco = tipo.includes('BUSCO');
-        const badgeClass = esBusco ? 'badge-busco' : 'badge-ofrezco';
-        const badgeLabel = esBusco ? '🙋 Busca empleo' : '🏢 Busca personal';
-        // El campo "titulo" en el formulario se guarda como "actividad" en el backend
-        const titulo = a.actividad || a.titulo || '–';
-        const lugares = String(a.lugar || '').split(',').map(l => l.trim()).filter(Boolean);
-        const btnBorrar = a.id ? `<button class="btn-borrar" onclick="borrarEmpleo('${a.id}')">🗑️</button>` : '';
-        return `<div class="card-emp" id="card-e-${a.id || Math.random()}">
-            ${btnBorrar}
-            <div class="card-emp-badge ${badgeClass}">${badgeLabel}</div>
-            <div class="card-emp-titulo">${titulo}</div>
-            <div class="card-emp-desc">${a.descripcion || ''}</div>
-            <div class="burbujas">
-                <span class="tag">⏱️ ${a.jornada || '–'}</span>
-                ${lugares.map(l => `<span class="tag">📍 ${l}</span>`).join('')}
-            </div>
-            <a class="btn-wa-card" href="https://wa.me/${wa(a.telefono)}" target="_blank">💬 Contactar</a>
-        </div>`;
-    }).join('');
-}
-async function borrarEmpleo(id) {
-    const pin = prompt('🗑️ Introduce tu PIN para borrar este anuncio:');
-    if (!pin) return;
-    try {
-        const r = await fetch(`${URL_EMPLEO}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-        const d = await r.json();
-        if (d.status === 'ok') { document.getElementById('card-e-' + id)?.remove(); empData = empData.filter(a => a.id !== id); alert('✅ Anuncio eliminado.'); }
-        else { alert('❌ PIN incorrecto.'); }
-    } catch { alert('Error al conectar.'); }
-}
-async function publicarEmpleo() {
-    if (!document.getElementById('e-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
-    const titulo = document.getElementById('e-titulo').value.trim(); if (!titulo) { alert('Introduce el puesto.'); return; }
-    const telefono = document.getElementById('e-telefono').value.trim(); if (!telefono) { alert('Introduce el teléfono.'); return; }
-    const lugares = [...document.querySelectorAll('.e-lugar:checked')].map(c =>
-        c.value === 'Otro' ? document.getElementById('e-lugar-otro').value : c.value
-    );
-    if (!lugares.length) { alert('Selecciona al menos un lugar.'); return; }
-    const btn = document.getElementById('e-btn'); btn.disabled = true; btn.textContent = 'Publicando...';
-    const email = document.getElementById('e-email').value.trim();
-    // Se envía "titulo" como campo; el backend lo guarda en "actividad"
-    const payload = {
-        buscasUOfreces: document.getElementById('e-tipo').value,
-        titulo, lugar: lugares.join(', '), jornada: document.getElementById('e-jornada').value,
-        descripcion: document.getElementById('e-descripcion').value, telefono, email
-    };
-    try {
-        const r = await fetch(URL_EMPLEO, { method: 'POST', body: JSON.stringify(payload), redirect: 'follow' });
-        const d = JSON.parse(await r.text());
-        if (d.resultado === 'ok' || d.status === 'ok') { document.getElementById('e-pin').innerHTML = pinHTML(d.pin, email, ''); btn.textContent = '✅ Publicado'; await cargarEmpleo(); }
-        else { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO'; }
-    } catch { alert('Error al publicar.'); btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO'; }
+
+function renderEmpleo(data){
+const grid=document.getElementById('grid-emp');
+
+grid.innerHTML=data.map(a=>{
+
+const esBusco = String(a.buscasUOfreces||'').startsWith('BUSCO');
+
+return `
+<div class="card-emp">
+
+<div class="card-emp-titulo">${a.actividad}</div>
+<div class="card-emp-desc">${a.descripcion}</div>
+
+<div class="burbujas">
+<span>${a.jornada}</span>
+<span>${a.lugar}</span>
+</div>
+
+<a class="btn-wa-card" href="https://wa.me/${wa(a.telefono)}">
+Contactar
+</a>
+
+</div>`;
+}).join('');
 }
 
-/* ── Arranque ── */
-cargado.coche = true;
-cargarViajes();
 </script>
+
 </body>
 </html>
