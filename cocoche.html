@@ -313,12 +313,14 @@
             border-radius: var(--radius-sm);
             margin: 10px 0 6px;
             cursor: pointer;
+            user-select: none;
         }
         .vuelta-toggle input[type="checkbox"] {
             width: 16px;
             height: 16px;
             flex-shrink: 0;
             accent-color: var(--accent);
+            cursor: pointer;
         }
         .vuelta-toggle label {
             font-size: 14px;
@@ -501,7 +503,6 @@
             color: var(--ink);
             margin-bottom: 14px;
             line-height: 1.2;
-            /* deja sitio para el botón de borrar */
             padding-right: 36px;
         }
 
@@ -590,6 +591,25 @@
         }
         .empty-icon { font-size: 32px; margin-bottom: 10px; }
 
+        /* LOADING SPINNER */
+        .loading-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 48px 20px;
+            color: var(--ink-light);
+        }
+        .spinner {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            border: 3px solid var(--border-strong);
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            margin-bottom: 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
         /* FOOTER */
         .footer {
             text-align: center;
@@ -672,13 +692,13 @@
             <div class="recur-pill" data-val="personalizada" onclick="setRecurrencia('personalizada')">✏️ Personalizada</div>
         </div>
 
+        <!-- FECHA ÚNICA -->
         <div id="seccion-unica" class="input-row">
             <input id="fecha" type="date">
 
-            <!-- OPCIÓN VUELTA (solo en fecha única) -->
-            <div class="vuelta-toggle" id="vueltaToggle" onclick="toggleVuelta()">
-                <input type="checkbox" id="addVuelta" onclick="event.stopPropagation(); toggleVuelta()">
-                <label for="addVuelta" onclick="event.stopPropagation(); toggleVuelta()">🔄 Añadir viaje de vuelta</label>
+            <div class="vuelta-toggle" id="vueltaToggle" onclick="toggleVuelta(event)">
+                <input type="checkbox" id="addVuelta">
+                <label for="addVuelta">🔄 Añadir viaje de vuelta</label>
             </div>
             <div id="horaVueltaWrap" class="oculto" style="margin-top:8px;">
                 <input id="horaVuelta" type="time" placeholder="Hora de vuelta">
@@ -686,11 +706,38 @@
             </div>
         </div>
 
+        <!-- LUNES A VIERNES -->
         <div id="seccion-lv" class="oculto">
-            <p class="hint">Se publicarán entradas para las próximas 2 semanas, de lunes a viernes.</p>
+            <div class="input-row">
+                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Fecha de inicio</label>
+                <input id="fechaInicioLV" type="date">
+            </div>
+            <div class="input-row">
+                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Número máximo de viajes</label>
+                <select id="maxViajesLV">
+                    <option value="5">5 viajes (1 semana)</option>
+                    <option value="10">10 viajes (2 semanas)</option>
+                    <option value="15" selected>15 viajes (3 semanas)</option>
+                </select>
+            </div>
+            <p class="hint">La fecha de inicio debe estar dentro de los próximos 15 días.</p>
         </div>
+
+        <!-- PERSONALIZADA -->
         <div id="seccion-personalizada" class="oculto">
-            <p class="hint">Selecciona los días (próximas 2 semanas):</p>
+            <div class="input-row">
+                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Fecha de inicio</label>
+                <input id="fechaInicioPers" type="date">
+            </div>
+            <div class="input-row">
+                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Número máximo de viajes</label>
+                <select id="maxViajesPers">
+                    <option value="5">5 viajes</option>
+                    <option value="10">10 viajes</option>
+                    <option value="15" selected>15 viajes</option>
+                </select>
+            </div>
+            <p class="hint">Selecciona los días:</p>
             <div class="day-pills" id="dayPills">
                 <div class="day-pill" data-val="1" onclick="toggleDay(this)">Lun</div>
                 <div class="day-pill" data-val="2" onclick="toggleDay(this)">Mar</div>
@@ -705,7 +752,7 @@
         <p class="form-section-title">Tus datos</p>
         <div class="field-group input-row">
             <input id="nombre" type="text" placeholder="Nombre">
-            <input id="telefono" type="tel" placeholder="Teléfono" maxlength="9">
+            <input id="telefono" type="tel" placeholder="Teléfono (9 dígitos)" maxlength="9">
         </div>
         <div class="input-row">
             <input id="email" type="email" placeholder="Email (opcional)">
@@ -731,7 +778,10 @@
     <!-- GRID -->
     <p class="section-label">Viajes disponibles</p>
     <div id="grid" class="grid">
-        <div class="empty-state"><div class="empty-icon">🚗</div>Cargando viajes...</div>
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <div>Cargando viajes...</div>
+        </div>
     </div>
 
 </main>
@@ -777,18 +827,21 @@ function toggleDay(el) {
 function checkOtro(id) {
     const val = document.getElementById(id).value;
     document.getElementById(id + 'Otro').classList.toggle('oculto', val !== 'Otro');
-    // Actualiza el hint de vuelta con los lugares actuales
-    actualizarHintVuelta();
+    // Solo actualiza hint si la vuelta está activa
+    if (document.getElementById('addVuelta').checked) {
+        actualizarHintVuelta();
+    }
 }
 
-function toggleVuelta() {
+// FIX 2: toggleVuelta recibe el evento para evitar doble disparo
+function toggleVuelta(e) {
+    // Evitar que el click del div propague cuando viene del checkbox
+    if (e && e.target.type === 'checkbox') return;
     const cb = document.getElementById('addVuelta');
-    // Si el click fue en el checkbox, ya cambió; si fue en el div, lo cambiamos nosotros
-    // Usamos el estado actual del checkbox tras el click
-    const checked = cb.checked;
-    document.getElementById('horaVueltaWrap').classList.toggle('oculto', !checked);
-    document.getElementById('vueltaToggle').classList.toggle('activo', checked);
-    actualizarHintVuelta();
+    cb.checked = !cb.checked;
+    document.getElementById('horaVueltaWrap').classList.toggle('oculto', !cb.checked);
+    document.getElementById('vueltaToggle').classList.toggle('activo', cb.checked);
+    if (cb.checked) actualizarHintVuelta();
 }
 
 function actualizarHintVuelta() {
@@ -803,12 +856,18 @@ function actualizarHintVuelta() {
 }
 
 /* ── FECHAS ── */
-function generarFechas(diasSemana) {
+function generarFechas(diasSemana, fechaInicio, maxViajes) {
     const fechas = [];
-    const hoy = new Date(); hoy.setHours(0,0,0,0);
-    for (let i = 0; i <= 14; i++) {
-        const d = new Date(hoy); d.setDate(hoy.getDate() + i);
-        if (diasSemana.includes(d.getDay())) fechas.push(d.toISOString().split('T')[0]);
+    const inicio = new Date(fechaInicio);
+    inicio.setHours(0,0,0,0);
+    let cursor = new Date(inicio);
+
+    while (fechas.length < maxViajes) {
+        if (diasSemana.includes(cursor.getDay())) {
+            fechas.push(cursor.toISOString().split('T')[0]);
+        }
+        cursor.setDate(cursor.getDate() + 1);
+        if ((cursor - inicio) / 86400000 > 60) break;
     }
     return fechas;
 }
@@ -836,10 +895,23 @@ function filtrar() {
 
 /* ── CARGA ── */
 async function cargar() {
+    document.getElementById('grid').innerHTML = `
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <div>Cargando viajes...</div>
+        </div>`;
     try {
         const res = await fetch(URL_SCRIPT);
         const text = await res.text();
-        todosLosViajes = JSON.parse(text);
+        const todos = JSON.parse(text);
+
+        // FIX 6: filtrar viajes pasados (comparar solo fecha, no hora)
+        const hoy = new Date();
+        hoy.setHours(0,0,0,0);
+        todosLosViajes = todos.filter(v => {
+            const fechaViaje = new Date(v.fecha + 'T00:00:00');
+            return fechaViaje >= hoy;
+        });
 
         todosLosViajes.sort((a,b) =>
             new Date(a.fecha + 'T' + a.hora) -
@@ -851,7 +923,7 @@ async function cargar() {
     } catch(e) {
         console.error(e);
         document.getElementById('grid').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes.</div>';
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes. Inténtalo de nuevo.</div>';
     }
 }
 
@@ -924,6 +996,11 @@ async function borrarViaje(id) {
     } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
 }
 
+/* ── VALIDAR TELÉFONO (FIX 3) ── */
+function validarTelefono(tel) {
+    return /^\d{9}$/.test(tel.trim());
+}
+
 /* ── PUBLICAR ── */
 async function publicarViaje() {
     if (!document.getElementById('aceptaPrivacidad').checked) {
@@ -937,25 +1014,72 @@ async function publicarViaje() {
         ? document.getElementById('hastaOtro').value.trim()
         : document.getElementById('hasta').value;
 
-    if (!desde || !hasta) { alert('Selecciona origen y destino.'); return; }
+    if (!desde || !hasta)  { alert('Selecciona origen y destino.'); return; }
     if (desde === hasta)   { alert('El origen y el destino no pueden ser iguales.'); return; }
     if (!document.getElementById('hora').value) { alert('Introduce la hora de salida.'); return; }
-    if (!document.getElementById('nombre').value.trim()) { alert('Introduce tu nombre.'); return; }
-    if (!document.getElementById('telefono').value.trim()) { alert('Introduce tu teléfono.'); return; }
+
+    const nombreVal = document.getElementById('nombre').value.trim();
+    const telefonoVal = document.getElementById('telefono').value.trim();
+    if (!nombreVal)   { alert('Introduce tu nombre.'); return; }
+    if (!telefonoVal) { alert('Introduce tu teléfono.'); return; }
+
+    // FIX 3: validar formato de teléfono
+    if (!validarTelefono(telefonoVal)) {
+        alert('El teléfono debe tener exactamente 9 dígitos numéricos.'); return;
+    }
 
     let fechas = [];
     if (recurrenciaActual === 'unica') {
         const f = document.getElementById('fecha').value;
         if (!f) { alert('Selecciona una fecha.'); return; }
         const hoy = new Date(); hoy.setHours(0,0,0,0);
-        if (new Date(f+'T00:00:00') < hoy) { alert('No puedes seleccionar una fecha pasada.'); return; }
+        if (new Date(f + 'T00:00:00') < hoy) { alert('No puedes seleccionar una fecha pasada.'); return; }
         fechas = [f];
+
     } else if (recurrenciaActual === 'lv') {
-        fechas = generarFechas([1,2,3,4,5]);
+        const inicio = document.getElementById('fechaInicioLV').value;
+        if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
+
+        const hoy = new Date(); hoy.setHours(0,0,0,0);
+        // FIX 1: validar que la fecha esté dentro de los próximos 15 días
+        const limite = new Date(hoy);
+        limite.setDate(limite.getDate() + 15);
+        const fechaInicio = new Date(inicio + 'T00:00:00');
+
+        if (fechaInicio < hoy) {
+            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
+        }
+        if (fechaInicio > limite) {
+            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
+        }
+
+        const maxViajes = parseInt(document.getElementById('maxViajesLV').value);
+        fechas = generarFechas([1,2,3,4,5], inicio, maxViajes);
+
     } else {
+        const inicio = document.getElementById('fechaInicioPers').value;
+        if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
+
+        const hoy = new Date(); hoy.setHours(0,0,0,0);
+        // FIX 1: misma validación de 15 días para personalizada
+        const limite = new Date(hoy);
+        limite.setDate(limite.getDate() + 15);
+        const fechaInicio = new Date(inicio + 'T00:00:00');
+
+        if (fechaInicio < hoy) {
+            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
+        }
+        if (fechaInicio > limite) {
+            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
+        }
+
         const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
         if (!activos.length) { alert('Selecciona al menos un día.'); return; }
-        fechas = generarFechas(activos.map(el => parseInt(el.dataset.val)));
+        fechas = generarFechas(
+            activos.map(el => parseInt(el.dataset.val)),
+            inicio,
+            parseInt(document.getElementById('maxViajesPers').value)
+        );
     }
 
     // Validar vuelta si está activada
@@ -973,12 +1097,11 @@ async function publicarViaje() {
         tipo:     document.getElementById('tipo').value,
         desde, hasta,
         hora:     document.getElementById('hora').value,
-        nombre:   document.getElementById('nombre').value.trim(),
-        telefono: document.getElementById('telefono').value.trim(),
+        nombre:   nombreVal,
+        telefono: telefonoVal,
         email:    document.getElementById('email').value.trim()
     };
 
-    // Construir payload de ida
     const payload = fechas.map(f => ({ ...base, fecha: f }));
 
     try {
@@ -991,10 +1114,10 @@ async function publicarViaje() {
                 payload: JSON.stringify(payload.length === 1 ? payload[0] : payload)
             })
         });
-        const data = await resIda.json();
-        console.log('PIN ida:', data.pin);
+        const dataIda = await resIda.json();
 
-        // Segunda llamada: vuelta (anuncio independiente, mismo PIN)
+        // Segunda llamada: vuelta (anuncio independiente)
+        let pinVuelta = null;
         if (conVuelta) {
             const vuelta = {
                 ...base,
@@ -1003,27 +1126,45 @@ async function publicarViaje() {
                 hora: horaVuelta,
                 fecha: fechas[0]
             };
-            await fetch(URL_SCRIPT, {
+            const resVuelta = await fetch(URL_SCRIPT, {
                 method: 'POST',
                 mode: 'cors',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: new URLSearchParams({ payload: JSON.stringify(vuelta) })
             });
+            const dataVuelta = await resVuelta.json();
+            // FIX 5: guardar el PIN de la vuelta para mostrarlo
+            pinVuelta = dataVuelta.pin;
         }
 
         const pinBox = document.getElementById('pinMostrado');
-        const numViajes = data.total || payload.length;
-        const textoViajes = conVuelta
-            ? `Se han publicado <b>2 anuncios</b>: ida (${desde} → ${hasta}) y vuelta (${hasta} → ${desde}).`
-            : numViajes > 1
-                ? `Se han publicado <b>${numViajes} viajes</b>.`
-                : 'Se ha publicado <b>1 viaje</b>.';
+
+        // FIX 4: usar payload.length como fallback si data.total es undefined
+        const numViajes = (dataIda.total !== undefined) ? dataIda.total : payload.length;
+
+        let textoViajes = '';
+        if (conVuelta) {
+            textoViajes = `Se han publicado <b>2 anuncios</b>: ida (${desde} → ${hasta}) y vuelta (${hasta} → ${desde}).`;
+        } else if (numViajes > 1) {
+            textoViajes = `Se han publicado <b>${numViajes} viajes</b>.`;
+        } else {
+            textoViajes = 'Se ha publicado <b>1 viaje</b>.';
+        }
+
+        // FIX 5: mostrar ambos PINes si hay vuelta
+        const pinVueltaHTML = conVuelta && pinVuelta ? `
+            <div style="margin-top:14px;padding-top:14px;border-top:1px dashed rgba(10,117,84,0.3)">
+                <p class="pin-label">🔑 PIN de la vuelta (${hasta} → ${desde}):</p>
+                <div class="pin-num">${pinVuelta}</div>
+                <button class="btn-copy-pin" onclick="copiarPin('${pinVuelta}', this)">📋 Copiar PIN vuelta</button>
+            </div>` : '';
 
         pinBox.innerHTML = `
             <div class="pin-box">
                 <p class="pin-label">🔑 Tu PIN personal es:</p>
-                <div class="pin-num">${data.pin}</div>
-                <button class="btn-copy-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
+                <div class="pin-num">${dataIda.pin}</div>
+                <button class="btn-copy-pin" onclick="copiarPin('${dataIda.pin}', this)">📋 Copiar PIN</button>
+                ${pinVueltaHTML}
                 <p class="pin-aviso">
                     ${base.email
                         ? `✅ Te hemos enviado el PIN a ${base.email}`
@@ -1032,11 +1173,17 @@ async function publicarViaje() {
                 </p>
             </div>`;
 
-        // Reset
         btn.textContent = '✅ Publicado';
-        btn.disabled = true;
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = 'Publicar';
+        }, 1500);
+
+        // Reset formulario
         document.getElementById('desde').value = '';
         document.getElementById('hasta').value = '';
+        document.getElementById('desdeOtro').classList.add('oculto');
+        document.getElementById('hastaOtro').classList.add('oculto');
         document.getElementById('hora').value = '';
         document.getElementById('fecha').value = '';
         document.getElementById('nombre').value = '';
@@ -1047,10 +1194,14 @@ async function publicarViaje() {
         document.getElementById('horaVuelta').value = '';
         document.getElementById('horaVueltaWrap').classList.add('oculto');
         document.getElementById('vueltaToggle').classList.remove('activo');
+        document.getElementById('fechaInicioLV').value = '';
+        document.getElementById('fechaInicioPers').value = '';
+        document.querySelectorAll('#dayPills .day-pill').forEach(p => p.classList.remove('active'));
 
         await cargar();
 
     } catch(err) {
+        console.error(err);
         alert('Error al publicar. Comprueba tu conexión e inténtalo de nuevo.');
         btn.disabled = false; btn.textContent = 'Publicar';
     }
@@ -1064,7 +1215,7 @@ function copiarPin(pin, btn) {
     });
 }
 
-/* ── WHATSAPP ── */
+/* ── WHATSAPP (FIX 7: valida campos mínimos antes de abrir) ── */
 function enviarWhatsApp() {
     const d = document.getElementById('desde').value === 'Otro'
         ? document.getElementById('desdeOtro').value.trim()
@@ -1075,6 +1226,9 @@ function enviarWhatsApp() {
     const hora = document.getElementById('hora').value;
     const nombre = document.getElementById('nombre').value.trim();
     const tipo = document.getElementById('tipo').value;
+
+    if (!d || !h) { alert('Introduce al menos el origen y el destino para compartir por WhatsApp.'); return; }
+
     const esConductor = tipo === 'Conductor';
 
     let cuandoText = '';
@@ -1082,17 +1236,17 @@ function enviarWhatsApp() {
         const f = document.getElementById('fecha').value;
         cuandoText = f ? `el ${formatFecha(f)} (${nombreDia(f)})` : 'en una fecha concreta';
     } else if (recurrenciaActual === 'lv') {
-        cuandoText = 'de lunes a viernes (próximas 2 semanas)';
+        cuandoText = 'de lunes a viernes';
     } else {
         const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
         const nombresMap = {'0':'domingos','1':'lunes','2':'martes','3':'miércoles','4':'jueves','5':'viernes','6':'sábados'};
         cuandoText = activos.length
-            ? `los ${activos.map(el => nombresMap[el.dataset.val]).join(', ')} (próximas 2 semanas)`
+            ? `los ${activos.map(el => nombresMap[el.dataset.val]).join(', ')}`
             : 'varios días';
     }
 
     const accion = esConductor ? 'tengo plaza' : 'busco viaje';
-    const msg = `Hola, soy ${nombre || '(sin nombre)'}. ${accion} desde ${d || '...'} hasta ${h || '...'} ${cuandoText}${hora ? ` a las ${hora}` : ''}. ¿Te interesa? ¡Escríbeme!`;
+    const msg = `Hola, soy ${nombre || '(sin nombre)'}. ${accion} desde ${d} hasta ${h} ${cuandoText}${hora ? ` a las ${hora}` : ''}. ¿Te interesa? ¡Escríbeme!`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
