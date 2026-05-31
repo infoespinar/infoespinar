@@ -9,82 +9,165 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
 
-        :root {
-            --brand-primary: #0d7a68;
-            --brand-dark: #0f4a3f;
-            --brand-darker: #0f2027;
-            --brand-light: #e0f2ee;
-            --brand-mid: #b2dfd6;
-            --gray-light: #e2e8f0;
-        }
-
-        /* HEADER Y HERO HABITUAL */
+        /* ── HERO ── */
+        .hero { background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%); padding: 0 24px 50px; text-align: center; position: relative; overflow: hidden; }
+        .hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px; background: #f4f6f9; clip-path: ellipse(55% 100% at 50% 100%); }
         .header { padding: 18px 24px; display: flex; justify-content: center; }
         .header-logo-link { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
         .header-bandera { width: 28px; height: 28px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); }
         .header-name { font-size: 18px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        .hero { background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%); padding: 0 24px 50px; text-align: center; position: relative; overflow: hidden; }
-        .hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px; background: #f4f6f9; clip-path: ellipse(55% 100% at 50% 100%); }
         .hero-title { font-size: clamp(24px, 5vw, 36px); font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
-        .hero-sub { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 400; }
+        .hero-sub { font-size: 14px; color: rgba(255,255,255,0.6); }
 
-        .main-container { max-width: 960px; margin: 0 auto; padding: 10px 20px 40px; }
+        /* ── MAIN ── */
+        .main-container { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
 
-        /* NAVEGACIÓN POR PESTAÑAS (TABS) - ESTILO MODERNO */
-        .tabs-comunidad { display: flex; background: white; padding: 6px; border-radius: 14px; border: 1px solid var(--gray-light); margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); overflow-x: auto; scrollbar-width: none; }
-        .tabs-comunidad::-webkit-scrollbar { display: none; } /* Oculta scroll en móvil */
-        
-        .tab-btn { flex: 1; min-width: 120px; padding: 12px 10px; border: none; background: transparent; font-family: inherit; font-size: 13px; font-weight: 700; color: #64748b; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .tab-btn span { font-size: 20px; }
-        .tab-btn:hover { color: var(--brand-primary); background: #f8fafc; }
-        .tab-btn.active { background: var(--brand-primary); color: white; box-shadow: 0 4px 10px rgba(13,122,104,0.2); }
+        /* ── TABS ── */
+        .tabs { display: flex; background: white; padding: 6px; border-radius: 14px; border: 1px solid #e2e8f0; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(0,0,0,0.03); overflow-x: auto; scrollbar-width: none; gap: 4px; }
+        .tabs::-webkit-scrollbar { display: none; }
+        .tab-btn { flex: 1; min-width: 110px; padding: 11px 8px; border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 700; color: #64748b; border-radius: 10px; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; transition: all 0.2s; letter-spacing: 0.3px; text-transform: uppercase; }
+        .tab-btn .tab-icon { font-size: 20px; }
+        .tab-btn:hover { color: #0d7a68; background: #f0fdf9; }
+        .tab-btn.active { background: linear-gradient(135deg, #0d7a68 0%, #0f4a3f 100%); color: white; box-shadow: 0 4px 12px rgba(13,122,104,0.25); }
 
-        /* CONTENEDORES DE SECCIÓN */
-        .seccion-panel { display: none; }
-        .seccion-panel.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        /* ── PANELES ── */
+        .panel { display: none; animation: fadeIn 0.25s ease; }
+        .panel.active { display: block; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(8px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* BUSCADORES Y FILTROS */
+        /* ── BUSCADOR ── */
         .buscador-wrap { position: relative; margin-bottom: 12px; }
-        .buscador-wrap span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
-        .buscador { width: 100%; padding: 14px 14px 14px 42px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 15px; font-family: inherit; background: white; }
-        .buscador:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(13,122,104,0.12); }
+        .buscador-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
+        .buscador { width: 100%; padding: 13px 14px 13px 42px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 15px; font-family: inherit; background: white; }
+        .buscador:focus { outline: none; border-color: #0d7a68; box-shadow: 0 0 0 3px rgba(13,122,104,0.1); }
 
-        .filtros-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-        .filtro-pill { padding: 6px 14px; border-radius: 20px; border: 1.5px solid #e2e8f0; background: white; font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.15s; }
-        .filtro-pill:hover, .filtro-pill.activo { border-color: var(--brand-primary); color: white; background: var(--brand-primary); }
+        /* ── BTN PUBLICAR ── */
+        .btn-publicar { display: block; width: 100%; padding: 14px; background: white; color: #0d7a68; border: 2px dashed #a7d9d0; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 20px; font-size: 14px; font-family: inherit; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-publicar:hover { background: #f0fdf9; border-color: #0d7a68; }
 
-        /* BOTÓN PUBLICAR */
-        .btn-toggle { display: block; width: 100%; padding: 14px; background: white; color: var(--brand-primary); border: 2px dashed var(--brand-mid); border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 24px; font-size: 14px; font-family: inherit; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-toggle:hover { background: var(--brand-light); border-color: var(--brand-primary); }
+        /* ── FORMULARIOS ── */
+        .form-card { background: white; padding: 24px; border-radius: 14px; border: 1px solid #e2e8f0; margin-bottom: 24px; display: none; }
+        .form-section-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin: 16px 0 8px; }
+        .form-section-title:first-child { margin-top: 0; }
 
-        /* REJILLA DE TARJETAS (REUTILIZABLE) */
+        .field { width: 100%; padding: 11px 14px; margin-bottom: 10px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #334155; transition: border-color 0.2s; }
+        .field:focus { outline: none; border-color: #0d7a68; box-shadow: 0 0 0 3px rgba(13,122,104,0.09); }
+        textarea.field { resize: vertical; }
+
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+        .field-row .field { margin-bottom: 0; }
+        @media (max-width: 520px) { .field-row { grid-template-columns: 1fr; } }
+
+        .email-hint { font-size: 12px; color: #64748b; margin: -6px 0 10px 2px; }
+
+        .privacy-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #475569; }
+        .privacy-box label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; margin-top: 8px; }
+        .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: #0d7a68; }
+        .privacy-box a { color: #0d7a68; }
+
+        /* ── PIN BOX ── */
+        .pin-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
+        .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #065f46; margin: 10px 0; font-variant-numeric: tabular-nums; }
+        .pin-aviso { font-size: 12px; color: #047857; margin-top: 8px; line-height: 1.6; }
+        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #065f46; color: white; border: none; border-radius: 8px; padding: 8px 18px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 10px; transition: background 0.2s; }
+        .btn-copiar-pin:hover { background: #047857; }
+        .btn-copiar-pin.copiado { background: #1e40af; }
+
+        /* ── BTN SUBMIT ── */
+        .btn-submit { display: block; width: 100%; padding: 13px; background: #0d7a68; color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 16px; transition: background 0.2s; text-transform: uppercase; letter-spacing: 0.04em; }
+        .btn-submit:hover { background: #0a5c4f; }
+        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        /* ── GRIDS Y TARJETAS ── */
         .section-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 14px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
 
-        .card { background: white; padding: 22px; border-radius: 16px; border: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.04); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
-        .card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+        /* Viajes */
+        .card-viaje { background: white; padding: 22px; border-radius: 16px; border-top: 5px solid #10b981; border-left: 1.5px solid #e2e8f0; border-right: 1.5px solid #e2e8f0; border-bottom: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .card-viaje:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+        .card-viaje-tipo { font-weight: 900; font-size: 12px; text-transform: uppercase; color: #10b981; margin-bottom: 8px; }
+        .card-viaje-ruta { font-size: 18px; font-weight: 700; color: #1e293b; margin-bottom: 12px; }
+        .card-viaje-meta { font-size: 14px; color: #475569; margin-bottom: 4px; }
+        .card-viaje-meta b { color: #1e293b; }
 
-        .card-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; background: var(--brand-light); color: var(--brand-dark); border: 1px solid var(--brand-mid); }
-        .card-titulo { font-size: 17px; font-weight: 900; color: #1e293b; margin-bottom: 12px; line-height: 1.3; }
-        
-        .card-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; font-size: 13px; color: #475569; }
-        .card-meta-row { display: flex; align-items: center; gap: 8px; }
-        .card-meta-row b { color: #1e293b; }
+        /* Actividades */
+        .card-act { background: white; padding: 22px; border-radius: 16px; border: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .card-act:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+        .card-act-badge { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; background: #f5f3ff; color: #6d28d9; border: 1px solid #ddd6fe; }
+        .card-act-titulo { font-size: 16px; font-weight: 900; color: #1e293b; margin-bottom: 10px; padding-right: 28px; line-height: 1.3; }
+        .card-act-meta { font-size: 13px; color: #475569; display: flex; flex-direction: column; gap: 5px; margin-bottom: 12px; }
+        .card-act-meta b { color: #1e293b; }
 
-        .btn-action-card { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 11px; background: var(--brand-primary); color: white; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; transition: background 0.2s; }
-        .btn-action-card:hover { background: var(--brand-dark); }
+        /* Particulares */
+        .card-part { background: white; border-radius: 12px; border: 1px solid #e2e8f0; overflow: hidden; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .card-part:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+        .foto-wrap { position: relative; }
+        .foto-articulo { width: 100%; height: 180px; object-fit: cover; cursor: pointer; display: block; }
+        .btn-borrar-foto { position: absolute; top: 8px; right: 8px; width: 32px; height: 32px; border-radius: 50%; background: rgba(0,0,0,0.55); border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; color: white; opacity: 0.75; transition: opacity 0.2s, background 0.2s, transform 0.15s; backdrop-filter: blur(4px); }
+        .btn-borrar-foto:hover { opacity: 1; background: rgba(220,38,38,0.80); transform: scale(1.08); }
+        .card-part-body { padding: 14px; }
+        .card-part-titulo { font-weight: 900; font-size: 15px; color: #1e293b; margin-bottom: 5px; }
+        .card-part-desc { font-size: 13px; color: #475569; margin-bottom: 8px; line-height: 1.5; word-break: break-word; }
+        .card-part-precio { font-weight: 900; font-size: 18px; margin-bottom: 8px; }
+        .burbujas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+        .tag { background: #f1f5f9; padding: 3px 9px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
+        .botones-contacto { display: flex; gap: 8px; }
+        .btn-llamar { flex: 1; text-align: center; padding: 9px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 12px; color: white; background: #000; }
+        .btn-wa-part { flex: 1; text-align: center; padding: 9px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 12px; color: white; background: #25d366; }
 
-        .btn-borrar { position: absolute; top: 14px; right: 14px; width: 30px; height: 30px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: all 0.2s; }
-        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.05); }
+        /* Empleo */
+        .card-emp { background: white; padding: 20px; border-radius: 16px; border: 1.5px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .card-emp:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+        .card-emp-titulo { font-weight: 900; font-size: 15px; color: #1e293b; margin-bottom: 8px; padding-right: 28px; }
+        .card-emp-desc { font-size: 13px; color: #475569; margin-bottom: 10px; line-height: 1.5; white-space: pre-line; }
 
-        /* FOOTER HABITUAL */
-        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; border-top: 1px solid #e2e8f0; margin-top: 40px; }
+        /* Compartidos */
+        .btn-wa-card { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; padding: 10px; background: #25d366; color: white; border-radius: 8px; text-decoration: none; font-size: 13px; font-weight: 700; transition: background 0.2s; margin-top: 12px; }
+        .btn-wa-card:hover { background: #128c7e; }
+        .btn-borrar { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: all 0.2s; }
+        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); }
+
+        /* Viajes: recurrencia */
+        .recur-opts { display: flex; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .recur-opts label { display: flex; align-items: center; gap: 5px; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 8px; padding: 7px 12px; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.2s; }
+        .recur-opts input[type="radio"] { width: auto; margin: 0; accent-color: #0d7a68; }
+        .recur-opts label:has(input:checked) { background: #dcfdf4; border-color: #0d7a68; color: #0a5c4f; }
+        .dias-semana { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+        .dias-semana label { display: flex; flex-direction: column; align-items: center; gap: 3px; background: #f1f5f9; border: 2px solid #cbd5e1; border-radius: 8px; padding: 7px 10px; cursor: pointer; font-size: 12px; font-weight: 700; min-width: 38px; transition: all 0.2s; }
+        .dias-semana input[type="checkbox"] { width: auto; margin: 0; accent-color: #0d7a68; }
+        .dias-semana label:has(input:checked) { background: #dcfdf4; border-color: #0d7a68; color: #0a5c4f; }
+
+        /* Actividades: fecha opcional */
+        .fecha-toggle { display: flex; align-items: center; gap: 10px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 8px; padding: 10px 14px; margin-bottom: 10px; cursor: pointer; }
+        .fecha-toggle input[type="checkbox"] { width: 16px; height: 16px; accent-color: #0d7a68; flex-shrink: 0; margin: 0; }
+        .fecha-toggle label { font-size: 14px; font-weight: 500; color: #64748b; cursor: pointer; }
+        .fecha-toggle.activo { border-color: #0d7a68; background: #f0fdf9; }
+        .fecha-toggle.activo label { color: #0a5c4f; }
+
+        /* Filtros actividades */
+        .filtros-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+        .filtro-pill { padding: 6px 14px; border-radius: 20px; border: 1.5px solid #e2e8f0; background: white; font-size: 12px; font-weight: 700; color: #64748b; cursor: pointer; transition: all 0.15s; }
+        .filtro-pill:hover, .filtro-pill.activo { border-color: #0d7a68; color: white; background: #0d7a68; }
+
+        /* img status */
+        .img-status { font-size: 12px; margin: -6px 0 10px 2px; min-height: 16px; }
+        .img-status.loading { color: #0d7a68; }
+        .img-status.ok  { color: #059669; }
+        .img-status.err { color: #dc2626; }
+        .img-preview-wrap { margin-bottom: 10px; display: none; }
+        .img-preview-wrap img { width: 100%; max-height: 180px; object-fit: cover; border-radius: 8px; border: 1px solid #e2e8f0; }
+
+        /* oculto */
+        .oculto { display: none !important; }
+
+        /* modal foto */
+        #modalFoto { display:none; position:fixed; z-index:999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); justify-content:center; align-items:center; }
+        #modalFoto img { max-width:90%; max-height:80%; border-radius:8px; }
+
+        .empty-state { grid-column:1/-1; text-align:center; padding:40px 20px; color:#94a3b8; font-size:15px; }
+        .empty-icon { font-size:30px; margin-bottom:8px; }
+
+        .footer { text-align:center; padding:25px; color:#64748b; font-size:12px; border-top:1px solid #e2e8f0; margin-top:40px; }
     </style>
 </head>
 <body>
@@ -92,126 +175,626 @@
 <div class="hero">
     <header class="header">
         <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera">
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="">
             <span class="header-name">infoespinar.com</span>
         </a>
     </header>
-    <h1 class="hero-title">Espacio Social</h1>
-    <p class="hero-sub">Conectando vecinos, viajes, deporte y empleo en el municipio</p>
+    <h1 class="hero-title">Espacio Comunidad</h1>
+    <p class="hero-sub">Viajes, actividades, anuncios y empleo local</p>
 </div>
 
 <main class="main-container">
 
-    <div class="tabs-comunidad">
-        <button class="tab-btn active" onclick="cambiarPestaña('coche')"><span>🚗</span>Cocoche</button>
-        <button class="tab-btn" onclick="cambiarPestaña('deportes')"><span>🏃</span>Actividades</button>
-        <button class="tab-btn" onclick="cambiarPestaña('particulares')"><span>🤝</span>Particulares</button>
-        <button class="tab-btn" onclick="cambiarPestaña('empleo')"><span>💼</span>Bolsa Empleo</button>
+    <!-- TABS -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="cambiarTab('coche', this)">
+            <span class="tab-icon">🚗</span>Cocoche
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('actividades', this)">
+            <span class="tab-icon">🏃</span>Actividades
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('particulares', this)">
+            <span class="tab-icon">🤝</span>Particulares
+        </button>
+        <button class="tab-btn" onclick="cambiarTab('empleo', this)">
+            <span class="tab-icon">💼</span>Empleo
+        </button>
     </div>
 
-    <div id="panel-coche" class="seccion-panel active">
-        <div class="buscador-wrap"><span>🔍</span><input class="buscador" type="text" placeholder="Buscar viajes a Madrid, Segovia, conductor..."></div>
-        <button class="btn-toggle">🚗 PUBLICAR VIAJE EN COCOCHE</button>
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PANEL: COCOCHE                                 -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="panel-coche" class="panel active">
+        <div class="buscador-wrap">
+            <span class="buscador-icon">🔍</span>
+            <input class="buscador" id="busca-coche" type="text" placeholder="Buscar por lugar, fecha..." oninput="filtrarViajes()">
+        </div>
+        <button class="btn-publicar" onclick="toggleForm('form-coche')">🚗 PUBLICAR VIAJE</button>
+
+        <div id="form-coche" class="form-card">
+            <p class="form-section-title">¿Cómo viajas?</p>
+            <select id="c-tipo" class="field">
+                <option>🚘 Conductor</option>
+                <option>🙋 Pasajero</option>
+            </select>
+
+            <p class="form-section-title">Ruta</p>
+            <div class="field-row">
+                <div>
+                    <select id="c-desde" class="field" style="margin-bottom:0" onchange="checkOtroViaje('desde')">
+                        <option value="">Desde...</option>
+                        <option>El Espinar</option><option>San Rafael</option><option>LASR</option>
+                        <option>La Estación</option><option>Madrid</option><option>Segovia</option><option>Ávila</option>
+                        <option value="Otro">Otro...</option>
+                    </select>
+                    <input id="c-desde-otro" class="field oculto" style="margin-top:8px;margin-bottom:0" placeholder="Escribe origen">
+                </div>
+                <div>
+                    <select id="c-hasta" class="field" style="margin-bottom:0" onchange="checkOtroViaje('hasta')">
+                        <option value="">Hasta...</option>
+                        <option>El Espinar</option><option>San Rafael</option><option>LASR</option>
+                        <option>La Estación</option><option>Madrid</option><option>Segovia</option><option>Ávila</option>
+                        <option value="Otro">Otro...</option>
+                    </select>
+                    <input id="c-hasta-otro" class="field oculto" style="margin-top:8px;margin-bottom:0" placeholder="Escribe destino">
+                </div>
+            </div>
+
+            <p class="form-section-title" style="margin-top:14px">Hora de salida</p>
+            <input id="c-hora" type="time" class="field">
+
+            <p class="form-section-title">¿Cuándo viajas?</p>
+            <div class="recur-opts">
+                <label><input type="radio" name="c-recur" value="unica" checked onchange="cambiarRecurViaje()"> 📅 Fecha única</label>
+                <label><input type="radio" name="c-recur" value="lv" onchange="cambiarRecurViaje()"> 🗓️ Lunes a Viernes</label>
+                <label><input type="radio" name="c-recur" value="custom" onchange="cambiarRecurViaje()"> ✏️ Personalizada</label>
+            </div>
+            <div id="c-sec-unica"><input id="c-fecha" type="date" class="field"></div>
+            <div id="c-sec-lv" class="oculto"><p style="font-size:12px;color:#64748b;margin-bottom:10px;">Próximas 2 semanas, lunes a viernes.</p></div>
+            <div id="c-sec-custom" class="oculto">
+                <p style="font-size:12px;color:#64748b;margin-bottom:8px;">Selecciona días (próximas 2 semanas):</p>
+                <div class="dias-semana">
+                    <label><input type="checkbox" value="1"> Lun</label>
+                    <label><input type="checkbox" value="2"> Mar</label>
+                    <label><input type="checkbox" value="3"> Mié</label>
+                    <label><input type="checkbox" value="4"> Jue</label>
+                    <label><input type="checkbox" value="5"> Vie</label>
+                    <label><input type="checkbox" value="6"> Sáb</label>
+                    <label><input type="checkbox" value="0"> Dom</label>
+                </div>
+            </div>
+
+            <p class="form-section-title">Tus datos</p>
+            <div class="field-row">
+                <input id="c-nombre" type="text" class="field" style="margin-bottom:0" placeholder="Nombre">
+                <input id="c-telefono" type="tel" class="field" style="margin-bottom:0" placeholder="Teléfono" maxlength="9">
+            </div>
+            <input id="c-email" type="email" class="field" style="margin-top:10px" placeholder="Email (opcional)">
+            <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
+
+            <div class="privacy-box">
+                ⚠️ Revisa los datos antes de publicar.
+                <label><input type="checkbox" id="c-privacidad"><span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span></label>
+            </div>
+            <div id="c-pin"></div>
+            <button class="btn-submit" id="c-btn" onclick="publicarViaje()">PUBLICAR VIAJE</button>
+        </div>
+
         <p class="section-label">Viajes disponibles</p>
-        <div id="grid-coche" class="grid">
-            <div class="card">
-                <button class="btn-borrar">🗑️</button>
-                <div class="card-badge">🚗 Madrid (Moncloa)</div>
-                <div class="card-titulo">Viaje con Carlos</div>
-                <div class="card-meta">
-                    <div class="card-meta-row">📅 <b>Hoy</b> · ⏰ 07:30</div>
-                    <div class="card-meta-row">📍 Sale de: <b>San Rafael (Marquesina)</b></div>
-                    <div class="card-meta-row">👥 Plazas libres: <b>3 libres</b></div>
-                </div>
-                <a href="#" class="btn-action-card">💬 Reservar plaza (WhatsApp)</a>
-            </div>
-        </div>
+        <div id="grid-coche" class="grid"><div class="empty-state"><div class="empty-icon">🚗</div>Cargando viajes...</div></div>
     </div>
 
-    <div id="panel-deportes" class="seccion-panel">
-        <div class="buscador-wrap"><span>🔍</span><input class="buscador" type="text" placeholder="Buscar deportes, nivel, grupo..."></div>
-        <div class="filtros-pills" id="filtrosActividad"></div>
-        <button class="btn-toggle">🏃 CREAR PROPUESTA DEPORTIVA</button>
-        <p class="section-label">Propuestas para apuntarse</p>
-        <div id="grid-deportes" class="grid">
-            <div class="card">
-                <button class="btn-borrar">🗑️</button>
-                <div class="card-badge">🏓🏓 🏓 Pádel</div>
-                <div class="card-titulo">Propuesta de Javi</div>
-                <div class="card-meta">
-                    <div class="card-meta-row">📅 <b>Sábado 06/06</b> · ⏰ 18:00</div>
-                    <div class="card-meta-row">📍 Lugar: <b>Pistas de LASR</b></div>
-                    <div class="card-meta-row">🎯 Nivel: <b>Intermedio</b></div>
-                    <div class="card-meta-row">👥 Busca: <b>3 personas</b></div>
-                </div>
-                <a href="#" class="btn-action-card">💬 Apuntarme (WhatsApp)</a>
-            </div>
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PANEL: ACTIVIDADES                             -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="panel-actividades" class="panel">
+        <div class="buscador-wrap">
+            <span class="buscador-icon">🔍</span>
+            <input class="buscador" id="busca-act" type="text" placeholder="Buscar actividad, lugar..." oninput="filtrarActividades()">
         </div>
+        <div class="filtros-pills" id="filtros-act"></div>
+        <button class="btn-publicar" onclick="toggleForm('form-act')">🏃 PUBLICAR PROPUESTA</button>
+
+        <div id="form-act" class="form-card">
+            <p class="form-section-title">Actividad</p>
+            <select id="a-actividad" class="field">
+                <option value="">Elige una actividad...</option>
+                <option>⚽ Fútbol</option><option>🎾 Tenis</option><option>🏓 Pádel</option>
+                <option>🏀 Baloncesto</option><option>🚵 Ciclismo</option><option>🥾 Senderismo</option>
+                <option>🏋️ Calistenia</option><option>🏊 Natación</option><option>🧘 Yoga / Pilates</option>
+                <option>🎲 Juegos de mesa</option><option>🏐 Voleibol</option><option>🎯 Otra actividad</option>
+            </select>
+
+            <p class="form-section-title">Descripción</p>
+            <textarea id="a-descripcion" class="field" placeholder="Cuéntanos más: qué buscas, nivel, detalles..." rows="3"></textarea>
+
+            <p class="form-section-title">Personas que buscas</p>
+            <input id="a-personas" type="number" class="field" placeholder="Número de personas (ej: 2)" min="1" max="50">
+
+            <p class="form-section-title">Lugar</p>
+            <select id="a-lugar" class="field">
+                <option value="">Zona...</option>
+                <option>El Espinar</option><option>San Rafael</option><option>LASR</option>
+                <option>La Estación</option><option>Zona del río</option><option>Pistas municipales</option><option>A convenir</option>
+            </select>
+
+            <p class="form-section-title">Fecha y hora (opcional)</p>
+            <div class="fecha-toggle" id="a-fecha-toggle" onclick="toggleFechaAct()">
+                <input type="checkbox" id="a-con-fecha" onclick="event.stopPropagation();toggleFechaAct()">
+                <label for="a-con-fecha" onclick="event.stopPropagation();toggleFechaAct()">📅 Tengo una fecha concreta</label>
+            </div>
+            <div id="a-fecha-wrap" class="oculto">
+                <div class="field-row">
+                    <input id="a-fecha" type="date" class="field" style="margin-bottom:0">
+                    <input id="a-hora" type="time" class="field" style="margin-bottom:0">
+                </div>
+            </div>
+
+            <p class="form-section-title" style="margin-top:14px">Tus datos</p>
+            <div class="field-row">
+                <input id="a-nombre" type="text" class="field" style="margin-bottom:0" placeholder="Nombre">
+                <input id="a-telefono" type="tel" class="field" style="margin-bottom:0" placeholder="Teléfono" maxlength="9">
+            </div>
+            <input id="a-email" type="email" class="field" style="margin-top:10px" placeholder="Email (opcional)">
+            <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
+
+            <div class="privacy-box">
+                ⚠️ Revisa los datos antes de publicar.
+                <label><input type="checkbox" id="a-privacidad"><span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span></label>
+            </div>
+            <div id="a-pin"></div>
+            <button class="btn-submit" id="a-btn" onclick="publicarActividad()">PUBLICAR PROPUESTA</button>
+        </div>
+
+        <p class="section-label">Propuestas activas</p>
+        <div id="grid-act" class="grid"><div class="empty-state"><div class="empty-icon">🏃</div>Cargando propuestas...</div></div>
     </div>
 
-    <div id="panel-particulares" class="seccion-panel">
-        <div class="buscador-wrap"><span>🔍</span><input class="buscador" type="text" placeholder="Buscar muebles, clases, reformas..."></div>
-        <button class="btn-toggle">🤝 PUBLICAR ANUNCIO CLASIFICADO</button>
-        <p class="section-label">Últimos anuncios particulares</p>
-        <div id="grid-particulares" class="grid">
-            <div class="card">
-                <button class="btn-borrar">🗑️</button>
-                <div class="card-badge">🏡 Segunda mano</div>
-                <div class="card-titulo">Vendo Bicicleta de Montaña</div>
-                <div class="card-meta">
-                    <div class="card-meta-row">💰 Precio: <b>150€</b></div>
-                    <div class="card-meta-row">📍 Ubicación: <b>El Espinar</b></div>
-                    <div class="card-meta-row">📝 Estado impecable, poco uso. Neumáticos nuevos.</div>
-                </div>
-                <a href="#" class="btn-action-card">💬 Contactar con vendedor</a>
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PANEL: PARTICULARES                            -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="panel-particulares" class="panel">
+        <p style="text-align:center;color:#64748b;font-size:12px;margin-bottom:14px;">* Los anuncios se eliminan automáticamente tras 20 días.</p>
+        <button class="btn-publicar" onclick="toggleForm('form-part')">🤝 PUBLICAR ANUNCIO</button>
+
+        <div id="form-part" class="form-card">
+            <input id="p-titulo" type="text" class="field" placeholder="TÍTULO EN MAYÚSCULAS" required oninput="this.value=this.value.toUpperCase()">
+            <select id="p-estado" class="field">
+                <option value="">Estado...</option>
+                <option>A ESTRENAR</option><option>COMO NUEVO</option><option>BUEN ESTADO</option><option>USADO</option><option>PARA RESTAURAR</option>
+            </select>
+            <textarea id="p-descripcion" class="field" placeholder="Descripción" rows="3"></textarea>
+            <input id="p-precio" type="number" class="field" placeholder="Precio (€)">
+            <select id="p-recogida" class="field">
+                <option value="">Zona de recogida...</option>
+                <option>EL ESPINAR</option><option>SAN RAFAEL</option><option>LASR</option><option>LA ESTACIÓN</option>
+            </select>
+            <input id="p-contacto" type="tel" class="field" placeholder="Teléfono (9 cifras)" pattern="[0-9]{9}" maxlength="9">
+            <input id="p-email" type="email" class="field" placeholder="Email (opcional)">
+            <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
+            <input id="p-imagen" type="file" class="field" accept="image/*" onchange="previsualizarImg(this)">
+            <div class="img-preview-wrap" id="p-img-wrap"><img id="p-img-prev" src="" alt=""></div>
+            <div class="img-status" id="p-img-status"></div>
+            <div class="privacy-box">
+                ⚠️ Revisa los datos antes de publicar.
+                <label><input type="checkbox" id="p-privacidad"><span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span></label>
             </div>
+            <div id="p-pin"></div>
+            <button class="btn-submit" id="p-btn" onclick="publicarParticular()">ENVIAR ANUNCIO</button>
         </div>
+
+        <p class="section-label">Últimos anuncios</p>
+        <div id="grid-part" class="grid"><div class="empty-state"><div class="empty-icon">🤝</div>Cargando anuncios...</div></div>
     </div>
 
-    <div id="panel-empleo" class="seccion-panel">
-        <div class="buscador-wrap"><span>🔍</span><input class="buscador" type="text" placeholder="Buscar camarero, dependiente, fontanero..."></div>
-        <button class="btn-toggle">💼 PUBLICAR OFERTA DE EMPLEO</button>
-        <p class="section-label">Ofertas de trabajo locales</p>
-        <div id="grid-empleo" class="grid">
-            <div class="card">
-                <button class="btn-borrar">🗑️</button>
-                <div class="card-badge">💼 Hostelería</div>
-                <div class="card-titulo">Se busca Camarero/a de Barra</div>
-                <div class="card-meta">
-                    <div class="card-meta-row">🏢 Empresa: <b>Restaurante Local</b></div>
-                    <div class="card-meta-row">⏱️ Jornada: <b>Completa (Fines de semana)</b></div>
-                    <div class="card-meta-row">📍 Zona: <b>La Estación</b></div>
-                </div>
-                <a href="#" class="btn-action-card">💬 Enviar currículum / Contactar</a>
-            </div>
+    <!-- ══════════════════════════════════════════════ -->
+    <!-- PANEL: EMPLEO                                  -->
+    <!-- ══════════════════════════════════════════════ -->
+    <div id="panel-empleo" class="panel">
+        <div class="buscador-wrap">
+            <span class="buscador-icon">🔍</span>
+            <input class="buscador" id="busca-emp" type="text" placeholder="Buscar puesto, zona..." oninput="filtrarEmpleo()">
         </div>
+        <p style="text-align:center;color:#64748b;font-size:12px;margin-bottom:14px;">* Los anuncios se eliminan automáticamente tras 20 días.</p>
+        <button class="btn-publicar" onclick="toggleForm('form-emp')">💼 PUBLICAR OFERTA / BUSCAR EMPLEO</button>
+
+        <div id="form-emp" class="form-card">
+            <p class="form-section-title">Tipo de anuncio</p>
+            <select id="e-tipo" class="field">
+                <option value="BUSCO">Busco empleo</option>
+                <option value="OFREZCO">Busco personal</option>
+            </select>
+
+            <p class="form-section-title">Puesto</p>
+            <input id="e-titulo" type="text" class="field" placeholder="EJ: CAMARERO/A" oninput="this.value=this.value.toUpperCase()">
+
+            <p class="form-section-title">Lugar de trabajo</p>
+            <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:12px;margin-bottom:10px;">
+                <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="El Espinar" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> El Espinar</label>
+                <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="San Rafael" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> San Rafael</label>
+                <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="LASR" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> LASR</label>
+                <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="La Estación" class="e-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> La Estación</label>
+                <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="Otro" class="e-lugar" onchange="checkLugarEmp()" style="width:auto;margin:0;accent-color:#0d7a68"> Otro</label>
+                <input id="e-lugar-otro" class="field oculto" style="margin-top:6px;margin-bottom:0" placeholder="Escribe el lugar">
+            </div>
+
+            <p class="form-section-title">Jornada</p>
+            <select id="e-jornada" class="field">
+                <option>Jornada Completa</option><option>Jornada Parcial</option>
+                <option>Fines de Semana</option><option>A Convenir</option>
+            </select>
+
+            <p class="form-section-title">Descripción</p>
+            <textarea id="e-descripcion" class="field" placeholder="Descripción del puesto o perfil" rows="3"></textarea>
+
+            <p class="form-section-title">Contacto</p>
+            <input id="e-telefono" type="tel" class="field" placeholder="Teléfono (9 cifras)" pattern="[0-9]{9}" maxlength="9">
+            <input id="e-email" type="email" class="field" placeholder="Email (opcional)">
+            <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
+
+            <div class="privacy-box">
+                ⚠️ Revisa los datos antes de publicar.
+                <label><input type="checkbox" id="e-privacidad"><span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a>.</span></label>
+            </div>
+            <div id="e-pin"></div>
+            <button class="btn-submit" id="e-btn" onclick="publicarEmpleo()">PUBLICAR ANUNCIO</button>
+        </div>
+
+        <p class="section-label">Ofertas disponibles</p>
+        <div id="grid-emp" class="grid"><div class="empty-state"><div class="empty-icon">💼</div>Cargando ofertas...</div></div>
     </div>
 
 </main>
 
+<div id="modalFoto" onclick="this.style.display='none'"><img id="modalFotoImg" src=""></div>
+
 <footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
-// LÓGICA DE CONTROL DE PESTAÑAS (SWAP)
-function cambiarPestaña(idSeccion) {
-    // 1. Apagar todas las pestañas visuales
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    // 2. Ocultar todos los paneles de tarjetas
-    document.querySelectorAll('.seccion-panel').forEach(panel => panel.classList.remove('active'));
+/* ══════════════════════════════════════════════════════════════════
+   URLs DE APPSCRIPT — SUSTITUYE CON LAS TUYAS
+══════════════════════════════════════════════════════════════════ */
+const URL_COCHE       = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
+const URL_ACTIVIDADES = "PEGA_URL_APPSCRIPT_ACTIVIDADES";
+const URL_PARTICULARES= "https://script.google.com/macros/s/AKfycbztGr52OqpIC2cgmA_I_qfPXjOlkkskkieCxUbRwkbKgdAhPrGz_mhqRfbwv_3o20A7/exec";
+const URL_EMPLEO      = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
+const IMGBB_KEY       = "889d9ccbbcd91efdb92e1cdaee18b11d";
 
-    // 3. Activar el botón de la pestaña pulsada
-    const botonActivo = event.currentTarget;
-    botonActivo.classList.add('active');
+/* ── ESTADO LAZY ── */
+const cargado = { coche: false, actividades: false, particulares: false, empleo: false };
+let viajesData = [], actData = [], empData = [], filtroAct = null;
 
-    // 4. Mostrar el panel correspondiente
-    document.getElementById('panel-' + idSeccion).classList.add('active');
-    
-    // Aquí puedes disparar la carga automática de datos de la hoja correspondiente si quieres
-    console.log("Cargando base de datos de: " + idSeccion);
+/* ── TABS ── */
+function cambiarTab(id, btn) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + id).classList.add('active');
+    if (!cargado[id]) { cargado[id] = true; cargarSeccion(id); }
 }
 
-// Aquí debajo irían tus funciones habituales de cargar(), filtrar(), renderizar() 
-// mapeando los datos de cada hoja a su grid respectivo (grid-coche, grid-deportes, etc.)
+function cargarSeccion(id) {
+    if (id === 'coche')        cargarViajes();
+    else if (id === 'actividades') cargarActividades();
+    else if (id === 'particulares') cargarParticulares();
+    else if (id === 'empleo')  cargarEmpleo();
+}
+
+function toggleForm(id) {
+    const f = document.getElementById(id);
+    f.style.display = f.style.display === 'block' ? 'none' : 'block';
+}
+
+/* ── PIN BOX ── */
+function pinHTML(pin, email, extra) {
+    return `<div class="pin-box">
+        <p>🔑 <b>Tu PIN personal es:</b></p>
+        <div class="pin-num">${pin}</div>
+        <button class="btn-copiar-pin" onclick="copiarPin('${pin}',this)">📋 Copiar PIN</button>
+        <p class="pin-aviso">${email ? `✅ PIN enviado a <b>${email}</b>` : '⚠️ Guarda este PIN, no podrás recuperarlo.'}<br>${extra||''}</p>
+    </div>`;
+}
+
+function copiarPin(pin, btn) {
+    navigator.clipboard.writeText(pin).then(() => {
+        btn.textContent = '✅ ¡Copiado!'; btn.classList.add('copiado');
+        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
+    });
+}
+
+/* ════════════════════════════════════════════════════════════════
+   COCOCHE
+════════════════════════════════════════════════════════════════ */
+function checkOtroViaje(campo) {
+    const val = document.getElementById('c-' + campo).value;
+    document.getElementById('c-' + campo + '-otro').classList.toggle('oculto', val !== 'Otro');
+}
+function cambiarRecurViaje() {
+    const val = document.querySelector('input[name="c-recur"]:checked').value;
+    document.getElementById('c-sec-unica').classList.toggle('oculto', val !== 'unica');
+    document.getElementById('c-sec-lv').classList.toggle('oculto', val !== 'lv');
+    document.getElementById('c-sec-custom').classList.toggle('oculto', val !== 'custom');
+}
+function generarFechas(dias) {
+    const r = [], hoy = new Date(); hoy.setHours(0,0,0,0);
+    for (let i = 0; i <= 14; i++) {
+        const d = new Date(hoy); d.setDate(hoy.getDate() + i);
+        if (dias.includes(d.getDay())) r.push(d.toISOString().split('T')[0]);
+    }
+    return r;
+}
+function filtrarViajes() {
+    const t = document.getElementById('busca-coche').value.toLowerCase();
+    renderViajes(viajesData.filter(v => [v.desde,v.hasta,v.fecha,v.hora,v.nombre,v.tipo].some(c => String(c||'').toLowerCase().includes(t))));
+}
+async function cargarViajes() {
+    try {
+        const r = await fetch(URL_COCHE);
+        viajesData = await r.json();
+        viajesData.sort((a,b) => new Date(a.fecha+'T'+a.hora) - new Date(b.fecha+'T'+b.hora));
+        renderViajes(viajesData);
+    } catch { document.getElementById('grid-coche').innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+}
+function renderViajes(data) {
+    document.getElementById('grid-coche').innerHTML = data.length ? data.map(v => {
+        const tel = String(v.telefono).replace(/\s+/g,'');
+        const wa = tel.startsWith('34') ? tel : '34'+tel;
+        const fFmt = v.fecha ? v.fecha.split('-').reverse().join('/') : '';
+        return `<div class="card-viaje" id="card-v-${v.id}">
+            <button class="btn-borrar" onclick="borrarViaje('${v.id}')">🗑️</button>
+            <div class="card-viaje-tipo">${v.tipo}</div>
+            <div class="card-viaje-ruta">${v.desde} ➔ ${v.hasta}</div>
+            <div class="card-viaje-meta">📅 <b>${fFmt}</b> &nbsp; ⏰ <b>${v.hora}</b></div>
+            <div class="card-viaje-meta">👤 <b>${v.nombre}</b></div>
+            <a class="btn-wa-card" href="https://wa.me/${wa}" target="_blank">💬 Escribir a ${v.nombre}</a>
+        </div>`;
+    }).join('') : '<div class="empty-state"><div class="empty-icon">🚗</div>No hay viajes disponibles.</div>';
+}
+async function borrarViaje(id) {
+    const pin = prompt('🗑️ Introduce tu PIN para borrar este viaje:'); if (!pin) return;
+    const r = await fetch(`${URL_COCHE}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+    const d = await r.json();
+    if (d.status==='ok') { document.getElementById('card-v-'+id)?.remove(); viajesData=viajesData.filter(v=>v.id!==id); alert('✅ Viaje eliminado.'); }
+    else alert('❌ PIN incorrecto.');
+}
+async function publicarViaje() {
+    if (!document.getElementById('c-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
+    const desde = document.getElementById('c-desde').value === 'Otro' ? document.getElementById('c-desde-otro').value : document.getElementById('c-desde').value;
+    const hasta = document.getElementById('c-hasta').value === 'Otro' ? document.getElementById('c-hasta-otro').value : document.getElementById('c-hasta').value;
+    if (!desde||!hasta) { alert('Selecciona origen y destino.'); return; }
+    if (desde===hasta) { alert('Origen y destino no pueden ser iguales.'); return; }
+    const recur = document.querySelector('input[name="c-recur"]:checked').value;
+    let fechas = [];
+    if (recur==='unica') {
+        const f = document.getElementById('c-fecha').value;
+        if (!f) { alert('Selecciona una fecha.'); return; }
+        const hoy = new Date(); hoy.setHours(0,0,0,0);
+        if (new Date(f+'T00:00:00') < hoy) { alert('No puedes usar una fecha pasada.'); return; }
+        fechas = [f];
+    } else if (recur==='lv') {
+        fechas = generarFechas([1,2,3,4,5]);
+    } else {
+        const ch = [...document.querySelectorAll('#c-sec-custom input:checked')];
+        if (!ch.length) { alert('Selecciona al menos un día.'); return; }
+        fechas = generarFechas(ch.map(c => parseInt(c.value)));
+    }
+    const btn = document.getElementById('c-btn'); btn.disabled=true; btn.textContent='Publicando...';
+    const base = { tipo: document.getElementById('c-tipo').value, desde, hasta, hora: document.getElementById('c-hora').value, nombre: document.getElementById('c-nombre').value, telefono: document.getElementById('c-telefono').value, email: document.getElementById('c-email').value.trim() };
+    const payload = fechas.map(f => ({...base, fecha: f}));
+    try {
+        const r = await fetch(URL_COCHE, { method:'POST', body: JSON.stringify(payload.length===1 ? payload[0] : payload) });
+        const d = await r.json();
+        document.getElementById('c-pin').innerHTML = pinHTML(d.pin, base.email, d.total>1 ? `Se publicaron <b>${d.total} viajes</b>.` : '');
+        btn.textContent='✅ Publicado'; await cargarViajes();
+    } catch { alert('Error al publicar.'); btn.disabled=false; btn.textContent='PUBLICAR VIAJE'; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ACTIVIDADES
+════════════════════════════════════════════════════════════════ */
+const EMOJI_ACT = {'fútbol':'⚽','tenis':'🎾','pádel':'🏓','baloncesto':'🏀','ciclismo':'🚵','senderismo':'🥾','calistenia':'🏋️','natación':'🏊','yoga / pilates':'🧘','juegos de mesa':'🎲','voleibol':'🏐','otra actividad':'🎯'};
+function emojiAct(n) { const k=n.replace(/^[^\w]*/,'').toLowerCase().trim(); for(const[a,e] of Object.entries(EMOJI_ACT)) if(k.includes(a)) return e; return '🏃'; }
+
+function toggleFechaAct() {
+    const cb = document.getElementById('a-con-fecha');
+    document.getElementById('a-fecha-wrap').classList.toggle('oculto', !cb.checked);
+    document.getElementById('a-fecha-toggle').classList.toggle('activo', cb.checked);
+}
+function filtrarActividades() {
+    const t = document.getElementById('busca-act').value.toLowerCase();
+    const f = actData.filter(p => {
+        const txt = [p.actividad,p.descripcion,p.lugar,p.nombre].some(c=>String(c||'').toLowerCase().includes(t));
+        return txt && (!filtroAct || p.actividad===filtroAct);
+    });
+    renderActividades(f);
+}
+function construirFiltrosAct(data) {
+    const acts = [...new Set(data.map(p=>p.actividad).filter(Boolean))];
+    const c = document.getElementById('filtros-act'); c.innerHTML='';
+    const todos = document.createElement('button'); todos.className='filtro-pill activo'; todos.textContent='Todas';
+    todos.onclick = () => { filtroAct=null; c.querySelectorAll('.filtro-pill').forEach(p=>p.classList.remove('activo')); todos.classList.add('activo'); filtrarActividades(); };
+    c.appendChild(todos);
+    acts.forEach(a => {
+        const pill = document.createElement('button'); pill.className='filtro-pill'; pill.textContent=a;
+        pill.onclick = () => { filtroAct=a; c.querySelectorAll('.filtro-pill').forEach(p=>p.classList.remove('activo')); pill.classList.add('activo'); filtrarActividades(); };
+        c.appendChild(pill);
+    });
+}
+async function cargarActividades() {
+    try {
+        const r = await fetch(URL_ACTIVIDADES); const text = await r.text(); actData = JSON.parse(text);
+        actData.sort((a,b) => { if(a.fecha&&b.fecha) return new Date(a.fecha+'T'+(a.hora||'00:00'))-new Date(b.fecha+'T'+(b.hora||'00:00')); if(a.fecha) return -1; if(b.fecha) return 1; return 0; });
+        construirFiltrosAct(actData); renderActividades(actData);
+    } catch { document.getElementById('grid-act').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+}
+function renderActividades(data) {
+    const DIAS = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    document.getElementById('grid-act').innerHTML = data.length ? data.map(p => {
+        const tel=String(p.telefono).replace(/\s+/g,''); const wa=tel.startsWith('34')?tel:'34'+tel;
+        const emoji=emojiAct(p.actividad||'');
+        const fechaHtml = p.fecha ? `<div>📅 <b>${p.fecha.split('-').reverse().join('/')}</b> (${DIAS[new Date(p.fecha+'T12:00:00').getDay()]})${p.hora?' · ⏰ '+p.hora:''}</div>` : `<div style="color:#94a3b8">📅 Sin fecha fija</div>`;
+        return `<div class="card-act" id="card-a-${p.id}">
+            <button class="btn-borrar" onclick="borrarActividad('${p.id}')">🗑️</button>
+            <div class="card-act-badge">${emoji} ${p.actividad}</div>
+            <div class="card-act-titulo">${p.descripcion||p.actividad}</div>
+            <div class="card-act-meta">
+                ${fechaHtml}
+                <div>📍 <b>${p.lugar}</b></div>
+                ${p.personas?`<div>👥 Busca <b>${p.personas} ${p.personas==1?'persona':'personas'}</b></div>`:''}
+                <div>👤 <b>${p.nombre}</b></div>
+            </div>
+            <a class="btn-wa-card" href="https://wa.me/${wa}" target="_blank">💬 Apuntarme con ${p.nombre}</a>
+        </div>`;
+    }).join('') : '<div class="empty-state"><div class="empty-icon">🏃</div>No hay propuestas activas.</div>';
+}
+async function borrarActividad(id) {
+    const pin=prompt('🗑️ Introduce tu PIN para borrar esta propuesta:'); if(!pin) return;
+    const r=await fetch(`${URL_ACTIVIDADES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+    const d=await r.json();
+    if(d.status==='ok'){document.getElementById('card-a-'+id)?.remove();actData=actData.filter(p=>p.id!==id);alert('✅ Propuesta eliminada.');}
+    else alert('❌ PIN incorrecto.');
+}
+async function publicarActividad() {
+    if (!document.getElementById('a-privacidad').checked) { alert('Acepta la política de privacidad.'); return; }
+    const actividad=document.getElementById('a-actividad').value; if(!actividad){alert('Selecciona una actividad.');return;}
+    const lugar=document.getElementById('a-lugar').value; if(!lugar){alert('Selecciona una zona.');return;}
+    const nombre=document.getElementById('a-nombre').value.trim(); if(!nombre){alert('Introduce tu nombre.');return;}
+    const telefono=document.getElementById('a-telefono').value.trim(); if(!telefono){alert('Introduce tu teléfono.');return;}
+    const conFecha=document.getElementById('a-con-fecha').checked;
+    const fecha=conFecha?document.getElementById('a-fecha').value:'';
+    const hora=conFecha?document.getElementById('a-hora').value:'';
+    if(conFecha&&!fecha){alert('Selecciona una fecha.');return;}
+    if(conFecha){const hoy=new Date();hoy.setHours(0,0,0,0);if(new Date(fecha+'T00:00:00')<hoy){alert('No puedes usar una fecha pasada.');return;}}
+    const btn=document.getElementById('a-btn'); btn.disabled=true; btn.textContent='Publicando...';
+    const email=document.getElementById('a-email').value.trim();
+    const params=new URLSearchParams({actividad,descripcion:document.getElementById('a-descripcion').value.trim(),personas:document.getElementById('a-personas').value,lugar,nombre,telefono,email,fecha,hora});
+    try {
+        const r=await fetch(URL_ACTIVIDADES,{method:'POST',body:params,redirect:'follow'});
+        const d=JSON.parse(await r.text());
+        if(d.status==='ok'){document.getElementById('a-pin').innerHTML=pinHTML(d.pin,email,'');btn.textContent='✅ Publicado';await cargarActividades();}
+        else{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR PROPUESTA';}
+    } catch{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR PROPUESTA';}
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PARTICULARES
+════════════════════════════════════════════════════════════════ */
+function previsualizarImg(input) {
+    const file=input.files[0]; if(!file) return;
+    const reader=new FileReader();
+    reader.onload=e=>{document.getElementById('p-img-prev').src=e.target.result;document.getElementById('p-img-wrap').style.display='block';};
+    reader.readAsDataURL(file);
+}
+async function subirImgBB(file) {
+    const st=document.getElementById('p-img-status'); st.textContent='Subiendo imagen…'; st.className='img-status loading';
+    const fd=new FormData(); fd.append('image',file);
+    const r=await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`,{method:'POST',body:fd});
+    const d=await r.json();
+    if(d.success){st.textContent='✓ Imagen subida';st.className='img-status ok';return d.data.url;}
+    st.textContent='✗ Error al subir';st.className='img-status err'; return null;
+}
+async function cargarParticulares() {
+    try {
+        const r=await fetch(URL_PARTICULARES); const d=await r.json();
+        d.sort(()=>Math.random()-0.5);
+        document.getElementById('grid-part').innerHTML = d.length ? d.map(a=>`
+            <div class="card-part" id="card-p-${a.id}">
+                <div class="foto-wrap">
+                    <img src="${a.imagen}" class="foto-articulo" onclick="ampliarFoto('${a.imagen}')">
+                    <button class="btn-borrar-foto" onclick="borrarParticular('${a.id}')">🗑️</button>
+                </div>
+                <div class="card-part-body">
+                    <div class="card-part-titulo">${a.titulo}</div>
+                    <div class="card-part-desc">${a.descripcion}</div>
+                    <div class="card-part-precio">${a.precio}€</div>
+                    <div class="burbujas"><span class="tag">📍 ${a.recogida}</span><span class="tag">📦 ${a.estado}</span></div>
+                    <div class="botones-contacto">
+                        <a href="tel:${a.contacto}" class="btn-llamar">LLAMAR</a>
+                        <a href="https://wa.me/34${a.contacto}" class="btn-wa-part" target="_blank">WHATSAPP</a>
+                    </div>
+                </div>
+            </div>`).join('') : '<div class="empty-state"><div class="empty-icon">🤝</div>No hay anuncios.</div>';
+    } catch { document.getElementById('grid-part').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+}
+function ampliarFoto(src){document.getElementById('modalFotoImg').src=src;document.getElementById('modalFoto').style.display='flex';}
+async function borrarParticular(id) {
+    const pin=prompt('🗑️ Introduce tu PIN para borrar este anuncio:'); if(!pin) return;
+    const r=await fetch(`${URL_PARTICULARES}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+    const d=await r.json();
+    if(d.status==='ok'){document.getElementById('card-p-'+id)?.remove();alert('✅ Anuncio eliminado.');}
+    else alert('❌ PIN incorrecto.');
+}
+async function publicarParticular() {
+    if(!document.getElementById('p-privacidad').checked){alert('Acepta la política de privacidad.');return;}
+    const btn=document.getElementById('p-btn'); btn.disabled=true; btn.textContent='Publicando...';
+    const file=document.getElementById('p-imagen').files[0];
+    if(!file){alert('Selecciona una imagen.');btn.disabled=false;btn.textContent='ENVIAR ANUNCIO';return;}
+    const imagenUrl=await subirImgBB(file);
+    if(!imagenUrl){btn.disabled=false;btn.textContent='ENVIAR ANUNCIO';return;}
+    const email=document.getElementById('p-email').value.trim();
+    const params=new URLSearchParams({titulo:document.getElementById('p-titulo').value,estado:document.getElementById('p-estado').value,descripcion:document.getElementById('p-descripcion').value,precio:document.getElementById('p-precio').value,contacto:document.getElementById('p-contacto').value,recogida:document.getElementById('p-recogida').value,email,imagenUrl});
+    const r=await fetch(URL_PARTICULARES,{method:'POST',body:params,redirect:'follow'});
+    const d=JSON.parse(await r.text());
+    if(d.status==='ok'){document.getElementById('p-pin').innerHTML=pinHTML(d.pin,email,'');btn.textContent='✅ Publicado';await cargarParticulares();}
+    else{alert(d.status==='ANTIFLOOD'?'Antiflood: espera 5 minutos.':'Error al publicar.');btn.disabled=false;btn.textContent='ENVIAR ANUNCIO';}
+}
+
+/* ════════════════════════════════════════════════════════════════
+   EMPLEO
+════════════════════════════════════════════════════════════════ */
+function checkLugarEmp() {
+    const otro=document.querySelector('.e-lugar[value="Otro"]').checked;
+    document.getElementById('e-lugar-otro').classList.toggle('oculto',!otro);
+}
+function filtrarEmpleo() {
+    const t=document.getElementById('busca-emp').value.toLowerCase();
+    renderEmpleo(empData.filter(a=>[a.titulo,a.descripcion,a.jornada,a.lugar].some(c=>String(c||'').toLowerCase().includes(t))));
+}
+async function cargarEmpleo() {
+    try {
+        const r=await fetch(URL_EMPLEO); const d=await r.json();
+        empData=d.reverse(); renderEmpleo(empData);
+    } catch { document.getElementById('grid-emp').innerHTML='<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar.</div>'; }
+}
+function renderEmpleo(data) {
+    document.getElementById('grid-emp').innerHTML = data.length ? data.map(a=>`
+        <div class="card-emp" id="card-e-${a.id}">
+            <button class="btn-borrar" onclick="borrarEmpleo('${a.id}')">🗑️</button>
+            <div class="card-emp-titulo">${a.titulo}</div>
+            <div class="card-emp-desc">${a.descripcion}</div>
+            <div class="burbujas">
+                <span class="tag">⏱️ ${a.jornada}</span>
+                ${a.lugar.split(', ').map(l=>`<span class="tag">📍 ${l}</span>`).join('')}
+            </div>
+            <a class="btn-wa-card" href="https://wa.me/34${a.telefono}" target="_blank">💬 Contactar</a>
+        </div>`).join('') : '<div class="empty-state"><div class="empty-icon">💼</div>No hay ofertas.</div>';
+}
+async function borrarEmpleo(id) {
+    const pin=prompt('🗑️ Introduce tu PIN para borrar este anuncio:'); if(!pin) return;
+    const r=await fetch(`${URL_EMPLEO}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+    const d=await r.json();
+    if(d.status==='ok'){document.getElementById('card-e-'+id)?.remove();empData=empData.filter(a=>a.id!==id);alert('✅ Anuncio eliminado.');}
+    else alert('❌ PIN incorrecto.');
+}
+async function publicarEmpleo() {
+    if(!document.getElementById('e-privacidad').checked){alert('Acepta la política de privacidad.');return;}
+    const titulo=document.getElementById('e-titulo').value.trim(); if(!titulo){alert('Introduce el puesto.');return;}
+    const telefono=document.getElementById('e-telefono').value.trim(); if(!telefono){alert('Introduce el teléfono.');return;}
+    const lugares=[...document.querySelectorAll('.e-lugar:checked')].map(c=>c.value==='Otro'?document.getElementById('e-lugar-otro').value:c.value);
+    if(!lugares.length){alert('Selecciona al menos un lugar.');return;}
+    const btn=document.getElementById('e-btn'); btn.disabled=true; btn.textContent='Publicando...';
+    const email=document.getElementById('e-email').value.trim();
+    const payload={buscasUOfreces:document.getElementById('e-tipo').value,titulo,lugar:lugares.join(', '),jornada:document.getElementById('e-jornada').value,descripcion:document.getElementById('e-descripcion').value,telefono,email};
+    try {
+        const r=await fetch(URL_EMPLEO,{method:'POST',body:JSON.stringify(payload),redirect:'follow'});
+        const d=JSON.parse(await r.text());
+        if(d.resultado==='ok'||d.status==='ok'){document.getElementById('e-pin').innerHTML=pinHTML(d.pin,email,'');btn.textContent='✅ Publicado';await cargarEmpleo();}
+        else{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR ANUNCIO';}
+    } catch{alert('Error al publicar.');btn.disabled=false;btn.textContent='PUBLICAR ANUNCIO';}
+}
+
+/* ── INICIO: carga pestaña activa (coche) ── */
+cargarViajes();
 </script>
 </body>
 </html>
