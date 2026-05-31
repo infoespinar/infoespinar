@@ -486,8 +486,8 @@ grupos[key].push(v);
 grid.innerHTML=Object.entries(grupos).map(([id,viajes],i)=>{
 const base=viajes[0];
 
-const safeId = (id && id.trim()!=='')
-    ? id
+const safeId = (id ? String(id) : (base.nombre+base.desde+base.hasta));
+   ? id
     : btoa(base.nombre+base.desde+base.hasta).replace(/=/g,'');
 
 const fechas=viajes.map(v=>`
@@ -618,6 +618,74 @@ Contactar
 }).join('');
 }
 
+/* ══════════════════════════════════════════════════
+   CARGA INICIAL (FALTA EN TU CÓDIGO)
+══════════════════════════════════════════════════ */
+
+window.onload = () => {
+    cargarTodo();
+};
+
+function cargarTodo(){
+    cargarViajes();
+    cargarActividades();
+    cargarParticulares();
+    cargarEmpleo();
+}
+
+/* ── FETCH GENERALES ── */
+
+function cargarViajes(){
+    fetch(URL_COCHE)
+        .then(r => r.json())
+        .then(data => {
+            viajesData = Array.isArray(data) ? data : [];
+            renderViajes(viajesData);
+        })
+        .catch(() => {
+            document.getElementById('grid-coche').innerHTML =
+                '<div class="empty-state">Error cargando viajes</div>';
+        });
+}
+
+function cargarActividades(){
+    fetch(URL_ACTIVIDADES)
+        .then(r => r.json())
+        .then(data => {
+            actData = Array.isArray(data) ? data : [];
+            renderActividades(actData);
+        })
+        .catch(() => {
+            document.getElementById('grid-act').innerHTML =
+                '<div class="empty-state">Error cargando actividades</div>';
+        });
+}
+
+function cargarParticulares(){
+    fetch(URL_PARTICULARES)
+        .then(r => r.json())
+        .then(data => {
+            renderParticulares(Array.isArray(data) ? data : []);
+        })
+        .catch(() => {
+            document.getElementById('grid-part').innerHTML =
+                '<div class="empty-state">Error cargando anuncios</div>';
+        });
+}
+
+function cargarEmpleo(){
+    fetch(URL_EMPLEO)
+        .then(r => r.json())
+        .then(data => {
+            empData = Array.isArray(data) ? data : [];
+            renderEmpleo(empData);
+        })
+        .catch(() => {
+            document.getElementById('grid-emp').innerHTML =
+                '<div class="empty-state">Error cargando empleo</div>';
+        });
+}
+ 
 </script>
 
 </body>
