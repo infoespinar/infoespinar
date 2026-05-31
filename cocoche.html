@@ -696,9 +696,9 @@
         <div id="seccion-unica" class="input-row">
             <input id="fecha" type="date">
 
-            <div class="vuelta-toggle" id="vueltaToggle" onclick="toggleVuelta(event)">
-                <input type="checkbox" id="addVuelta">
-                <label for="addVuelta">🔄 Añadir viaje de vuelta</label>
+            <div class="vuelta-toggle" id="vueltaToggle" onclick="onVueltaDivClick(event)">
+                <input type="checkbox" id="addVuelta" onchange="syncVuelta()">
+                <label for="addVuelta" onclick="event.stopPropagation()">🔄 Añadir viaje de vuelta</label>
             </div>
             <div id="horaVueltaWrap" class="oculto" style="margin-top:8px;">
                 <input id="horaVuelta" type="time" placeholder="Hora de vuelta">
@@ -833,15 +833,20 @@ function checkOtro(id) {
     }
 }
 
-// FIX 2: toggleVuelta recibe el evento para evitar doble disparo
-function toggleVuelta(e) {
-    // Evitar que el click del div propague cuando viene del checkbox
-    if (e && e.target.type === 'checkbox') return;
+// Click en el div (no en el checkbox ni el label): toggle manual
+function onVueltaDivClick(e) {
+    if (e.target.id === 'addVuelta' || e.target.tagName === 'LABEL') return;
     const cb = document.getElementById('addVuelta');
     cb.checked = !cb.checked;
-    document.getElementById('horaVueltaWrap').classList.toggle('oculto', !cb.checked);
-    document.getElementById('vueltaToggle').classList.toggle('activo', cb.checked);
-    if (cb.checked) actualizarHintVuelta();
+    syncVuelta();
+}
+
+// El checkbox cambió (por click directo o por onVueltaDivClick)
+function syncVuelta() {
+    const checked = document.getElementById('addVuelta').checked;
+    document.getElementById('horaVueltaWrap').classList.toggle('oculto', !checked);
+    document.getElementById('vueltaToggle').classList.toggle('activo', checked);
+    if (checked) actualizarHintVuelta();
 }
 
 function actualizarHintVuelta() {
