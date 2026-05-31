@@ -432,7 +432,7 @@ async function publicar() {
     if (conFecha && !fecha) { alert('Selecciona una fecha.'); return; }
     if (conFecha) {
         const hoy = new Date(); hoy.setHours(0,0,0,0);
-        if (new Date(fecha + 'T00:00:00') < hoy) { alert('No puedes seleccionar una fecha pasada.'); return; }
+        if (new Date(fecha + 'T00:00:00') < hoy) { alert('¡No puedes viajar en el tiempo! Selecciona una fecha correcta.'); return; }
     }
 
     const btn = document.getElementById('btnPublicar');
