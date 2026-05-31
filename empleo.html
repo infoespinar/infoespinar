@@ -1,45 +1,86 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Empleo Local | infoespinar.com</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empleo Local | infoespinar.com</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap');
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --menta: #0d7a68; --fondo: #f4f6f9; }
+        body { font-family: 'Lato', sans-serif; background: var(--fondo); color: #334155; padding-bottom: 50px; }
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+        .header { background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%); padding: 18px 24px; display: flex; justify-content: center; }
+        .header-logo { display: inline-flex; align-items: center; gap: 10px; text-decoration: none; color: white; }
+        .header-bandera { width: 28px; height: 28px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,255,255,0.2); }
+        .header-name { font-size: 18px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
 
-<style>
-/* --- TU CSS (sin cambios importantes) --- */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+        .hero { background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%); padding: 32px 24px 58px; text-align: center; position: relative; overflow: hidden; }
+        .hero::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 40px; background: var(--fondo); clip-path: ellipse(55% 100% at 50% 100%); }
+        .hero-title { font-size: clamp(22px, 5vw, 34px); font-weight: 900; color: white; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+        .hero-sub { font-size: 14px; color: rgba(255,255,255,0.55); }
 
-:root {
-    --ink: #1a1a2e;
-    --ink-light: #8888aa;
-    --surface: #ffffff;
-    --surface-2: #f7f7fb;
-    --border: rgba(60,60,120,0.10);
-    --border-strong: rgba(60,60,120,0.18);
-    --accent: #3a56e8;
-    --green-light: #edfaf4;
-    --green-dark: #0a7554;
-    --radius: 14px;
-    --radius-sm: 8px;
-    --shadow: 0 2px 16px rgba(30,30,80,0.07);
-    --shadow-md: 0 4px 24px rgba(30,30,80,0.10);
-}
+        .contenedor-app { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .aviso { text-align: center; color: #64748b; font-size: 12px; margin-bottom: 20px; }
 
-body { font-family: 'DM Sans', sans-serif; background: var(--surface-2); color: var(--ink); }
+        .btn-publicar { display: block; width: 100%; padding: 14px; background: white; color: var(--menta); border: 2px dashed #b2dfd6; border-radius: 12px; font-weight: 700; cursor: pointer; margin-bottom: 24px; font-size: 14px; font-family: inherit; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.5px; }
+        .btn-publicar:hover { background: #e0f2ee; border-color: var(--menta); }
 
-/* (recortado: mantienes tu CSS tal cual) */
+        #form { background: white; padding: 25px; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 40px; display: none; }
 
-#loading {
-    text-align:center;
-    padding:40px;
-    color: var(--ink-light);
-}
-</style>
+        .form-section { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin: 16px 0 8px; }
+        .form-section:first-child { margin-top: 0; }
+
+        input, select, textarea { width: 100%; padding: 11px 14px; margin-bottom: 10px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #334155; transition: border-color 0.2s; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--menta); box-shadow: 0 0 0 3px rgba(13,122,104,0.09); }
+
+        .oculto { display: none !important; }
+        .email-hint { font-size: 12px; color: #64748b; margin: -6px 0 10px 2px; }
+
+        .privacy-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #475569; margin-bottom: 0; }
+        .privacy-box label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; margin-top: 8px; }
+        .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; margin-bottom: 0; accent-color: var(--menta); }
+        .privacy-box a { color: var(--menta); }
+
+        .pin-box { background: #e0f2ee; border: 2px solid #0d7a68; border-radius: 12px; padding: 20px; margin: 20px 0; text-align: center; box-shadow: 0 4px 12px rgba(13,122,104,0.1); }
+        .pin-num { font-size: 38px; font-weight: 900; letter-spacing: 8px; color: #0f4a3f; margin: 12px 0; font-variant-numeric: tabular-nums; padding-left: 8px; font-family: monospace; }
+        .pin-aviso { font-size: 13px; color: #0f4a3f; margin-top: 8px; line-height: 1.5; font-weight: 500; }
+        .btn-copiar-pin { display: inline-flex; align-items: center; gap: 6px; background: #0f4a3f; color: white; border: none; border-radius: 8px; padding: 10px 20px; font-size: 13px; font-weight: 700; cursor: pointer; margin-top: 6px; transition: all 0.2s; font-family: inherit; }
+        .btn-copiar-pin:hover { background: #0d7a68; }
+        .btn-copiar-pin.copiado { background: #0f2027; }
+
+        .btn-submit { display: block; width: 100%; padding: 13px; background: var(--menta); color: white; border: none; border-radius: 8px; font-weight: 700; font-size: 14px; font-family: inherit; cursor: pointer; margin-top: 16px; transition: background 0.2s; text-transform: uppercase; }
+        .btn-submit:hover { background: #0f4a3f; }
+        .btn-submit:disabled { background: #94a3b8; cursor: not-allowed; }
+
+        /* BADGES ETIQUETAS DINÁMICAS */
+        .card-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px; }
+        .badge-busco { background: #deb887; color: #5c3a21; } /* Tono marrón/arena suave */
+        .badge-ofrezco { background: #b2dfd6; color: #0f4a3f; } /* Tono menta */
+
+        .section-label { font-size: 12px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #94a3b8; margin-bottom: 14px; }
+        .grid-anuncios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+
+        .tarjeta { background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 18px; position: relative; transition: transform 0.2s, box-shadow 0.2s; }
+        .tarjeta:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+
+        .titulo-tarjeta { font-weight: 900; font-size: 16px; margin-bottom: 8px; color: #1e293b; padding-right: 28px; text-transform: uppercase; }
+        .descripcion { font-size: 14px; color: #475569; margin-bottom: 12px; line-height: 1.5; white-space: pre-line; }
+        .burbujas { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+        .tag { background: #f1f5f9; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; color: #475569; border: 1px solid #e2e8f0; }
+
+        .btn-wa { display: flex; align-items: center; justify-content: center; gap: 6px; width: 100%; text-align: center; padding: 10px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 13px; color: white; background: #25d366; transition: background 0.2s; }
+        .btn-wa:hover { background: #128c7e; }
+
+        .btn-borrar { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 50%; background: transparent; border: none; cursor: pointer; font-size: 15px; display: flex; align-items: center; justify-content: center; opacity: 0.3; transition: all 0.2s; }
+        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); }
+
+        .empty-state { grid-column: 1/-1; text-align: center; padding: 40px 20px; color: #94a3b8; }
+        .empty-icon { font-size: 30px; margin-bottom: 8px; }
+
+        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; border-top: 1px solid #e2e8f0; margin-top: 40px; }
+    </style>
 </head>
-
 <body>
 
 <div class="hero">
@@ -49,108 +90,221 @@ body { font-family: 'DM Sans', sans-serif; background: var(--surface-2); color: 
             <span class="header-name">INFOESPINAR.COM</span>
         </a>
     </header>
-
     <h1 class="hero-title">Empleo Local</h1>
-    <p class="hero-sub">Ofertas de trabajo y búsqueda de empleo</p>
+    <p class="hero-sub">Ofertas de trabajo y búsqueda de empleo en el municipio</p>
 </div>
 
 <div class="contenedor-app">
+    <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
+    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">💼 PUBLICAR OFERTA / BUSCAR EMPLEO</button>
 
-<p class="aviso">* Los anuncios expiran a los 20 días</p>
+    <div id="form">
+        <p class="form-section">Tipo de anuncio</p>
+        <select id="buscasUOfreces">
+            <option value="BUSCO">Busco empleo</option>
+            <option value="OFREZCO">Busco personal (Ofrezco empleo)</option>
+        </select>
 
-<button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">
-💼 PUBLICAR
-</button>
+        <p class="form-section">Puesto</p>
+        <input type="text" id="titulo" placeholder="EJ: CAMARERO/A" oninput="this.value=this.value.toUpperCase()">
 
-<div id="form" style="display:none">
-    <p class="form-section">Tipo</p>
-    <select id="buscasUOfreces">
-        <option value="BUSCO">Busco empleo</option>
-        <option value="OFREZCO">Ofrezco empleo</option>
-    </select>
+        <p class="form-section">Lugar de trabajo</p>
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; margin-bottom:10px;">
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="El Espinar" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> El Espinar</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="San Rafael" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> San Rafael</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="LASR" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> LASR</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="La Estación" class="chk-lugar" style="width:auto;margin:0;accent-color:#0d7a68"> La Estación</label>
+            <label style="display:flex;gap:8px;align-items:center;margin-bottom:6px;font-size:14px;"><input type="checkbox" value="Otro" class="chk-lugar" onchange="checkLugar()" style="width:auto;margin:0;accent-color:#0d7a68"> Otro</label>
+            <input id="lugarOtro" class="oculto" placeholder="Escribe el lugar" style="margin-top:6px;margin-bottom:0">
+        </div>
 
-    <p class="form-section">Puesto</p>
-    <input id="titulo" oninput="this.value=this.value.toUpperCase()">
+        <p class="form-section">Jornada</p>
+        <select id="jornada">
+            <option>Jornada Completa</option>
+            <option>Jornada Parcial</option>
+            <option>Fines de Semana</option>
+            <option>A Convenir</option>
+        </select>
 
-    <p class="form-section">Descripción</p>
-    <textarea id="descripcion"></textarea>
+        <p class="form-section">Descripción</p>
+        <textarea id="descripcion" placeholder="Descripción del puesto o perfil" rows="3"></textarea>
 
-    <p class="form-section">Contacto</p>
-    <input id="telefono">
-    <input id="email">
+        <p class="form-section">Contacto</p>
+        <input type="tel" id="telefono" placeholder="Teléfono (9 cifras)" pattern="[0-9]{9}" maxlength="9">
+        <input type="email" id="email" placeholder="Email (opcional)">
+        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
 
-    <div class="privacy-box">
-        <label>
-            <input type="checkbox" id="aceptaPrivacidad">
-            Acepto privacidad
-        </label>
+        <div class="privacy-box">
+            ⚠️ Revisa que todos los datos sean correctos antes de publicar.
+            <label>
+                <input type="checkbox" id="aceptaPrivacidad">
+                <span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a> y autorizo el uso de mis datos para la gestión del anuncio.</span>
+            </label>
+        </div>
+
+        <div id="pinMostrado"></div>
+        <button class="btn-submit" id="btn" onclick="enviar()">PUBLICAR ANUNCIO</button>
     </div>
 
-    <button class="btn-submit" id="btn" onclick="enviar()">PUBLICAR</button>
-    <div id="pinMostrado"></div>
+    <p class="section-label">Ofertas disponibles</p>
+    <div id="loading" style="text-align:center; padding:40px; font-weight:700; color:#888;">Cargando anuncios...</div>
+    <div id="tablon" class="grid-anuncios"></div>
 </div>
 
-<p class="section-label">Anuncios</p>
-
-<div id="loading">Cargando anuncios...</div>
-<div id="tablon" class="grid-anuncios"></div>
-
-</div>
+<footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
 const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
 
+function checkLugar() {
+    const otro = document.querySelector('.chk-lugar[value="Otro"]').checked;
+    document.getElementById('lugarOtro').classList.toggle('oculto', !otro);
+}
+
 async function cargar() {
     try {
-        const res = await fetch(urlScript);
+        const res  = await fetch(urlScript);
         const data = await res.json();
+        document.getElementById('loading').style.display = 'none';
 
-        document.getElementById("loading").style.display = "none";
+        document.getElementById('tablon').innerHTML = data.length
+            ? data.reverse().map(a => {
+                // Control seguro del tipo de anuncio para evitar el "undefined"
+                const tipoRaw = String(a.buscasUOfreces || '').toUpperCase().trim();
+                
+                let textoBadge = "BUSCO EMPLEO";
+                let emojiBadge = "🙋‍♂️";
+                let claseBadge = "badge-busco";
 
-        const cont = document.getElementById("tablon");
+                if (tipoRaw === 'OFREZCO' || tipoRaw === 'BUSCO PERSONAL') {
+                    textoBadge = "OFERTA EMPLEO";
+                    emojiBadge = "🏢";
+                    claseBadge = "badge-ofrezco";
+                }
 
-        if (!data || !data.length) {
-            cont.innerHTML = "<div class='empty-state'>No hay anuncios</div>";
-            return;
-        }
+                // Si viene de tu AppScript genérico, el título se guarda en la clave 'actividad'
+                const puestoDeTrabajo = a.actividad || a.titulo || 'PUESTO NO ESPECIFICADO';
 
-        cont.innerHTML = data.reverse().map(a => `
-            <div class="tarjeta">
-                <div class="titulo-tarjeta">${a.actividad || ''}</div>
-                <div class="descripcion">${a.descripcion || ''}</div>
-                <div class="tag">📍 ${a.lugar || ''}</div>
-                <div class="tag">⏱️ ${a.jornada || ''}</div>
-                <a class="btn-wa" href="https://wa.me/34${a.telefono}" target="_blank">Contactar</a>
-            </div>
-        `).join("");
-
-    } catch (e) {
-        document.getElementById("loading").innerText = "Error cargando anuncios";
+                return `
+                <div class="tarjeta" id="tarjeta-${a.id}">
+                    <button class="btn-borrar" onclick="borrar('${a.id}')" title="Borrar anuncio">🗑️</button>
+                    <div class="card-badge ${claseBadge}">${emojiBadge} ${textoBadge}</div>
+                    <div class="titulo-tarjeta">${puestoDeTrabajo}</div>
+                    <div class="descripcion">${a.descripcion || ''}</div>
+                    <div class="burbujas">
+                        <span class="tag">⏱️ ${a.jornada || 'A convenir'}</span>
+                        ${a.lugar ? a.lugar.split(', ').map(l => `<span class="tag">📍 ${l}</span>`).join('') : ''}
+                    </div>
+                    <a href="https://wa.me/34${String(a.telefono).replace(/\s+/g, '')}" class="btn-wa" target="_blank">💬 Contactar</a>
+                </div>`;
+            }).join('')
+            : '<div class="empty-state"><div class="empty-icon">💼</div>No hay anuncios publicados.</div>';
+    } catch(e) {
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('tablon').innerHTML = '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los anuncios.</div>';
     }
 }
 
-function enviar() {
-    if (!document.getElementById('aceptaPrivacidad').checked) return alert("Acepta privacidad");
-
-    const params = new URLSearchParams();
-    params.append("buscasUOfreces", document.getElementById("buscasUOfreces").value);
-    params.append("actividad", document.getElementById("titulo").value);
-    params.append("descripcion", document.getElementById("descripcion").value);
-    params.append("telefono", document.getElementById("telefono").value);
-    params.append("email", document.getElementById("email").value);
-
-    fetch(urlScript, {
-        method: "POST",
-        body: params,
-        mode: "no-cors"
-    });
-
-    alert("Publicado (puede tardar unos segundos en aparecer)");
-    cargar();
+async function borrar(id) {
+    const pin = prompt('🗑️ Introduce tu PIN de 5 dígitos para borrar este anuncio:');
+    if (!pin) return;
+    try {
+        const res  = await fetch(`${urlScript}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+        const data = await res.json();
+        if (data.status === 'ok') {
+            document.getElementById('tarjeta-' + id)?.remove();
+            alert('✅ Anuncio eliminado correctamente.');
+        } else {
+            alert('❌ PIN incorrecto. El anuncio no se ha borrado.');
+        }
+    } catch(e) { alert('Error de conexión al intentar borrar.'); }
 }
 
+async function enviar() {
+    if (!document.getElementById('aceptaPrivacidad').checked) { alert('Acepta la política de privacidad.'); return; }
+
+    const titulo   = document.getElementById('titulo').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const email    = document.getElementById('email').value.trim();
+    if (!titulo)   { alert('Introduce el puesto.'); return; }
+    if (!telefono) { alert('Introduce el teléfono.'); return; }
+
+    const lugares = [...document.querySelectorAll('.chk-lugar:checked')]
+        .map(c => c.value === 'Otro' ? document.getElementById('lugarOtro').value.trim() : c.value);
+    if (!lugares.length || lugares.includes('')) { alert('Selecciona o escribe un lugar válido.'); return; }
+
+    const btn = document.getElementById('btn');
+    btn.disabled = true; btn.textContent = 'Publicando...';
+
+    const pinDeCincoCifras = String(Math.floor(10000 + Math.random() * 90000));
+    const tipoSeleccionado = document.getElementById('buscasUOfreces').value;
+
+    // Sincronización exacta de variables para el Apps Script (.gs)
+    const params = new URLSearchParams();
+    params.append('buscasUOfreces', tipoSeleccionado);
+    params.append('actividad', titulo); // Mapeado a 'actividad' para tu base de datos genérica
+    params.append('lugar', lugares.join(', '));
+    params.append('jornada', document.getElementById('jornada').value);
+    params.append('descripcion', document.getElementById('descripcion').value);
+    params.append('telefono', telefono);
+    params.append('email', email);
+    params.append('pin', pinDeCincoCifras);
+
+    try {
+        await fetch(urlScript, { 
+            method: 'POST', 
+            body: params,
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        });
+        
+        btn.textContent = '✅ Publicado';
+        
+        document.getElementById('pinMostrado').innerHTML = `
+            <div class="pin-box">
+                <p style="font-weight:900; color:#0f4a3f; font-size:15px;">¡OFERTA PUBLICADA CON ÉXITO!</p>
+                <div class="pin-num" id="codigoPinTexto">${pinDeCincoCifras}</div>
+                <button class="btn-copiar-pin" onclick="copiarPin('${pinDeCincoCifras}', this)">📋 Copiar PIN</button>
+                <p class="pin-aviso">
+                    ${email
+                        ? `Tu PIN ha sido enviado a <b>${email}</b> para que puedas dar de baja la oferta cuando quieras.`
+                        : 'Apunta este PIN en un lugar seguro. Lo necesitarás para eliminar el anuncio en el futuro.'
+                    }
+                </p>
+            </div>`;
+        
+        // Limpieza completa del formulario
+        document.getElementById('titulo').value = '';
+        document.getElementById('telefono').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('descripcion').value = '';
+        document.getElementById('lugarOtro').value = '';
+        document.getElementById('lugarOtro').classList.add('oculto');
+        document.getElementById('aceptaPrivacidad').checked = false;
+        document.querySelectorAll('.chk-lugar').forEach(c => c.checked = false);
+
+        setTimeout(async () => {
+            await cargar();
+            document.getElementById('form').style.display = 'none';
+            btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO';
+            document.getElementById('pinMostrado').innerHTML = '';
+        }, 5000);
+
+    } catch(err) {
+        alert('Error inesperado de red al conectar con el servidor.');
+        btn.disabled = false; btn.textContent = 'PUBLICAR ANUNCIO';
+    }
+}
+
+function copiarPin(pin, btn) {
+    navigator.clipboard.writeText(pin).then(() => {
+        btn.textContent = '✅ ¡Copiado!'; btn.classList.add('copiado');
+        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
+    });
+}
+
+// Carga inicial al entrar a la página
 cargar();
 </script>
-
 </body>
 </html>
