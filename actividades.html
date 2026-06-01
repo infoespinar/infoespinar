@@ -72,13 +72,18 @@
 
         .email-hint { font-size: 12px; color: #64748b; margin: -6px 0 10px 2px; }
 
+        /* Textarea descripción */
+        .textarea-descripcion { width: 100%; padding: 11px 14px; margin-bottom: 4px; border: 1.5px solid #e2e8f0; border-radius: 8px; font-size: 14px; font-family: inherit; color: #334155; transition: border-color 0.2s; resize: vertical; min-height: 72px; line-height: 1.5; }
+        .textarea-descripcion:focus { outline: none; border-color: var(--brand-primary); box-shadow: 0 0 0 3px rgba(13,122,104,0.1); }
+        .char-counter { font-size: 11px; color: #94a3b8; text-align: right; margin-bottom: 10px; }
+        .char-counter.casi-lleno { color: #f59e0b; }
+        .char-counter.lleno { color: #ef4444; }
+
         .privacy-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px 14px; font-size: 13px; color: #475569; margin-bottom: 0; }
         .privacy-box label { display: flex; align-items: flex-start; gap: 8px; cursor: pointer; margin-top: 8px; }
         .privacy-box input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px; accent-color: var(--brand-primary); }
         .privacy-box a { color: var(--brand-primary); }
 
-        /* CAJA DEL PIN ESTILO COMPARTIR COCHE / PARTICULARES */
-/* PIN BOX */
         .pin-box { background: #f0fdf4; border: 2px solid #10b981; border-radius: 12px; padding: 16px; margin-top: 16px; text-align: center; }
         .pin-num { font-size: 36px; font-weight: 900; letter-spacing: 10px; color: #065f46; margin: 10px 0; font-variant-numeric: tabular-nums; }
         .pin-aviso { font-size: 12px; color: #047857; margin-top: 8px; line-height: 1.6; }
@@ -103,6 +108,8 @@
         .card-meta { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; font-size: 14px; color: #475569; }
         .card-meta-row { display: flex; align-items: center; gap: 8px; }
         .card-meta-row b { color: #1e293b; }
+
+        .card-descripcion { font-size: 13px; color: #475569; background: #f8fafc; border-radius: 8px; padding: 10px 12px; margin-bottom: 14px; line-height: 1.5; border-left: 3px solid var(--brand-mid); font-style: italic; }
 
         .btn-wa-card { display: flex; align-items: center; justify-content: center; gap: 7px; width: 100%; padding: 11px; background: var(--brand-primary); color: white; border-radius: 8px; text-decoration: none; font-size: 14px; font-weight: 700; transition: background 0.2s; }
         .btn-wa-card:hover { background: var(--brand-dark); }
@@ -150,10 +157,11 @@
             <option>🏀 Baloncesto</option>
             <option>🚵 Ciclismo</option>
             <option>🥾 Senderismo</option>
-            <option>🏋️ Calistenia</option>
+            <option>🤸‍♀️​ Calistenia</option>
             <option>🏃‍♂️ Running</option>
             <option>🧘 Yoga / Pilates</option>
-            <option>🎴​ Juegos de mesa/ Cartas</option>
+            <option>♟️ Juegos de mesa</option>
+            <option>🃏 Cartas / Poker</option>
             <option>🏐 Voleibol</option>
             <option>🎯 Otra actividad</option>
         </select>
@@ -207,6 +215,10 @@
             </div>
         </div>
 
+        <p class="form-section">Descripción <span style="font-size:11px; font-weight:400; text-transform:none; letter-spacing:0; color:#b0bec5;">(opcional)</span></p>
+        <textarea id="descripcion" class="textarea-descripcion" maxlength="140" placeholder="Añade un detalle extra: lugar concreto, nivel de juego, qué llevar... (máx. 140 caracteres)" oninput="actualizarContador()"></textarea>
+        <p class="char-counter" id="charCounter">0 / 140</p>
+
         <p class="form-section">Tus datos</p>
         <div class="field-row">
             <input type="text" id="nombre" placeholder="Nombre">
@@ -242,8 +254,8 @@ let filtroActivo = null;
 
 const ACTIVIDADES_EMOJI = {
     'fútbol': '⚽', 'tenis': '🎾', 'pádel': '🏓', 'baloncesto': '🏀',
-    'ciclismo': '🚵', 'senderismo': '🥾', 'calistenia': '🏋️', 'running': '🏃‍♂️',
-    'yoga / pilates': '🧘', 'juegos de mesa': '🎲', 'voleibol': '🏐', 'otra actividad': '🎯'
+    'ciclismo': '🚵', 'senderismo': '🥾', 'calistenia': '🤸‍♀️​', 'running': '🏃‍♂️',
+    'yoga / pilates': '🧘', 'juegos de mesa': '♟️', 'cartas / poker': '🃏', 'voleibol': '🏐', 'otra actividad': '🎯'
 };
 
 function emojiActividad(nombre) {
@@ -267,7 +279,14 @@ function toggleFecha() {
     tog.classList.toggle('activo', cb.checked);
 }
 
-// CORREGIDO: Filtros superiores 100% limpios (solo Actividad con su Emoji original)
+function actualizarContador() {
+    const textarea = document.getElementById('descripcion');
+    const counter  = document.getElementById('charCounter');
+    const len = textarea.value.length;
+    counter.textContent = len + ' / 140';
+    counter.className = 'char-counter' + (len >= 140 ? ' lleno' : len >= 120 ? ' casi-lleno' : '');
+}
+
 function construirFiltros(data) {
     const actividades = [...new Set(data.map(p => p.actividad).filter(Boolean))];
     const container = document.getElementById('filtrosActividad');
@@ -282,7 +301,7 @@ function construirFiltros(data) {
     actividades.forEach(act => {
         const pill = document.createElement('button');
         pill.className = 'filtro-pill';
-        pill.textContent = act; 
+        pill.textContent = act;
         pill.onclick = () => { filtroActivo = act; actualizarPills(pill); filtrar(); };
         container.appendChild(pill);
     });
@@ -296,7 +315,7 @@ function actualizarPills(activo) {
 function filtrar() {
     const texto = document.getElementById('buscador').value.toLowerCase();
     const filtrados = todasLasPropuestas.filter(p => {
-        const coincideTexto = [p.actividad, p.nivel, p.edad, p.lugar, p.nombre, p.fecha]
+        const coincideTexto = [p.actividad, p.nivel, p.edad, p.lugar, p.nombre, p.fecha, p.descripcion]
             .some(c => String(c || '').toLowerCase().includes(texto));
         const coincideActividad = !filtroActivo || p.actividad === filtroActivo;
         return coincideTexto && coincideActividad;
@@ -309,25 +328,18 @@ async function cargar() {
         const res  = await fetch(URL_SCRIPT);
         const text = await res.text();
         todasLasPropuestas = JSON.parse(text);
-        
-        // ─── LÓGICA DE ORDENACIÓN DINÁMICA ───
+
         todasLasPropuestas.sort((a, b) => {
-            // Caso 1: Ambas tienen fecha -> Ordenamos por proximidad (la más cercana primero)
             if (a.fecha && b.fecha) {
                 const horaA = a.hora || '00:00';
                 const horaB = b.hora || '00:00';
                 return new Date(a.fecha + 'T' + horaA) - new Date(b.fecha + 'T' + horaB);
             }
-            
-            // Caso 2: Una tiene fecha y la otra no -> La que tiene fecha va primero arriba
             if (a.fecha) return -1;
             if (b.fecha) return 1;
-            
-            // Caso 3: Ninguna tiene fecha -> Ordenación aleatoria (Shuffle)
             return Math.random() - 0.5;
         });
-        // ─────────────────────────────────────
-        
+
         construirFiltros(todasLasPropuestas);
         renderizar(todasLasPropuestas);
     } catch(e) {
@@ -340,7 +352,7 @@ function renderizar(data) {
         document.getElementById('grid').innerHTML = '<div class="empty-state"><div class="empty-icon">🏃</div>No se encontraron propuestas.</div>';
         return;
     }
-    
+
     document.getElementById('grid').innerHTML = data.map(p => {
         const tel = String(p.telefono).replace(/\s+/g, '');
         const numWA = tel.startsWith('34') ? tel : '34' + tel;
@@ -349,10 +361,7 @@ function renderizar(data) {
         const numPersonas = parseInt(p.personas) || 1;
         const repeticiones = Math.max(0, Math.min(numPersonas - 1, 4));
         let bloqueEmojis = emoji.repeat(repeticiones);
-        
-        if (numPersonas > 5) {
-            bloqueEmojis = emoji.repeat(4) + '...';
-        }
+        if (numPersonas > 5) bloqueEmojis = emoji.repeat(4) + '...';
 
         let fechaHtml = '';
         if (p.fecha) {
@@ -364,13 +373,15 @@ function renderizar(data) {
             fechaHtml = `<div class="card-meta-row" style="color:#94a3b8;">📅 Sin fecha fija</div>`;
         }
 
+        const descripcionHtml = p.descripcion
+            ? `<div class="card-descripcion">${p.descripcion}</div>`
+            : '';
+
         return `
         <div class="card" id="card-${p.id}">
             <button class="btn-borrar" onclick="borrar('${p.id}')" title="Borrar propuesta">🗑️</button>
             <div class="card-actividad-badge">${bloqueEmojis} ${p.actividad}</div>
-            
             <div class="card-titulo">Propuesta de ${p.nombre}</div>
-            
             <div class="card-meta">
                 ${fechaHtml}
                 ${p.nivel ? `<div class="card-meta-row">🎯 Nivel: <b>${p.nivel}</b></div>` : ''}
@@ -378,6 +389,7 @@ function renderizar(data) {
                 <div class="card-meta-row">📍 <b>${p.lugar}</b></div>
                 ${p.personas ? `<div class="card-meta-row">👥 Busca <b>${p.personas} ${p.personas == 1 ? 'persona' : 'personas'}</b></div>` : ''}
             </div>
+            ${descripcionHtml}
             <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
                 💬 Apuntarme con ${p.nombre}
             </a>
@@ -401,7 +413,6 @@ async function borrar(id) {
     } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
 }
 
-// SOLUCIÓN COMPLETA: Generación local de PIN de 5 cifras y renderizado estilo Cocoche
 async function publicar() {
     if (!document.getElementById('aceptaPrivacidad').checked) {
         alert('Debes aceptar la política de privacidad.'); return;
@@ -418,6 +429,7 @@ async function publicar() {
     const nombre     = document.getElementById('nombre').value.trim();
     const telefono   = document.getElementById('telefono').value.trim();
     const email      = document.getElementById('email').value.trim();
+    const descripcion = document.getElementById('descripcion').value.trim();
     const conFecha   = document.getElementById('conFecha').checked;
     const fecha      = conFecha ? document.getElementById('fecha').value : '';
     const hora       = conFecha ? document.getElementById('hora').value : '';
@@ -438,40 +450,36 @@ async function publicar() {
     const btn = document.getElementById('btnPublicar');
     btn.disabled = true; btn.textContent = 'Publicando...';
 
-    // 1. Generamos el PIN de 5 cifras exactas de forma local
     const pinDeCincoCifras = String(Math.floor(10000 + Math.random() * 90000));
 
-    const params = new URLSearchParams({ 
-        actividad, nivel, edad, personas, lugar, nombre, telefono, email, fecha, hora,
-        pin: pinDeCincoCifras 
+    const params = new URLSearchParams({
+        actividad, nivel, edad, personas, lugar, nombre, telefono, email, descripcion, fecha, hora,
+        pin: pinDeCincoCifras
     });
 
     try {
-        // 2. Encriptamos / enviamos los parámetros a Google Sheets
-        await fetch(URL_SCRIPT, { 
-            method: 'POST', 
+        await fetch(URL_SCRIPT, {
+            method: 'POST',
             body: params,
             mode: 'no-cors',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         });
-        
+
         btn.textContent = '✅ Publicado';
-        
-        // 3. Pintamos la caja del PIN en los tonos verdes corporativos
+
         document.getElementById('pinMostrado').innerHTML = `
             <div class="pin-box">
                 <p style="font-weight:900; color:#0f4a3f; font-size:15px;">¡PROPUESTA GUARDADA CON ÉXITO!</p>
                 <div class="pin-num" id="codigoPinTexto">${pinDeCincoCifras}</div>
                 <button class="btn-copiar-pin" onclick="copiarPin('${pinDeCincoCifras}', this)">📋 Copiar PIN</button>
                 <p class="pin-aviso">
-                    ${email 
-                        ? `Tu PIN de 5 cifras ha sido enviado a <b>${email}</b>. Úsalo para borrar la tarjeta cuando quieras.` 
+                    ${email
+                        ? `Tu PIN de 5 cifras ha sido enviado a <b>${email}</b>. Úsalo para borrar la tarjeta cuando quieras.`
                         : 'Apunta este PIN. Lo necesitarás si decides dar de baja o eliminar la propuesta.'
                     }
                 </p>
             </div>`;
-        
-        // 4. LÓGICA DE BORRADO: Limpiamos todos los inputs y estados del formulario inmediatamente
+
         document.getElementById('otraActividad').value = '';
         document.getElementById('personas').value = '';
         document.getElementById('fecha').value = '';
@@ -479,27 +487,25 @@ async function publicar() {
         document.getElementById('nombre').value = '';
         document.getElementById('telefono').value = '';
         document.getElementById('email').value = '';
-        
+        document.getElementById('descripcion').value = '';
+        document.getElementById('charCounter').textContent = '0 / 140';
+        document.getElementById('charCounter').className = 'char-counter';
         document.getElementById('actividad').value = '';
         document.getElementById('nivel').value = '';
         document.getElementById('edad').value = '';
-        
         document.getElementById('conFecha').checked = false;
         document.getElementById('aceptaPrivacidad').checked = false;
-        
         document.getElementById('fechaHoraWrap').style.display = 'none';
         document.getElementById('fechaToggleWrap').classList.remove('activo');
         document.getElementById('otraActividad').style.display = 'none';
-        
         document.querySelectorAll('.lugar-pill').forEach(p => p.classList.remove('activo'));
 
-        // 5. Dejamos el PIN visible durante 5 segundos antes de cerrar el bloque por completo
         setTimeout(async () => {
-            await cargar(); 
-            document.getElementById('formActividad').style.display = 'none'; 
-            btn.disabled = false; 
+            await cargar();
+            document.getElementById('formActividad').style.display = 'none';
+            btn.disabled = false;
             btn.textContent = 'PUBLICAR PROPUESTA';
-            document.getElementById('pinMostrado').innerHTML = ''; 
+            document.getElementById('pinMostrado').innerHTML = '';
         }, 5000);
 
     } catch(err) {
@@ -535,10 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (contenedorLugares) {
         contenedorLugares.addEventListener('click', e => {
             const pill = e.target.closest('.lugar-pill');
-            if (pill) {
-                e.preventDefault();
-                pill.classList.toggle('activo');
-            }
+            if (pill) { e.preventDefault(); pill.classList.toggle('activo'); }
         });
     }
 
