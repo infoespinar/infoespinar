@@ -32,7 +32,7 @@
         .btn-publicar-icon { font-size: 15px; }
 
         /* ── BANNER PUBLICIDAD ── */
-        .banner-comercio { width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .banner-comercio { position: relative; width: 100%; height: 90px; border-radius: 14px; overflow: hidden; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 20px; }
         .banner-info { padding: 15px 20px; }
         .banner-label { display: inline-block; background: #9f1239; color: #fff; font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
         .banner-nombre { color: white; font-size: 18px; font-weight: 700; margin: 0; }
@@ -190,12 +190,15 @@
     <!-- BOTÓN PUBLICAR — encima del banner -->
     <button class="btn-publicar" id="btn-publicar">Publica Tu Evento</button>
 
-    <a href="mailto:info@infoespinar.com" class="banner-comercio">
-        <div class="banner-info">
-            <span class="banner-label">¿Organizas un evento?</span>
-            <h3 class="banner-nombre">¡Anúncialo Aquí!</h3>
-        </div>
-    </a>
+   <a href="mailto:info@infoespinar.com" class="banner-comercio">
+    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80"
+         alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 40%;">
+    <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(159,18,57,0.82) 0%, rgba(159,18,57,0.45) 60%, transparent 100%);"></div>
+    <div class="banner-info" style="position:relative;">
+        <span class="banner-label">¿Organizas un evento?</span>
+        <h3 class="banner-nombre">¡Anúncialo Aquí!</h3>
+    </div>
+</a>
 
     <!-- Botón "Filtrar" discreto -->
     <div class="filtrar-toggle-wrap">
