@@ -388,7 +388,7 @@ async function cargar() {
         document.getElementById('loading').style.display = 'none';
 
         document.getElementById('tablon').innerHTML = data.length
-            ? data.reverse().map(a => {
+            ? data.sort(() => Math.random() - 0.5).map(a => {
                 const tipoRaw = String(a.buscasUOfreces || '').toUpperCase().trim();
                 let textoBadge = "BUSCO EMPLEO";
                 let emojiBadge = "🙋‍♂️";
