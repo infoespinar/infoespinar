@@ -910,11 +910,17 @@ async function cargar() {
             <div>🚗 Cargando viajes...</div>
         </div>`;
     try {
-        const res = await fetch(URL_SCRIPT);
+        // Añadimos redirección automática explícita por si el navegador la frena
+        const res = await fetch(URL_SCRIPT, { method: 'GET' });
         const text = await res.text();
+        
+        // Validamos si lo que devuelve Google es un HTML de error o el JSON esperado
+        if(text.trim().startsWith("<doctype") || text.trim().startsWith("<html")) {
+            throw new Error("La API devolvió HTML en vez de JSON. Comprueba los permisos de la implementación.");
+        }
+
         const todos = JSON.parse(text);
 
-        // FIX 6: filtrar viajes pasados (comparar solo fecha, no hora)
         const hoy = new Date();
         hoy.setHours(0,0,0,0);
         todosLosViajes = todos.filter(v => {
@@ -930,9 +936,9 @@ async function cargar() {
         renderizar(todosLosViajes);
 
     } catch(e) {
-        console.error(e);
+        console.error("Error detallado:", e);
         document.getElementById('grid').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes. Inténtalo de nuevo.</div>';
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes o permisos CORS denegados.</div>';
     }
 }
 
