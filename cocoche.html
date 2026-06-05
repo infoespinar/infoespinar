@@ -23,1267 +23,891 @@
             --green: #0f9b6e;
             --green-light: #edfaf4;
             --green-dark: #0a7554;
-            --border: rgba(60,60,120,0.10);
-            --border-strong: rgba(60,60,120,0.18);
-            --radius: 14px;
-            --radius-sm: 8px;
-            --shadow: 0 2px 16px rgba(30,30,80,0.07);
-            --shadow-md: 0 4px 24px rgba(30,30,80,0.10);
-            --wa: #25d366;
-            --wa-dark: #1aad55;
+            --border: #e1e1f0;
+            --border-strong: #ccccdf;
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 4px 20px rgba(26, 26, 46, 0.05);
+            --shadow-sm: 0 2px 8px rgba(26, 26, 46, 0.03);
+            --font: 'DM Sans', sans-serif;
         }
 
         body {
-            font-family: 'DM Sans', sans-serif;
-            background: var(--surface-2);
+            font-family: var(--font);
+            background-color: var(--surface-2);
             color: var(--ink);
-            min-height: 100vh;
-            font-size: 15px;
-            line-height: 1.6;
+            padding: 20px 12px 60px 12px;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* HEADER */
-        .header {
-            background: transparent;
-            color: white;
-            padding: 18px 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .header-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            text-decoration: none;
-            color: white;
-        }
-        .header-flag {
-            width: 28px;
-            height: 28px;
-            border-radius: 6px;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-        .header-name {
-            font-family: 'DM Serif Display', serif;
-            font-size: 20px;
-            letter-spacing: 0.02em;
-        }
-
-        /* HERO */
-        .hero {
-            background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%);
-            padding: 0 24px 56px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0; right: 0;
-            height: 40px;
-            background: var(--surface-2);
-            clip-path: ellipse(55% 100% at 50% 100%);
-        }
-        .hero-title {
-            font-family: 'DM Serif Display', serif;
-            font-size: clamp(26px, 5vw, 38px);
-            color: white;
-            margin-bottom: 8px;
-            letter-spacing: 0.01em;
-        }
-        .hero-sub {
-            font-size: 14px;
-            color: rgba(255,255,255,0.52);
-            font-weight: 400;
-        }
-
-        /* MAIN */
-        .main {
-            max-width: 860px;
+        .container {
+            max-width: 500px;
             margin: 0 auto;
-            padding: 32px 20px 60px;
         }
 
-        /* SEARCH */
-        .search-wrap {
-            position: relative;
-            margin-bottom: 16px;
-        }
-        .search-icon {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--ink-light);
-            font-size: 16px;
-            pointer-events: none;
-        }
-        .search-input {
-            width: 100%;
-            padding: 14px 16px 14px 44px;
-            border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius);
-            background: var(--surface);
-            font-family: inherit;
-            font-size: 15px;
-            color: var(--ink);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            box-shadow: var(--shadow);
-        }
-        .search-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(58,86,232,0.10);
-        }
-        .search-input::placeholder { color: var(--ink-light); }
-
-        .btn-publish {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 15px;
-            background: #0d7a68;
-            color: white;
-            border: none;
-            border-radius: var(--radius);
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            cursor: pointer;
+        header {
+            text-align: center;
             margin-bottom: 24px;
-            transition: background 0.2s, transform 0.15s;
-            box-shadow: 0 4px 16px rgba(13,122,104,0.28);
+            position: relative;
         }
-        .btn-publish:hover { background: #0a5e52; transform: translateY(-1px); }
-        .btn-publish:active { transform: translateY(0); }
-
-        /* FORM */
-        .form-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            border: 1.5px solid var(--border);
-            box-shadow: var(--shadow-md);
-            padding: 28px 24px;
-            margin-bottom: 32px;
-            display: none;
-            animation: slideDown 0.25s ease;
-        }
-        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
-
-        .form-section-title {
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--ink-light);
-            margin: 20px 0 8px;
-        }
-        .form-section-title:first-child { margin-top: 0; }
-
-        .field-group {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-       
-        select, input[type="text"], input[type="tel"],
-        input[type="email"], input[type="date"], input[type="time"] {
-            width: 100%;
-            padding: 11px 14px;
-            border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius-sm);
-            background: var(--surface);
-            font-family: inherit;
-            font-size: 14px;
-            color: var(--ink);
-            transition: border-color 0.2s, box-shadow 0.2s;
-            margin-bottom: 0;
-        }
-        select:focus, input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(58,86,232,0.09);
-        }
-
-        .input-row { margin-bottom: 10px; }
-
-        /* TYPE SELECTOR */
-        .type-pills {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        .type-pill {
-            flex: 1;
-            padding: 11px;
-            border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius-sm);
-            background: var(--surface);
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 500;
+        .back-link {
+            position: absolute;
+            left: 0; top: 4px;
             color: var(--ink-mid);
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.18s;
-        }
-        .type-pill.active {
-            border-color: var(--accent);
-            background: var(--accent-light);
-            color: var(--accent-dark);
-        }
-
-        /* RECURRENCIA */
-        .recur-pills {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-        .recur-pill {
-            padding: 9px 16px;
-            border: 1.5px solid var(--border-strong);
-            border-radius: 40px;
-            background: var(--surface);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--ink-mid);
-            cursor: pointer;
-            transition: all 0.18s;
-        }
-        .recur-pill.active {
-            border-color: var(--accent);
-            background: var(--accent-light);
-            color: var(--accent-dark);
-        }
-
-        /* DÍAS */
-        .day-pills {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            margin-bottom: 10px;
-        }
-        .day-pill {
-            padding: 8px 12px;
-            border: 1.5px solid var(--border-strong);
-            border-radius: 40px;
-            background: var(--surface);
-            font-family: inherit;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--ink-mid);
-            cursor: pointer;
-            transition: all 0.18s;
-            min-width: 44px;
-            text-align: center;
-        }
-        .day-pill.active {
-            border-color: var(--accent);
-            background: var(--accent-light);
-            color: var(--accent-dark);
-        }
-
-        .oculto { display: none !important; }
-
-        .hint {
-            font-size: 12px;
-            color: var(--ink-light);
-            margin: 4px 0 8px;
-            line-height: 1.5;
-        }
-
-        /* VUELTA */
-        .vuelta-toggle {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 14px;
-            background: var(--surface-2);
-            border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius-sm);
-            margin: 10px 0 6px;
-            cursor: pointer;
-            user-select: none;
-        }
-        .vuelta-toggle input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            flex-shrink: 0;
-            accent-color: var(--accent);
-            cursor: pointer;
-        }
-        .vuelta-toggle label {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--ink-mid);
-            cursor: pointer;
-        }
-        .vuelta-toggle.activo {
-            border-color: var(--accent);
-            background: var(--accent-light);
-        }
-        .vuelta-toggle.activo label {
-            color: var(--accent-dark);
-        }
-
-        /* PRIVACIDAD */
-        .privacy-box {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-            padding: 14px 16px;
-            font-size: 13px;
-            color: var(--ink-mid);
-            margin-top: 4px;
-            line-height: 1.6;
-        }
-        .privacy-box label {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-        .privacy-box input[type="checkbox"] {
-            width: 16px; height: 16px;
-            flex-shrink: 0;
-            margin-top: 2px;
-            accent-color: var(--accent);
-        }
-        .privacy-box a { color: var(--accent); }
-
-        /* FORM ACTIONS */
-        .form-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 16px;
-        }
-        .btn-submit {
-            flex: 1;
-            padding: 13px;
-            background: var(--ink);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-        .btn-submit:hover { background: var(--accent-dark); }
-        .btn-submit:disabled { background: var(--ink-light); cursor: not-allowed; }
-
-        .btn-wa-form {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 13px 18px;
-            background: var(--wa);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: background 0.2s;
             text-decoration: none;
-        }
-        .btn-wa-form:hover { background: var(--wa-dark); }
-
-        /* PIN BOX */
-        .pin-box {
-            background: var(--green-light);
-            border: 1.5px solid rgba(15,155,110,0.25);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            margin-top: 16px;
-            text-align: center;
-        }
-        .pin-label {
-            font-size: 13px;
-            color: var(--green-dark);
+            font-size: 14px;
             font-weight: 500;
-            margin-bottom: 6px;
-        }
-        .pin-num {
-            font-family: 'DM Serif Display', serif;
-            font-size: 42px;
-            letter-spacing: 12px;
-            color: var(--green-dark);
-            margin: 4px 0 10px;
-        }
-        .btn-copy-pin {
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
-            padding: 8px 18px;
-            background: var(--green-dark);
-            color: white;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
+            gap: 4px;
         }
-        .btn-copy-pin:hover { background: var(--green); }
-        .btn-copy-pin.copied { background: var(--accent); }
-        .pin-aviso {
-            font-size: 12px;
-            color: var(--green-dark);
-            margin-top: 10px;
-            opacity: 0.85;
+        header h1 {
+            font-family: 'DM Serif Display', serif;
+            font-size: 28px;
+            color: var(--ink);
+            margin-bottom: 4px;
         }
-
-        /* CARDS GRID */
-        .section-label {
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--ink-light);
-            margin-bottom: 14px;
+        header p {
+            font-size: 14px;
+            color: var(--ink-mid);
         }
-
-        /* Estilo para hacer el coche más grande */
-.loading-car {
-    font-size: 3.5rem; /* Ajusta este valor si lo quieres aún más grande (ej. 4rem o 5rem) */
-    line-height: 1;
-    margin-bottom: 12px; /* Espacio entre el coche y el texto de abajo */
-    display: inline-block;
-    animation: bounceCar 1.5s ease-in-out infinite; /* Animación opcional de movimiento */
-}
-
-.loading-text {
-    font-size: 1.1rem;
-    color: var(--ink-mid); /* O el color secundario que uses */
-    font-weight: 500;
-}
-
-/* Animación opcional: hace que el coche flote suavemente arriba y abajo mientras carga */
-@keyframes bounceCar {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
-       .grid {
-    column-count: 2;
-    column-gap: 16px;
-}
 
         .card {
-    break-inside: avoid;
-    margin-bottom: 16px;
-    background: var(--surface);
-    border-radius: var(--radius);
-    border: 1.5px solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 22px;
-    position: relative;
-    transition: box-shadow 0.2s, transform 0.2s;
-}
-        .card:hover {
-            box-shadow: var(--shadow-md);
-            transform: translateY(-2px);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
         }
 
-        .card-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            font-size: 11px;
-            font-weight: 600;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            padding: 4px 10px;
-            border-radius: 40px;
-            margin-bottom: 12px;
-        }
-        .badge-conductor { background: var(--accent-light); color: var(--accent-dark); }
-        .badge-pasajero { background: var(--green-light); color: var(--green-dark); }
-
-        .card-route {
-            font-family: 'DM Serif Display', serif;
-            font-size: 20px;
-            color: var(--ink);
-            margin-bottom: 14px;
-            line-height: 1.2;
-            padding-right: 36px;
-        }
-
-        .card-meta {
+        .toggle-btn {
+            background: var(--surface-3);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 4px;
             display: flex;
-            flex-direction: column;
-            gap: 6px;
+            gap: 4px;
             margin-bottom: 16px;
         }
-        .card-meta-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 14px;
-            color: var(--ink-mid);
-        }
-        .card-meta-left {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .card-meta-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 6px;
-            background: var(--surface-3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            flex-shrink: 0;
-        }
-        .card-meta-val { font-weight: 500; color: var(--ink); }
-        .card-meta-hora {
-            font-size: 13px;
-            color: var(--ink-mid);
-            white-space: nowrap;
-        }
-
-        .btn-wa-card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 7px;
-            width: 100%;
-            padding: 11px;
-            background: var(--wa);
-            color: white;
-            border-radius: var(--radius-sm);
-            text-decoration: none;
+        .toggle-btn button {
+            flex: 1;
+            background: none;
+            border: none;
+            padding: 10px;
+            font-family: inherit;
             font-size: 14px;
             font-weight: 600;
-            transition: background 0.2s;
-            text-align: center;
-        }
-        .btn-wa-card:hover { background: var(--wa-dark); }
-
-        .btn-delete {
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background: transparent;
-            border: none;
+            color: var(--ink-mid);
             cursor: pointer;
-            font-size: 16px;
+            border-radius: calc(var(--radius-sm) - 2px);
+            transition: all 0.2s;
+        }
+        .toggle-btn button.active {
+            background: var(--surface);
+            color: var(--accent-dark);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .field-group {
+            margin-bottom: 16px;
+        }
+        .field-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--ink-mid);
+            margin-bottom: 6px;
+        }
+        .input-row {
+            display: flex;
+            gap: 10px;
+        }
+        .input-row select, .input-row input {
+            flex: 1;
+            width: 50%;
+        }
+
+        select, input, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 15px;
+            color: var(--ink);
+            background-color: var(--surface);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        select:focus, input:focus, textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .recurrence-options {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+        }
+        .recurrence-option {
+            flex: 1;
+            text-align: center;
+            padding: 10px 6px;
+            border: 1px solid var(--border-strong);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--ink-mid);
+            cursor: pointer;
+            background: var(--surface);
+            transition: all 0.2s;
+        }
+        .recurrence-option.active {
+            background: var(--accent-light);
+            border-color: var(--accent);
+            color: var(--accent-dark);
+            font-weight: 600;
+        }
+
+        .day-pills {
+            display: flex;
+            justify-content: space-between;
+            gap: 4px;
+            margin-bottom: 16px;
+            background: var(--surface-2);
+            padding: 6px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        .day-pill {
+            flex: 1;
+            text-align: center;
+            padding: 8px 0;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--ink-light);
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.15s;
+        }
+        .day-pill.active {
+            background: var(--accent);
+            color: white;
+        }
+
+        .btn-submit {
+            background: var(--accent);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 14px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(58, 86, 232, 0.2);
+            transition: all 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
-            opacity: 0.45;
-            transition: opacity 0.2s, transform 0.15s, background 0.2s;
+            gap: 8px;
         }
-        .btn-delete:hover {
-            opacity: 1;
-            background: rgba(0,0,0,0.06);
-            transform: scale(1.1);
+        .btn-submit:hover {
+            background: var(--accent-dark);
+            transform: translateY(-1px);
+        }
+        .btn-submit:disabled {
+            background: var(--ink-light);
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
         }
 
-        .empty-state {
-            grid-column: 1/-1;
-            text-align: center;
-            padding: 48px 20px;
-            color: var(--ink-light);
-            font-size: 15px;
+        .section-label {
+            font-family: 'DM Serif Display', serif;
+            font-size: 20px;
+            margin: 28px 0 14px 0;
+            color: var(--ink);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        .empty-icon { font-size: 32px; margin-bottom: 10px; }
 
-        /* LOADING SPINNER */
-        .loading-state {
-            grid-column: 1/-1;
-            text-align: center;
-            padding: 48px 20px;
-            color: var(--ink-light);
+        .search-container {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
         }
+        .search-container select {
+            flex: 1;
+        }
+
+        .grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .item-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 16px;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        .badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .badge.conductor { background: var(--accent-light); color: var(--accent-dark); }
+        .badge.pasajero { background: var(--surface-3); color: var(--ink-mid); }
+
+        .route-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 18px;
+            color: var(--ink);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .route-arrow { color: var(--ink-light); font-family: sans-serif; font-size: 14px; }
+
+        .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 14px;
+            font-size: 13px;
+            color: var(--ink-mid);
+        }
+        .meta-item { display: flex; align-items: center; gap: 4px; }
+
+        .btn-whatsapp {
+            background: var(--green-light);
+            color: var(--green-dark);
+            border: 1px solid rgba(15, 155, 110, 0.2);
+            width: 100%;
+            padding: 10px;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        .btn-whatsapp:hover {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-delete-trigger {
+            position: absolute;
+            top: 14px; right: 14px;
+            background: none;
+            border: none;
+            color: var(--ink-light);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 4px;
+            line-height: 1;
+            border-radius: 4px;
+        }
+        .btn-delete-trigger:hover { color: #d93838; background: #fff0f0; }
+
+        .loading-state, .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--ink-mid);
+            background: var(--surface);
+            border: 1px dashed var(--border-strong);
+            border-radius: var(--radius);
+        }
+        .empty-icon { font-size: 28px; margin-bottom: 8px; }
+
         .spinner {
-            display: inline-block;
-            width: 28px;
-            height: 28px;
-            border: 3px solid var(--border-strong);
+            width: 24px; height: 24px;
+            border: 3px solid var(--accent-light);
             border-top-color: var(--accent);
             border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            margin-bottom: 12px;
+            margin: 0 auto 12px auto;
+            animation: spin 0.8s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* FOOTER */
-        .footer {
-            text-align: center;
-            padding: 28px;
-            color: var(--ink-light);
-            font-size: 12px;
-            border-top: 1px solid var(--border);
-            margin-top: 40px;
+        /* NUEVOS ESTILOS PARA HACER EL COCHE MÁS GRANDE */
+        .loading-car {
+            font-size: 3.5rem;
+            line-height: 1;
+            margin-bottom: 12px;
+            display: inline-block;
+            animation: bounceCar 1.5s ease-in-out infinite;
+        }
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--ink-mid);
+            font-weight: 500;
+        }
+        @keyframes bounceCar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
-        @media (max-width: 520px) {
-    .field-group { grid-template-columns: 1fr; }
-    .grid { column-count: 1; }
-}
+        /* ESTILOS DEL SISTEMA DE ALERTAS POR CORREO */
+        .alert-box {
+            background: #eef0fd;
+            border: 1.5px dashed var(--accent);
+            border-radius: var(--radius);
+            padding: 22px;
+            margin: 24px 0;
+            text-align: center;
+        }
+        .alert-box h3 {
+            font-family: 'DM Serif Display', serif;
+            color: var(--accent-dark);
+            margin-bottom: 6px;
+            font-size: 18px;
+        }
+        .alert-box p {
+            font-size: 14px;
+            color: var(--ink-mid);
+            margin-bottom: 14px;
+        }
+        .btn-alert-trigger {
+            background: var(--accent);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-alert-trigger:hover { background: var(--accent-dark); }
+
+        .form-alert-card {
+            background: var(--surface);
+            border: 1.5px solid var(--border-strong);
+            border-radius: var(--radius);
+            padding: 20px;
+            margin-top: 14px;
+            display: none;
+            text-align: left;
+        }
+        .alert-management-link {
+            display: block;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--ink-light);
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .alert-management-link:hover { color: var(--accent); }
     </style>
 </head>
 <body>
 
-<div class="hero">
-    <header class="header">
-        <a href="index.html" class="header-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-flag" alt="">
-            <span class="header-name">infoespinar.com</span>
-        </a>
+<div class="container">
+
+    <header>
+        <a href="index.html" class="back-link">← Volver</a>
+        <h1>Viajes Compartidos</h1>
+        <p>Publica tu trayecto o encuentra conductores en El Espinar</p>
     </header>
-    <h1 class="hero-title">Viajes Compartidos</h1>
-    <p class="hero-sub">Encuentra o comparte trayectos con vecinos de la zona.</p>
-</div>
 
-<main class="main">
-
-    <div class="search-wrap">
-        <span class="search-icon">🔍</span>
-        <input id="buscador" class="search-input" type="text"
-            placeholder="Buscar por lugar, fecha, nombre..."
-            oninput="filtrar()">
-    </div>
-
-    <button class="btn-publish" onclick="abrirFormulario()">
-        Publicar viaje
-    </button>
-
-    <!-- FORMULARIO -->
-    <div id="formCard" class="form-card">
-
-        <p class="form-section-title">¿Cómo viajas?</p>
-        <div class="type-pills">
-            <div class="type-pill active" id="pill-conductor" onclick="setTipo('Conductor')">🚘 Conductor</div>
-            <div class="type-pill" id="pill-pasajero" onclick="setTipo('Pasajero')">🙋 Pasajero</div>
+    <div class="card">
+        <div class="toggle-btn">
+            <button id="btnConductor" class="active" onclick="setTipo('Conductor')">Soy Conductor</button>
+            <button id="btnPasajero" onclick="setTipo('Pasajero')">Soy Pasajero</button>
         </div>
+
         <input type="hidden" id="tipo" value="Conductor">
 
-        <p class="form-section-title">Ruta</p>
-        <div class="field-group input-row">
-            <div>
-                <select id="desde" onchange="checkOtro('desde')">
-                    <option value="">Desde...</option>
+        <div class="field-group">
+            <label>Ruta del viaje</label>
+            <div class="input-row" style="margin-bottom: 8px;">
+                <select id="desde" onchange="checkOtros()">
+                    <option value="">Origen...</option>
+                    <option>El Espinar</option><option>San Rafael</option><option>LASR</option><option>La Estación</option>
+                    <option>Madrid</option><option>Segovia</option><option>Ávila</option><option value="Otro">Otro lugar...</option>
+                </select>
+                <select id="hasta" onchange="checkOtros()">
+                    <option value="">Destino...</option>
+                    <option>El Espinar</option><option>San Rafael</option><option>LASR</option><option>La Estación</option>
+                    <option>Madrid</option><option>Segovia</option><option>Ávila</option><option value="Otro">Otro lugar...</option>
+                </select>
+            </div>
+            <div class="input-row">
+                <input type="text" id="desdeOtro" placeholder="¿Qué origen?" style="display:none;">
+                <input type="text" id="hastaOtro" placeholder="¿Qué destino?" style="display:none;">
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Frecuencia del trayecto</label>
+            <div class="recurrence-options">
+                <div id="rec_unica" class="recurrence-option active" onclick="setRecurrencia('unica')">Un solo día</div>
+                <div id="rec_lv" class="recurrence-option" onclick="setRecurrencia('lv')">Lun a Vie</div>
+                <div id="rec_multi" class="recurrence-option" onclick="setRecurrencia('multi')">Elegir días</div>
+            </div>
+
+            <div id="wrapFecha" style="display: block;">
+                <input type="date" id="fecha">
+            </div>
+
+            <div id="dayPills" class="day-pills" style="display: none;">
+                <div class="day-pill" data-val="1" onclick="toggleDayPill(this)">L</div>
+                <div class="day-pill" data-val="2" onclick="toggleDayPill(this)">M</div>
+                <div class="day-pill" data-val="3" onclick="toggleDayPill(this)">X</div>
+                <div class="day-pill" data-val="4" onclick="toggleDayPill(this)">J</div>
+                <div class="day-pill" data-val="5" onclick="toggleDayPill(this)">V</div>
+                <div class="day-pill" data-val="6" onclick="toggleDayPill(this)">S</div>
+                <div class="day-pill" data-val="0" onclick="toggleDayPill(this)">D</div>
+            </div>
+        </div>
+
+        <div class="field-group">
+            <label>Hora estimada de salida</label>
+            <input type="time" id="hora">
+        </div>
+
+        <div class="field-group">
+            <label>Tus datos de contacto</label>
+            <input type="text" id="nombre" placeholder="Tu nombre" style="margin-bottom: 8px;">
+            <input type="tel" id="telefono" placeholder="Teléfono de WhatsApp (Ej: 600123456)" style="margin-bottom: 8px;">
+            <input type="email" id="email" placeholder="Tu email (para mandarte el PIN de borrado)">
+        </div>
+
+        <div class="field-group" style="display: flex; align-items: center; gap: 8px; margin-top: 4px;">
+            <input type="checkbox" id="vuelta" style="width: auto; cursor: pointer;">
+            <label for="vuelta" style="margin-bottom: 0; cursor: pointer; font-weight: 500;">Publicar también viaje de vuelta inverso</label>
+        </div>
+
+        <button class="btn-submit" id="btnPublicar" onclick="publicarViaje()">
+            <span>Publicar en la Web y Compartir</span>
+        </button>
+    </div>
+
+    <div class="alert-box">
+        <h3>¿No encuentras tu viaje ideal? 🔔</h3>
+        <p>Crea una alerta y te enviaremos un correo instantáneo cuando un conductor publique la ruta que buscas.</p>
+        <button class="btn-alert-trigger" onclick="document.getElementById('formAlertCard').style.display = document.getElementById('formAlertCard').style.display === 'block' ? 'none' : 'block'">
+            Activar Alerta de Viaje
+        </button>
+
+        <div id="formAlertCard" class="form-alert-card">
+            <div class="field-group input-row">
+                <select id="alertaDesde">
+                    <option value="">Origen...</option>
                     <option>El Espinar</option><option>San Rafael</option><option>LASR</option>
                     <option>La Estación</option><option>Madrid</option><option>Segovia</option><option>Ávila</option>
-                    <option value="Otro">Otro lugar...</option>
                 </select>
-                <input id="desdeOtro" class="oculto" type="text" placeholder="Escribe el origen" style="margin-top:8px;">
-            </div>
-            <div>
-                <select id="hasta" onchange="checkOtro('hasta')">
-                    <option value="">Hasta...</option>
+                <select id="alertaHasta">
+                    <option value="">Destino...</option>
                     <option>El Espinar</option><option>San Rafael</option><option>LASR</option>
                     <option>La Estación</option><option>Madrid</option><option>Segovia</option><option>Ávila</option>
-                    <option value="Otro">Otro lugar...</option>
-                </select>
-                <input id="hastaOtro" class="oculto" type="text" placeholder="Escribe el destino" style="margin-top:8px;">
-            </div>
-        </div>
-
-        <p class="form-section-title">Hora de salida</p>
-        <div class="input-row">
-            <input id="hora" type="time">
-        </div>
-
-        <p class="form-section-title">¿Cuándo viajas?</p>
-        <div class="recur-pills">
-            <div class="recur-pill active" data-val="unica" onclick="setRecurrencia('unica')">📅 Fecha única</div>
-            <div class="recur-pill" data-val="lv" onclick="setRecurrencia('lv')">🗓️ Lunes a Viernes</div>
-            <div class="recur-pill" data-val="personalizada" onclick="setRecurrencia('personalizada')">✏️ Personalizada</div>
-        </div>
-
-        <!-- FECHA ÚNICA -->
-        <div id="seccion-unica" class="input-row">
-            <input id="fecha" type="date">
-
-            <div class="vuelta-toggle" id="vueltaToggle" onclick="onVueltaDivClick(event)">
-                <input type="checkbox" id="addVuelta" onchange="syncVuelta()">
-                <label for="addVuelta" onclick="event.stopPropagation()">🔄 Añadir viaje de vuelta</label>
-            </div>
-            <div id="horaVueltaWrap" class="oculto" style="margin-top:8px;">
-                <input id="horaVuelta" type="time" placeholder="Hora de vuelta">
-                <p class="hint" id="hintVuelta">Se publicará el viaje de vuelta a esta hora, con origen y destino invertidos.</p>
-            </div>
-        </div>
-
-        <!-- LUNES A VIERNES -->
-        <div id="seccion-lv" class="oculto">
-            <div class="input-row">
-                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Fecha de inicio</label>
-                <input id="fechaInicioLV" type="date">
-            </div>
-            <div class="input-row">
-                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Número máximo de viajes</label>
-                <select id="maxViajesLV">
-                    <option value="5">5 viajes (1 semana)</option>
-                    <option value="10">10 viajes (2 semanas)</option>
-                    <option value="15" selected>15 viajes (3 semanas)</option>
                 </select>
             </div>
-            <p class="hint">La fecha de inicio debe estar dentro de los próximos 15 días.</p>
-        </div>
-
-        <!-- PERSONALIZADA -->
-        <div id="seccion-personalizada" class="oculto">
-            <div class="input-row">
-                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Fecha de inicio</label>
-                <input id="fechaInicioPers" type="date">
+            <div class="input-row" style="margin-top: 10px;">
+                <input id="alertaEmail" type="email" placeholder="Introduce tu correo electrónico">
             </div>
-            <div class="input-row">
-                <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Número máximo de viajes</label>
-                <select id="maxViajesPers">
-                    <option value="5">5 viajes</option>
-                    <option value="10">10 viajes</option>
-                    <option value="15" selected>15 viajes</option>
-                </select>
-            </div>
-            <p class="hint">Selecciona los días:</p>
-            <div class="day-pills" id="dayPills">
-                <div class="day-pill" data-val="1" onclick="toggleDay(this)">Lun</div>
-                <div class="day-pill" data-val="2" onclick="toggleDay(this)">Mar</div>
-                <div class="day-pill" data-val="3" onclick="toggleDay(this)">Mié</div>
-                <div class="day-pill" data-val="4" onclick="toggleDay(this)">Jue</div>
-                <div class="day-pill" data-val="5" onclick="toggleDay(this)">Vie</div>
-                <div class="day-pill" data-val="6" onclick="toggleDay(this)">Sáb</div>
-                <div class="day-pill" data-val="0" onclick="toggleDay(this)">Dom</div>
-            </div>
-        </div>
-
-        <p class="form-section-title">Tus datos</p>
-        <div class="field-group input-row">
-            <input id="nombre" type="text" placeholder="Nombre">
-            <input id="telefono" type="tel" placeholder="Teléfono (9 dígitos)" maxlength="9">
-        </div>
-        <div class="input-row">
-            <input id="email" type="email" placeholder="Email (opcional)">
-            <p class="hint">Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
-        </div>
-
-        <div class="privacy-box">
-            ⚠️ Revisa que todos los datos sean correctos antes de publicar.
-            <label>
-                <input type="checkbox" id="aceptaPrivacidad">
-                <span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a> y autorizo el uso de mis datos para la gestión de viajes compartidos.</span>
-            </label>
-        </div>
-
-        <div id="pinMostrado"></div>
-
-        <div class="form-actions">
-            <button class="btn-submit" id="btnPublicar" onclick="publicarViaje()">Publicar</button>
-            <button class="btn-wa-form" onclick="enviarWhatsApp()">💬 WhatsApp</button>
+            <button class="btn-submit" id="btnCrearAlerta" onclick="crearAlertaMail()" style="margin-top: 10px; width: 100%;">
+                Guardar Alerta
+            </button>
+            <div id="resultadoAlerta"></div>
+            
+            <span class="alert-management-link" onclick="gestionarBajaManual()">
+                ¿Quieres dar de baja una alerta existente? Haz clic aquí.
+            </span>
         </div>
     </div>
 
-    <!-- GRID -->
-  <p class="section-label">Viajes disponibles</p>
-<div id="grid" class="grid">
-    <div class="loading-state">
-        <div class="spinner"></div>
-        <div class="loading-car">🚗</div>
-        <div class="loading-text">Cargando viajes...</div>
+    <p class="section-label">Viajes disponibles</p>
+    <div class="search-container">
+        <select id="filtroDesde" onchange="filtrar()">
+            <option value="">Todos los orígenes</option>
+            <option>El Espinar</option><option>San Rafael</option><option>LASR</option><option>La Estación</option>
+            <option>Madrid</option><option>Segovia</option><option>Ávila</option>
+        </select>
+        <select id="filtroHasta" onchange="filtrar()">
+            <option value="">Todos los destinos</option>
+            <option>El Espinar</option><option>San Rafael</option><option>LASR</option><option>La Estación</option>
+            <option>Madrid</option><option>Segovia</option><option>Ávila</option>
+        </select>
     </div>
-</div>
 
-</main>
-
-<footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
-
-<script>
-const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
-let todosLosViajes = [];
-let recurrenciaActual = 'unica';
-
-/* ── UI HELPERS ── */
-function abrirFormulario() {
-    const c = document.getElementById('formCard');
-    c.style.display = c.style.display === 'block' ? 'none' : 'block';
-}
-
-function setTipo(val) {
-    document.getElementById('tipo').value = val;
-    document.getElementById('pill-conductor').classList.toggle('active', val === 'Conductor');
-    document.getElementById('pill-pasajero').classList.toggle('active', val === 'Pasajero');
-}
-
-function setRecurrencia(val) {
-    recurrenciaActual = val;
-    document.querySelectorAll('.recur-pill').forEach(p => p.classList.toggle('active', p.dataset.val === val));
-    document.getElementById('seccion-unica').classList.toggle('oculto', val !== 'unica');
-    document.getElementById('seccion-lv').classList.toggle('oculto', val !== 'lv');
-    document.getElementById('seccion-personalizada').classList.toggle('oculto', val !== 'personalizada');
-
-    // Si no es fecha única, resetea la vuelta
-    if (val !== 'unica') {
-        document.getElementById('addVuelta').checked = false;
-        document.getElementById('horaVueltaWrap').classList.add('oculto');
-        document.getElementById('vueltaToggle').classList.remove('activo');
-    }
-}
-
-function toggleDay(el) {
-    el.classList.toggle('active');
-}
-
-function checkOtro(id) {
-    const val = document.getElementById(id).value;
-    document.getElementById(id + 'Otro').classList.toggle('oculto', val !== 'Otro');
-    // Solo actualiza hint si la vuelta está activa
-    if (document.getElementById('addVuelta').checked) {
-        actualizarHintVuelta();
-    }
-}
-
-// Click en el div (no en el checkbox ni el label): toggle manual
-function onVueltaDivClick(e) {
-    if (e.target.id === 'addVuelta' || e.target.tagName === 'LABEL') return;
-    const cb = document.getElementById('addVuelta');
-    cb.checked = !cb.checked;
-    syncVuelta();
-}
-
-// El checkbox cambió (por click directo o por onVueltaDivClick)
-function syncVuelta() {
-    const checked = document.getElementById('addVuelta').checked;
-    document.getElementById('horaVueltaWrap').classList.toggle('oculto', !checked);
-    document.getElementById('vueltaToggle').classList.toggle('activo', checked);
-    if (checked) actualizarHintVuelta();
-}
-
-function actualizarHintVuelta() {
-    const desde = document.getElementById('desde').value === 'Otro'
-        ? document.getElementById('desdeOtro').value.trim() || '...'
-        : document.getElementById('desde').value || '...';
-    const hasta = document.getElementById('hasta').value === 'Otro'
-        ? document.getElementById('hastaOtro').value.trim() || '...'
-        : document.getElementById('hasta').value || '...';
-    const hint = document.getElementById('hintVuelta');
-    if (hint) hint.textContent = `Se publicará el viaje de vuelta (${hasta} → ${desde}) a esta hora.`;
-}
-
-/* ── FECHAS ── */
-function generarFechas(diasSemana, fechaInicio, maxViajes) {
-    const fechas = [];
-    // Anclar al mediodía para evitar desfase UTC+2 al parsear fechas ISO sin hora
-    const inicio = new Date(fechaInicio + 'T12:00:00');
-    let cursor = new Date(inicio);
-
-    while (fechas.length < maxViajes) {
-        if (diasSemana.includes(cursor.getDay())) {
-            fechas.push(cursor.toISOString().split('T')[0]);
-        }
-        cursor.setDate(cursor.getDate() + 1);
-        if ((cursor - inicio) / 86400000 > 60) break;
-    }
-    return fechas;
-}
-
-function formatFecha(isoStr) {
-    if (!isoStr) return '';
-    return isoStr.split('-').reverse().join('/');
-}
-
-function nombreDia(isoStr) {
-    const dias = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
-    const d = new Date(isoStr + 'T12:00:00');
-    return dias[d.getDay()];
-}
-
-/* ── FILTRO ── */
-function filtrar() {
-    const texto = document.getElementById('buscador').value.toLowerCase();
-    const filtrados = todosLosViajes.filter(v =>
-        [v.desde, v.hasta, v.fecha, v.hora, v.nombre, v.tipo]
-            .some(c => String(c).toLowerCase().includes(texto))
-    );
-    renderizar(filtrados);
-}
-
-/* ── CARGA ── */
-async function cargar() {
-    document.getElementById('grid').innerHTML = `
+    <div id="grid" class="grid">
         <div class="loading-state">
             <div class="spinner"></div>
-            <div>🚗 Cargando viajes...</div>
-        </div>`;
-    try {
-        // Añadimos redirección automática explícita por si el navegador la frena
-        const res = await fetch(URL_SCRIPT, { method: 'GET' });
-        const text = await res.text();
-        
-        // Validamos si lo que devuelve Google es un HTML de error o el JSON esperado
-        if(text.trim().startsWith("<doctype") || text.trim().startsWith("<html")) {
-            throw new Error("La API devolvió HTML en vez de JSON. Comprueba los permisos de la implementación.");
+            <div class="loading-car">🚗</div>
+            <div class="loading-text">Cargando viajes...</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // URL DE TU WEB APP EN GOOGLE APPS SCRIPT
+    const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
+
+    let recurrenciaActual = 'unica';
+    let todosLosViajes = [];
+
+    // Ajustar fecha mínima por defecto al día de hoy en el formulario
+    window.addEventListener('DOMContentLoaded', () => {
+        const inputFecha = document.getElementById('fecha');
+        if (inputFecha) {
+            const hoyStr = new Date().toISOString().split('T')[0];
+            inputFecha.min = hoyStr;
+            inputFecha.value = hoyStr;
         }
-
-        const todos = JSON.parse(text);
-
-        const hoy = new Date();
-        hoy.setHours(0,0,0,0);
-        todosLosViajes = todos.filter(v => {
-            const fechaViaje = new Date(v.fecha + 'T00:00:00');
-            return fechaViaje >= hoy;
-        });
-
-        todosLosViajes.sort((a,b) =>
-            new Date(a.fecha + 'T' + a.hora) -
-            new Date(b.fecha + 'T' + b.hora)
-        );
-
-        renderizar(todosLosViajes);
-
-    } catch(e) {
-        console.error("Error detallado:", e);
-        document.getElementById('grid').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes o permisos CORS denegados.</div>';
-    }
-}
-
-/* ── RENDER ── */
-function renderizar(data) {
-    if (!data.length) {
-        document.getElementById('grid').innerHTML =
-            '<div class="empty-state"><div class="empty-icon">🚗</div>No se encontraron viajes.</div>';
-        return;
-    }
-
-    // Agrupar por anuncio padre
-    const grupos = {};
-    data.forEach(v => {
-        if (!grupos[v.anuncio]) grupos[v.anuncio] = [];
-        grupos[v.anuncio].push(v);
     });
 
-    document.getElementById('grid').innerHTML = Object.values(grupos).map(viajes => {
-        const base = viajes[0];
-        const tel = String(base.telefono).replace(/\s+/g,'');
-        const numWA = tel.startsWith('34') ? tel : '34' + tel;
-        const esConductor = base.tipo.includes('Conductor');
+    function setTipo(tipo) {
+        document.getElementById('tipo').value = tipo;
+        document.getElementById('btnConductor').classList.toggle('active', tipo === 'Conductor');
+        document.getElementById('btnPasajero').classList.toggle('active', tipo === 'Pasajero');
+    }
 
-        return `
-        <div class="card">
-            <button class="btn-delete" title="Borrar anuncio" onclick="borrarViaje('${base.anuncio}')">🗑️</button>
-            <div class="card-badge ${esConductor ? 'badge-conductor' : 'badge-pasajero'}">
-                ${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}
-            </div>
-            <div class="card-route">
-                ${base.desde} → ${base.hasta}
-            </div>
-            <div style="font-size:12px;color:var(--ink-light);margin-bottom:10px;">
-                ${viajes.length} ${viajes.length === 1 ? 'viaje publicado' : 'viajes publicados'}
-            </div>
-            <div class="card-meta">
-                ${viajes.map(v => `
-                    <div class="card-meta-row">
-                        <div class="card-meta-left">
-                            <div class="card-meta-icon">📅</div>
-                            <span class="card-meta-val">${formatFecha(v.fecha)}</span>
-                            <span style="color:var(--ink-light); font-size:13px">(${nombreDia(v.fecha)})</span>
-                        </div>
-                        <span class="card-meta-hora">⏰ ${v.hora}</span>
-                    </div>
-                `).join('')}
-            </div>
-            <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
-                💬 Escribir a ${base.nombre}
-            </a>
-        </div>`;
-    }).join('');
-}
+    function checkOtros() {
+        const d = document.getElementById('desde').value;
+        const h = document.getElementById('hasta').value;
+        document.getElementById('desdeOtro').style.display = (d === 'Otro') ? 'block' : 'none';
+        document.getElementById('hastaOtro').style.display = (h === 'Otro') ? 'block' : 'none';
+    }
 
-/* ── BORRAR ── */
-async function borrarViaje(id) {
-    const pin = prompt('🗑️ Introduce tu PIN de 6 dígitos para borrar este anuncio:');
-    if (!pin) return;
-    try {
-        const res = await fetch(`${URL_SCRIPT}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
-        const data = await res.json();
-        if (data.status === 'ok') {
-            todosLosViajes = todosLosViajes.filter(v => v.anuncio !== id);
+    function setRecurrencia(modo) {
+        recurrenciaActual = modo;
+        document.getElementById('rec_unica').classList.toggle('active', modo === 'unica');
+        document.getElementById('rec_lv').classList.toggle('active', modo === 'lv');
+        document.getElementById('rec_multi').classList.toggle('active', modo === 'multi');
+
+        document.getElementById('wrapFecha').style.display = (modo === 'unica') ? 'block' : 'none';
+        document.getElementById('dayPills').style.display = (modo === 'multi') ? 'flex' : 'none';
+    }
+
+    function toggleDayPill(el) {
+        el.classList.toggle('active');
+    }
+
+    function nameDayShort(num) {
+        return ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'][num];
+    }
+
+    function formatFecha(str) {
+        if(!str || str.includes('M-V') || str.includes('Días')) return str;
+        const parts = str.split('-');
+        if(parts.length !== 3) return str;
+        return `${parts[2]}/${parts[1]}/${parts[0]}`;
+    }
+
+    function nombreDia(str) {
+        if(!str) return '';
+        const d = new Date(str + 'T00:00:00');
+        return isNaN(d.getTime()) ? '' : nameDayShort(d.getDay());
+    }
+
+    /* ── 📦 CARGAR VIAJES DESDE BACKEND ── */
+    async function cargar() {
+        document.getElementById('grid').innerHTML = `
+            <div class="loading-state">
+                <div class="spinner"></div>
+                <div class="loading-car">🚗</div>
+                <div class="loading-text">Cargando viajes...</div>
+            </div>`;
+        try {
+            const res = await fetch(URL_SCRIPT, { method: 'GET' });
+            const text = await res.text();
+            
+            if(text.trim().startsWith("<doctype") || text.trim().startsWith("<html")) {
+                throw new Error("La API devolvió HTML en vez de JSON.");
+            }
+
+            const todos = JSON.parse(text);
+
+            const hoy = new Date();
+            hoy.setHours(0,0,0,0);
+            
+            todosLosViajes = todos.filter(v => {
+                const fechaViaje = new Date(v.fecha + 'T00:00:00');
+                return fechaViaje >= hoy;
+            });
+
+            todosLosViajes.sort((a,b) =>
+                new Date(a.fecha + 'T' + a.hora) -
+                new Date(b.fecha + 'T' + b.hora)
+            );
+
             renderizar(todosLosViajes);
-            alert('✅ Anuncio eliminado correctamente.');
-        } else {
-            alert('❌ PIN incorrecto. El anuncio no se ha borrado.');
+
+        } catch(e) {
+            console.error("Error detallado:", e);
+            document.getElementById('grid').innerHTML =
+                '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes o permisos CORS denegados.</div>';
         }
-    } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
-}
-
-/* ── GENERAR PIN EN CLIENTE (Opción C) ── */
-function generarPIN() {
-    return Math.floor(100000 + Math.random() * 900000).toString();
-}
-
-/* ── VALIDAR TELÉFONO (FIX 3) ── */
-function validarTelefono(tel) {
-    return /^\d{9}$/.test(tel.trim());
-}
-
-/* ── PUBLICAR ── */
-async function publicarViaje() {
-    if (!document.getElementById('aceptaPrivacidad').checked) {
-        alert('Debes aceptar la política de privacidad.'); return;
     }
 
-    const desde = document.getElementById('desde').value === 'Otro'
-        ? document.getElementById('desdeOtro').value.trim()
-        : document.getElementById('desde').value;
-    const hasta = document.getElementById('hasta').value === 'Otro'
-        ? document.getElementById('hastaOtro').value.trim()
-        : document.getElementById('hasta').value;
-
-    if (!desde || !hasta)  { alert('Selecciona origen y destino.'); return; }
-    if (desde === hasta)   { alert('El origen y el destino no pueden ser iguales.'); return; }
-    if (!document.getElementById('hora').value) { alert('Introduce la hora de salida.'); return; }
-
-    const nombreVal = document.getElementById('nombre').value.trim();
-    const telefonoVal = document.getElementById('telefono').value.trim();
-    if (!nombreVal)   { alert('Introduce tu nombre.'); return; }
-    if (!telefonoVal) { alert('Introduce tu teléfono.'); return; }
-
-    // FIX 3: validar formato de teléfono
-    if (!validarTelefono(telefonoVal)) {
-        alert('El teléfono debe tener exactamente 9 dígitos numéricos.'); return;
-    }
-
-    let fechas = [];
-    if (recurrenciaActual === 'unica') {
-        const f = document.getElementById('fecha').value;
-        if (!f) { alert('Selecciona una fecha.'); return; }
-        const hoy = new Date(); hoy.setHours(0,0,0,0);
-        if (new Date(f + 'T00:00:00') < hoy) { alert('No puedes seleccionar una fecha pasada.'); return; }
-        fechas = [f];
-
-    } else if (recurrenciaActual === 'lv') {
-        const inicio = document.getElementById('fechaInicioLV').value;
-        if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
-
-        const hoy = new Date(); hoy.setHours(0,0,0,0);
-        // FIX 1: validar que la fecha esté dentro de los próximos 15 días
-        const limite = new Date(hoy);
-        limite.setDate(limite.getDate() + 15);
-        const fechaInicio = new Date(inicio + 'T12:00:00');
-
-        if (fechaInicio < hoy) {
-            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
-        }
-        if (fechaInicio > limite) {
-            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
+    function renderizar(lista) {
+        const grid = document.getElementById('grid');
+        if (lista.length === 0) {
+            grid.innerHTML = '<div class="empty-state"><div class="empty-icon">🗺️</div>No hay viajes programados que coincidan.</div>';
+            return;
         }
 
-        const maxViajes = parseInt(document.getElementById('maxViajesLV').value);
-        fechas = generarFechas([1,2,3,4,5], inicio, maxViajes);
+        let html = '';
+        lista.forEach(v => {
+            const esConductor = v.tipo.includes('Conductor');
+            const claseBadge = esConductor ? 'conductor' : 'pasajero';
+            const textoBadge = esConductor ? 'Conductor' : 'Pasajero';
 
-    } else {
-        const inicio = document.getElementById('fechaInicioPers').value;
-        if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
+            // Armar texto de WhatsApp
+            const msgText = `Hola ${v.nombre}, te escribo por tu anuncio en la web de viajes de ${v.desde} a ${v.hasta} el día ${formatFecha(v.fecha)} a las ${v.hora}. ¿Sigue disponible?`;
+            const waLink = `https://wa.me/${v.telefono}?text=${encodeURIComponent(msgText)}`;
 
-        const hoy = new Date(); hoy.setHours(0,0,0,0);
-        // FIX 1: misma validación de 15 días para personalizada
-        const limite = new Date(hoy);
-        limite.setDate(limite.getDate() + 15);
-        const fechaInicio = new Date(inicio + 'T12:00:00');
-
-        if (fechaInicio < hoy) {
-            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
-        }
-        if (fechaInicio > limite) {
-            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
-        }
-
-        const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
-        if (!activos.length) { alert('Selecciona al menos un día.'); return; }
-        fechas = generarFechas(
-            activos.map(el => parseInt(el.dataset.val)),
-            inicio,
-            parseInt(document.getElementById('maxViajesPers').value)
-        );
-    }
-
-    // Validar vuelta si está activada
-    const conVuelta = recurrenciaActual === 'unica' && document.getElementById('addVuelta').checked;
-    let horaVuelta = '';
-    if (conVuelta) {
-        horaVuelta = document.getElementById('horaVuelta').value;
-        if (!horaVuelta) { alert('Introduce la hora de vuelta.'); return; }
-    }
-
-    const btn = document.getElementById('btnPublicar');
-    btn.disabled = true; btn.textContent = 'Publicando...';
-
-    const base = {
-        tipo:     document.getElementById('tipo').value,
-        desde, hasta,
-        hora:     document.getElementById('hora').value,
-        nombre:   nombreVal,
-        telefono: telefonoVal,
-        email:    document.getElementById('email').value.trim()
-    };
-
-    // OPCIÓN C: el HTML genera el PIN una vez y lo pasa en ambos POSTs
-    const pinCompartido = generarPIN();
-
-    const payload = fechas.map(f => ({ ...base, fecha: f, pin: pinCompartido }));
-
-    try {
-        // Primera llamada: ida (con email → el script lo envía)
-        const resIda = await fetch(URL_SCRIPT, {
-            method: 'POST',
-            mode: 'cors',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams({
-                payload: JSON.stringify(payload.length === 1 ? payload[0] : payload)
-            })
+            html += `
+                <div class="item-card">
+                    <button class="btn-delete-trigger" title="Borrar este viaje" onclick="borrarViaje('${v.anuncio}')">✕</button>
+                    <div class="item-header">
+                        <span class="badge ${claseBadge}">${textoBadge}</span>
+                    </div>
+                    <div class="route-title">
+                        ${v.desde} <span class="route-arrow">→</span> ${v.hasta}
+                    </div>
+                    <div class="meta-row">
+                        <div class="meta-item">📅 ${formatFecha(v.fecha)} (${nombreDia(v.fecha)})</div>
+                        <div class="meta-item">🕒 ${v.hora} h</div>
+                        <div class="meta-item">👤 ${v.nombre}</div>
+                    </div>
+                    <a href="${waLink}" target="_blank" class="btn-whatsapp">
+                        💬 Contactar por WhatsApp
+                    </a>
+                </div>
+            `;
         });
-        const dataIda = await resIda.json();
+        grid.innerHTML = html;
+    }
 
-        // Segunda llamada: vuelta (sendEmail:false → el script no reenvía el email)
-        if (conVuelta) {
-            const vuelta = {
-                ...base,
-                desde: hasta,
-                hasta: desde,
-                hora: horaVuelta,
-                fecha: fechas[0],
-                pin: pinCompartido,
-                sendEmail: false   // ← suprime el email en la vuelta
-            };
-            await fetch(URL_SCRIPT, {
+    function filtrar() {
+        const fd = document.getElementById('filtroDesde').value.toLowerCase();
+        const fh = document.getElementById('filtroHasta').value.toLowerCase();
+
+        const filtrados = todosLosViajes.filter(v => {
+            const matchD = !fd || v.desde.toLowerCase().includes(fd);
+            const matchH = !fh || v.hasta.toLowerCase().includes(fh);
+            return matchD && matchH;
+        });
+
+        renderizar(filtrados);
+    }
+
+    /* ── 🚘 PUBLICAR VIAJE EN BACKEND ── */
+    async function publicarViaje() {
+        const d = (document.getElementById('desde').value === 'Otro') ? document.getElementById('desdeOtro').value.trim() : document.getElementById('desde').value;
+        const h = (document.getElementById('hasta').value === 'Otro') ? document.getElementById('hastaOtro').value.trim() : document.getElementById('hasta').value;
+        const hora = document.getElementById('hora').value;
+        const nombre = document.getElementById('nombre').value.trim();
+        const telefono = document.getElementById('telefono').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const tipo = document.getElementById('tipo').value;
+        const publicarVuelta = document.getElementById('vuelta').checked;
+
+        if (!d || !h || !hora || !nombre || !telefono || !email) {
+            alert('Por favor, rellena todos los campos del formulario.');
+            return;
+        }
+        if (d === h) {
+            alert('El origen y el destino no pueden ser iguales.');
+            return;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert('Por favor, introduce un correo electrónico válido.');
+            return;
+        }
+
+        const btn = document.getElementById('btnPublicar');
+        btn.disabled = true;
+        btn.textContent = 'Publicando viaje...';
+
+        // Estructurar array de payload (soporta ida y vuelta)
+        const payload = [];
+
+        // Generar las fechas en base a la recurrencia
+        let fechasArray = [];
+        if (recurrenciaActual === 'unica') {
+            fechasArray.push(document.getElementById('fecha').value);
+        } else if (recurrenciaActual === 'lv') {
+            fechasArray.push('L-V');
+        } else {
+            const activos = [...document.querySelectorAll('#dayPills .day-pill.active')].map(el => el.dataset.val);
+            fechasArray.push(activos.length ? 'Días: ' + activos.map(nameDayShort).join(',') : 'Varios días');
+        }
+
+        fechasArray.forEach(f => {
+            payload.push({ tipo, desde: d, hasta: h, fecha: f, hora, nombre, telefono, email });
+            if (publicarVuelta) {
+                payload.push({ tipo, desde: h, hasta: d, fecha: f, hora, nombre, telefono, email, sendEmail: false });
+            }
+        });
+
+        try {
+            const res = await fetch(URL_SCRIPT, {
                 method: 'POST',
                 mode: 'cors',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                body: new URLSearchParams({ payload: JSON.stringify(vuelta) })
+                body: new URLSearchParams({ payload: JSON.stringify(payload) })
             });
-        }
+            const data = await res.json();
 
-        const pinBox = document.getElementById('pinMostrado');
-
-        // FIX 4: usar payload.length como fallback si data.total es undefined
-        const numViajes = (dataIda.total !== undefined) ? dataIda.total : payload.length;
-
-        let textoViajes = '';
-        if (conVuelta) {
-            textoViajes = `Se han publicado <b>2 anuncios</b>: ida (${desde} → ${hasta}) y vuelta (${hasta} → ${desde}). Ambos se borran con el mismo PIN.`;
-        } else if (numViajes > 1) {
-            textoViajes = `Se han publicado <b>${numViajes} viajes</b>.`;
-        } else {
-            textoViajes = 'Se ha publicado <b>1 viaje</b>.';
-        }
-
-        pinBox.innerHTML = `
-            <div class="pin-box">
-                <p class="pin-label">🔑 Tu PIN personal es:</p>
-                <div class="pin-num">${pinCompartido}</div>
-                <button class="btn-copy-pin" onclick="copiarPin('${pinCompartido}', this)">📋 Copiar PIN</button>
-                <p class="pin-aviso">
-                    ${base.email
-                        ? `✅ Te hemos enviado el PIN a ${base.email}`
-                        : '⚠️ Guarda este PIN — no podrás recuperarlo si lo pierdes.'
-                    }<br>${textoViajes}
-                </p>
-            </div>`;
-
-        btn.textContent = '✅ Publicado';
-        setTimeout(() => {
+            if (data.status === 'ok') {
+                alert(`¡Viaje publicado correctamente!\n\n🔑 Tu PIN de borrado es: ${data.pin}\nLo hemos enviado también a tu correo electrónico.`);
+                
+                // Limpiar campos básicos
+                document.getElementById('hora').value = '';
+                document.getElementById('vuelta').checked = false;
+                
+                cargar(); // Recargar el listado
+            } else {
+                alert('Hubo un error al guardar en la base de datos.');
+            }
+        } catch (err) {
+            console.error(err);
+            alert('Error crítico de conexión al publicar el viaje.');
+        } finally {
             btn.disabled = false;
-            btn.textContent = 'Publicar';
-        }, 1500);
-
-        // Reset formulario
-        document.getElementById('desde').value = '';
-        document.getElementById('hasta').value = '';
-        document.getElementById('desdeOtro').classList.add('oculto');
-        document.getElementById('hastaOtro').classList.add('oculto');
-        document.getElementById('hora').value = '';
-        document.getElementById('fecha').value = '';
-        document.getElementById('nombre').value = '';
-        document.getElementById('telefono').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('aceptaPrivacidad').checked = false;
-        document.getElementById('addVuelta').checked = false;
-        document.getElementById('horaVuelta').value = '';
-        document.getElementById('horaVueltaWrap').classList.add('oculto');
-        document.getElementById('vueltaToggle').classList.remove('activo');
-        document.getElementById('fechaInicioLV').value = '';
-        document.getElementById('fechaInicioPers').value = '';
-        document.querySelectorAll('#dayPills .day-pill').forEach(p => p.classList.remove('active'));
-
-        await cargar();
-
-    } catch(err) {
-        console.error(err);
-        alert('Error al publicar. Comprueba tu conexión e inténtalo de nuevo.');
-        btn.disabled = false; btn.textContent = 'Publicar';
-    }
-}
-
-function copiarPin(pin, btn) {
-    navigator.clipboard.writeText(pin).then(() => {
-        btn.textContent = '✅ ¡Copiado!';
-        btn.classList.add('copied');
-        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copied'); }, 2500);
-    });
-}
-
-/* ── WHATSAPP (FIX 7: valida campos mínimos antes de abrir) ── */
-function enviarWhatsApp() {
-    const d = document.getElementById('desde').value === 'Otro'
-        ? document.getElementById('desdeOtro').value.trim()
-        : document.getElementById('desde').value;
-    const h = document.getElementById('hasta').value === 'Otro'
-        ? document.getElementById('hastaOtro').value.trim()
-        : document.getElementById('hasta').value;
-    const hora = document.getElementById('hora').value;
-    const nombre = document.getElementById('nombre').value.trim();
-    const tipo = document.getElementById('tipo').value;
-
-    if (!d || !h) { alert('Introduce al menos el origen y el destino para compartir por WhatsApp.'); return; }
-
-    const esConductor = tipo === 'Conductor';
-
-    let cuandoText = '';
-    if (recurrenciaActual === 'unica') {
-        const f = document.getElementById('fecha').value;
-        cuandoText = f ? `el ${formatFecha(f)} (${nombreDia(f)})` : 'en una fecha concreta';
-    } else if (recurrenciaActual === 'lv') {
-        cuandoText = 'de lunes a viernes';
-    } else {
-        const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
-        const nombresMap = {'0':'domingos','1':'lunes','2':'martes','3':'miércoles','4':'jueves','5':'viernes','6':'sábados'};
-        cuandoText = activos.length
-            ? `los ${activos.map(el => nombresMap[el.dataset.val]).join(', ')}`
-            : 'varios días';
+            btn.textContent = 'Publicar en la Web y Compartir';
+        }
     }
 
-    const accion = esConductor ? 'tengo plaza' : 'busco viaje';
-    const msg = `Hola, soy ${nombre || '(sin nombre)'}. ${accion} desde ${d} hasta ${h} ${cuandoText}${hora ? ` a las ${hora}` : ''}. ¿Te interesa? ¡Escríbeme!`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
-}
+    /* ── 🗑️ BORRAR UN VIAJE ── */
+    async function borrarViaje(anuncioId) {
+        const pin = prompt('Introduce el PIN de 6 dígitos para borrar este anuncio:');
+        if (!pin) return;
 
-cargar();
+        try {
+            const res = await fetch(`${URL_SCRIPT}?action=delete&id=${anuncioId}&pin=${pin.trim()}`);
+            const data = await res.json();
+
+            if (data.status === 'ok') {
+                alert('✅ El viaje se ha eliminado correctamente de la web.');
+                cargar();
+            } else {
+                alert('❌ El PIN introducido es incorrecto o el viaje ya no existe.');
+            }
+        } catch(e) {
+            alert('Error de red al intentar borrar el trayecto.');
+        }
+    }
+
+    /* ── 🔔 GUARDAR NUEVA ALERTA POR CORREO ── */
+    async function crearAlertaMail() {
+        const desde = document.getElementById('alertaDesde').value;
+        const hasta = document.getElementById('alertaHasta').value;
+        const email = document.getElementById('alertaEmail').value.trim();
+
+        if (!desde || !hasta) { alert('Selecciona origen y destino para la alerta.'); return; }
+        if (desde === hasta) { alert('El origen y el destino no pueden ser iguales.'); return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { alert('Por favor, introduce un email válido.'); return; }
+
+        const btn = document.getElementById('btnCrearAlerta');
+        btn.disabled = true; btn.textContent = 'Guardando alerta...';
+
+        const payload = {
+            actionType: 'createAlert',
+            desde: desde,
+            hasta: hasta,
+            email: email
+        };
+
+        try {
+            const res = await fetch(URL_SCRIPT, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ payload: JSON.stringify(payload) })
+            });
+            const data = await res.json();
+
+            if (data.status === 'ok') {
+                document.getElementById('resultadoAlerta').innerHTML = `
+                    <div style="margin-top:12px; padding:12px; background:#edfaf4; color:#0a7554; border-radius:8px; font-size:13px; text-align:center;">
+                        <b>¡Alerta guardada!</b> El sistema te avisará en cuanto un conductor publique un viaje de ${desde} a ${hasta}.<br>
+                        🔑 Tu PIN de gestión es: <b>${data.pin}</b> (Guárdalo por si deseas darte de baja desde la web).
+                    </div>`;
+                document.getElementById('alertaEmail').value = '';
+                document.getElementById('alertaDesde').value = '';
+                document.getElementById('alertaHasta').value = '';
+            } else {
+                alert('No se pudo guardar la alerta. Inténtalo de nuevo.');
+            }
+        } catch(err) {
+            console.error(err);
+            alert('Error de conexión al procesar la alerta.');
+        } finally {
+            btn.disabled = false; btn.textContent = 'Guardar Alerta';
+        }
+    }
+
+    /* ── 🔕 DAR DE BAJA MANUAL DESDE LA WEB ── */
+    async function gestionarBajaManual() {
+        const email = prompt('Introduce el correo electrónico con el que te suscribiste:');
+        if (!email) return;
+        const pin = prompt('Introduce el PIN de 6 dígitos de tu alerta:');
+        if (!pin) return;
+
+        ejecutarBajaAlerta(email.trim(), pin.trim());
+    }
+
+    /* Función interna para tramitar la baja */
+    async function ejecutarBajaAlerta(email, pin) {
+        try {
+            const res = await fetch(`${URL_SCRIPT}?action=unsubscribeAlert&email=${encodeURIComponent(email)}&pin=${encodeURIComponent(pin)}`);
+            const data = await res.json();
+            if (data.status === 'ok') {
+                alert('✅ Te has dado de baja de la alerta correctamente. No recibirás más correos sobre esta ruta.');
+            } else {
+                alert('❌ Código PIN o correo electrónico incorrectos. No se pudo tramitar la baja.');
+            }
+        } catch(e) {
+            alert('Error al conectar con el servidor para tramitar la baja.');
+        }
+    }
+
+    /* ── 🔮 DETECTAR ENLACE MÁGICO DE BAJA EN LA URL ── */
+    function chequearEnlaceBajaAutomatico() {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('action') === 'unsubscribe' && params.get('email') && params.get('pin')) {
+            const email = params.get('email');
+            const pin = params.get('pin');
+            
+            window.history.replaceState({}, document.title, window.location.pathname);
+            alert('Procesando tu solicitud de baja automática...');
+            ejecutarBajaAlerta(email, pin);
+        }
+    }
+
+    // Inicializar cargas de datos al entrar
+    chequearEnlaceBajaAutomatico();
+    cargar();
 </script>
+
 </body>
 </html>
