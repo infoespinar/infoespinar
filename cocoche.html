@@ -810,7 +810,89 @@
 </div>
 
 </main>
+<div class="form-card" style="display:block;margin-top:30px;">
+    
+    <p class="form-section-title">Alertas de viajes</p>
 
+    <h3 style="margin-bottom:10px;">
+        ¿No has encontrado tu viaje?
+    </h3>
+
+    <p class="hint" style="margin-bottom:16px;">
+        Crea una alerta personalizada y te avisaremos por email cuando alguien publique un viaje que coincida.
+    </p>
+
+    <div class="field-group input-row">
+        <select id="alertaDesde">
+            <option value="">Origen...</option>
+            <option>El Espinar</option>
+            <option>San Rafael</option>
+            <option>LASR</option>
+            <option>La Estación</option>
+            <option>Madrid</option>
+            <option>Segovia</option>
+            <option>Ávila</option>
+        </select>
+
+        <select id="alertaHasta">
+            <option value="">Destino...</option>
+            <option>El Espinar</option>
+            <option>San Rafael</option>
+            <option>LASR</option>
+            <option>La Estación</option>
+            <option>Madrid</option>
+            <option>Segovia</option>
+            <option>Ávila</option>
+        </select>
+    </div>
+
+    <div class="input-row">
+        <input
+            id="alertaEmail"
+            type="email"
+            placeholder="Tu email">
+    </div>
+
+    <div class="input-row">
+        <select id="alertaDuracion">
+            <option value="7">1 semana</option>
+            <option value="14">2 semanas</option>
+            <option value="30">1 mes</option>
+        </select>
+    </div>
+
+    <button class="btn-submit" onclick="crearAlerta()">
+        Crear alerta
+    </button>
+
+    <div id="resultadoAlerta" style="margin-top:15px;"></div>
+
+    <hr style="margin:30px 0;border:none;border-top:1px solid var(--border);">
+
+    <p class="form-section-title">Cancelar alerta</p>
+
+    <div class="input-row">
+        <input
+            id="bajaEmail"
+            type="email"
+            placeholder="Tu email">
+    </div>
+
+    <div class="input-row">
+        <input
+            id="bajaPin"
+            type="text"
+            maxlength="6"
+            placeholder="PIN recibido">
+    </div>
+
+    <button class="btn-submit" onclick="eliminarAlerta()">
+        Eliminar alerta
+    </button>
+
+</div>
+
+    
 <footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
@@ -1283,6 +1365,104 @@ function enviarWhatsApp() {
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
+async function crearAlerta() {
+
+    const desde = document.getElementById('alertaDesde').value;
+    const hasta = document.getElementById('alertaHasta').value;
+    const email = document.getElementById('alertaEmail').value.trim();
+    const duracion = parseInt(document.getElementById('alertaDuracion').value);
+
+    if (!desde || !hasta) {
+        alert('Selecciona origen y destino');
+        return;
+    }
+
+    if (desde === hasta) {
+        alert('Origen y destino no pueden coincidir');
+        return;
+    }
+
+    if (!email) {
+        alert('Introduce un email');
+        return;
+    }
+
+    try {
+
+        const res = await fetch(URL_SCRIPT,{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/x-www-form-urlencoded'
+            },
+            body:new URLSearchParams({
+                payload: JSON.stringify({
+                    actionType:'createAlert',
+                    desde,
+                    hasta,
+                    email,
+                    duracion
+                })
+            })
+        });
+
+        const data = await res.json();
+
+        if(data.status === 'ok'){
+
+            document.getElementById('resultadoAlerta').innerHTML = `
+                <div class="pin-box">
+                    <p class="pin-label">Tu PIN de alerta</p>
+                    <div class="pin-num">${data.pin}</div>
+                    <p class="pin-aviso">
+                        Guarda este PIN. También lo hemos enviado por email.
+                    </p>
+                </div>
+            `;
+
+        } else {
+
+            alert('No se pudo crear la alerta');
+
+        }
+
+    } catch(err){
+
+        console.error(err);
+        alert('Error de conexión');
+
+    }
+}
+
+
+async function eliminarAlerta(){
+
+    const email = document.getElementById('bajaEmail').value.trim();
+    const pin = document.getElementById('bajaPin').value.trim();
+
+    if(!email || !pin){
+        alert('Introduce email y PIN');
+        return;
+    }
+
+    try{
+
+        const res = await fetch(
+            `${URL_SCRIPT}?action=unsubscribeAlert&email=${encodeURIComponent(email)}&pin=${encodeURIComponent(pin)}`
+        );
+
+        const data = await res.json();
+
+        if(data.status === 'ok'){
+            alert('Alerta eliminada correctamente');
+        } else {
+            alert('Email o PIN incorrectos');
+        }
+
+    }catch(err){
+        alert('Error de conexión');
+    }
+}
+    
 cargar();
 </script>
 </body>
