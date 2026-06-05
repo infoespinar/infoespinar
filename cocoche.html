@@ -460,6 +460,26 @@
             margin-bottom: 14px;
         }
 
+        /* Estilo para hacer el coche más grande */
+.loading-car {
+    font-size: 3.5rem; /* Ajusta este valor si lo quieres aún más grande (ej. 4rem o 5rem) */
+    line-height: 1;
+    margin-bottom: 12px; /* Espacio entre el coche y el texto de abajo */
+    display: inline-block;
+    animation: bounceCar 1.5s ease-in-out infinite; /* Animación opcional de movimiento */
+}
+
+.loading-text {
+    font-size: 1.1rem;
+    color: var(--ink-mid); /* O el color secundario que uses */
+    font-weight: 500;
+}
+
+/* Animación opcional: hace que el coche flote suavemente arriba y abajo mientras carga */
+@keyframes bounceCar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
        .grid {
     column-count: 2;
     column-gap: 16px;
@@ -780,13 +800,14 @@
     </div>
 
     <!-- GRID -->
-    <p class="section-label">Viajes disponibles</p>
-    <div id="grid" class="grid">
-        <div class="loading-state">
-            <div class="spinner"></div>
-            <div>🚗 Cargando viajes...</div>
-        </div>
+  <p class="section-label">Viajes disponibles</p>
+<div id="grid" class="grid">
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <div class="loading-car">🚗</div>
+        <div class="loading-text">Cargando viajes...</div>
     </div>
+</div>
 
 </main>
 
