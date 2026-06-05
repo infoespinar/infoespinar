@@ -460,22 +460,42 @@
             margin-bottom: 14px;
         }
 
-        .grid {
-            column-count: 2;
-            column-gap: 16px;
-        }
+        /* Estilo para hacer el coche más grande */
+.loading-car {
+    font-size: 3.5rem; /* Ajusta este valor si lo quieres aún más grande (ej. 4rem o 5rem) */
+    line-height: 1;
+    margin-bottom: 12px; /* Espacio entre el coche y el texto de abajo */
+    display: inline-block;
+    animation: bounceCar 1.5s ease-in-out infinite; /* Animación opcional de movimiento */
+}
+
+.loading-text {
+    font-size: 1.1rem;
+    color: var(--ink-mid); /* O el color secundario que uses */
+    font-weight: 500;
+}
+
+/* Animación opcional: hace que el coche flote suavemente arriba y abajo mientras carga */
+@keyframes bounceCar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+       .grid {
+    column-count: 2;
+    column-gap: 16px;
+}
 
         .card {
-            break-inside: avoid;
-            margin-bottom: 16px;
-            background: var(--surface);
-            border-radius: var(--radius);
-            border: 1.5px solid var(--border);
-            box-shadow: var(--shadow);
-            padding: 22px;
-            position: relative;
-            transition: box-shadow 0.2s, transform 0.2s;
-        }
+    break-inside: avoid;
+    margin-bottom: 16px;
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 22px;
+    position: relative;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
         .card:hover {
             box-shadow: var(--shadow-md);
             transform: translateY(-2px);
@@ -610,63 +630,6 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* ESTILOS DE LA SECCIÓN DE ALERTAS POR CORREO (ADAPTADO) */
-        .alert-box {
-            background: var(--surface);
-            border: 2px dashed rgba(13, 122, 104, 0.4);
-            border-radius: var(--radius);
-            padding: 24px;
-            margin-top: 40px;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-        .alert-box h3 {
-            font-family: 'DM Serif Display', serif;
-            color: #0d7a68;
-            margin-bottom: 6px;
-            font-size: 20px;
-        }
-        .alert-box p {
-            font-size: 14px;
-            color: var(--ink-mid);
-            margin-bottom: 16px;
-        }
-        .btn-alert-trigger {
-            background: #0d7a68;
-            color: white;
-            padding: 11px 22px;
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: inherit;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s;
-            box-shadow: 0 4px 12px rgba(13,122,104,0.15);
-        }
-        .btn-alert-trigger:hover { background: #0a5e52; }
-
-        .form-alert-card {
-            background: var(--surface);
-            border: 1.5px solid var(--border-strong);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-top: 16px;
-            display: none;
-            text-align: left;
-            animation: slideDown 0.2s ease;
-        }
-        .alert-management-link {
-            display: block;
-            margin-top: 14px;
-            font-size: 12px;
-            color: var(--ink-light);
-            text-decoration: underline;
-            cursor: pointer;
-            text-align: center;
-        }
-        .alert-management-link:hover { color: #0d7a68; }
-
         /* FOOTER */
         .footer {
             text-align: center;
@@ -678,9 +641,9 @@
         }
 
         @media (max-width: 520px) {
-            .field-group { grid-template-columns: 1fr; }
-            .grid { column-count: 1; }
-        }
+    .field-group { grid-template-columns: 1fr; }
+    .grid { column-count: 1; }
+}
     </style>
 </head>
 <body>
@@ -709,6 +672,7 @@
         Publicar viaje
     </button>
 
+    <!-- FORMULARIO -->
     <div id="formCard" class="form-card">
 
         <p class="form-section-title">¿Cómo viajas?</p>
@@ -752,6 +716,7 @@
             <div class="recur-pill" data-val="personalizada" onclick="setRecurrencia('personalizada')">✏️ Personalizada</div>
         </div>
 
+        <!-- FECHA ÚNICA -->
         <div id="seccion-unica" class="input-row">
             <input id="fecha" type="date">
 
@@ -765,6 +730,7 @@
             </div>
         </div>
 
+        <!-- LUNES A VIERNES -->
         <div id="seccion-lv" class="oculto">
             <div class="input-row">
                 <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Fecha de inicio</label>
@@ -781,6 +747,7 @@
             <p class="hint">La fecha de inicio debe estar dentro de los próximos 15 días.</p>
         </div>
 
+        <!-- PERSONALIZADA -->
         <div id="seccion-personalizada" class="oculto">
             <div class="input-row">
                 <label style="font-size:13px;color:var(--ink-mid);display:block;margin-bottom:6px;">Fecha de inicio</label>
@@ -820,4 +787,503 @@
             ⚠️ Revisa que todos los datos sean correctos antes de publicar.
             <label>
                 <input type="checkbox" id="aceptaPrivacidad">
-                <span>He leído y acepto la
+                <span>He leído y acepto la <a href="/privacidad" target="_blank">política de privacidad</a> y autorizo el uso de mis datos para la gestión de viajes compartidos.</span>
+            </label>
+        </div>
+
+        <div id="pinMostrado"></div>
+
+        <div class="form-actions">
+            <button class="btn-submit" id="btnPublicar" onclick="publicarViaje()">Publicar</button>
+            <button class="btn-wa-form" onclick="enviarWhatsApp()">💬 WhatsApp</button>
+        </div>
+    </div>
+
+    <!-- GRID -->
+  <p class="section-label">Viajes disponibles</p>
+<div id="grid" class="grid">
+    <div class="loading-state">
+        <div class="spinner"></div>
+        <div class="loading-car">🚗</div>
+        <div class="loading-text">Cargando viajes...</div>
+    </div>
+</div>
+
+</main>
+
+<footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
+
+<script>
+const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
+let todosLosViajes = [];
+let recurrenciaActual = 'unica';
+
+/* ── UI HELPERS ── */
+function abrirFormulario() {
+    const c = document.getElementById('formCard');
+    c.style.display = c.style.display === 'block' ? 'none' : 'block';
+}
+
+function setTipo(val) {
+    document.getElementById('tipo').value = val;
+    document.getElementById('pill-conductor').classList.toggle('active', val === 'Conductor');
+    document.getElementById('pill-pasajero').classList.toggle('active', val === 'Pasajero');
+}
+
+function setRecurrencia(val) {
+    recurrenciaActual = val;
+    document.querySelectorAll('.recur-pill').forEach(p => p.classList.toggle('active', p.dataset.val === val));
+    document.getElementById('seccion-unica').classList.toggle('oculto', val !== 'unica');
+    document.getElementById('seccion-lv').classList.toggle('oculto', val !== 'lv');
+    document.getElementById('seccion-personalizada').classList.toggle('oculto', val !== 'personalizada');
+
+    // Si no es fecha única, resetea la vuelta
+    if (val !== 'unica') {
+        document.getElementById('addVuelta').checked = false;
+        document.getElementById('horaVueltaWrap').classList.add('oculto');
+        document.getElementById('vueltaToggle').classList.remove('activo');
+    }
+}
+
+function toggleDay(el) {
+    el.classList.toggle('active');
+}
+
+function checkOtro(id) {
+    const val = document.getElementById(id).value;
+    document.getElementById(id + 'Otro').classList.toggle('oculto', val !== 'Otro');
+    // Solo actualiza hint si la vuelta está activa
+    if (document.getElementById('addVuelta').checked) {
+        actualizarHintVuelta();
+    }
+}
+
+// Click en el div (no en el checkbox ni el label): toggle manual
+function onVueltaDivClick(e) {
+    if (e.target.id === 'addVuelta' || e.target.tagName === 'LABEL') return;
+    const cb = document.getElementById('addVuelta');
+    cb.checked = !cb.checked;
+    syncVuelta();
+}
+
+// El checkbox cambió (por click directo o por onVueltaDivClick)
+function syncVuelta() {
+    const checked = document.getElementById('addVuelta').checked;
+    document.getElementById('horaVueltaWrap').classList.toggle('oculto', !checked);
+    document.getElementById('vueltaToggle').classList.toggle('activo', checked);
+    if (checked) actualizarHintVuelta();
+}
+
+function actualizarHintVuelta() {
+    const desde = document.getElementById('desde').value === 'Otro'
+        ? document.getElementById('desdeOtro').value.trim() || '...'
+        : document.getElementById('desde').value || '...';
+    const hasta = document.getElementById('hasta').value === 'Otro'
+        ? document.getElementById('hastaOtro').value.trim() || '...'
+        : document.getElementById('hasta').value || '...';
+    const hint = document.getElementById('hintVuelta');
+    if (hint) hint.textContent = `Se publicará el viaje de vuelta (${hasta} → ${desde}) a esta hora.`;
+}
+
+/* ── FECHAS ── */
+function generarFechas(diasSemana, fechaInicio, maxViajes) {
+    const fechas = [];
+    // Anclar al mediodía para evitar desfase UTC+2 al parsear fechas ISO sin hora
+    const inicio = new Date(fechaInicio + 'T12:00:00');
+    let cursor = new Date(inicio);
+
+    while (fechas.length < maxViajes) {
+        if (diasSemana.includes(cursor.getDay())) {
+            fechas.push(cursor.toISOString().split('T')[0]);
+        }
+        cursor.setDate(cursor.getDate() + 1);
+        if ((cursor - inicio) / 86400000 > 60) break;
+    }
+    return fechas;
+}
+
+function formatFecha(isoStr) {
+    if (!isoStr) return '';
+    return isoStr.split('-').reverse().join('/');
+}
+
+function nombreDia(isoStr) {
+    const dias = ['domingo','lunes','martes','miércoles','jueves','viernes','sábado'];
+    const d = new Date(isoStr + 'T12:00:00');
+    return dias[d.getDay()];
+}
+
+/* ── FILTRO ── */
+function filtrar() {
+    const texto = document.getElementById('buscador').value.toLowerCase();
+    const filtrados = todosLosViajes.filter(v =>
+        [v.desde, v.hasta, v.fecha, v.hora, v.nombre, v.tipo]
+            .some(c => String(c).toLowerCase().includes(texto))
+    );
+    renderizar(filtrados);
+}
+
+/* ── CARGA ── */
+async function cargar() {
+    document.getElementById('grid').innerHTML = `
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <div>🚗 Cargando viajes...</div>
+        </div>`;
+    try {
+        // Añadimos redirección automática explícita por si el navegador la frena
+        const res = await fetch(URL_SCRIPT, { method: 'GET' });
+        const text = await res.text();
+        
+        // Validamos si lo que devuelve Google es un HTML de error o el JSON esperado
+        if(text.trim().startsWith("<doctype") || text.trim().startsWith("<html")) {
+            throw new Error("La API devolvió HTML en vez de JSON. Comprueba los permisos de la implementación.");
+        }
+
+        const todos = JSON.parse(text);
+
+        const hoy = new Date();
+        hoy.setHours(0,0,0,0);
+        todosLosViajes = todos.filter(v => {
+            const fechaViaje = new Date(v.fecha + 'T00:00:00');
+            return fechaViaje >= hoy;
+        });
+
+        todosLosViajes.sort((a,b) =>
+            new Date(a.fecha + 'T' + a.hora) -
+            new Date(b.fecha + 'T' + b.hora)
+        );
+
+        renderizar(todosLosViajes);
+
+    } catch(e) {
+        console.error("Error detallado:", e);
+        document.getElementById('grid').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">⚠️</div>Error al cargar los viajes o permisos CORS denegados.</div>';
+    }
+}
+
+/* ── RENDER ── */
+function renderizar(data) {
+    if (!data.length) {
+        document.getElementById('grid').innerHTML =
+            '<div class="empty-state"><div class="empty-icon">🚗</div>No se encontraron viajes.</div>';
+        return;
+    }
+
+    // Agrupar por anuncio padre
+    const grupos = {};
+    data.forEach(v => {
+        if (!grupos[v.anuncio]) grupos[v.anuncio] = [];
+        grupos[v.anuncio].push(v);
+    });
+
+    document.getElementById('grid').innerHTML = Object.values(grupos).map(viajes => {
+        const base = viajes[0];
+        const tel = String(base.telefono).replace(/\s+/g,'');
+        const numWA = tel.startsWith('34') ? tel : '34' + tel;
+        const esConductor = base.tipo.includes('Conductor');
+
+        return `
+        <div class="card">
+            <button class="btn-delete" title="Borrar anuncio" onclick="borrarViaje('${base.anuncio}')">🗑️</button>
+            <div class="card-badge ${esConductor ? 'badge-conductor' : 'badge-pasajero'}">
+                ${esConductor ? '🚘 Conductor' : '🙋 Pasajero'}
+            </div>
+            <div class="card-route">
+                ${base.desde} → ${base.hasta}
+            </div>
+            <div style="font-size:12px;color:var(--ink-light);margin-bottom:10px;">
+                ${viajes.length} ${viajes.length === 1 ? 'viaje publicado' : 'viajes publicados'}
+            </div>
+            <div class="card-meta">
+                ${viajes.map(v => `
+                    <div class="card-meta-row">
+                        <div class="card-meta-left">
+                            <div class="card-meta-icon">📅</div>
+                            <span class="card-meta-val">${formatFecha(v.fecha)}</span>
+                            <span style="color:var(--ink-light); font-size:13px">(${nombreDia(v.fecha)})</span>
+                        </div>
+                        <span class="card-meta-hora">⏰ ${v.hora}</span>
+                    </div>
+                `).join('')}
+            </div>
+            <a class="btn-wa-card" href="https://wa.me/${numWA}" target="_blank">
+                💬 Escribir a ${base.nombre}
+            </a>
+        </div>`;
+    }).join('');
+}
+
+/* ── BORRAR ── */
+async function borrarViaje(id) {
+    const pin = prompt('🗑️ Introduce tu PIN de 6 dígitos para borrar este anuncio:');
+    if (!pin) return;
+    try {
+        const res = await fetch(`${URL_SCRIPT}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
+        const data = await res.json();
+        if (data.status === 'ok') {
+            todosLosViajes = todosLosViajes.filter(v => v.anuncio !== id);
+            renderizar(todosLosViajes);
+            alert('✅ Anuncio eliminado correctamente.');
+        } else {
+            alert('❌ PIN incorrecto. El anuncio no se ha borrado.');
+        }
+    } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
+}
+
+/* ── GENERAR PIN EN CLIENTE (Opción C) ── */
+function generarPIN() {
+    return Math.floor(100000 + Math.random() * 900000).toString();
+}
+
+/* ── VALIDAR TELÉFONO (FIX 3) ── */
+function validarTelefono(tel) {
+    return /^\d{9}$/.test(tel.trim());
+}
+
+/* ── PUBLICAR ── */
+async function publicarViaje() {
+    if (!document.getElementById('aceptaPrivacidad').checked) {
+        alert('Debes aceptar la política de privacidad.'); return;
+    }
+
+    const desde = document.getElementById('desde').value === 'Otro'
+        ? document.getElementById('desdeOtro').value.trim()
+        : document.getElementById('desde').value;
+    const hasta = document.getElementById('hasta').value === 'Otro'
+        ? document.getElementById('hastaOtro').value.trim()
+        : document.getElementById('hasta').value;
+
+    if (!desde || !hasta)  { alert('Selecciona origen y destino.'); return; }
+    if (desde === hasta)   { alert('El origen y el destino no pueden ser iguales.'); return; }
+    if (!document.getElementById('hora').value) { alert('Introduce la hora de salida.'); return; }
+
+    const nombreVal = document.getElementById('nombre').value.trim();
+    const telefonoVal = document.getElementById('telefono').value.trim();
+    if (!nombreVal)   { alert('Introduce tu nombre.'); return; }
+    if (!telefonoVal) { alert('Introduce tu teléfono.'); return; }
+
+    // FIX 3: validar formato de teléfono
+    if (!validarTelefono(telefonoVal)) {
+        alert('El teléfono debe tener exactamente 9 dígitos numéricos.'); return;
+    }
+
+    let fechas = [];
+    if (recurrenciaActual === 'unica') {
+        const f = document.getElementById('fecha').value;
+        if (!f) { alert('Selecciona una fecha.'); return; }
+        const hoy = new Date(); hoy.setHours(0,0,0,0);
+        if (new Date(f + 'T00:00:00') < hoy) { alert('No puedes seleccionar una fecha pasada.'); return; }
+        fechas = [f];
+
+    } else if (recurrenciaActual === 'lv') {
+        const inicio = document.getElementById('fechaInicioLV').value;
+        if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
+
+        const hoy = new Date(); hoy.setHours(0,0,0,0);
+        // FIX 1: validar que la fecha esté dentro de los próximos 15 días
+        const limite = new Date(hoy);
+        limite.setDate(limite.getDate() + 15);
+        const fechaInicio = new Date(inicio + 'T12:00:00');
+
+        if (fechaInicio < hoy) {
+            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
+        }
+        if (fechaInicio > limite) {
+            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
+        }
+
+        const maxViajes = parseInt(document.getElementById('maxViajesLV').value);
+        fechas = generarFechas([1,2,3,4,5], inicio, maxViajes);
+
+    } else {
+        const inicio = document.getElementById('fechaInicioPers').value;
+        if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
+
+        const hoy = new Date(); hoy.setHours(0,0,0,0);
+        // FIX 1: misma validación de 15 días para personalizada
+        const limite = new Date(hoy);
+        limite.setDate(limite.getDate() + 15);
+        const fechaInicio = new Date(inicio + 'T12:00:00');
+
+        if (fechaInicio < hoy) {
+            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
+        }
+        if (fechaInicio > limite) {
+            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
+        }
+
+        const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
+        if (!activos.length) { alert('Selecciona al menos un día.'); return; }
+        fechas = generarFechas(
+            activos.map(el => parseInt(el.dataset.val)),
+            inicio,
+            parseInt(document.getElementById('maxViajesPers').value)
+        );
+    }
+
+    // Validar vuelta si está activada
+    const conVuelta = recurrenciaActual === 'unica' && document.getElementById('addVuelta').checked;
+    let horaVuelta = '';
+    if (conVuelta) {
+        horaVuelta = document.getElementById('horaVuelta').value;
+        if (!horaVuelta) { alert('Introduce la hora de vuelta.'); return; }
+    }
+
+    const btn = document.getElementById('btnPublicar');
+    btn.disabled = true; btn.textContent = 'Publicando...';
+
+    const base = {
+        tipo:     document.getElementById('tipo').value,
+        desde, hasta,
+        hora:     document.getElementById('hora').value,
+        nombre:   nombreVal,
+        telefono: telefonoVal,
+        email:    document.getElementById('email').value.trim()
+    };
+
+    // OPCIÓN C: el HTML genera el PIN una vez y lo pasa en ambos POSTs
+    const pinCompartido = generarPIN();
+
+    const payload = fechas.map(f => ({ ...base, fecha: f, pin: pinCompartido }));
+
+    try {
+        // Primera llamada: ida (con email → el script lo envía)
+        const resIda = await fetch(URL_SCRIPT, {
+            method: 'POST',
+            mode: 'cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+                payload: JSON.stringify(payload.length === 1 ? payload[0] : payload)
+            })
+        });
+        const dataIda = await resIda.json();
+
+        // Segunda llamada: vuelta (sendEmail:false → el script no reenvía el email)
+        if (conVuelta) {
+            const vuelta = {
+                ...base,
+                desde: hasta,
+                hasta: desde,
+                hora: horaVuelta,
+                fecha: fechas[0],
+                pin: pinCompartido,
+                sendEmail: false   // ← suprime el email en la vuelta
+            };
+            await fetch(URL_SCRIPT, {
+                method: 'POST',
+                mode: 'cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: new URLSearchParams({ payload: JSON.stringify(vuelta) })
+            });
+        }
+
+        const pinBox = document.getElementById('pinMostrado');
+
+        // FIX 4: usar payload.length como fallback si data.total es undefined
+        const numViajes = (dataIda.total !== undefined) ? dataIda.total : payload.length;
+
+        let textoViajes = '';
+        if (conVuelta) {
+            textoViajes = `Se han publicado <b>2 anuncios</b>: ida (${desde} → ${hasta}) y vuelta (${hasta} → ${desde}). Ambos se borran con el mismo PIN.`;
+        } else if (numViajes > 1) {
+            textoViajes = `Se han publicado <b>${numViajes} viajes</b>.`;
+        } else {
+            textoViajes = 'Se ha publicado <b>1 viaje</b>.';
+        }
+
+        pinBox.innerHTML = `
+            <div class="pin-box">
+                <p class="pin-label">🔑 Tu PIN personal es:</p>
+                <div class="pin-num">${pinCompartido}</div>
+                <button class="btn-copy-pin" onclick="copiarPin('${pinCompartido}', this)">📋 Copiar PIN</button>
+                <p class="pin-aviso">
+                    ${base.email
+                        ? `✅ Te hemos enviado el PIN a ${base.email}`
+                        : '⚠️ Guarda este PIN — no podrás recuperarlo si lo pierdes.'
+                    }<br>${textoViajes}
+                </p>
+            </div>`;
+
+        btn.textContent = '✅ Publicado';
+        setTimeout(() => {
+            btn.disabled = false;
+            btn.textContent = 'Publicar';
+        }, 1500);
+
+        // Reset formulario
+        document.getElementById('desde').value = '';
+        document.getElementById('hasta').value = '';
+        document.getElementById('desdeOtro').classList.add('oculto');
+        document.getElementById('hastaOtro').classList.add('oculto');
+        document.getElementById('hora').value = '';
+        document.getElementById('fecha').value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('telefono').value = '';
+        document.getElementById('email').value = '';
+        document.getElementById('aceptaPrivacidad').checked = false;
+        document.getElementById('addVuelta').checked = false;
+        document.getElementById('horaVuelta').value = '';
+        document.getElementById('horaVueltaWrap').classList.add('oculto');
+        document.getElementById('vueltaToggle').classList.remove('activo');
+        document.getElementById('fechaInicioLV').value = '';
+        document.getElementById('fechaInicioPers').value = '';
+        document.querySelectorAll('#dayPills .day-pill').forEach(p => p.classList.remove('active'));
+
+        await cargar();
+
+    } catch(err) {
+        console.error(err);
+        alert('Error al publicar. Comprueba tu conexión e inténtalo de nuevo.');
+        btn.disabled = false; btn.textContent = 'Publicar';
+    }
+}
+
+function copiarPin(pin, btn) {
+    navigator.clipboard.writeText(pin).then(() => {
+        btn.textContent = '✅ ¡Copiado!';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copied'); }, 2500);
+    });
+}
+
+/* ── WHATSAPP (FIX 7: valida campos mínimos antes de abrir) ── */
+function enviarWhatsApp() {
+    const d = document.getElementById('desde').value === 'Otro'
+        ? document.getElementById('desdeOtro').value.trim()
+        : document.getElementById('desde').value;
+    const h = document.getElementById('hasta').value === 'Otro'
+        ? document.getElementById('hastaOtro').value.trim()
+        : document.getElementById('hasta').value;
+    const hora = document.getElementById('hora').value;
+    const nombre = document.getElementById('nombre').value.trim();
+    const tipo = document.getElementById('tipo').value;
+
+    if (!d || !h) { alert('Introduce al menos el origen y el destino para compartir por WhatsApp.'); return; }
+
+    const esConductor = tipo === 'Conductor';
+
+    let cuandoText = '';
+    if (recurrenciaActual === 'unica') {
+        const f = document.getElementById('fecha').value;
+        cuandoText = f ? `el ${formatFecha(f)} (${nombreDia(f)})` : 'en una fecha concreta';
+    } else if (recurrenciaActual === 'lv') {
+        cuandoText = 'de lunes a viernes';
+    } else {
+        const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
+        const nombresMap = {'0':'domingos','1':'lunes','2':'martes','3':'miércoles','4':'jueves','5':'viernes','6':'sábados'};
+        cuandoText = activos.length
+            ? `los ${activos.map(el => nombresMap[el.dataset.val]).join(', ')}`
+            : 'varios días';
+    }
+
+    const accion = esConductor ? 'tengo plaza' : 'busco viaje';
+    const msg = `Hola, soy ${nombre || '(sin nombre)'}. ${accion} desde ${d} hasta ${h} ${cuandoText}${hora ? ` a las ${hora}` : ''}. ¿Te interesa? ¡Escríbeme!`;
+    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+cargar();
+</script>
+</body>
+</html>
