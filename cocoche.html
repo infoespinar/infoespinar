@@ -1468,6 +1468,7 @@ async function eliminarAlerta() {
     } catch(err) {
         alert('Error de conexión');
     }
+}
 const params = new URLSearchParams(window.location.search);
 if (params.get('baja') === 'ok') {
     alert('✅ Tu alerta ha sido eliminada correctamente.');
