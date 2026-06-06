@@ -1424,8 +1424,18 @@ async function crearAlerta() {
                     </p>
                     <p class="pin-label">Tu PIN de alerta</p>
                     <div class="pin-num">${data.pin}</div>
-                    <p class="pin-aviso">Guarda este PIN. También lo hemos enviado por email.</p>
-                </div>
+document.getElementById('resultadoAlerta').innerHTML = `
+    <div class="pin-box">
+        <p class="pin-label">✅ Alerta creada correctamente</p>
+        <p style="font-size:13px;color:var(--green-dark);margin-bottom:10px;">
+            <b>${origenesTexto} → ${hasta}</b>
+        </p>
+        <p class="pin-label">Tu PIN de alerta</p>
+        <div class="pin-num">${data.pin}</div>
+        <button class="btn-copy-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
+        <p class="pin-aviso">Guarda este PIN. También lo hemos enviado por email.</p>
+    </div>
+`;                </div>
             `;
             // Reset pills
             document.querySelectorAll('#alertaOrigenPills .day-pill').forEach(p => p.classList.remove('active'));
