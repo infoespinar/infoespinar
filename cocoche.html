@@ -1036,10 +1036,10 @@ function filtrar() {
 /* ── CARGA ── */
 async function cargar() {
     document.getElementById('grid').innerHTML = `
-        <div class="loading-state">
-            <div class="spinner"></div>
-            <div>🚗 Cargando viajes...</div>
-        </div>`;
+    <div class="loading-state">
+        <div class="loading-car">🚗</div>
+        <div class="loading-text">Cargando viajes...</div>
+    </div>`;
     try {
         const res = await fetch(URL_SCRIPT, { method: 'GET' });
         const text = await res.text();
