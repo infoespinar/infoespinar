@@ -810,7 +810,12 @@
 </div>
 
 </main>
-<div class="form-card" style="display:block;margin-top:30px;">
+    <div style="max-width:860px;margin:0 auto;padding:0 20px;">
+    <button class="btn-publish" onclick="abrirAlertas()" style="background:#1a1a2e;">
+        🔔 Alertas de viajes
+    </button>
+</div>
+<div id="alertaCard" class="form-card" style="display:none;margin-top:30px;">
     
     <p class="form-section-title">Alertas de viajes</p>
 
@@ -1461,6 +1466,10 @@ async function eliminarAlerta(){
     }catch(err){
         alert('Error de conexión');
     }
+}
+function abrirAlertas() {
+    const c = document.getElementById('alertaCard');
+    c.style.display = c.style.display === 'block' ? 'none' : 'block';
 }
     
 cargar();
