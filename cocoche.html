@@ -157,12 +157,36 @@
             letter-spacing: 0.06em;
             text-transform: uppercase;
             cursor: pointer;
-            margin-bottom: 24px;
+            margin-bottom: 12px;
             transition: background 0.2s, transform 0.15s;
             box-shadow: 0 4px 16px rgba(13,122,104,0.28);
         }
         .btn-publish:hover { background: #0a5e52; transform: translateY(-1px); }
         .btn-publish:active { transform: translateY(0); }
+
+        .btn-alerts {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 15px;
+            background: var(--ink);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 24px;
+            transition: background 0.2s, transform 0.15s;
+            box-shadow: 0 4px 16px rgba(26,26,46,0.18);
+        }
+        .btn-alerts:hover { background: var(--accent-dark); transform: translateY(-1px); }
+        .btn-alerts:active { transform: translateY(0); }
 
         /* FORM */
         .form-card {
@@ -265,7 +289,7 @@
             color: var(--accent-dark);
         }
 
-        /* DÍAS */
+        /* DÍAS y LUGARES (pills genéricos) */
         .day-pills {
             display: flex;
             gap: 6px;
@@ -460,42 +484,39 @@
             margin-bottom: 14px;
         }
 
-        /* Estilo para hacer el coche más grande */
-.loading-car {
-    font-size: 3.5rem; /* Ajusta este valor si lo quieres aún más grande (ej. 4rem o 5rem) */
-    line-height: 1;
-    margin-bottom: 12px; /* Espacio entre el coche y el texto de abajo */
-    display: inline-block;
-    animation: bounceCar 1.5s ease-in-out infinite; /* Animación opcional de movimiento */
-}
+        .loading-car {
+            font-size: 3.5rem;
+            line-height: 1;
+            margin-bottom: 12px;
+            display: inline-block;
+            animation: bounceCar 1.5s ease-in-out infinite;
+        }
+        .loading-text {
+            font-size: 1.1rem;
+            color: var(--ink-mid);
+            font-weight: 500;
+        }
+        @keyframes bounceCar {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
 
-.loading-text {
-    font-size: 1.1rem;
-    color: var(--ink-mid); /* O el color secundario que uses */
-    font-weight: 500;
-}
-
-/* Animación opcional: hace que el coche flote suavemente arriba y abajo mientras carga */
-@keyframes bounceCar {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-}
-       .grid {
-    column-count: 2;
-    column-gap: 16px;
-}
+        .grid {
+            column-count: 2;
+            column-gap: 16px;
+        }
 
         .card {
-    break-inside: avoid;
-    margin-bottom: 16px;
-    background: var(--surface);
-    border-radius: var(--radius);
-    border: 1.5px solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 22px;
-    position: relative;
-    transition: box-shadow 0.2s, transform 0.2s;
-}
+            break-inside: avoid;
+            margin-bottom: 16px;
+            background: var(--surface);
+            border-radius: var(--radius);
+            border: 1.5px solid var(--border);
+            box-shadow: var(--shadow);
+            padding: 22px;
+            position: relative;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
         .card:hover {
             box-shadow: var(--shadow-md);
             transform: translateY(-2px);
@@ -630,6 +651,13 @@
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
+        /* ALERTS WRAPPER (mismo max-width que .main) */
+        .alerts-wrapper {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
         /* FOOTER */
         .footer {
             text-align: center;
@@ -641,9 +669,9 @@
         }
 
         @media (max-width: 520px) {
-    .field-group { grid-template-columns: 1fr; }
-    .grid { column-count: 1; }
-}
+            .field-group { grid-template-columns: 1fr; }
+            .grid { column-count: 1; }
+        }
     </style>
 </head>
 <body>
@@ -672,7 +700,11 @@
         Publicar viaje
     </button>
 
-    <!-- FORMULARIO -->
+    <button class="btn-alerts" onclick="abrirAlertas()">
+        🔔 Alertas de viajes
+    </button>
+
+    <!-- FORMULARIO PUBLICAR -->
     <div id="formCard" class="form-card">
 
         <p class="form-section-title">¿Cómo viajas?</p>
@@ -800,104 +832,94 @@
     </div>
 
     <!-- GRID -->
-  <p class="section-label">Viajes disponibles</p>
-<div id="grid" class="grid">
-    <div class="loading-state">
-        <div class="spinner"></div>
-        <div class="loading-car">🚗</div>
-        <div class="loading-text">Cargando viajes...</div>
+    <p class="section-label">Viajes disponibles</p>
+    <div id="grid" class="grid">
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <div class="loading-car">🚗</div>
+            <div class="loading-text">Cargando viajes...</div>
+        </div>
     </div>
-</div>
 
 </main>
-    <div style="max-width:860px;margin:0 auto;padding:0 20px;">
-    <button class="btn-publish" onclick="abrirAlertas()" style="background:#1a1a2e;">
-        🔔 Alertas de viajes
-    </button>
-</div>
-<div id="alertaCard" class="form-card" style="display:none;margin-top:30px;">
-    
-    <p class="form-section-title">Alertas de viajes</p>
 
-    <h3 style="margin-bottom:10px;">
-        ¿No has encontrado tu viaje?
-    </h3>
-
-    <p class="hint" style="margin-bottom:16px;">
-        Crea una alerta personalizada y te avisaremos por email cuando alguien publique un viaje que coincida.
-    </p>
-
-    <div class="field-group input-row">
-        <select id="alertaDesde">
-            <option value="">Origen...</option>
-            <option>El Espinar</option>
-            <option>San Rafael</option>
-            <option>LASR</option>
-            <option>La Estación</option>
-            <option>Madrid</option>
-            <option>Segovia</option>
-            <option>Ávila</option>
-        </select>
-
-        <select id="alertaHasta">
-            <option value="">Destino...</option>
-            <option>El Espinar</option>
-            <option>San Rafael</option>
-            <option>LASR</option>
-            <option>La Estación</option>
-            <option>Madrid</option>
-            <option>Segovia</option>
-            <option>Ávila</option>
-        </select>
-    </div>
-
-    <div class="input-row">
-        <input
-            id="alertaEmail"
-            type="email"
-            placeholder="Tu email">
-    </div>
-
-    <div class="input-row">
-        <select id="alertaDuracion">
-            <option value="7">1 semana</option>
-            <option value="14">2 semanas</option>
-            <option value="30">1 mes</option>
-        </select>
-    </div>
-
-    <button class="btn-submit" onclick="crearAlerta()">
-        Crear alerta
+<!-- SECCIÓN ALERTAS (fuera del main, con su propio wrapper para respetar el ancho) -->
+<div class="alerts-wrapper">
+    <button class="btn-alerts" onclick="abrirAlertas()" style="margin-bottom:0;">
+        🔔 ¿No encuentras tu viaje? Crear alerta
     </button>
 
-    <div id="resultadoAlerta" style="margin-top:15px;"></div>
+    <div id="alertaCard" class="form-card" style="margin-top:16px;">
 
-    <hr style="margin:30px 0;border:none;border-top:1px solid var(--border);">
+        <p class="form-section-title">Alertas de viajes</p>
 
-    <p class="form-section-title">Cancelar alerta</p>
+        <h3 style="margin-bottom:10px;">¿No has encontrado tu viaje?</h3>
 
-    <div class="input-row">
-        <input
-            id="bajaEmail"
-            type="email"
-            placeholder="Tu email">
+        <p class="hint" style="margin-bottom:16px;">
+            Crea una alerta y te avisaremos por email cuando alguien publique un viaje que coincida.
+        </p>
+
+        <!-- ORIGEN MÚLTIPLE CON PILLS -->
+        <p class="form-section-title">Origen (puedes seleccionar varios)</p>
+        <div class="day-pills" id="alertaOrigenPills">
+            <div class="day-pill" data-val="El Espinar" onclick="toggleDay(this)">El Espinar</div>
+            <div class="day-pill" data-val="San Rafael" onclick="toggleDay(this)">San Rafael</div>
+            <div class="day-pill" data-val="LASR" onclick="toggleDay(this)">LASR</div>
+            <div class="day-pill" data-val="La Estación" onclick="toggleDay(this)">La Estación</div>
+            <div class="day-pill" data-val="Madrid" onclick="toggleDay(this)">Madrid</div>
+            <div class="day-pill" data-val="Segovia" onclick="toggleDay(this)">Segovia</div>
+            <div class="day-pill" data-val="Ávila" onclick="toggleDay(this)">Ávila</div>
+        </div>
+
+        <!-- DESTINO: sigue siendo un select (normalmente es uno solo) -->
+        <p class="form-section-title">Destino</p>
+        <div class="input-row">
+            <select id="alertaHasta">
+                <option value="">Destino...</option>
+                <option>El Espinar</option>
+                <option>San Rafael</option>
+                <option>LASR</option>
+                <option>La Estación</option>
+                <option>Madrid</option>
+                <option>Segovia</option>
+                <option>Ávila</option>
+            </select>
+        </div>
+
+        <p class="form-section-title">Tu email</p>
+        <div class="input-row">
+            <input id="alertaEmail" type="email" placeholder="Tu email">
+        </div>
+
+        <p class="form-section-title">Duración de la alerta</p>
+        <div class="input-row">
+            <select id="alertaDuracion">
+                <option value="7">1 semana</option>
+                <option value="14">2 semanas</option>
+                <option value="30">1 mes</option>
+            </select>
+        </div>
+
+        <button class="btn-submit" onclick="crearAlerta()">Crear alerta</button>
+
+        <div id="resultadoAlerta" style="margin-top:15px;"></div>
+
+        <hr style="margin:30px 0;border:none;border-top:1px solid var(--border);">
+
+        <p class="form-section-title">Cancelar alerta</p>
+
+        <div class="input-row">
+            <input id="bajaEmail" type="email" placeholder="Tu email">
+        </div>
+        <div class="input-row">
+            <input id="bajaPin" type="text" maxlength="6" placeholder="PIN recibido">
+        </div>
+
+        <button class="btn-submit" onclick="eliminarAlerta()">Eliminar alerta</button>
+
     </div>
-
-    <div class="input-row">
-        <input
-            id="bajaPin"
-            type="text"
-            maxlength="6"
-            placeholder="PIN recibido">
-    </div>
-
-    <button class="btn-submit" onclick="eliminarAlerta()">
-        Eliminar alerta
-    </button>
-
 </div>
 
-    
 <footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
@@ -909,6 +931,14 @@ let recurrenciaActual = 'unica';
 function abrirFormulario() {
     const c = document.getElementById('formCard');
     c.style.display = c.style.display === 'block' ? 'none' : 'block';
+}
+
+function abrirAlertas() {
+    const c = document.getElementById('alertaCard');
+    c.style.display = c.style.display === 'block' ? 'none' : 'block';
+    if (c.style.display === 'block') {
+        c.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
 
 function setTipo(val) {
@@ -924,7 +954,6 @@ function setRecurrencia(val) {
     document.getElementById('seccion-lv').classList.toggle('oculto', val !== 'lv');
     document.getElementById('seccion-personalizada').classList.toggle('oculto', val !== 'personalizada');
 
-    // Si no es fecha única, resetea la vuelta
     if (val !== 'unica') {
         document.getElementById('addVuelta').checked = false;
         document.getElementById('horaVueltaWrap').classList.add('oculto');
@@ -939,13 +968,11 @@ function toggleDay(el) {
 function checkOtro(id) {
     const val = document.getElementById(id).value;
     document.getElementById(id + 'Otro').classList.toggle('oculto', val !== 'Otro');
-    // Solo actualiza hint si la vuelta está activa
     if (document.getElementById('addVuelta').checked) {
         actualizarHintVuelta();
     }
 }
 
-// Click en el div (no en el checkbox ni el label): toggle manual
 function onVueltaDivClick(e) {
     if (e.target.id === 'addVuelta' || e.target.tagName === 'LABEL') return;
     const cb = document.getElementById('addVuelta');
@@ -953,7 +980,6 @@ function onVueltaDivClick(e) {
     syncVuelta();
 }
 
-// El checkbox cambió (por click directo o por onVueltaDivClick)
 function syncVuelta() {
     const checked = document.getElementById('addVuelta').checked;
     document.getElementById('horaVueltaWrap').classList.toggle('oculto', !checked);
@@ -975,7 +1001,6 @@ function actualizarHintVuelta() {
 /* ── FECHAS ── */
 function generarFechas(diasSemana, fechaInicio, maxViajes) {
     const fechas = [];
-    // Anclar al mediodía para evitar desfase UTC+2 al parsear fechas ISO sin hora
     const inicio = new Date(fechaInicio + 'T12:00:00');
     let cursor = new Date(inicio);
 
@@ -1018,13 +1043,11 @@ async function cargar() {
             <div>🚗 Cargando viajes...</div>
         </div>`;
     try {
-        // Añadimos redirección automática explícita por si el navegador la frena
         const res = await fetch(URL_SCRIPT, { method: 'GET' });
         const text = await res.text();
         
-        // Validamos si lo que devuelve Google es un HTML de error o el JSON esperado
-        if(text.trim().startsWith("<doctype") || text.trim().startsWith("<html")) {
-            throw new Error("La API devolvió HTML en vez de JSON. Comprueba los permisos de la implementación.");
+        if (text.trim().startsWith("<doctype") || text.trim().startsWith("<html")) {
+            throw new Error("La API devolvió HTML en vez de JSON.");
         }
 
         const todos = JSON.parse(text);
@@ -1058,7 +1081,6 @@ function renderizar(data) {
         return;
     }
 
-    // Agrupar por anuncio padre
     const grupos = {};
     data.forEach(v => {
         if (!grupos[v.anuncio]) grupos[v.anuncio] = [];
@@ -1119,12 +1141,12 @@ async function borrarViaje(id) {
     } catch(e) { alert('Error al conectar. Inténtalo de nuevo.'); }
 }
 
-/* ── GENERAR PIN EN CLIENTE (Opción C) ── */
+/* ── PIN ── */
 function generarPIN() {
     return Math.floor(100000 + Math.random() * 900000).toString();
 }
 
-/* ── VALIDAR TELÉFONO (FIX 3) ── */
+/* ── VALIDAR TELÉFONO ── */
 function validarTelefono(tel) {
     return /^\d{9}$/.test(tel.trim());
 }
@@ -1151,7 +1173,6 @@ async function publicarViaje() {
     if (!nombreVal)   { alert('Introduce tu nombre.'); return; }
     if (!telefonoVal) { alert('Introduce tu teléfono.'); return; }
 
-    // FIX 3: validar formato de teléfono
     if (!validarTelefono(telefonoVal)) {
         alert('El teléfono debe tener exactamente 9 dígitos numéricos.'); return;
     }
@@ -1169,17 +1190,12 @@ async function publicarViaje() {
         if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
 
         const hoy = new Date(); hoy.setHours(0,0,0,0);
-        // FIX 1: validar que la fecha esté dentro de los próximos 15 días
         const limite = new Date(hoy);
         limite.setDate(limite.getDate() + 15);
         const fechaInicio = new Date(inicio + 'T12:00:00');
 
-        if (fechaInicio < hoy) {
-            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
-        }
-        if (fechaInicio > limite) {
-            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
-        }
+        if (fechaInicio < hoy) { alert('La fecha de inicio no puede ser anterior a hoy.'); return; }
+        if (fechaInicio > limite) { alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return; }
 
         const maxViajes = parseInt(document.getElementById('maxViajesLV').value);
         fechas = generarFechas([1,2,3,4,5], inicio, maxViajes);
@@ -1189,17 +1205,12 @@ async function publicarViaje() {
         if (!inicio) { alert('Selecciona una fecha de inicio.'); return; }
 
         const hoy = new Date(); hoy.setHours(0,0,0,0);
-        // FIX 1: misma validación de 15 días para personalizada
         const limite = new Date(hoy);
         limite.setDate(limite.getDate() + 15);
         const fechaInicio = new Date(inicio + 'T12:00:00');
 
-        if (fechaInicio < hoy) {
-            alert('La fecha de inicio no puede ser anterior a hoy.'); return;
-        }
-        if (fechaInicio > limite) {
-            alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return;
-        }
+        if (fechaInicio < hoy) { alert('La fecha de inicio no puede ser anterior a hoy.'); return; }
+        if (fechaInicio > limite) { alert('La fecha de inicio debe estar dentro de los próximos 15 días.'); return; }
 
         const activos = [...document.querySelectorAll('#dayPills .day-pill.active')];
         if (!activos.length) { alert('Selecciona al menos un día.'); return; }
@@ -1210,7 +1221,6 @@ async function publicarViaje() {
         );
     }
 
-    // Validar vuelta si está activada
     const conVuelta = recurrenciaActual === 'unica' && document.getElementById('addVuelta').checked;
     let horaVuelta = '';
     if (conVuelta) {
@@ -1230,13 +1240,10 @@ async function publicarViaje() {
         email:    document.getElementById('email').value.trim()
     };
 
-    // OPCIÓN C: el HTML genera el PIN una vez y lo pasa en ambos POSTs
     const pinCompartido = generarPIN();
-
     const payload = fechas.map(f => ({ ...base, fecha: f, pin: pinCompartido }));
 
     try {
-        // Primera llamada: ida (con email → el script lo envía)
         const resIda = await fetch(URL_SCRIPT, {
             method: 'POST',
             mode: 'cors',
@@ -1247,7 +1254,6 @@ async function publicarViaje() {
         });
         const dataIda = await resIda.json();
 
-        // Segunda llamada: vuelta (sendEmail:false → el script no reenvía el email)
         if (conVuelta) {
             const vuelta = {
                 ...base,
@@ -1256,7 +1262,7 @@ async function publicarViaje() {
                 hora: horaVuelta,
                 fecha: fechas[0],
                 pin: pinCompartido,
-                sendEmail: false   // ← suprime el email en la vuelta
+                sendEmail: false
             };
             await fetch(URL_SCRIPT, {
                 method: 'POST',
@@ -1267,8 +1273,6 @@ async function publicarViaje() {
         }
 
         const pinBox = document.getElementById('pinMostrado');
-
-        // FIX 4: usar payload.length como fallback si data.total es undefined
         const numViajes = (dataIda.total !== undefined) ? dataIda.total : payload.length;
 
         let textoViajes = '';
@@ -1335,7 +1339,7 @@ function copiarPin(pin, btn) {
     });
 }
 
-/* ── WHATSAPP (FIX 7: valida campos mínimos antes de abrir) ── */
+/* ── WHATSAPP ── */
 function enviarWhatsApp() {
     const d = document.getElementById('desde').value === 'Otro'
         ? document.getElementById('desdeOtro').value.trim()
@@ -1370,39 +1374,41 @@ function enviarWhatsApp() {
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
+/* ── CREAR ALERTA (con origen múltiple) ── */
 async function crearAlerta() {
+    // Recoge los orígenes seleccionados como pills
+    const origenesSeleccionados = [...document.querySelectorAll('#alertaOrigenPills .day-pill.active')]
+        .map(el => el.dataset.val);
 
-    const desde = document.getElementById('alertaDesde').value;
-    const hasta = document.getElementById('alertaHasta').value;
-    const email = document.getElementById('alertaEmail').value.trim();
+    const hasta  = document.getElementById('alertaHasta').value;
+    const email  = document.getElementById('alertaEmail').value.trim();
     const duracion = parseInt(document.getElementById('alertaDuracion').value);
 
-    if (!desde || !hasta) {
-        alert('Selecciona origen y destino');
+    if (!origenesSeleccionados.length) {
+        alert('Selecciona al menos un origen');
         return;
     }
-
-    if (desde === hasta) {
+    if (!hasta) {
+        alert('Selecciona el destino');
+        return;
+    }
+    if (origenesSeleccionados.length === 1 && origenesSeleccionados[0] === hasta) {
         alert('Origen y destino no pueden coincidir');
         return;
     }
-
     if (!email) {
         alert('Introduce un email');
         return;
     }
 
     try {
-
-        const res = await fetch(URL_SCRIPT,{
-            method:'POST',
-            headers:{
-                'Content-Type':'application/x-www-form-urlencoded'
-            },
-            body:new URLSearchParams({
+        const res = await fetch(URL_SCRIPT, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
                 payload: JSON.stringify({
-                    actionType:'createAlert',
-                    desde,
+                    actionType: 'createAlert',
+                    desde: origenesSeleccionados.join(','),   // ej: "El Espinar,San Rafael,LASR"
                     hasta,
                     email,
                     duracion
@@ -1412,66 +1418,59 @@ async function crearAlerta() {
 
         const data = await res.json();
 
-        if(data.status === 'ok'){
-
+        if (data.status === 'ok') {
+            const origenesTexto = origenesSeleccionados.join(', ');
             document.getElementById('resultadoAlerta').innerHTML = `
                 <div class="pin-box">
+                    <p class="pin-label">✅ Alerta creada correctamente</p>
+                    <p style="font-size:13px;color:var(--green-dark);margin-bottom:10px;">
+                        <b>${origenesTexto} → ${hasta}</b>
+                    </p>
                     <p class="pin-label">Tu PIN de alerta</p>
                     <div class="pin-num">${data.pin}</div>
-                    <p class="pin-aviso">
-                        Guarda este PIN. También lo hemos enviado por email.
-                    </p>
+                    <p class="pin-aviso">Guarda este PIN. También lo hemos enviado por email.</p>
                 </div>
             `;
-
+            // Reset pills
+            document.querySelectorAll('#alertaOrigenPills .day-pill').forEach(p => p.classList.remove('active'));
+            document.getElementById('alertaHasta').value = '';
+            document.getElementById('alertaEmail').value = '';
         } else {
-
             alert('No se pudo crear la alerta');
-
         }
 
-    } catch(err){
-
+    } catch(err) {
         console.error(err);
         alert('Error de conexión');
-
     }
 }
 
-
-async function eliminarAlerta(){
-
+/* ── ELIMINAR ALERTA ── */
+async function eliminarAlerta() {
     const email = document.getElementById('bajaEmail').value.trim();
-    const pin = document.getElementById('bajaPin').value.trim();
+    const pin   = document.getElementById('bajaPin').value.trim();
 
-    if(!email || !pin){
+    if (!email || !pin) {
         alert('Introduce email y PIN');
         return;
     }
 
-    try{
-
+    try {
         const res = await fetch(
             `${URL_SCRIPT}?action=unsubscribeAlert&email=${encodeURIComponent(email)}&pin=${encodeURIComponent(pin)}`
         );
-
         const data = await res.json();
 
-        if(data.status === 'ok'){
+        if (data.status === 'ok') {
             alert('Alerta eliminada correctamente');
         } else {
             alert('Email o PIN incorrectos');
         }
-
-    }catch(err){
+    } catch(err) {
         alert('Error de conexión');
     }
 }
-function abrirAlertas() {
-    const c = document.getElementById('alertaCard');
-    c.style.display = c.style.display === 'block' ? 'none' : 'block';
-}
-    
+
 cargar();
 </script>
 </body>
