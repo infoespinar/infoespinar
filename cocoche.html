@@ -1421,8 +1421,21 @@ async function crearAlerta() {
         const origenesTexto = origenesSeleccionados.join(', ');
 
         document.getElementById('resultadoAlerta').innerHTML = `
-            ...
-        `;
+    <div class="pin-box">
+        <p class="pin-label">🔔 Alerta creada correctamente</p>
+
+        <div class="pin-num">${data.pin}</div>
+
+        <button class="btn-copy-pin"
+                onclick="copiarPin('${data.pin}', this)">
+            📋 Copiar PIN
+        </button>
+
+        <p class="pin-aviso">
+            Guarda este PIN. Lo necesitarás para eliminar la alerta más adelante.
+        </p>
+    </div>
+`;
 
         document.querySelectorAll('#alertaOrigenPills .day-pill')
             .forEach(p => p.classList.remove('active'));
