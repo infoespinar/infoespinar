@@ -638,6 +638,9 @@
             text-align: center;
             padding: 48px 20px;
             color: var(--ink-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         .spinner {
             display: inline-block;
@@ -1414,34 +1417,25 @@ async function crearAlerta() {
         const data = await res.json();
 
         if (data.status === 'ok') {
-            const origenesTexto = origenesSeleccionados.join(', ');
-            document.getElementById('resultadoAlerta').innerHTML = `
-                <div class="pin-box">
-                    <p class="pin-label">✅ Alerta creada correctamente</p>
-                    <p style="font-size:13px;color:var(--green-dark);margin-bottom:10px;">
-                        <b>${origenesTexto} → ${hasta}</b>
-                    </p>
-                    <p class="pin-label">Tu PIN de alerta</p>
-                    <div class="pin-num">${data.pin}</div>
-document.getElementById('resultadoAlerta').innerHTML = `
-    <div class="pin-box">
-        <p class="pin-label">✅ Alerta creada correctamente</p>
-        <p style="font-size:13px;color:var(--green-dark);margin-bottom:10px;">
-            <b>${origenesTexto} → ${hasta}</b>
-        </p>
-        <p class="pin-label">Tu PIN de alerta</p>
-        <div class="pin-num">${data.pin}</div>
-        <button class="btn-copy-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
-        <p class="pin-aviso">Guarda este PIN. También lo hemos enviado por email.</p>
-    </div>
-`;                </div>
-            `;
-            // Reset pills
-            document.querySelectorAll('#alertaOrigenPills .day-pill').forEach(p => p.classList.remove('active'));
-            document.getElementById('alertaHasta').value = '';
-            document.getElementById('alertaEmail').value = '';
-        } else {
-            alert('No se pudo crear la alerta');
+    const origenesTexto = origenesSeleccionados.join(', ');
+    document.getElementById('resultadoAlerta').innerHTML = `
+        <div class="pin-box">
+            <p class="pin-label">✅ Alerta creada correctamente</p>
+            <p style="font-size:13px;color:var(--green-dark);margin-bottom:10px;">
+                <b>${origenesTexto} → ${hasta}</b>
+            </p>
+            <p class="pin-label">Tu PIN de alerta</p>
+            <div class="pin-num">${data.pin}</div>
+            <button class="btn-copy-pin" onclick="copiarPin('${data.pin}', this)">📋 Copiar PIN</button>
+            <p class="pin-aviso">Guarda este PIN. También lo hemos enviado por email.</p>
+        </div>
+    `;
+    document.querySelectorAll('#alertaOrigenPills .day-pill').forEach(p => p.classList.remove('active'));
+    document.getElementById('alertaHasta').value = '';
+    document.getElementById('alertaEmail').value = '';
+} else {
+    alert('No se pudo crear la alerta');
+}
         }
 
     } catch(err) {
@@ -1474,7 +1468,7 @@ async function eliminarAlerta() {
     } catch(err) {
         alert('Error de conexión');
     }
-}
+
 
 cargar();
 </script>
