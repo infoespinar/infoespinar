@@ -587,6 +587,10 @@ function iniciarTicker(textos) {
     }, INTERVALO);
 }
 
+function fechaAString(f) {
+    return `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`;
+}
+    
 async function cargarAgendaSheet() {
     try {
         const res  = await fetch(SHEET_CSV_URL);
@@ -597,15 +601,15 @@ async function cargarAgendaSheet() {
         const todos = rows
             .filter(ev => {
                 const f = parseFechaSheet(ev.fecha);
-                return f && f.toISOString().split('T')[0] >= hoy
-                    && (ev.aprobado || '').toLowerCase().trim() === 'ok';
+                return f && fechaAString(f) >= hoy
+                && (ev.aprobado || '').toLowerCase().trim() === 'ok';
             })
             .sort((a, b) => parseFechaSheet(a.fecha) - parseFechaSheet(b.fecha));
 
         // Solo los eventos de la fecha más próxima
-        const fechaMasProxima = todos.length ? parseFechaSheet(todos[0].fecha).toISOString().split('T')[0] : null;
+        const fechaMasProxima = todos.length ? fechaAString(parseFechaSheet(todos[0].fecha)) : null;
         const proximos = fechaMasProxima
-            ? todos.filter(ev => parseFechaSheet(ev.fecha).toISOString().split('T')[0] === fechaMasProxima)
+    ? todos.filter(ev => fechaAString(parseFechaSheet(ev.fecha)) === fechaMasProxima)
             : [];
 
         const textos = proximos.map(ev => {
