@@ -463,7 +463,10 @@ const calendarioGuardias = [
 
 function obtenerFechaLocal() {
     const ahora = new Date();
-    return new Date(ahora.getTime() - ahora.getTimezoneOffset() * 60000).toISOString().split('T')[0];
+    const y = ahora.getFullYear();
+    const m = String(ahora.getMonth() + 1).padStart(2, '0');
+    const d = String(ahora.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
 }
 
 function obtenerTurnoHoy() {
