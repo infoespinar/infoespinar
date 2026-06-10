@@ -110,6 +110,12 @@
         .cartel-link-icon { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: rgba(255,255,255,0.85); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; color: #334155; opacity: 0; transition: opacity 0.25s; backdrop-filter: blur(4px); }
         .cartel:hover .cartel-link-icon { opacity: 1; }
 
+        /* ── BOTÓN COMPARTIR ── */
+        .cartel-share { position: absolute; bottom: 10px; right: 10px; width: 30px; height: 30px; background: rgba(255,255,255,0.92); border: 1px solid rgba(0,0,0,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; opacity: 0; transition: opacity 0.25s, background 0.18s; backdrop-filter: blur(4px); z-index: 2; color: #334155; line-height: 1; }
+        .cartel:hover .cartel-share { opacity: 1; }
+        .cartel-share:hover { background: #9f1239; color: #fff; border-color: #9f1239; }
+        @media (max-width: 768px) { .cartel-share { opacity: 1; } }
+
         .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
 
         .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
@@ -188,27 +194,24 @@
 
     <h2 class="titulo-seccion-principal">Cartelera de Eventos</h2>
 
-    <!-- BOTÓN PUBLICAR — encima del banner -->
     <button class="btn-publicar" id="btn-publicar">Publica Tu Evento</button>
 
-   <a href="mailto:info@infoespinar.com" class="banner-comercio">
-    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80"
-         alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 40%;">
-    <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(159,18,57,0.82) 0%, rgba(159,18,57,0.45) 60%, transparent 100%);"></div>
-    <div class="banner-info" style="position:relative;">
-        <span class="banner-label">¿Organizas un evento?</span>
-        <h3 class="banner-nombre">¡Anúncialo Aquí!</h3>
-    </div>
-</a>
+    <a href="mailto:info@infoespinar.com" class="banner-comercio">
+        <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=1200&q=80"
+             alt="" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 40%;">
+        <div style="position:absolute; inset:0; background:linear-gradient(90deg, rgba(159,18,57,0.82) 0%, rgba(159,18,57,0.45) 60%, transparent 100%);"></div>
+        <div class="banner-info" style="position:relative;">
+            <span class="banner-label">¿Organizas un evento?</span>
+            <h3 class="banner-nombre">¡Anúncialo Aquí!</h3>
+        </div>
+    </a>
 
-    <!-- Botón "Filtrar" discreto -->
     <div class="filtrar-toggle-wrap">
         <button class="btn-filtrar" id="btn-filtrar">
             ⚙ Filtrar <i class="btn-filtrar-arrow">▾</i>
         </button>
     </div>
 
-    <!-- Panel de filtros: oculto por defecto -->
     <div class="filtros-wrap" id="filtros-wrap">
         <div class="filtro-grupo">
             <span class="filtro-label">Categoría</span>
@@ -320,6 +323,7 @@ const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zp
 
 const MESES = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
 const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+const MESES_LARGO = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
 
 const filtros = { categoria: null, lugar: null };
 
@@ -411,7 +415,6 @@ function crearPills(containerId, tipo, valores) {
     });
 }
 
-// Toggle filtros
 const btnFiltrar = document.getElementById('btn-filtrar');
 const filtrosWrap = document.getElementById('filtros-wrap');
 btnFiltrar.addEventListener('click', () => {
@@ -477,11 +480,36 @@ async function cargarEventos() {
                     </div>
                     <div class="cartel-titulo">${ev.titulo}</div>
                     <div class="cartel-lugar">${lugar}${ev.url ? ' <span class="cartel-web" title="Ver más info">🌐</span>' : ''}</div>
-                </${bodyTag}>`;
+                </${bodyTag}>
+                <button class="cartel-share" title="Compartir evento" aria-label="Compartir ${ev.titulo}"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>`;
+
+            // Listener botón compartir
+            cartel.querySelector('.cartel-share').addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const imagenUrl = ev.imagen && !ev.imagen.includes('unsplash') ? ev.imagen : null;
+                const shareData = {
+                    title: ev.titulo,
+                    text: `📅 ${ev.titulo}\n📍 ${lugar} · ${String(fecha.getDate()).padStart(2,'0')} de ${MESES_LARGO[fecha.getMonth()]} de ${fecha.getFullYear()}${imagenUrl ? '\n' + imagenUrl : ''}`,
+                    url: ev.url || window.location.href
+                };
+                if (navigator.share) {
+                    try { await navigator.share(shareData); } catch (_) {}
+                } else {
+                    try {
+                        await navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+                        const btn = e.currentTarget;
+                        btn.textContent = '✓';
+                        setTimeout(() => { btn.textContent = '<svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>'; }, 2000);
+                    } catch (_) {
+                        alert(`${shareData.text}\n${shareData.url}`);
+                    }
+                }
+            });
+
             grid.appendChild(cartel);
         });
 
-        // Solo mostrar filtros si hay variedad
         if (categorias.length > 1 || lugares.length > 1) {
             if (categorias.length > 1) crearPills('pills-categoria', 'categoria', categorias);
             else document.querySelector('.filtro-grupo:first-child').style.display = 'none';
@@ -491,13 +519,13 @@ async function cargarEventos() {
                 document.querySelector('.filtro-grupo:last-child').style.display = 'none';
             }
         } else {
-            // Ocultar el toggle si no hay filtros útiles
             document.querySelector('.filtrar-toggle-wrap').style.display = 'none';
         }
 
         marquee.innerHTML = marqueeHTML
-    ? [...new Set(ordenados.map(ev => ev.titulo))].map(t => `<span>${t}</span>`).join('') .repeat(2)
-    : "<span>No hay eventos próximos programados</span>";
+            ? [...new Set(ordenados.map(ev => ev.titulo))].map(t => `<span>${t}</span>`).join('').repeat(2)
+            : "<span>No hay eventos próximos programados</span>";
+
         document.querySelectorAll('.cartel-img-wrap img').forEach(img => {
             img.addEventListener('click', (e) => {
                 e.preventDefault();
