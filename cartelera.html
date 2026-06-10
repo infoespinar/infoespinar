@@ -590,7 +590,8 @@ async function subirImagen(file) {
     status.textContent = 'Subiendo imagen…';
     status.className = 'img-status loading';
     const formData = new FormData();
-    formData.append('image', file);
+    const fileRenombrado = new File([file], 'evento-espinar.jpg', { type: file.type });  // ← esta línea
+    formData.append('image', fileRenombrado);
     const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
     const data = await res.json();
     if (data.success) {
