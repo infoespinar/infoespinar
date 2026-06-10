@@ -488,11 +488,11 @@ async function cargarEventos() {
                 e.preventDefault();
                 e.stopPropagation();
                 const imagenUrl = ev.imagen && !ev.imagen.includes('unsplash') ? ev.imagen : null;
-                const shareData = {
-                    title: ev.titulo,
-                    text: `📅 ${ev.titulo}\n📍 ${lugar} · ${String(fecha.getDate()).padStart(2,'0')} de ${MESES_LARGO[fecha.getMonth()]} de ${fecha.getFullYear()}${imagenUrl ? '\n' + imagenUrl : ''}`,
-                    url: ev.url || window.location.href
-                };
+const shareData = {
+    title: ev.titulo,
+    text: `📅 ${ev.titulo}\n📍 ${lugar} · ${String(fecha.getDate()).padStart(2,'0')} de ${MESES_LARGO[fecha.getMonth()]} de ${fecha.getFullYear()}`,
+    url: imagenUrl || ev.url || window.location.href
+};
                 if (navigator.share) {
                     try { await navigator.share(shareData); } catch (_) {}
                 } else {
