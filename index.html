@@ -7,80 +7,176 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; display: flex; flex-direction: column; min-height: 100vh; }
 
-        .header { background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%); color: white; text-align: center; padding: 25px 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-        .header-logo-link { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; color: white; margin-bottom: 12px; background: rgba(255,255,255,0.08); padding: 8px 16px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.15); transition: background 0.2s, transform 0.2s; }
-        .header-logo-link:hover { background: rgba(255,255,255,0.15); transform: translateY(-1px); }
+        /* ============================================================
+           HEADER con shimmer animado
+        ============================================================ */
+        .header {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: white;
+            text-align: center;
+            padding: 32px 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            position: relative;
+            overflow: hidden;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3.5s infinite linear;
+            pointer-events: none;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .header-logo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: white;
+            margin-bottom: 12px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 18px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: background 0.2s, transform 0.2s;
+            backdrop-filter: blur(4px);
+            position: relative;
+        }
+        .header-logo-link:hover { background: rgba(255,255,255,0.18); transform: translateY(-2px); }
         .header-bandera { width: 32px; height: 32px; object-fit: cover; border-radius: 6px; aspect-ratio: 1/1; background-color: rgba(255,255,255,0.2); }
-        .header h1 { font-size: 24px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; }
-        .header p { font-size: 15px; opacity: 0.9; margin-bottom: 1px; }
+        .header h1 { font-size: 24px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; position: relative; }
+        .header p { font-size: 15px; opacity: 0.88; margin-bottom: 1px; position: relative; }
 
+        /* ============================================================
+           CONTAINER
+        ============================================================ */
         .main-container { max-width: 1200px; width: 100%; margin: 0 auto; padding: 15px 12px; flex-grow: 1; }
-        .titulo-seccion { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 20px 0 12px 4px; font-weight: 700; }
-        
-        /* TABLÓN COMUNITARIO / VECINAL */
-        .grid-comunidad { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
-        .card-comunidad { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            text-align: center; 
-            padding: 18px 12px; 
-            border-radius: 16px; 
-            text-decoration: none; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02); 
-            border: 2px solid; 
-            transition: all 0.2s ease;
-        }
-        .card-comunidad:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -5px rgba(0,0,0,0.08); }
-        .comunidad-icono { font-size: 28px; margin-bottom: 4px; }
-        
-        /* Colores específicos por sección (Jerarquía y dinamismo) */
-        .comunidad-empleo { background-color: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
-        .comunidad-empleo:hover { border-color: #3b82f6; }
-        .comunidad-anuncios { background-color: #f0fdf4; border-color: #bbf7d0; color: #166534; }
-        .comunidad-anuncios:hover { border-color: #22c55e; }
-        .comunidad-coche { background-color: #fffbeb; border-color: #fef08a; color: #854d0e; }
-        .comunidad-coche:hover { border-color: #eab308; }
-        .comunidad-actividades { background-color: #faf5ff; border-color: #e9d5ff; color: #6b21a8; }
-        .comunidad-actividades:hover { border-color: #a855f7; }
 
-        @media screen and (min-width: 768px) {
-            .grid-comunidad { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        /* ============================================================
+           TÍTULOS DE SECCIÓN
+        ============================================================ */
+        .titulo-seccion {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #475569;
+            margin: 24px 0 12px 4px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
 
-        /* CARRUSEL */
-        .contenedor-ofertas { width: 100%; overflow: hidden; position: relative; }
+        /* ============================================================
+           REVEAL AL SCROLL
+        ============================================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.55s ease, transform 0.55s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        /* ============================================================
+           CARRUSEL con fade lateral
+        ============================================================ */
+        .contenedor-ofertas { width: 100%; position: relative; }
+        .contenedor-ofertas::before,
+        .contenedor-ofertas::after {
+            content: '';
+            position: absolute;
+            top: 0; bottom: 0;
+            width: 56px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .contenedor-ofertas::before { left: 0; background: linear-gradient(to right, #f4f6f9, transparent); }
+        .contenedor-ofertas::after  { right: 0; background: linear-gradient(to left, #f4f6f9, transparent); }
         .carrusel-track { display: flex; width: 100%; overflow: hidden; }
         .carrusel-inner { display: flex; will-change: transform; }
         .oferta-item { width: 140px; margin: 0 10px 0 0; text-align: center; flex-shrink: 0; display: block; text-decoration: none; }
-        .imagen-oferta { width: 140px; height: 140px; border-radius: 18px; object-fit: cover; border: 1px solid #e2e8f0; box-shadow: 0 4px 8px rgba(0,0,0,0.06); user-select: none; -webkit-user-drag: none; }
+        .imagen-oferta {
+            width: 140px; height: 140px; border-radius: 18px; object-fit: cover;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.06);
+            user-select: none; -webkit-user-drag: none;
+            transition: transform 0.28s ease, box-shadow 0.28s ease;
+        }
+        .oferta-item:hover .imagen-oferta {
+            transform: scale(1.05) translateY(-3px);
+            box-shadow: 0 14px 28px rgba(0,0,0,0.13);
+        }
         .nombre-comercio { display: block; font-size: 10px; color: #334155; margin-top: 8px; text-transform: uppercase; font-weight: 700; }
         .texto-rojo .servicio-texto { color: #dc2626; }
 
-        /* UTILIDADES */
+        /* ============================================================
+           UTILIDADES
+        ============================================================ */
         .grid-utilidades { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; width: 100%; }
-        .enlace-util, .boton-util-guardia { display: flex; align-items: center; gap: 14px; padding: 14px 18px; background-color: #ffffff; border: 2px solid #cbd5e1; border-radius: 16px; text-decoration: none; color: #1e293b; font-size: 14px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); transition: all 0.2s ease; width: 100%; box-sizing: border-box; text-align: left; cursor: pointer; font-family: 'Lato', sans-serif; }
-        .enlace-util:hover, .boton-util-guardia:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -5px rgba(0,0,0,0.08); }
 
-        .contenedor-split-taxi { display: flex; background-color: #fefce8; border: 2px solid #fef08a; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03); transition: all 0.2s ease; width: 100%; overflow: hidden; }
-        .contenedor-split-taxi:hover { transform: translateY(-2px); box-shadow: 0 8px 15px -5px rgba(0,0,0,0.08); border-color: #eab308; }
+        .enlace-util, .boton-util-guardia {
+            display: flex; align-items: center; gap: 14px;
+            padding: 14px 18px;
+            background-color: #ffffff;
+            border: 2px solid #cbd5e1;
+            border-radius: 16px;
+            text-decoration: none; color: #1e293b; font-size: 14px;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+            width: 100%; box-sizing: border-box; text-align: left; cursor: pointer; font-family: 'Lato', sans-serif;
+        }
+        .enlace-util:hover, .boton-util-guardia:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.09);
+        }
+
+        .contenedor-split-taxi {
+            display: flex; background-color: #fefce8; border: 2px solid #fef08a;
+            border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+            width: 100%; overflow: hidden;
+        }
+        .contenedor-split-taxi:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.09); border-color: #eab308; }
         .taxi-mitad-web { display: flex; align-items: center; gap: 14px; padding: 14px 14px 14px 18px; text-decoration: none; flex-grow: 1; color: #1e293b; }
         .taxi-mitad-web:hover { background-color: #fef9c3; }
-        .taxi-mitad-azar { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 15px; background-color: transparent; border: none; border-left: 2px dashed #fde047; cursor: pointer; min-width: 85px; }
+        .taxi-mitad-azar {
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            padding: 0 15px; background-color: transparent; border: none;
+            border-left: 2px dashed #fde047; cursor: pointer; min-width: 85px;
+            transition: background 0.2s;
+        }
         .taxi-mitad-azar:hover { background-color: #fef9c3; }
+        .taxi-mitad-azar:hover .dado-icon { animation: spin 0.45s ease; }
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            40% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .dado-icon { font-size: 24px; margin-bottom: 4px; display: inline-block; }
+
         .taxi-color-texto { color: #a16207 !important; }
         .taxi-color-secundario { color: #854d0e !important; font-weight: 700; }
         .bg-amarillo { background-color: #fef08a; color: #a16207; }
         .boton-util-guardia { background-color: #e6fbd0; border-color: #a7f3d0; }
         .boton-util-guardia:hover { border-color: #10b981; }
 
-        .icono-wrap { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 12px; font-size: 20px; flex-shrink: 0; }
+        .icono-wrap { display: flex; justify-content: center; align-items: center; width: 40px; height: 40px; border-radius: 12px; font-size: 20px; flex-shrink: 0; transition: transform 0.2s; }
+        .enlace-util:hover .icono-wrap,
+        .boton-util-guardia:hover .icono-wrap { transform: scale(1.12); }
         .bg-azul { background-color: #7dd3fc; color: #0369a1; }
-        .bg-rojo { background-color: #fecdd3; color: #be123c; }
+        .bg-rojo  { background-color: #fecdd3; color: #be123c; }
         .bg-morado { background-color: #f5d0fe; color: #a21caf; }
 
         .titulo-boton { display: block; font-weight: 900; font-size: 12px; letter-spacing: 0.5px; color: #475569; margin-bottom: 2px; }
@@ -91,86 +187,185 @@
         .agenda-color:hover { border-color: #d946ef; }
         .agenda-color .titulo-boton { color: #a21caf; }
 
-        /* ── AGENDA WIDGET: scroll vertical ── */
+        /* Agenda ticker */
         .agenda-ticker-wrap { position: relative; height: 1.3em; overflow: hidden; }
         .agenda-ticker-item {
-            position: absolute;
-            inset: 0;
-            font-size: 12px;
-            font-weight: 700;
-            color: #701a75;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            line-height: 1.3em;
-            opacity: 0;
-            transition: opacity 0.5s ease;
+            position: absolute; inset: 0;
+            font-size: 12px; font-weight: 700; color: #701a75;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+            line-height: 1.3em; opacity: 0; transition: opacity 0.5s ease;
         }
         .agenda-ticker-item.visible { opacity: 1; }
 
         /* Climas */
-        .clima-soleado { background-color: #fef9c3 !important; border-color: #fde047 !important; }
-        .clima-soleado .titulo-boton { color: #854d0e !important; }
-        .clima-soleado .tiempo-dinamico { color: #713f12 !important; }
-        .clima-soleado .icono-wrap { background-color: #fde047 !important; color: #854d0e !important; }
-        .clima-nublado { background-color: #f1f5f9 !important; border-color: #cbd5e1 !important; }
-        .clima-nublado .titulo-boton { color: #334155 !important; }
-        .clima-nublado .tiempo-dinamico { color: #0f172a !important; }
-        .clima-nublado .icono-wrap { background-color: #cbd5e1 !important; color: #334155 !important; }
-        .clima-lluvia { background-color: #e0f2fe !important; border-color: #7dd3fc !important; }
-        .clima-lluvia .titulo-boton { color: #0369a1 !important; }
-        .clima-lluvia .tiempo-dinamico { color: #1e3a8a !important; }
-        .clima-lluvia .icono-wrap { background-color: #7dd3fc !important; color: #0369a1 !important; }
-        .clima-nieve { background-color: #e0e7ff !important; border-color: #c7d2fe !important; }
-        .clima-nieve .titulo-boton { color: #3730a3 !important; }
-        .clima-nieve .tiempo-dinamico { color: #1e1b4b !important; }
-        .clima-nieve .icono-wrap { background-color: #c7d2fe !important; color: #3730a3 !important; }
+        .clima-soleado  { background-color: #fef9c3 !important; border-color: #fde047 !important; }
+        .clima-soleado  .titulo-boton { color: #854d0e !important; }
+        .clima-soleado  .tiempo-dinamico { color: #713f12 !important; }
+        .clima-soleado  .icono-wrap { background-color: #fde047 !important; color: #854d0e !important; }
+        .clima-nublado  { background-color: #f1f5f9 !important; border-color: #cbd5e1 !important; }
+        .clima-nublado  .titulo-boton { color: #334155 !important; }
+        .clima-nublado  .tiempo-dinamico { color: #0f172a !important; }
+        .clima-nublado  .icono-wrap { background-color: #cbd5e1 !important; color: #334155 !important; }
+        .clima-lluvia   { background-color: #e0f2fe !important; border-color: #7dd3fc !important; }
+        .clima-lluvia   .titulo-boton { color: #0369a1 !important; }
+        .clima-lluvia   .tiempo-dinamico { color: #1e3a8a !important; }
+        .clima-lluvia   .icono-wrap { background-color: #7dd3fc !important; color: #0369a1 !important; }
+        .clima-nieve    { background-color: #e0e7ff !important; border-color: #c7d2fe !important; }
+        .clima-nieve    .titulo-boton { color: #3730a3 !important; }
+        .clima-nieve    .tiempo-dinamico { color: #1e1b4b !important; }
+        .clima-nieve    .icono-wrap { background-color: #c7d2fe !important; color: #3730a3 !important; }
         .clima-nocturno { background-color: #0f172a !important; border-color: #334155 !important; }
         .clima-nocturno .titulo-boton { color: #94a3b8 !important; }
         .clima-nocturno .tiempo-dinamico { color: #f8fafc !important; }
         .clima-nocturno .icono-wrap { background-color: #1e293b !important; color: #f1f5f9 !important; }
 
-        /* CATEGORÍAS */
-        .grid-servicios { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
-        .card-servicio { background-color: #ffffff; border-radius: 14px; padding: 16px 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; text-decoration: none; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.02); border: 1px solid #e2e8f0; transition: transform 0.2s, box-shadow 0.2s; gap: 8px; }
-        .card-servicio:hover { transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.06); background-color: #f8fafc; }
-        .servicio-icono { font-size: 30px; display: flex; align-items: center; justify-content: center; }
-        .servicio-texto { font-size: 15px; font-weight: 700; color: #334155; }
+        /* ============================================================
+           TABLÓN VECINAL
+        ============================================================ */
+        .grid-comunidad { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; width: 100%; }
+        .card-comunidad {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px 12px; border-radius: 18px;
+            text-decoration: none; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            border: 2px solid;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+            position: relative; overflow: hidden;
+        }
+        .card-comunidad::after {
+            content: ''; position: absolute; inset: 0;
+            background: rgba(255,255,255,0);
+            transition: background 0.2s;
+        }
+        .card-comunidad:hover { transform: translateY(-5px); box-shadow: 0 18px 36px rgba(0,0,0,0.1); }
+        .card-comunidad:hover::after { background: rgba(255,255,255,0.15); }
+        .comunidad-icono { font-size: 30px; margin-bottom: 6px; transition: transform 0.3s ease; }
+        .card-comunidad:hover .comunidad-icono { transform: scale(1.18) rotate(-6deg); }
 
-        /* EMERGENCIAS */
-        .grid-telefonos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; width: 100%; }
-        .telf-item { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background-color: #ffffff; border: 1px solid #fee2e2; border-radius: 12px; text-decoration: none; color: #1e293b; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: background-color 0.2s, transform 0.1s; }
-        .telf-item:hover { background-color: #fef2f2; transform: translateY(-1px); }
-        .telf-112 { background-color: #dc2626; border-color: #dc2626; color: #ffffff; }
-        .telf-112:hover { background-color: #b91c1c; }
-        .telf-112 .numero-telf { color: #ffffff; background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 6px; }
-        .nombre-servicio { font-size: 13.5px; font-weight: 700; }
-        .numero-telf { font-size: 13.5px; font-weight: 700; color: #dc2626; }
+        .comunidad-empleo    { background-color: #eff6ff; border-color: #bfdbfe; color: #1e40af; }
+        .comunidad-empleo:hover { border-color: #3b82f6; }
+        .comunidad-anuncios  { background-color: #f0fdf4; border-color: #bbf7d0; color: #166534; }
+        .comunidad-anuncios:hover { border-color: #22c55e; }
+        .comunidad-coche     { background-color: #fffbeb; border-color: #fef08a; color: #854d0e; }
+        .comunidad-coche:hover { border-color: #eab308; }
+        .comunidad-actividades { background-color: #faf5ff; border-color: #e9d5ff; color: #6b21a8; }
+        .comunidad-actividades:hover { border-color: #a855f7; }
 
         @media screen and (min-width: 768px) {
-            .header { padding: 45px 20px; }
+            .grid-comunidad { grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        }
+
+        /* ============================================================
+           CATEGORÍAS con acento inferior por color
+        ============================================================ */
+        .grid-servicios { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; width: 100%; }
+        .card-servicio {
+            background-color: #ffffff; border-radius: 14px; padding: 16px 10px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; text-decoration: none; color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02); border: 1px solid #e2e8f0;
+            transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
+            gap: 8px; position: relative; overflow: hidden;
+        }
+        .card-servicio::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+            background: var(--accent, #3b82f6);
+            transform: scaleX(0); transform-origin: center;
+            transition: transform 0.25s ease;
+        }
+        .card-servicio:hover { transform: translateY(-3px); box-shadow: 0 10px 22px rgba(0,0,0,0.08); background-color: #f8fafc; }
+        .card-servicio:hover::after { transform: scaleX(1); }
+        .servicio-icono { font-size: 30px; display: flex; align-items: center; justify-content: center; transition: transform 0.2s; }
+        .card-servicio:hover .servicio-icono { transform: scale(1.15); }
+        .servicio-texto { font-size: 15px; font-weight: 700; color: #334155; }
+
+        @media screen and (min-width: 768px) {
             .grid-servicios { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; }
         }
 
-        /* FOOTER */
-        .footer { background-color: #1e293b; color: #94a3b8; text-align: center; padding: 25px 20px; margin-top: 40px; font-size: 13px; line-height: 1.6; border-top: 3px solid #3b82f6; }
+        /* ============================================================
+           EMERGENCIAS con pulse en el 112
+        ============================================================ */
+        .grid-telefonos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; width: 100%; }
+        .telf-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 16px; background-color: #ffffff; border: 1px solid #fee2e2;
+            border-radius: 12px; text-decoration: none; color: #1e293b;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .telf-item:hover { background-color: #fef2f2; transform: translateY(-2px); }
+        .telf-112 {
+            background-color: #dc2626; border-color: #dc2626; color: #ffffff;
+            animation: pulse112 2.8s infinite;
+        }
+        @keyframes pulse112 {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.35); }
+            50%       { box-shadow: 0 0 0 10px rgba(220,38,38,0); }
+        }
+        .telf-112:hover { background-color: #b91c1c; }
+        .telf-112 .numero-telf { color: #ffffff; background: rgba(255,255,255,0.22); padding: 2px 10px; border-radius: 6px; }
+        .nombre-servicio { font-size: 13.5px; font-weight: 700; }
+        .numero-telf { font-size: 13.5px; font-weight: 700; color: #dc2626; }
+
+        /* ============================================================
+           FOOTER con wave SVG
+        ============================================================ */
+        .footer-wave-wrap { position: relative; margin-top: 48px; }
+        .footer-wave { display: block; width: 100%; height: 44px; }
+        .footer {
+            background-color: #1e293b; color: #94a3b8;
+            text-align: center; padding: 20px 20px 28px;
+            font-size: 13px; line-height: 1.7;
+            border-top: 3px solid #3b82f6;
+        }
         .footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
 
-        /* BANNER FLOTANTE */
-        .banner-emergente { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 92%; max-width: 700px; background: #ffffff; border: 2px solid #3b82f6; box-shadow: 0 10px 30px rgba(30,58,138,0.2); border-radius: 20px; padding: 16px 20px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 12px; z-index: 9999; transition: bottom 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+        /* ============================================================
+           BANNER FLOTANTE (sin cambios de funcionalidad)
+        ============================================================ */
+        .banner-emergente {
+            position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%);
+            width: 92%; max-width: 700px;
+            background: #ffffff; border: 2px solid #3b82f6;
+            box-shadow: 0 10px 30px rgba(30,58,138,0.2);
+            border-radius: 20px; padding: 16px 20px;
+            display: flex; flex-direction: column; align-items: center; justify-content: space-between;
+            gap: 12px; z-index: 9999;
+            transition: bottom 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+        }
         .banner-emergente.activo { bottom: 16px; }
         .banner-texto { font-size: 14.5px; color: #1e293b; text-align: center; line-height: 1.4; }
         .banner-texto strong { color: #2563eb; background-color: #eff6ff; padding: 2px 6px; border-radius: 6px; }
         .banner-acciones { display: flex; align-items: center; gap: 10px; width: 100%; justify-content: center; }
-        .btn-formulario { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; text-decoration: none; font-weight: 700; font-size: 13.5px; padding: 10px 18px; border-radius: 30px; box-shadow: 0 4px 10px rgba(37,99,235,0.2); transition: transform 0.2s, box-shadow 0.2s; text-align: center; }
+        .btn-formulario {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white; text-decoration: none; font-weight: 700; font-size: 13.5px;
+            padding: 10px 18px; border-radius: 30px;
+            box-shadow: 0 4px 10px rgba(37,99,235,0.2);
+            transition: transform 0.2s, box-shadow 0.2s; text-align: center;
+        }
         .btn-formulario:hover { transform: translateY(-1px); box-shadow: 0 6px 14px rgba(37,99,235,0.3); }
-        .btn-cerrar-banner { background: #f1f5f9; color: #64748b; border: none; font-size: 13px; font-weight: 700; padding: 10px 14px; border-radius: 30px; cursor: pointer; transition: background 0.2s; }
+        .btn-cerrar-banner {
+            background: #f1f5f9; color: #64748b; border: none;
+            font-size: 13px; font-weight: 700; padding: 10px 14px; border-radius: 30px;
+            cursor: pointer; transition: background 0.2s;
+        }
         .btn-cerrar-banner:hover { background: #e2e8f0; color: #334155; }
 
+        @media screen and (min-width: 768px) {
+            .header { padding: 48px 20px; }
+        }
         @media (min-width: 580px) {
             .banner-emergente { flex-direction: row; text-align: left; padding: 14px 24px; gap: 20px; }
             .banner-texto { text-align: left; }
             .banner-acciones { width: auto; flex-shrink: 0; }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .header::before, .telf-112, .dado-icon { animation: none; }
+            .reveal { transition: none; }
+            .card-servicio::after, .card-comunidad::after { transition: none; }
         }
     </style>
 </head>
@@ -187,8 +382,8 @@
 <main class="main-container">
 
     <!-- CARRUSEL -->
-    <div class="titulo-seccion">Ofertas destacadas</div>
-    <div class="contenedor-ofertas">
+    <div class="titulo-seccion reveal">Ofertas destacadas</div>
+    <div class="contenedor-ofertas reveal">
         <div class="carrusel-track">
             <div class="carrusel-inner" id="carruselInner">
                 <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item">
@@ -199,10 +394,10 @@
                     <img src="https://i.imgur.com/mbn5vQH.jpeg" class="imagen-oferta" alt="Tu Evento">
                     <span class="nombre-comercio">TU EVENTO</span>
                 </a>
-                  <a href="https://www.instagram.com/mindful_divers/" class="oferta-item">
+                <a href="https://www.instagram.com/mindful_divers/" class="oferta-item">
                     <img src="https://i.ibb.co/8D3LTHHg/643229490-18422096578138264-8292138894514637233-n.jpg" class="imagen-oferta" alt="Buceo Mindfulness">
                     <span class="nombre-comercio">Buceo Mindfulness</span>
-                </a>                
+                </a>
                 <a href="https://andrearuibal.com" class="oferta-item">
                     <img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta" alt="Andrea Comesaña">
                     <span class="nombre-comercio">Andrea Comesaña</span>
@@ -228,8 +423,8 @@
     </div>
 
     <!-- INFORMACIÓN DE INTERÉS -->
-    <div class="titulo-seccion">📜 Información de interés</div>
-    <div class="grid-utilidades">
+    <div class="titulo-seccion reveal">📜 Información de interés</div>
+    <div class="grid-utilidades reveal">
 
         <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" rel="noopener" class="enlace-util" id="botonTiempo">
             <div class="icono-wrap bg-azul" id="tiempoIcono">🌤️</div>
@@ -239,7 +434,6 @@
             </div>
         </a>
 
-        <!-- AGENDA: ticker vertical desde el sheet -->
         <a href="cartelera.html" class="enlace-util agenda-color">
             <div class="icono-wrap bg-morado">📅</div>
             <div style="min-width:0;flex:1;">
@@ -249,8 +443,7 @@
                 </div>
             </div>
         </a>
-        
-        
+
         <button onclick="irAFarmaciaGuardiaHoy()" class="boton-util-guardia">
             <div class="icono-wrap bg-rojo">🏥</div>
             <div>
@@ -268,77 +461,69 @@
                 </div>
             </a>
             <button onclick="llamarTaxiAzar()" class="taxi-mitad-azar" title="Llamar a un taxi aleatorio">
-                <span style="font-size:24px;margin-bottom:4px;">🎲</span>
+                <span class="dado-icon">🎲</span>
                 <span style="font-size:11px;font-weight:900;color:#a16207;letter-spacing:0.5px;">TAXI AL AZAR</span>
             </button>
         </div>
 
     </div>
 
-<!-- TABLÓN VECINAL -->
-    <div class="titulo-seccion" style="color: #1e3a8a;">🤝 Tablón Vecinal y Comunidad</div>
-    <div class="grid-comunidad">
-        
-         <!-- 4. Compartir Actividades -->
+    <!-- TABLÓN VECINAL -->
+    <div class="titulo-seccion reveal" style="color: #1e3a8a;">🤝 Tablón Vecinal y Comunidad</div>
+    <div class="grid-comunidad reveal">
+
         <a href="actividades.html" class="card-comunidad comunidad-actividades">
             <div class="comunidad-icono">🏔️</div>
             <span class="titulo-boton" style="color: inherit;">PLANES Y OCIO</span>
             <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Comparte tus aficiones</span>
         </a>
-        
-        <!-- 3. Compartir Coche -->
+
         <a href="cocoche.html" class="card-comunidad comunidad-coche">
             <div class="comunidad-icono">🚗</div>
             <span class="titulo-boton" style="color: inherit;">COMPARTIR COCHE</span>
             <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Viajes y carpooling</span>
         </a>
-        
-        <!-- 1. Empleo -->
+
         <a href="empleo.html" class="card-comunidad comunidad-empleo">
             <div class="comunidad-icono">💼</div>
             <span class="titulo-boton" style="color: inherit;">EMPLEO LOCAL</span>
             <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Trabajo en la zona</span>
         </a>
 
-        <!-- 2. Anuncios Particulares -->
         <a href="particulares.html" class="card-comunidad comunidad-anuncios">
             <div class="comunidad-icono">🤝</div>
             <span class="titulo-boton" style="color: inherit;">COMPRA-VENTA</span>
             <span class="texto-secundario" style="color: inherit; opacity: 0.8; font-size: 11px;">Anuncios entre particulares</span>
         </a>
 
-
-       
-
     </div>
 
-
     <!-- CATEGORÍAS -->
-    <div class="titulo-seccion">🛠️​ Categorías profesionales</div>
-    <div class="grid-servicios">
-        <a href="jardineria.html" class="card-servicio"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
-        <a href="limpieza.html" class="card-servicio"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza - Portes</span></a>
-        <a href="reformas.html" class="card-servicio"><div class="servicio-icono">🏗️</div><span class="servicio-texto">Reformas - Mantenimiento</span></a>
-        <a href="fontaneria.html" class="card-servicio"><div class="servicio-icono">🔧</div><span class="servicio-texto">Fontanería - Climatización</span></a>
-        <a href="talleres.html" class="card-servicio"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
-        <a href="ferreteria.html" class="card-servicio"><div class="servicio-icono">🔨</div><span class="servicio-texto">Ferretería - Materiales</span></a>
-        <a href="panaderia.html" class="card-servicio"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
-        <a href="restaurantes.html" class="card-servicio"><div class="servicio-icono">🍴</div><span class="servicio-texto">A Comer</span></a>
-        <a href="salud.html" class="card-servicio"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
-        <a href="bienestar.html" class="card-servicio"><div class="servicio-icono">💆</div><span class="servicio-texto">Bienestar</span></a>
-        <a href="formacion.html" class="card-servicio"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
-        <a href="ocio.html" class="card-servicio"><div class="servicio-icono">🚵‍♀️</div><span class="servicio-texto">Ocio - Deporte</span></a>
-        <a href="artesania.html" class="card-servicio"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
-        <a href="eventos.html" class="card-servicio"><div class="servicio-icono">🎉</div><span class="servicio-texto">Eventos</span></a>
-        <a href="otros-servicios.html" class="card-servicio"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
-        <a href="mascotas.html" class="card-servicio"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
-        <a href="alojamientos.html" class="card-servicio"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
-        <a href="alimentacion.html" class="card-servicio"><div class="servicio-icono">🍉</div><span class="servicio-texto">Alimentación</span></a>
-            </div>
+    <div class="titulo-seccion reveal">🛠️ Categorías profesionales</div>
+    <div class="grid-servicios reveal">
+        <a href="jardineria.html"      class="card-servicio" style="--accent:#22c55e"><div class="servicio-icono">🌳</div><span class="servicio-texto">Jardinería</span></a>
+        <a href="limpieza.html"        class="card-servicio" style="--accent:#3b82f6"><div class="servicio-icono">🧹</div><span class="servicio-texto">Limpieza - Portes</span></a>
+        <a href="reformas.html"        class="card-servicio" style="--accent:#f97316"><div class="servicio-icono">🏗️</div><span class="servicio-texto">Reformas - Mantenimiento</span></a>
+        <a href="fontaneria.html"      class="card-servicio" style="--accent:#6366f1"><div class="servicio-icono">🔧</div><span class="servicio-texto">Fontanería - Climatización</span></a>
+        <a href="talleres.html"        class="card-servicio" style="--accent:#64748b"><div class="servicio-icono">🚗</div><span class="servicio-texto">Automoción</span></a>
+        <a href="ferreteria.html"      class="card-servicio" style="--accent:#d97706"><div class="servicio-icono">🔨</div><span class="servicio-texto">Ferretería - Materiales</span></a>
+        <a href="panaderia.html"       class="card-servicio" style="--accent:#ec4899"><div class="servicio-icono">🍰</div><span class="servicio-texto">Panadería - Pastelería</span></a>
+        <a href="restaurantes.html"    class="card-servicio" style="--accent:#ef4444"><div class="servicio-icono">🍴</div><span class="servicio-texto">A Comer</span></a>
+        <a href="salud.html"           class="card-servicio" style="--accent:#f43f5e"><div class="servicio-icono">❤️</div><span class="servicio-texto">Salud</span></a>
+        <a href="bienestar.html"       class="card-servicio" style="--accent:#a855f7"><div class="servicio-icono">💆</div><span class="servicio-texto">Bienestar</span></a>
+        <a href="formacion.html"       class="card-servicio" style="--accent:#0ea5e9"><div class="servicio-icono">🎓</div><span class="servicio-texto">Formación</span></a>
+        <a href="ocio.html"            class="card-servicio" style="--accent:#10b981"><div class="servicio-icono">🚵‍♀️</div><span class="servicio-texto">Ocio - Deporte</span></a>
+        <a href="artesania.html"       class="card-servicio" style="--accent:#f59e0b"><div class="servicio-icono">🎨</div><span class="servicio-texto">Artesanía</span></a>
+        <a href="eventos.html"         class="card-servicio" style="--accent:#8b5cf6"><div class="servicio-icono">🎉</div><span class="servicio-texto">Eventos</span></a>
+        <a href="otros-servicios.html" class="card-servicio" style="--accent:#475569"><div class="servicio-icono">🏪</div><span class="servicio-texto">Otros Servicios</span></a>
+        <a href="mascotas.html"        class="card-servicio" style="--accent:#d97706"><div class="servicio-icono">🐾</div><span class="servicio-texto">Mascotas</span></a>
+        <a href="alojamientos.html"    class="card-servicio" style="--accent:#0891b2"><div class="servicio-icono">🛎️</div><span class="servicio-texto">Alojamientos</span></a>
+        <a href="alimentacion.html"    class="card-servicio" style="--accent:#16a34a"><div class="servicio-icono">🍉</div><span class="servicio-texto">Alimentación</span></a>
+    </div>
 
     <!-- EMERGENCIAS -->
-    <div class="titulo-seccion" style="color:#dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
-    <div class="grid-telefonos">
+    <div class="titulo-seccion reveal" style="color:#dc2626;">🚨 Teléfonos de Emergencia y Seguridad</div>
+    <div class="grid-telefonos reveal">
         <a href="tel:112" class="telf-item telf-112">
             <span class="nombre-servicio">Emergencias General</span>
             <span class="numero-telf">112</span>
@@ -372,13 +557,38 @@
     </div>
 </div>
 
-<footer class="footer">
-    <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
-    <p>Página optimizada de forma nativa para móviles y PC.</p>
-    <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
-</footer>
+<!-- FOOTER con wave -->
+<div class="footer-wave-wrap">
+    <svg class="footer-wave" viewBox="0 0 1440 44" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,22 C360,44 720,0 1080,22 C1260,33 1380,16 1440,22 L1440,44 L0,44 Z" fill="#1e293b"/>
+    </svg>
+    <footer class="footer">
+        <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
+    </footer>
+</div>
 
 <script>
+/* ============================================================
+   SCROLL REVEAL con IntersectionObserver
+============================================================ */
+(function () {
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach((e, i) => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                io.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = (i * 0.06) + 's';
+        io.observe(el);
+    });
+})();
+
 /* ============================================================
    CARRUSEL INFINITO
 ============================================================ */
@@ -417,10 +627,10 @@ function llamarTaxiAzar() {
 /* ============================================================
    FARMACIA DE GUARDIA
 ============================================================ */
-const MAPS_SR        = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+San+Rafael+Travesia+Alto+del+Leon+19+San+Rafael";
+const MAPS_SR         = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+San+Rafael+Travesia+Alto+del+Leon+19+San+Rafael";
 const MAPS_HONTANILLA = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+Aparicio+Av+Hontanilla+18+El+Espinar";
-const MAPS_PERALES   = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+El+Espinar+Calle+Marques+de+Perales+2+El+Espinar";
-const MAPS_GENERICO  = "https://elespinar.es/farmacias/";
+const MAPS_PERALES    = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+El+Espinar+Calle+Marques+de+Perales+2+El+Espinar";
+const MAPS_GENERICO   = "https://elespinar.es/farmacias/";
 
 const calendarioGuardias = [
     { inicio:"2026-01-01",fin:"2026-01-04",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
@@ -514,7 +724,7 @@ function cargarTiempoReal() {
 }
 
 /* ============================================================
-   AGENDA TICKER — lee del Google Sheet (mismo CSV que cartelera)
+   AGENDA TICKER
 ============================================================ */
 const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zpL_RCmFxrwSfn0XMZPIIUhM52uV0HxKY33cZ89XtE9dfrvDJ9HSqFiA61SjXHQoaMvfYDKx/pub?output=csv";
 const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
@@ -559,13 +769,10 @@ function csvToObjects(csv) {
 
 function iniciarTicker(textos) {
     const wrap = document.getElementById('agendaTickerWrap');
-
     if (textos.length === 0) {
         wrap.innerHTML = '<span class="agenda-ticker-item visible">Ver Agenda</span>';
         return;
     }
-
-    // Construir todos los items superpuestos
     wrap.innerHTML = '';
     textos.forEach((t, i) => {
         const span = document.createElement('span');
@@ -573,52 +780,40 @@ function iniciarTicker(textos) {
         span.textContent = t;
         wrap.appendChild(span);
     });
-
-    if (textos.length === 1) return; // solo uno, no hace falta rotar
-
+    if (textos.length === 1) return;
     let idx = 0;
     const items = wrap.querySelectorAll('.agenda-ticker-item');
-    const INTERVALO = 3000;
-
     setInterval(() => {
         items[idx].classList.remove('visible');
         idx = (idx + 1) % items.length;
         items[idx].classList.add('visible');
-    }, INTERVALO);
+    }, 3000);
 }
 
 function fechaAString(f) {
     return `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`;
 }
-    
+
 async function cargarAgendaSheet() {
     try {
         const res  = await fetch(SHEET_CSV_URL);
         const csv  = await res.text();
         const rows = csvToObjects(csv);
         const hoy  = obtenerFechaLocal();
-
         const todos = rows
             .filter(ev => {
                 const f = parseFechaSheet(ev.fecha);
-                return f && fechaAString(f) >= hoy
-                && (ev.aprobado || '').toLowerCase().trim() === 'ok';
+                return f && fechaAString(f) >= hoy && (ev.aprobado || '').toLowerCase().trim() === 'ok';
             })
             .sort((a, b) => parseFechaSheet(a.fecha) - parseFechaSheet(b.fecha));
-
-        // Solo los eventos de la fecha más próxima
         const fechaMasProxima = todos.length ? fechaAString(parseFechaSheet(todos[0].fecha)) : null;
-        const proximos = fechaMasProxima
-    ? todos.filter(ev => fechaAString(parseFechaSheet(ev.fecha)) === fechaMasProxima)
-            : [];
-
+        const proximos = fechaMasProxima ? todos.filter(ev => fechaAString(parseFechaSheet(ev.fecha)) === fechaMasProxima) : [];
         const textos = proximos.map(ev => {
             const f = parseFechaSheet(ev.fecha);
             const dia = String(f.getDate()).padStart(2, '0');
             const mes = MESES_CORTO[f.getMonth()];
             return `${dia} ${mes} · ${ev.titulo}`;
         });
-
         iniciarTicker(textos);
     } catch (e) {
         document.getElementById('agendaTickerWrap').innerHTML = '<span class="agenda-ticker-item visible">Ver Agenda</span>';
