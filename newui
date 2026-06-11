@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>infoespinar.com | El portal de El Espinar</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --verde: #00ff87;
+  --naranja: #ff4d00;
+  --amarillo: #ffe500;
+  --negro: #050505;
+  --gris-oscuro: #0f0f0f;
+  --gris-mid: #1a1a1a;
+  --gris-borde: #2a2a2a;
+  --blanco: #f5f5f0;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Space Grotesk', sans-serif; background: var(--negro); color: var(--blanco); overflow-x: hidden; cursor: none; }
+
+/* CURSOR */
+.cursor { width: 12px; height: 12px; background: var(--verde); border-radius: 50%; position: fixed; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: width 0.2s, height 0.2s; mix-blend-mode: difference; }
+.cursor-ring { width: 40px; height: 40px; border: 1.5px solid var(--verde); border-radius: 50%; position: fixed; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: left 0.12s ease, top 0.12s ease, width 0.3s, height 0.3s; mix-blend-mode: difference; }
+#particulas { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.35; }
+
+/* HEADER */
+.header { position: relative; z-index: 10; min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; overflow: hidden; border-bottom: 1px solid var(--gris-borde); }
+.header-badge { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--gris-borde); padding: 8px 20px; font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--verde); text-decoration: none; text-transform: uppercase; margin-bottom: 40px; position: relative; transition: background 0.2s; animation: fadeSlideDown 1s ease 0.2s both; }
+.header-badge:hover { background: rgba(0,255,135,0.06); }
+.header-badge::before { content: ''; position: absolute; left: -1px; top: -1px; bottom: -1px; width: 3px; background: var(--verde); }
+.header-bandera { width: 20px; height: 20px; border-radius: 2px; object-fit: cover; }
+.header-titulo { font-size: clamp(56px, 14vw, 140px); font-weight: 700; line-height: 0.88; letter-spacing: -3px; text-transform: uppercase; color: var(--blanco); animation: fadeSlideUp 1s ease 0.4s both; }
+.header-titulo .acento { color: transparent; -webkit-text-stroke: 1px var(--verde); display: block; }
+.header-titulo .acento-naranja { color: transparent; -webkit-text-stroke: 1px var(--naranja); display: block; }
+.header-sub { font-size: clamp(14px, 2vw, 18px); color: #666; margin-top: 32px; font-weight: 400; letter-spacing: 1px; animation: fadeSlideUp 1s ease 0.6s both; }
+.header-scroll { position: absolute; bottom: 32px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 8px; color: #444; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; animation: fadeIn 1s ease 1.2s both; }
+.scroll-line { width: 1px; height: 50px; background: linear-gradient(to bottom, var(--verde), transparent); animation: scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{opacity:1;transform:scaleY(1)} 50%{opacity:0.4;transform:scaleY(0.5)} }
+@keyframes fadeSlideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:none} }
+@keyframes fadeSlideDown { from{opacity:0;transform:translateY(-20px)} to{opacity:1;transform:none} }
+@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+
+/* SECCIÓN LABEL */
+.sec-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 4px; color: #444; text-transform: uppercase; display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.sec-label::after { content: ''; flex: 1; height: 1px; background: var(--gris-borde); }
+.sec-num { color: var(--verde); }
+
+/* CARRUSEL */
+.seccion-carrusel { padding: 80px 0 0; overflow: hidden; border-bottom: 1px solid var(--gris-borde); }
+.carrusel-header { padding: 0 32px 40px; }
+.carrusel-titulo { font-size: clamp(36px, 6vw, 72px); font-weight: 700; text-transform: uppercase; letter-spacing: -2px; line-height: 1; }
+.carrusel-titulo span { color: var(--verde); }
+.carrusel-track-outer { position: relative; overflow: hidden; }
+.carrusel-track-outer::before, .carrusel-track-outer::after { content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none; }
+.carrusel-track-outer::before { left: 0; background: linear-gradient(to right, var(--negro), transparent); }
+.carrusel-track-outer::after  { right: 0; background: linear-gradient(to left, var(--negro), transparent); }
+.carrusel-inner-new { display: flex; will-change: transform; padding: 0 32px 40px; gap: 16px; }
+.oferta-item-new { flex-shrink: 0; width: 200px; text-decoration: none; color: var(--blanco); display: block; }
+.oferta-img-wrap { width: 200px; height: 200px; overflow: hidden; position: relative; }
+.oferta-img-wrap::after { content: ''; position: absolute; inset: 0; background: var(--verde); opacity: 0; transition: opacity 0.3s; mix-blend-mode: color; }
+.oferta-item-new:hover .oferta-img-wrap::after { opacity: 0.3; }
+.imagen-oferta-new { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; user-select: none; -webkit-user-drag: none; display: block; }
+.oferta-item-new:hover .imagen-oferta-new { transform: scale(1.08); }
+.nombre-comercio-new { display: block; font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: #666; margin-top: 10px; transition: color 0.2s; }
+.oferta-item-new:hover .nombre-comercio-new { color: var(--verde); }
+
+/* MARQUEE */
+.marquee-bar { border-top: 1px solid var(--gris-borde); border-bottom: 1px solid var(--gris-borde); background: var(--gris-mid); overflow: hidden; padding: 14px 0; white-space: nowrap; }
+.marquee-inner { display: inline-flex; animation: marqueeScroll 22s linear infinite; }
+.marquee-item { font-family: 'Space Mono', monospace; font-size: 12px; letter-spacing: 2px; color: #555; text-transform: uppercase; padding: 0 40px; display: inline-flex; align-items: center; gap: 14px; }
+.marquee-dot { width: 5px; height: 5px; background: var(--verde); border-radius: 50%; flex-shrink: 0; }
+@keyframes marqueeScroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* UTILIDADES */
+.seccion-utilidades { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--gris-borde); }
+@media (min-width: 768px) { .seccion-utilidades { grid-template-columns: repeat(4, 1fr); } }
+.util-celda { border-right: 1px solid var(--gris-borde); border-bottom: 1px solid var(--gris-borde); padding: 36px 24px; text-decoration: none; color: var(--blanco); background: var(--negro); cursor: pointer; font-family: 'Space Grotesk', sans-serif; border-top: 0; border-left: 0; text-align: left; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 10px; }
+.util-celda:last-child { border-right: none; }
+.util-celda::before { content: ''; position: absolute; inset: 0; background: var(--verde); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); z-index: 0; }
+.util-celda:hover::before { transform: scaleY(1); }
+.util-celda:hover { color: var(--negro); }
+.util-celda > * { position: relative; z-index: 1; }
+.util-icono-big { font-size: 30px; line-height: 1; }
+.util-label { font-family: 'Space Mono', monospace; font-size: 9px; letter-spacing: 3px; color: #555; text-transform: uppercase; transition: color 0.3s; }
+.util-celda:hover .util-label { color: rgba(0,0,0,0.55); }
+.util-valor { font-size: 18px; font-weight: 700; line-height: 1.15; }
+.util-celda.clima-soleado::before  { background: var(--amarillo); }
+.util-celda.clima-nublado::before  { background: #888; }
+.util-celda.clima-lluvia::before   { background: #4ab3f4; }
+.util-celda.clima-nieve::before    { background: #c7d2fe; }
+.util-celda.clima-nocturno::before { background: #6366f1; }
+.util-celda.clima-soleado:hover, .util-celda.clima-nublado:hover, .util-celda.clima-lluvia:hover, .util-celda.clima-nieve:hover, .util-celda.clima-nocturno:hover { color: var(--negro); }
+.util-celda.agenda-celda::before { background: #c026d3; }
+.util-celda.farm-celda::before   { background: var(--verde); }
+.agenda-ticker-wrap { position: relative; height: 1.3em; overflow: hidden; }
+.agenda-ticker-item { position: absolute; inset: 0; font-size: 16px; font-weight: 700; opacity: 0; transition: opacity 0.5s ease; line-height: 1.3em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.agenda-ticker-item.visible { opacity: 1; }
+.util-celda.taxi-celda { padding: 0; flex-direction: row; gap: 0; }
+.taxi-web-part { display: flex; flex-direction: column; gap: 10px; padding: 36px 20px; flex: 1; text-decoration: none; color: var(--blanco); position: relative; overflow: hidden; transition: color 0.3s; }
+.taxi-web-part::before { content: ''; position: absolute; inset: 0; background: var(--amarillo); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); z-index: 0; }
+.taxi-web-part:hover::before { transform: scaleY(1); }
+.taxi-web-part:hover { color: var(--negro); }
+.taxi-web-part:hover .util-label { color: rgba(0,0,0,0.55); }
+.taxi-web-part > * { position: relative; z-index: 1; }
+.taxi-azar-part { border-left: 1px solid var(--gris-borde); background: transparent; border-top: 0; border-right: 0; border-bottom: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; padding: 16px; min-width: 78px; cursor: pointer; color: var(--blanco); font-family: 'Space Grotesk', sans-serif; position: relative; overflow: hidden; transition: color 0.3s; }
+.taxi-azar-part::before { content: ''; position: absolute; inset: 0; background: var(--naranja); transform: scaleY(0); transform-origin: bottom; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); z-index: 0; }
+.taxi-azar-part:hover::before { transform: scaleY(1); }
+.taxi-azar-part > * { position: relative; z-index: 1; }
+.taxi-dado { font-size: 22px; display: inline-block; }
+.taxi-azar-part:hover .taxi-dado { animation: tumble 0.4s ease; }
+@keyframes tumble { 0%{transform:rotate(0) scale(1)} 40%{transform:rotate(180deg) scale(1.3)} 100%{transform:rotate(360deg) scale(1)} }
+.taxi-azar-label { font-family: 'Space Mono', monospace; font-size: 8px; letter-spacing: 2px; text-transform: uppercase; text-align: center; }
+
+/* TABLÓN VECINAL */
+.seccion-talon { border-bottom: 1px solid var(--gris-borde); }
+.talon-header { padding: 80px 32px 40px; }
+.talon-titulo { font-size: clamp(36px, 6vw, 72px); font-weight: 700; text-transform: uppercase; letter-spacing: -2px; line-height: 1; }
+.talon-titulo span { color: var(--naranja); }
+.talon-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--gris-borde); }
+@media (min-width: 768px) { .talon-grid { grid-template-columns: repeat(4, 1fr); } }
+.talon-celda { border-right: 1px solid var(--gris-borde); border-bottom: 1px solid var(--gris-borde); padding: 40px 24px; text-decoration: none; color: var(--blanco); display: flex; flex-direction: column; gap: 14px; position: relative; overflow: hidden; }
+.talon-celda:last-child { border-right: none; }
+.talon-celda::before { content: ''; position: absolute; inset: 0; transform: scaleX(0); transform-origin: left; transition: transform 0.45s cubic-bezier(0.16,1,0.3,1); z-index: 0; }
+.talon-celda-actividades::before { background: #7c3aed; }
+.talon-celda-coche::before       { background: #d97706; }
+.talon-celda-empleo::before      { background: #2563eb; }
+.talon-celda-anuncios::before    { background: #059669; }
+.talon-celda:hover::before { transform: scaleX(1); }
+.talon-celda > * { position: relative; z-index: 1; }
+.talon-icono { font-size: 38px; transition: transform 0.3s; }
+.talon-celda:hover .talon-icono { transform: scale(1.2) rotate(-8deg); }
+.talon-nombre { font-size: 20px; font-weight: 700; text-transform: uppercase; letter-spacing: -0.5px; }
+.talon-sub { font-size: 12px; color: #666; font-family: 'Space Mono', monospace; transition: color 0.3s; }
+.talon-celda:hover .talon-sub { color: rgba(255,255,255,0.65); }
+
+/* CATEGORÍAS */
+.seccion-cats { border-bottom: 1px solid var(--gris-borde); }
+.cats-header { padding: 80px 32px 40px; }
+.cats-titulo { font-size: clamp(36px, 6vw, 72px); font-weight: 700; text-transform: uppercase; letter-spacing: -2px; line-height: 1; }
+.cats-titulo span { color: var(--amarillo); }
+.cats-grid { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--gris-borde); }
+@media (min-width: 768px) { .cats-grid { grid-template-columns: repeat(6, 1fr); } }
+.cat-celda { border-right: 1px solid var(--gris-borde); border-bottom: 1px solid var(--gris-borde); padding: 24px 16px; text-decoration: none; color: var(--blanco); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; position: relative; overflow: hidden; aspect-ratio: 1; transition: color 0.3s; }
+.cat-celda::before { content: ''; position: absolute; inset: 0; background: var(--accent-cat, var(--verde)); transform: scale(0); border-radius: 50%; transition: transform 0.5s cubic-bezier(0.16,1,0.3,1), border-radius 0.5s; z-index: 0; }
+.cat-celda:hover::before { transform: scale(3); border-radius: 0; }
+.cat-celda:hover { color: var(--negro); }
+.cat-celda > * { position: relative; z-index: 1; }
+.cat-icono-big { font-size: 26px; transition: transform 0.3s; }
+.cat-celda:hover .cat-icono-big { transform: scale(1.2); }
+.cat-nombre { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.2; }
+
+/* EMERGENCIAS */
+.seccion-emg { border-bottom: 1px solid var(--gris-borde); }
+.emg-header { padding: 80px 32px 40px; }
+.emg-titulo { font-size: clamp(36px, 6vw, 72px); font-weight: 700; text-transform: uppercase; letter-spacing: -2px; line-height: 1; }
+.emg-titulo span { color: var(--naranja); }
+.emg-grid { display: grid; grid-template-columns: 1fr; border-top: 1px solid var(--gris-borde); }
+@media (min-width: 640px)  { .emg-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .emg-grid { grid-template-columns: repeat(5, 1fr); } }
+.emg-celda { border-right: 1px solid var(--gris-borde); border-bottom: 1px solid var(--gris-borde); padding: 32px 24px; text-decoration: none; color: var(--blanco); display: flex; flex-direction: column; justify-content: space-between; gap: 14px; position: relative; overflow: hidden; transition: color 0.3s; min-height: 130px; }
+.emg-celda::before { content: ''; position: absolute; inset: 0; background: var(--gris-mid); transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1); z-index: 0; }
+.emg-celda:hover::before { transform: scaleX(1); }
+.emg-celda > * { position: relative; z-index: 1; }
+.emg-celda-112 { background: var(--naranja); border-color: transparent; animation: pulse112 3s ease-in-out infinite; }
+.emg-celda-112::before { background: #c73d00; }
+@keyframes pulse112 { 0%,100%{box-shadow:0 0 0 0 rgba(255,77,0,0.5)} 50%{box-shadow:0 0 0 18px rgba(255,77,0,0)} }
+.emg-nombre { font-size: 12px; color: #666; font-family: 'Space Mono', monospace; letter-spacing: 1px; }
+.emg-numero { font-size: clamp(22px, 3.5vw, 34px); font-weight: 700; letter-spacing: -1px; font-family: 'Space Mono', monospace; color: var(--verde); transition: color 0.3s; }
+.emg-celda-112 .emg-nombre { color: rgba(255,255,255,0.7); }
+.emg-celda-112 .emg-numero { color: #fff; font-size: clamp(36px, 5vw, 52px); }
+.emg-celda:hover:not(.emg-celda-112) .emg-numero { color: var(--verde); }
+
+/* FOOTER */
+.footer-new { border-top: 1px solid var(--gris-borde); padding: 56px 32px; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 32px; }
+.footer-logo { font-size: clamp(30px, 5vw, 56px); font-weight: 700; letter-spacing: -2px; text-transform: uppercase; line-height: 1; }
+.footer-logo span { color: var(--verde); }
+.footer-meta { font-family: 'Space Mono', monospace; font-size: 11px; color: #444; line-height: 2; text-align: right; }
+.footer-meta a { color: var(--verde); text-decoration: none; }
+.footer-meta a:hover { text-decoration: underline; }
+.footer-copy { grid-column: 1/-1; border-top: 1px solid var(--gris-borde); padding-top: 24px; font-family: 'Space Mono', monospace; font-size: 10px; color: #333; letter-spacing: 2px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+/* BANNER */
+.banner-emergente { position: fixed; bottom: -100%; left: 50%; transform: translateX(-50%); width: 92%; max-width: 700px; background: var(--gris-mid); border: 1px solid var(--gris-borde); border-left: 3px solid var(--verde); padding: 16px 20px; display: flex; flex-direction: column; align-items: center; justify-content: space-between; gap: 12px; z-index: 9999; transition: bottom 0.5s cubic-bezier(0.175,0.885,0.32,1.275); border-radius: 0; }
+.banner-emergente.activo { bottom: 16px; }
+.banner-texto { font-size: 14px; color: var(--blanco); text-align: center; line-height: 1.4; }
+.banner-texto strong { color: var(--verde); }
+.banner-acciones { display: flex; align-items: center; gap: 10px; width: 100%; justify-content: center; }
+.btn-formulario { background: var(--verde); color: var(--negro); text-decoration: none; font-weight: 700; font-size: 12px; padding: 10px 24px; letter-spacing: 1px; text-transform: uppercase; font-family: 'Space Mono', monospace; transition: background 0.2s, transform 0.2s; }
+.btn-formulario:hover { background: #00cc6a; transform: translateY(-1px); }
+.btn-cerrar-banner { background: transparent; color: #666; border: 1px solid var(--gris-borde); font-size: 13px; font-weight: 700; padding: 10px 16px; cursor: pointer; transition: background 0.2s; font-family: 'Space Grotesk', sans-serif; }
+.btn-cerrar-banner:hover { background: var(--gris-borde); color: var(--blanco); }
+@media (min-width: 580px) { .banner-emergente { flex-direction: row; gap: 20px; } .banner-texto { text-align: left; } .banner-acciones { width: auto; flex-shrink: 0; } }
+
+/* REVEAL */
+.entrada { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+.entrada.visible { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .entrada { opacity: 1; transform: none; } body { cursor: auto; } .cursor, .cursor-ring { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<canvas id="particulas"></canvas>
+
+<!-- HEADER -->
+<header class="header">
+  <a href="index.html" class="header-badge">
+    <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
+    infoespinar.com
+  </a>
+  <h1 class="header-titulo">
+    El
+    <span class="acento">Espinar</span>
+    <span class="acento-naranja">Vivo.</span>
+  </h1>
+  <p class="header-sub">La comunidad que esperabas, en tu mano</p>
+  <div class="header-scroll">
+    <span>scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</header>
+
+<main>
+
+<!-- CARRUSEL -->
+<section class="seccion-carrusel entrada">
+  <div class="carrusel-header">
+    <div class="sec-label"><span class="sec-num">01</span> Negocios Destacados</div>
+    <h2 class="carrusel-titulo">Ofertas <span>cercanas.</span></h2>
+  </div>
+  <div class="carrusel-track-outer">
+    <div class="carrusel-inner-new" id="carruselInner">
+      <a href="https://www.instagram.com/eltallerdeboli/" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.imgur.com/3ZggbJh.jpeg" class="imagen-oferta-new" alt="El Taller de Boli"></div>
+        <span class="nombre-comercio-new">El Taller de Boli</span>
+      </a>
+      <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.imgur.com/mbn5vQH.jpeg" class="imagen-oferta-new" alt="Tu Evento"></div>
+        <span class="nombre-comercio-new">Tu Evento</span>
+      </a>
+      <a href="https://www.instagram.com/mindful_divers/" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.ibb.co/8D3LTHHg/643229490-18422096578138264-8292138894514637233-n.jpg" class="imagen-oferta-new" alt="Buceo Mindfulness"></div>
+        <span class="nombre-comercio-new">Buceo Mindfulness</span>
+      </a>
+      <a href="https://andrearuibal.com" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.imgur.com/SwHa2Of.jpeg" class="imagen-oferta-new" alt="Andrea Comesaña"></div>
+        <span class="nombre-comercio-new">Andrea Comesaña</span>
+      </a>
+      <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta-new" alt="Limpiezas"></div>
+        <span class="nombre-comercio-new">Limpiezas</span>
+      </a>
+      <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.imgur.com/mbn5vQH.jpeg" class="imagen-oferta-new" alt="Tu Evento"></div>
+        <span class="nombre-comercio-new">Tu Evento</span>
+      </a>
+      <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta-new" alt="Cafetería"></div>
+        <span class="nombre-comercio-new">Cafetería</span>
+      </a>
+      <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="oferta-item-new">
+        <div class="oferta-img-wrap"><img src="https://i.imgur.com/HQsKVcc.jpeg" class="imagen-oferta-new" alt="Reformas"></div>
+        <span class="nombre-comercio-new">Reformas</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-inner">
+    <span class="marquee-item"><span class="marquee-dot"></span>El Espinar · Segovia</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Negocios Locales</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Tablón Vecinal</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Emergencias 24h</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Farmacia de Guardia</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Taxi Inmediato</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Eventos y Ocio</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Empleo Local</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>El Espinar · Segovia</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Negocios Locales</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Tablón Vecinal</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Emergencias 24h</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Farmacia de Guardia</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Taxi Inmediato</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Eventos y Ocio</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Empleo Local</span>
+  </div>
+</div>
+
+<!-- UTILIDADES -->
+<section class="seccion-utilidades entrada">
+  <a href="https://www.eltiempo.es/el-espinar.html" target="_blank" rel="noopener" class="util-celda" id="botonTiempo">
+    <div class="util-icono-big" id="tiempoIcono">🌤️</div>
+    <div class="util-label">El Tiempo</div>
+    <div class="util-valor" id="tiempoTexto">Cargando...</div>
+  </a>
+  <a href="cartelera.html" class="util-celda agenda-celda">
+    <div class="util-icono-big">📅</div>
+    <div class="util-label">Cartelera de Eventos</div>
+    <div class="agenda-ticker-wrap" id="agendaTickerWrap">
+      <span class="agenda-ticker-item visible">Cargando...</span>
+    </div>
+  </a>
+  <button onclick="irAFarmaciaGuardiaHoy()" class="util-celda farm-celda">
+    <div class="util-icono-big">🏥</div>
+    <div class="util-label">Farmacia de Guardia</div>
+    <div class="util-valor" id="txtFarmaciaNombre">Cargando...</div>
+  </button>
+  <div class="util-celda taxi-celda">
+    <a href="taxi.html" class="taxi-web-part">
+      <div class="util-icono-big">🚖</div>
+      <div class="util-label">Taxis</div>
+      <div class="util-valor">Ver Teléfonos</div>
+    </a>
+    <button onclick="llamarTaxiAzar()" class="taxi-azar-part">
+      <span class="taxi-dado">🎲</span>
+      <span class="taxi-azar-label">Al azar</span>
+    </button>
+  </div>
+</section>
+
+<!-- TABLÓN VECINAL -->
+<section class="seccion-talon entrada">
+  <div class="talon-header">
+    <div class="sec-label"><span class="sec-num">02</span> Comunidad</div>
+    <h2 class="talon-titulo">Tablón <span>vecinal.</span></h2>
+  </div>
+  <div class="talon-grid">
+    <a href="actividades.html" class="talon-celda talon-celda-actividades">
+      <div class="talon-icono">🏔️</div>
+      <div class="talon-nombre">Planes y Ocio</div>
+      <div class="talon-sub">comparte tus aficiones</div>
+    </a>
+    <a href="cocoche.html" class="talon-celda talon-celda-coche">
+      <div class="talon-icono">🚗</div>
+      <div class="talon-nombre">Compartir Coche</div>
+      <div class="talon-sub">viajes y carpooling</div>
+    </a>
+    <a href="empleo.html" class="talon-celda talon-celda-empleo">
+      <div class="talon-icono">💼</div>
+      <div class="talon-nombre">Empleo Local</div>
+      <div class="talon-sub">trabajo en la zona</div>
+    </a>
+    <a href="particulares.html" class="talon-celda talon-celda-anuncios">
+      <div class="talon-icono">🤝</div>
+      <div class="talon-nombre">Compra-Venta</div>
+      <div class="talon-sub">entre particulares</div>
+    </a>
+  </div>
+</section>
+
+<!-- CATEGORÍAS -->
+<section class="seccion-cats entrada">
+  <div class="cats-header">
+    <div class="sec-label"><span class="sec-num">03</span> Directorio</div>
+    <h2 class="cats-titulo">Servicios <span>locales.</span></h2>
+  </div>
+  <div class="cats-grid">
+    <a href="jardineria.html"      class="cat-celda" style="--accent-cat:#22c55e"><div class="cat-icono-big">🌳</div><span class="cat-nombre">Jardinería</span></a>
+    <a href="limpieza.html"        class="cat-celda" style="--accent-cat:#3b82f6"><div class="cat-icono-big">🧹</div><span class="cat-nombre">Limpieza</span></a>
+    <a href="reformas.html"        class="cat-celda" style="--accent-cat:#f97316"><div class="cat-icono-big">🏗️</div><span class="cat-nombre">Reformas</span></a>
+    <a href="fontaneria.html"      class="cat-celda" style="--accent-cat:#6366f1"><div class="cat-icono-big">🔧</div><span class="cat-nombre">Fontanería</span></a>
+    <a href="talleres.html"        class="cat-celda" style="--accent-cat:#94a3b8"><div class="cat-icono-big">🚗</div><span class="cat-nombre">Automoción</span></a>
+    <a href="ferreteria.html"      class="cat-celda" style="--accent-cat:#d97706"><div class="cat-icono-big">🔨</div><span class="cat-nombre">Ferretería</span></a>
+    <a href="panaderia.html"       class="cat-celda" style="--accent-cat:#ec4899"><div class="cat-icono-big">🍰</div><span class="cat-nombre">Panadería</span></a>
+    <a href="restaurantes.html"    class="cat-celda" style="--accent-cat:#ef4444"><div class="cat-icono-big">🍴</div><span class="cat-nombre">A Comer</span></a>
+    <a href="salud.html"           class="cat-celda" style="--accent-cat:#f43f5e"><div class="cat-icono-big">❤️</div><span class="cat-nombre">Salud</span></a>
+    <a href="bienestar.html"       class="cat-celda" style="--accent-cat:#a855f7"><div class="cat-icono-big">💆</div><span class="cat-nombre">Bienestar</span></a>
+    <a href="formacion.html"       class="cat-celda" style="--accent-cat:#0ea5e9"><div class="cat-icono-big">🎓</div><span class="cat-nombre">Formación</span></a>
+    <a href="ocio.html"            class="cat-celda" style="--accent-cat:#10b981"><div class="cat-icono-big">🚵‍♀️</div><span class="cat-nombre">Ocio · Deporte</span></a>
+    <a href="artesania.html"       class="cat-celda" style="--accent-cat:#f59e0b"><div class="cat-icono-big">🎨</div><span class="cat-nombre">Artesanía</span></a>
+    <a href="eventos.html"         class="cat-celda" style="--accent-cat:#8b5cf6"><div class="cat-icono-big">🎉</div><span class="cat-nombre">Eventos</span></a>
+    <a href="otros-servicios.html" class="cat-celda" style="--accent-cat:#475569"><div class="cat-icono-big">🏪</div><span class="cat-nombre">Otros</span></a>
+    <a href="mascotas.html"        class="cat-celda" style="--accent-cat:#d97706"><div class="cat-icono-big">🐾</div><span class="cat-nombre">Mascotas</span></a>
+    <a href="alojamientos.html"    class="cat-celda" style="--accent-cat:#0891b2"><div class="cat-icono-big">🛎️</div><span class="cat-nombre">Alojamientos</span></a>
+    <a href="alimentacion.html"    class="cat-celda" style="--accent-cat:#16a34a"><div class="cat-icono-big">🍉</div><span class="cat-nombre">Alimentación</span></a>
+  </div>
+</section>
+
+<!-- EMERGENCIAS -->
+<section class="seccion-emg entrada">
+  <div class="emg-header">
+    <div class="sec-label"><span class="sec-num">04</span> Seguridad</div>
+    <h2 class="emg-titulo">Emergencias <span>24h.</span></h2>
+  </div>
+  <div class="emg-grid">
+    <a href="tel:112" class="emg-celda emg-celda-112">
+      <div class="emg-nombre">Emergencias General</div>
+      <div class="emg-numero">112</div>
+    </a>
+    <a href="tel:921182323" class="emg-celda">
+      <div class="emg-nombre">Policía Municipal (Fijo)</div>
+      <div class="emg-numero">921 182 323</div>
+    </a>
+    <a href="tel:600400880" class="emg-celda">
+      <div class="emg-nombre">Policía Municipal (Móvil)</div>
+      <div class="emg-numero">600 400 880</div>
+    </a>
+    <a href="tel:921181029" class="emg-celda">
+      <div class="emg-nombre">Guardia Civil El Espinar</div>
+      <div class="emg-numero">921 181 029</div>
+    </a>
+    <a href="tel:921422222" class="emg-celda">
+      <div class="emg-nombre">Bomberos (Provincia)</div>
+      <div class="emg-numero">921 422 222</div>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-new">
+  <div class="footer-logo">Info<span>Espinar</span></div>
+  <div class="footer-meta">
+    <div>© 2026 InfoEspinar</div>
+    <div>Todos los derechos reservados</div>
+    <div><a href="mailto:info@infoespinar.com">info@infoespinar.com</a></div>
+  </div>
+  <div class="footer-copy">
+    <span>Página optimizada para móviles y PC</span>
+    <span style="color:#222">EL ESPINAR · SEGOVIA · SPAIN</span>
+  </div>
+</footer>
+
+<!-- BANNER FLOTANTE -->
+<div id="popupAnuncio" class="banner-emergente">
+  <p class="banner-texto">¿Tienes un negocio? Aparecer aquí es <strong>GRATIS</strong>. Solo rellena el formulario.</p>
+  <div class="banner-acciones">
+    <a href="./inscripcion.html" class="btn-formulario">Inscribirme</a>
+    <button class="btn-cerrar-banner" onclick="cerrarPopup()">✕</button>
+  </div>
+</div>
+
+<script>
+/* CURSOR */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cur.style.left  = e.clientX + 'px';
+  cur.style.top   = e.clientY + 'px';
+  ring.style.left = e.clientX + 'px';
+  ring.style.top  = e.clientY + 'px';
+});
+
+/* PARTÍCULAS */
+(function() {
+  const canvas = document.getElementById('particulas');
+  const ctx = canvas.getContext('2d');
+  let W, H, pts;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function init() {
+    resize();
+    pts = Array.from({length: 55}, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: -Math.random() * 0.35 - 0.1,
+      r: Math.random() * 1.4 + 0.4,
+      a: Math.random() * 0.8 + 0.2
+    }));
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    pts.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.y < -10) { p.y = H + 10; p.x = Math.random() * W; }
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0,255,135,${p.a * 0.5})`; ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  init(); draw();
+  window.addEventListener('resize', resize);
+})();
+
+/* SCROLL REVEAL */
+(function() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.entrada').forEach((el, i) => { el.style.transitionDelay = (i * 0.06) + 's'; io.observe(el); });
+})();
+
+/* CARRUSEL */
+(function() {
+  const inner = document.getElementById('carruselInner');
+  if (!inner) return;
+  const orig = Array.from(inner.children);
+  orig.forEach(item => inner.appendChild(item.cloneNode(true)));
+  const ITEM_W = 216;
+  let pos = 0, drag = false, startX = 0, startPos = 0;
+  const total = orig.length * ITEM_W;
+  const clamp = p => ((p % total) + total) % total;
+  (function tick() { if (!drag) { pos = clamp(pos + 0.4); inner.style.transform = `translateX(-${pos}px)`; } requestAnimationFrame(tick); })();
+  inner.addEventListener('mousedown', e => { drag = true; startX = e.clientX; startPos = pos; inner.style.cursor = 'grabbing'; });
+  window.addEventListener('mousemove', e => { if (!drag) return; pos = clamp(startPos + (startX - e.clientX)); inner.style.transform = `translateX(-${pos}px)`; });
+  window.addEventListener('mouseup', () => { drag = false; inner.style.cursor = 'grab'; });
+  inner.addEventListener('touchstart', e => { drag = true; startX = e.touches[0].clientX; startPos = pos; }, {passive:true});
+  inner.addEventListener('touchmove', e => { if (!drag) return; pos = clamp(startPos + (startX - e.touches[0].clientX)); inner.style.transform = `translateX(-${pos}px)`; }, {passive:true});
+  inner.addEventListener('touchend', () => { drag = false; });
+  inner.style.cursor = 'grab';
+})();
+
+/* TAXIS */
+const telefonosTaxis = ["628826577","666154968","649553180","639752456","722501122","697920835","662958026","690840809"];
+function llamarTaxiAzar() {
+  if (!telefonosTaxis.length) return;
+  window.location.href = `tel:${telefonosTaxis[Math.floor(Math.random() * telefonosTaxis.length)]}`;
+}
+
+/* FARMACIA */
+const MAPS_SR = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+San+Rafael+Travesia+Alto+del+Leon+19+San+Rafael";
+const MAPS_HONTANILLA = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+Aparicio+Av+Hontanilla+18+El+Espinar";
+const MAPS_PERALES = "https://www.google.com/maps/dir/?api=1&destination=Farmacia+El+Espinar+Calle+Marques+de+Perales+2+El+Espinar";
+const MAPS_GENERICO = "https://elespinar.es/farmacias/";
+const calendarioGuardias = [
+  {inicio:"2026-01-01",fin:"2026-01-04",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-01-05",fin:"2026-01-11",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-01-12",fin:"2026-01-18",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-01-19",fin:"2026-01-25",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-01-26",fin:"2026-02-01",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-02-02",fin:"2026-02-08",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-02-09",fin:"2026-02-15",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-02-16",fin:"2026-02-22",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-02-23",fin:"2026-03-01",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-03-02",fin:"2026-03-08",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-03-09",fin:"2026-03-15",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-03-16",fin:"2026-03-22",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-03-23",fin:"2026-03-29",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-03-30",fin:"2026-04-05",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-04-06",fin:"2026-04-12",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-04-13",fin:"2026-04-19",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-04-20",fin:"2026-04-26",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-04-27",fin:"2026-05-03",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-05-04",fin:"2026-05-10",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-05-11",fin:"2026-05-17",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-05-18",fin:"2026-05-24",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-05-25",fin:"2026-05-31",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-06-01",fin:"2026-06-07",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-06-08",fin:"2026-06-14",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-06-15",fin:"2026-06-21",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-06-22",fin:"2026-06-28",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-06-29",fin:"2026-07-05",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-07-06",fin:"2026-07-12",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-07-13",fin:"2026-07-19",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-07-20",fin:"2026-07-26",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-07-27",fin:"2026-08-02",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-08-03",fin:"2026-08-09",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-08-10",fin:"2026-08-16",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"},
+  {inicio:"2026-08-17",fin:"2026-08-23",farmacia:MAPS_PERALES,nombre:"C/ Marqués de Perales"},
+  {inicio:"2026-08-24",fin:"2026-08-30",farmacia:MAPS_SR,nombre:"San Rafael"},
+  {inicio:"2026-08-31",fin:"2026-09-06",farmacia:MAPS_HONTANILLA,nombre:"Av. Hontanilla 18"}
+];
+function obtenerFechaLocal() {
+  const n = new Date();
+  return `${n.getFullYear()}-${String(n.getMonth()+1).padStart(2,'0')}-${String(n.getDate()).padStart(2,'0')}`;
+}
+function obtenerTurnoHoy() {
+  const hoy = obtenerFechaLocal();
+  return calendarioGuardias.find(r => hoy >= r.inicio && hoy <= r.fin) || null;
+}
+function irAFarmaciaGuardiaHoy() {
+  const t = obtenerTurnoHoy();
+  window.open(t ? t.farmacia : MAPS_GENERICO, '_blank', 'noopener');
+}
+function cargarFarmacia() {
+  const t = obtenerTurnoHoy();
+  document.getElementById('txtFarmaciaNombre').innerText = t ? t.nombre : 'Consultar Guardia';
+}
+
+/* TIEMPO */
+function cargarTiempoReal() {
+  const url = "https://api.open-meteo.com/v1/forecast?latitude=40.7183&longitude=-4.2415&current=temperature_2m,weather_code,is_day";
+  const btn = document.getElementById('botonTiempo');
+  fetch(url)
+    .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+    .then(data => {
+      const temp = Math.round(data.current.temperature_2m);
+      const code = data.current.weather_code;
+      const esDia = data.current.is_day === 1;
+      let icono = "☀️", estado = "Despejado", clase = "clima-soleado";
+      if (code === 0) { icono = esDia ? "☀️" : "🌙"; estado = "Despejado"; clase = esDia ? "clima-soleado" : "clima-nocturno"; }
+      else if (code >= 1 && code <= 3) { icono = esDia ? "⛅" : "☁️"; estado = "Intervalos"; clase = esDia ? "clima-nublado" : "clima-nocturno"; }
+      else if (code >= 45 && code <= 48) { icono = "🌫️"; estado = "Niebla"; clase = esDia ? "clima-nublado" : "clima-nocturno"; }
+      else if ((code >= 51 && code <= 67) || (code >= 80 && code <= 82)) { icono = "🌧️"; estado = "Lluvia"; clase = esDia ? "clima-lluvia" : "clima-nocturno"; }
+      else if ((code >= 71 && code <= 77) || (code >= 85 && code <= 86)) { icono = "❄️"; estado = "Nieve"; clase = esDia ? "clima-nieve" : "clima-nocturno"; }
+      else if (code >= 95) { icono = "⛈️"; estado = "Tormenta"; clase = esDia ? "clima-lluvia" : "clima-nocturno"; }
+      document.getElementById('tiempoIcono').innerText = icono;
+      document.getElementById('tiempoTexto').innerText = `${temp}°C · ${estado}`;
+      btn.classList.add(clase);
+    })
+    .catch(() => { document.getElementById('tiempoTexto').innerText = "Ver previsión"; });
+}
+
+/* AGENDA TICKER */
+const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS7ovf3zpL_RCmFxrwSfn0XMZPIIUhM52uV0HxKY33cZ89XtE9dfrvDJ9HSqFiA61SjXHQoaMvfYDKx/pub?output=csv";
+const MESES_CORTO = ["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+function parseFechaSheet(s) {
+  if (!s) return null; const l = s.trim();
+  if (l.includes('/')) { const [d,m,y] = l.split('/').map(Number); if(!isNaN(d)&&!isNaN(m)&&!isNaN(y)) return new Date(y,m-1,d); }
+  if (l.includes('-')) { const [y,m,d] = l.split('-').map(Number); if(!isNaN(y)&&!isNaN(m)&&!isNaN(d)) return new Date(y,m-1,d); }
+  return null;
+}
+function csvToObjects(csv) {
+  const lines = csv.split(/\r?\n/); if (!lines.length) return [];
+  const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g,''));
+  const result = [];
+  for (let i = 1; i < lines.length; i++) {
+    if (!lines[i].trim()) continue;
+    let cells=[], inQ=false, cell='';
+    for (const ch of lines[i]) { if(ch==='"'){inQ=!inQ} else if(ch===','&&!inQ){cells.push(cell.trim());cell=''} else {cell+=ch} }
+    cells.push(cell.trim());
+    const obj={};
+    headers.forEach((h,idx)=>{let v=(cells[idx]||'').replace(/^"|"$/g,'').trim();obj[h]=v==='null'||v===''?null:v;});
+    if(obj.titulo) result.push(obj);
+  }
+  return result;
+}
+function fechaAString(f) { return `${f.getFullYear()}-${String(f.getMonth()+1).padStart(2,'0')}-${String(f.getDate()).padStart(2,'0')}`; }
+function iniciarTicker(textos) {
+  const wrap = document.getElementById('agendaTickerWrap');
+  if (!textos.length) { wrap.innerHTML='<span class="agenda-ticker-item visible">Ver Agenda</span>'; return; }
+  wrap.innerHTML='';
+  textos.forEach((t,i)=>{ const span=document.createElement('span'); span.className='agenda-ticker-item'+(i===0?' visible':''); span.textContent=t; wrap.appendChild(span); });
+  if (textos.length===1) return;
+  let idx=0; const items=wrap.querySelectorAll('.agenda-ticker-item');
+  setInterval(()=>{ items[idx].classList.remove('visible'); idx=(idx+1)%items.length; items[idx].classList.add('visible'); }, 3000);
+}
+async function cargarAgendaSheet() {
+  try {
+    const res=await fetch(SHEET_CSV_URL); const csv=await res.text();
+    const rows=csvToObjects(csv); const hoy=obtenerFechaLocal();
+    const todos=rows.filter(ev=>{const f=parseFechaSheet(ev.fecha);return f&&fechaAString(f)>=hoy&&(ev.aprobado||'').toLowerCase().trim()==='ok';}).sort((a,b)=>parseFechaSheet(a.fecha)-parseFechaSheet(b.fecha));
+    const fp=todos.length?fechaAString(parseFechaSheet(todos[0].fecha)):null;
+    const proximos=fp?todos.filter(ev=>fechaAString(parseFechaSheet(ev.fecha))===fp):[];
+    iniciarTicker(proximos.map(ev=>{const f=parseFechaSheet(ev.fecha);return `${String(f.getDate()).padStart(2,'0')} ${MESES_CORTO[f.getMonth()]} · ${ev.titulo}`;}));
+  } catch(e) { document.getElementById('agendaTickerWrap').innerHTML='<span class="agenda-ticker-item visible">Ver Agenda</span>'; }
+}
+
+/* POPUP */
+function mostrarPopup() { setTimeout(()=>document.getElementById('popupAnuncio').classList.add('activo'),1500); }
+function cerrarPopup() { document.getElementById('popupAnuncio').classList.remove('activo'); }
+
+/* ARRANQUE */
+document.addEventListener('DOMContentLoaded', ()=>{
+  cargarFarmacia();
+  cargarTiempoReal();
+  cargarAgendaSheet();
+  mostrarPopup();
+});
+</script>
+</body>
+</html>
