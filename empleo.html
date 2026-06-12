@@ -6,29 +6,29 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Empleo Local | infoespinar.com</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display&family=Lato:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Serif+Display&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         :root {
-            --ink: #1a1a2e;
+            --ink: #0f0f1a;
             --ink-mid: #4a4a6a;
-            --ink-light: #8888aa;
+            --ink-light: #9090b0;
             --surface: #ffffff;
-            --surface-2: #f7f7fb;
-            --surface-3: #eeeef8;
-            --accent: #3a56e8;
+            --surface-2: #f4f4f9;
+            --surface-3: #eaeaf4;
+            --accent: #2d4fd6;
             --accent-light: #eef0fd;
-            --accent-dark: #2840cc;
-            --green: #0f9b6e;
-            --green-light: #edfaf4;
-            --green-dark: #0a7554;
-            --border: rgba(60,60,120,0.10);
-            --border-strong: rgba(60,60,120,0.18);
-            --radius: 14px;
-            --radius-sm: 8px;
-            --shadow: 0 2px 16px rgba(30,30,80,0.07);
-            --shadow-md: 0 4px 24px rgba(30,30,80,0.10);
+            --green: #0d8a60;
+            --green-light: #eafaf4;
+            --green-dark: #0a6b4a;
+            --border: rgba(50,50,120,0.09);
+            --border-strong: rgba(50,50,120,0.16);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --radius-xs: 6px;
+            --shadow: 0 2px 12px rgba(20,20,60,0.06);
+            --shadow-md: 0 6px 28px rgba(20,20,60,0.10);
             --wa: #25d366;
             --wa-dark: #1aad55;
         }
@@ -42,10 +42,48 @@
             line-height: 1.6;
         }
 
+        /* ── FONDO DINÁMICO ── */
+        .bg-canvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .bg-canvas canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            z-index: 1;
+            background: linear-gradient(150deg, #0b5e50 0%, #081624 100%);
+            padding: 0 24px 64px;
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 70% 80% at 50% 120%, rgba(13,138,96,0.35) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; left: 0; right: 0;
+            height: 48px;
+            background: var(--surface-2);
+            clip-path: ellipse(56% 100% at 50% 100%);
+        }
+
         .header {
-            background: transparent;
-            color: white;
-            padding: 18px 24px;
+            position: relative;
+            z-index: 2;
+            padding: 20px 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -67,82 +105,106 @@
             font-family: 'DM Serif Display', serif;
             font-size: 20px;
             letter-spacing: 0.02em;
+            color: white;
         }
 
-        .hero {
-            background: linear-gradient(135deg, #0d7a68 0%, #0f2027 100%);
-            padding: 0 24px 56px;
-            text-align: center;
+        .hero-inner {
             position: relative;
-            overflow: hidden;
+            z-index: 2;
         }
-        .hero::after {
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 14px;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after {
             content: '';
-            position: absolute;
-            bottom: -1px; left: 0; right: 0;
-            height: 40px;
-            background: var(--surface-2);
-            clip-path: ellipse(55% 100% at 50% 100%);
+            display: block;
+            width: 24px;
+            height: 1px;
+            background: rgba(255,255,255,0.25);
         }
         .hero-title {
             font-family: 'DM Serif Display', serif;
-            font-size: clamp(26px, 5vw, 38px);
+            font-size: clamp(30px, 6vw, 46px);
             color: white;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             letter-spacing: 0.01em;
+            line-height: 1.1;
         }
         .hero-sub {
             font-size: 14px;
-            color: rgba(255,255,255,0.52);
+            color: rgba(255,255,255,0.48);
             font-weight: 400;
-        }
-
-        .main {
-            max-width: 860px;
+            max-width: 360px;
             margin: 0 auto;
-            padding: 32px 20px 60px;
         }
 
-        .aviso { text-align: center; color: var(--ink-light); font-size: 12px; margin-bottom: 20px; }
+        /* ── MAIN ── */
+        .main {
+            position: relative;
+            z-index: 1;
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+        }
 
+        .aviso {
+            text-align: center;
+            color: var(--ink-light);
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* ── BOTÓN PUBLICAR ── */
         .btn-publicar {
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
             width: 100%;
-            padding: 15px;
-            background: #0d7a68;
+            padding: 16px;
+            background: linear-gradient(135deg, #0d8a60, #0a5e52);
             color: white;
             border: none;
             border-radius: var(--radius);
             font-family: inherit;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
-            letter-spacing: 0.06em;
+            letter-spacing: 0.08em;
             text-transform: uppercase;
             cursor: pointer;
             margin-bottom: 24px;
-            transition: background 0.2s, transform 0.15s;
-            box-shadow: 0 4px 16px rgba(13,122,104,0.28);
+            transition: opacity 0.2s, transform 0.15s;
+            box-shadow: 0 6px 20px rgba(13,138,96,0.3);
         }
-        .btn-publicar:hover { background: #0a5e52; transform: translateY(-1px); }
+        .btn-publicar:hover { opacity: 0.88; transform: translateY(-1px); }
 
+        /* ── FORMULARIO ── */
         #form {
             background: var(--surface);
             border-radius: var(--radius);
-            border: 1.5px solid var(--border);
+            border: 1px solid var(--border);
             box-shadow: var(--shadow-md);
             padding: 28px 24px;
             margin-bottom: 32px;
             display: none;
             animation: slideDown 0.25s ease;
         }
-        @keyframes slideDown { from { opacity:0; transform: translateY(-10px); } to { opacity:1; transform: translateY(0); } }
+        @keyframes slideDown {
+            from { opacity:0; transform: translateY(-10px); }
+            to   { opacity:1; transform: translateY(0); }
+        }
 
         .form-section {
-            font-size: 12px; font-weight: 600;
-            letter-spacing: 0.08em; text-transform: uppercase;
+            font-size: 11px; font-weight: 600;
+            letter-spacing: 0.09em; text-transform: uppercase;
             color: var(--ink-light); margin: 20px 0 8px;
         }
         .form-section:first-child { margin-top: 0; }
@@ -157,7 +219,7 @@
         }
         input:focus, select:focus, textarea:focus {
             outline: none; border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(58,86,232,0.09);
+            box-shadow: 0 0 0 3px rgba(45,79,214,0.08);
         }
 
         .oculto { display: none !important; }
@@ -174,7 +236,7 @@
 
         .pin-box {
             background: var(--green-light);
-            border: 1.5px solid rgba(15,155,110,0.25);
+            border: 1.5px solid rgba(13,138,96,0.2);
             border-radius: var(--radius-sm); padding: 20px;
             margin-top: 16px; text-align: center;
         }
@@ -187,11 +249,10 @@
         .btn-copiar-pin {
             display: inline-flex; align-items: center; gap: 6px;
             padding: 8px 18px; background: var(--green-dark); color: white;
-            border: none; border-radius: var(--radius-sm); font-family: inherit;
+            border: none; border-radius: var(--radius-xs); font-family: inherit;
             font-size: 13px; font-weight: 600; cursor: pointer; transition: background 0.2s;
         }
         .btn-copiar-pin:hover { background: var(--green); }
-        .btn-copiar-pin.copiado { background: #0d7a68; }
         .pin-aviso { font-size: 12px; color: var(--green-dark); margin-top: 10px; opacity: 0.85; line-height: 1.6; }
 
         .btn-submit {
@@ -205,100 +266,138 @@
         .btn-submit:hover { background: #0a5e52; }
         .btn-submit:disabled { background: var(--ink-light); cursor: not-allowed; }
 
+        /* ── BADGES ── */
         .card-badge {
             display: inline-flex; align-items: center; gap: 5px;
-            font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.07em;
             text-transform: uppercase; padding: 4px 10px;
-            border-radius: 40px; margin-bottom: 12px;
+            border-radius: 40px; margin-bottom: 10px;
         }
-        .badge-busco { background: #ffe4e1; color: #c0392b; }
+        .badge-busco   { background: #fde8e8; color: #b02020; }
         .badge-ofrezco { background: var(--green-light); color: var(--green-dark); }
 
+        /* ── LAYOUT MASONRY ── */
         .section-label {
-            font-size: 12px; font-weight: 600; letter-spacing: 0.08em;
-            text-transform: uppercase; color: var(--ink-light); margin-bottom: 14px;
-        }
-        .grid-anuncios {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
-            align-items: start;
+            font-size: 11px; font-weight: 600; letter-spacing: 0.09em;
+            text-transform: uppercase; color: var(--ink-light); margin-bottom: 16px;
         }
 
+        /* Masonry con CSS columns */
+        .grid-masonry {
+            columns: 3 280px;
+            column-gap: 14px;
+        }
+        @media (max-width: 640px) {
+            .grid-masonry { columns: 1; }
+        }
+
+        /* ── TARJETAS ── */
         .tarjeta {
             background: var(--surface);
             border-radius: var(--radius);
-            border: 1.5px solid var(--border);
+            border: 1px solid var(--border);
             box-shadow: var(--shadow);
-            padding: 22px;
+            padding: 20px;
             position: relative;
-            transition: box-shadow 0.2s, transform 0.2s;
+            break-inside: avoid;
+            margin-bottom: 14px;
+            display: block;
+            transition: box-shadow 0.22s, transform 0.22s;
         }
-        .tarjeta:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+        .tarjeta:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        /* Línea de color superior por tipo */
+        .tarjeta::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            border-radius: var(--radius) var(--radius) 0 0;
+        }
+        .tarjeta.tipo-busco::before   { background: linear-gradient(90deg, #e55, #f88); }
+        .tarjeta.tipo-ofrezco::before { background: linear-gradient(90deg, #0d8a60, #43c99a); }
 
         .titulo-tarjeta {
-            font-family: 'Lato', sans-serif;
-            font-size: 18px; font-weight: 900; color: var(--ink);
+            font-family: 'DM Serif Display', serif;
+            font-size: 19px; color: var(--ink);
             margin-bottom: 8px; padding-right: 28px; line-height: 1.2;
         }
-        .descripcion { font-size: 14px; color: var(--ink-mid); margin-bottom: 12px; line-height: 1.5; white-space: pre-line; }
-        .burbujas { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+        .descripcion {
+            font-size: 13.5px; color: var(--ink-mid); margin-bottom: 12px;
+            line-height: 1.55; white-space: pre-line;
+        }
+        .burbujas { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
         .tag {
-            background: var(--surface-3); padding: 4px 10px;
-            border-radius: 40px; font-size: 11px; font-weight: 600;
+            background: var(--surface-3); padding: 3px 9px;
+            border-radius: 40px; font-size: 11px; font-weight: 500;
             color: var(--ink-mid); border: 1px solid var(--border-strong);
         }
 
-        /* Botones de contacto */
-        .contacto-btns {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+        /* ── BOTONES DE CONTACTO ── */
+        .contacto-btns { display: flex; flex-direction: column; gap: 7px; }
 
         .btn-wa {
             display: flex; align-items: center; justify-content: center; gap: 6px;
-            width: 100%; padding: 10px; border-radius: var(--radius-sm);
+            width: 100%; padding: 10px; border-radius: var(--radius-xs);
             text-decoration: none; font-weight: 600; font-size: 13px;
-            color: white; background: var(--wa); transition: background 0.2s;
+            color: white; background: var(--wa); transition: background 0.2s, transform 0.15s;
         }
-        .btn-wa:hover { background: var(--wa-dark); }
+        .btn-wa:hover { background: var(--wa-dark); transform: scale(1.01); }
 
         .btn-llamar {
             display: flex; align-items: center; justify-content: center; gap: 6px;
-            width: 100%; padding: 10px; border-radius: var(--radius-sm);
+            width: 100%; padding: 10px; border-radius: var(--radius-xs);
             text-decoration: none; font-weight: 600; font-size: 13px;
-            color: white; background: #000000; transition: background 0.2s;
+            color: white; background: #1a1a2e; transition: background 0.2s, transform 0.15s;
         }
-        .btn-llamar:hover { background: #2840cc; }
+        .btn-llamar:hover { background: #2d4fd6; transform: scale(1.01); }
 
         .btn-email {
             display: flex; align-items: center; justify-content: center; gap: 6px;
-            width: 100%; padding: 10px; border-radius: var(--radius-sm);
+            width: 100%; padding: 10px; border-radius: var(--radius-xs);
             text-decoration: none; font-weight: 600; font-size: 13px;
-            color: white; background: #6c5ce7; transition: background 0.2s;
+            color: white; background: #6c5ce7; transition: background 0.2s, transform 0.15s;
         }
-        .btn-email:hover { background: #5549c0; }
+        .btn-email:hover { background: #5549c0; transform: scale(1.01); }
 
         .btn-borrar {
             position: absolute; top: 12px; right: 12px;
-            width: 30px; height: 30px; border-radius: 50%;
+            width: 28px; height: 28px; border-radius: 50%;
             background: transparent; border: none; cursor: pointer;
-            font-size: 15px; display: flex; align-items: center; justify-content: center;
-            opacity: 0.35; transition: opacity 0.2s, background 0.2s, transform 0.15s;
+            font-size: 14px; display: flex; align-items: center; justify-content: center;
+            opacity: 0.3; transition: opacity 0.2s, background 0.2s;
         }
-        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); transform: scale(1.1); }
+        .btn-borrar:hover { opacity: 1; background: rgba(0,0,0,0.06); }
 
-        .empty-state { grid-column: 1/-1; text-align: center; padding: 48px 20px; color: var(--ink-light); }
-        .empty-icon { font-size: 32px; margin-bottom: 10px; }
+        .empty-state {
+            text-align: center; padding: 52px 20px; color: var(--ink-light);
+            font-size: 14px;
+        }
+        .empty-icon { font-size: 36px; margin-bottom: 12px; }
 
         .footer {
+            position: relative; z-index: 1;
             text-align: center; padding: 28px; color: var(--ink-light);
             font-size: 12px; border-top: 1px solid var(--border); margin-top: 40px;
+        }
+
+        /* Loading skeleton */
+        #loading {
+            text-align: center; padding: 48px;
+            font-size: 14px; color: var(--ink-light);
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
+
+<!-- Fondo dinámico de partículas -->
+<div class="bg-canvas">
+    <canvas id="bgCanvas"></canvas>
+</div>
 
 <div class="hero">
     <header class="header">
@@ -307,14 +406,19 @@
             <span class="header-name">infoespinar.com</span>
         </a>
     </header>
-    <h1 class="hero-title">Empleo Local</h1>
-    <p class="hero-sub">Ofertas de trabajo y búsqueda de empleo en el municipio</p>
+    <div class="hero-inner">
+        <div class="hero-eyebrow">Municipio · El Espinar</div>
+        <h1 class="hero-title">Empleo Local</h1>
+        <p class="hero-sub">Ofertas de trabajo y búsqueda de empleo en el municipio</p>
+    </div>
 </div>
 
 <main class="main">
 
     <p class="aviso">* Los anuncios se eliminan automáticamente tras 20 días.</p>
-    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">Publicar oferta / Buscar empleo</button>
+    <button class="btn-publicar" onclick="document.getElementById('form').style.display='block'">
+        ＋ Publicar oferta / Buscar empleo
+    </button>
 
     <div id="form">
         <p class="form-section">Tipo de anuncio</p>
@@ -351,7 +455,7 @@
         <input type="tel" id="telefonoWa" placeholder="WhatsApp / Móvil (opcional, 9 cifras)" pattern="[0-9]{9}" maxlength="9">
         <input type="tel" id="telefonoFijo" placeholder="Teléfono fijo (opcional, 9 cifras)" pattern="[0-9]{9}" maxlength="9">
         <input type="email" id="email" placeholder="Email (opcional)">
-        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado por si lo necesitas más adelante.</p>
+        <p class="email-hint">📧 Si introduces tu email, te enviaremos el PIN de borrado.</p>
 
         <div class="privacy-box">
             ⚠️ Revisa que todos los datos sean correctos antes de publicar.
@@ -366,14 +470,74 @@
     </div>
 
     <p class="section-label">Ofertas disponibles</p>
-    <div id="loading" style="text-align:center; padding:40px; font-weight:600; color:var(--ink-light);">Cargando anuncios...</div>
-    <div id="tablon" class="grid-anuncios"></div>
+    <div id="loading">Cargando anuncios…</div>
+    <div id="tablon" class="grid-masonry"></div>
 
 </main>
 
 <footer class="footer">© 2026 InfoEspinar. Todos los derechos reservados.</footer>
 
 <script>
+/* ── FONDO DINÁMICO ── */
+(function() {
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, dots = [];
+
+    function resize() {
+        W = canvas.width  = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+
+    function initDots(n) {
+        dots = [];
+        for (let i = 0; i < n; i++) {
+            dots.push({
+                x: Math.random() * W,
+                y: Math.random() * H,
+                r: Math.random() * 2.5 + 0.5,
+                vx: (Math.random() - 0.5) * 0.25,
+                vy: (Math.random() - 0.5) * 0.25,
+                a: Math.random() * 0.5 + 0.1
+            });
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, W, H);
+        const maxDist = 130;
+        for (let i = 0; i < dots.length; i++) {
+            const d = dots[i];
+            d.x += d.vx; d.y += d.vy;
+            if (d.x < 0) d.x = W; if (d.x > W) d.x = 0;
+            if (d.y < 0) d.y = H; if (d.y > H) d.y = 0;
+            ctx.beginPath();
+            ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(60,120,200,${d.a * 0.45})`;
+            ctx.fill();
+            for (let j = i + 1; j < dots.length; j++) {
+                const e = dots[j];
+                const dx = d.x - e.x, dy = d.y - e.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < maxDist) {
+                    ctx.beginPath();
+                    ctx.moveTo(d.x, d.y);
+                    ctx.lineTo(e.x, e.y);
+                    const alpha = (1 - dist / maxDist) * 0.07;
+                    ctx.strokeStyle = `rgba(80,140,220,${alpha})`;
+                    ctx.lineWidth = 0.8;
+                    ctx.stroke();
+                }
+            }
+        }
+        requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => { resize(); initDots(60); });
+    resize(); initDots(60); draw();
+})();
+
+/* ── APP ── */
 const urlScript = "https://script.google.com/macros/s/AKfycbxYYe_KcumXkwn_FYgrXOzIjioAK6VroEfklMnSKaR153Fqji6mr2eSwguiT1WI65az/exec";
 
 function checkLugar() {
@@ -390,17 +554,12 @@ async function cargar() {
         document.getElementById('tablon').innerHTML = data.length
             ? data.sort(() => Math.random() - 0.5).map(a => {
                 const tipoRaw = String(a.buscasUOfreces || '').toUpperCase().trim();
-                let textoBadge = "BUSCO EMPLEO";
-                let emojiBadge = "🙋‍♂️";
-                let claseBadge = "badge-busco";
-                if (tipoRaw === 'OFREZCO' || tipoRaw === 'BUSCO PERSONAL') {
-                    textoBadge = "OFERTA EMPLEO";
-                    emojiBadge = "🏢";
-                    claseBadge = "badge-ofrezco";
-                }
-                const puestoDeTrabajo = a.actividad || a.titulo || 'PUESTO NO ESPECIFICADO';
+                const esOferta = tipoRaw === 'OFREZCO' || tipoRaw === 'BUSCO PERSONAL';
+                const claseTipo = esOferta ? 'tipo-ofrezco' : 'tipo-busco';
+                const textoBadge = esOferta ? '🏢 OFERTA EMPLEO' : '🙋 BUSCO EMPLEO';
+                const claseBadge = esOferta ? 'badge-ofrezco' : 'badge-busco';
+                const puesto = a.actividad || a.titulo || 'PUESTO NO ESPECIFICADO';
 
-                // Generar botones de contacto según los datos disponibles
                 const wa    = a.telefonoWa   ? String(a.telefonoWa).replace(/\s+/g, '')   : (a.telefono ? String(a.telefono).replace(/\s+/g, '') : '');
                 const fijo  = a.telefonoFijo ? String(a.telefonoFijo).replace(/\s+/g, '') : '';
                 const email = a.email        ? a.email.trim() : '';
@@ -411,13 +570,13 @@ async function cargar() {
                 if (email) btns += `<a href="mailto:${email}" class="btn-email">✉️ Email</a>`;
 
                 return `
-                <div class="tarjeta" id="tarjeta-${a.id}">
-                    <button class="btn-borrar" onclick="borrar('${a.id}')" title="Borrar anuncio">🗑️</button>
-                    <div class="card-badge ${claseBadge}">${emojiBadge} ${textoBadge}</div>
-                    <div class="titulo-tarjeta">${puestoDeTrabajo}</div>
-                    <div class="descripcion">${a.descripcion || ''}</div>
+                <div class="tarjeta ${claseTipo}" id="tarjeta-${a.id}">
+                    <button class="btn-borrar" onclick="borrar('${a.id}')" title="Borrar anuncio">🗑</button>
+                    <div class="card-badge ${claseBadge}">${textoBadge}</div>
+                    <div class="titulo-tarjeta">${puesto}</div>
+                    ${a.descripcion ? `<div class="descripcion">${a.descripcion}</div>` : ''}
                     <div class="burbujas">
-                        <span class="tag">⏱️ ${a.jornada || 'A convenir'}</span>
+                        <span class="tag">⏱ ${a.jornada || 'A convenir'}</span>
                         ${a.lugar ? a.lugar.split(', ').map(l => `<span class="tag">📍 ${l}</span>`).join('') : ''}
                     </div>
                     <div class="contacto-btns">${btns}</div>
@@ -431,7 +590,7 @@ async function cargar() {
 }
 
 async function borrar(id) {
-    const pin = prompt('🗑️ Introduce tu PIN de 5 dígitos para borrar este anuncio:');
+    const pin = prompt('🗑 Introduce tu PIN de 5 dígitos para borrar este anuncio:');
     if (!pin) return;
     try {
         const res  = await fetch(`${urlScript}?action=delete&id=${encodeURIComponent(id)}&pin=${encodeURIComponent(pin.trim())}`);
@@ -453,18 +612,17 @@ async function enviar() {
     const email        = document.getElementById('email').value.trim();
 
     if (!titulo) { alert('Introduce el puesto.'); return; }
-    if (!telefonoWa && !telefonoFijo && !email) { alert('Introduce al menos un dato de contacto (WhatsApp, fijo o email).'); return; }
+    if (!telefonoWa && !telefonoFijo && !email) { alert('Introduce al menos un dato de contacto.'); return; }
 
     const lugares = [...document.querySelectorAll('.chk-lugar:checked')]
         .map(c => c.value === 'Otro' ? document.getElementById('lugarOtro').value.trim() : c.value);
     if (!lugares.length || lugares.includes('')) { alert('Selecciona o escribe un lugar válido.'); return; }
 
     const btn = document.getElementById('btn');
-    btn.disabled = true; btn.textContent = 'Publicando...';
+    btn.disabled = true; btn.textContent = 'Publicando…';
     const pinDeCincoCifras = String(Math.floor(10000 + Math.random() * 90000));
-    const tipoSeleccionado = document.getElementById('buscasUOfreces').value;
     const params = new URLSearchParams();
-    params.append('buscasUOfreces', tipoSeleccionado);
+    params.append('buscasUOfreces', document.getElementById('buscasUOfreces').value);
     params.append('actividad', titulo);
     params.append('lugar', lugares.join(', '));
     params.append('jornada', document.getElementById('jornada').value);
@@ -483,17 +641,14 @@ async function enviar() {
                 <button class="btn-copiar-pin" onclick="copiarPin('${pinDeCincoCifras}', this)">📋 Copiar PIN</button>
                 <p class="pin-aviso">
                     ${email
-                        ? `Tu PIN ha sido enviado a <b>${email}</b> para que puedas dar de baja la oferta cuando quieras.`
-                        : 'Apunta este PIN en un lugar seguro. Lo necesitarás para eliminar el anuncio en el futuro.'
+                        ? `Tu PIN ha sido enviado a <b>${email}</b>.`
+                        : 'Apunta este PIN. Lo necesitarás para eliminar el anuncio.'
                     }
                 </p>
             </div>`;
-        document.getElementById('titulo').value = '';
-        document.getElementById('telefonoWa').value = '';
-        document.getElementById('telefonoFijo').value = '';
-        document.getElementById('email').value = '';
-        document.getElementById('descripcion').value = '';
-        document.getElementById('lugarOtro').value = '';
+        ['titulo','telefonoWa','telefonoFijo','email','descripcion','lugarOtro'].forEach(id => {
+            const el = document.getElementById(id); if (el) el.value = '';
+        });
         document.getElementById('lugarOtro').classList.add('oculto');
         document.getElementById('aceptaPrivacidad').checked = false;
         document.querySelectorAll('.chk-lugar').forEach(c => c.checked = false);
@@ -511,8 +666,8 @@ async function enviar() {
 
 function copiarPin(pin, btn) {
     navigator.clipboard.writeText(pin).then(() => {
-        btn.textContent = '✅ ¡Copiado!'; btn.classList.add('copiado');
-        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; btn.classList.remove('copiado'); }, 2500);
+        btn.textContent = '✅ ¡Copiado!';
+        setTimeout(() => { btn.textContent = '📋 Copiar PIN'; }, 2500);
     });
 }
 
