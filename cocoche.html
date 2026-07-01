@@ -891,12 +891,14 @@
             <div class="day-pill" data-val="Madrid" onclick="toggleDay(this)">Madrid</div>
             <div class="day-pill" data-val="Segovia" onclick="toggleDay(this)">Segovia</div>
             <div class="day-pill" data-val="Ávila" onclick="toggleDay(this)">Ávila</div>
+            <div class="day-pill" data-val="Otro" onclick="toggleAlertaOrigenPill(this)">Otro</div>
         </div>
+        <input id="alertaOrigenOtro" class="oculto" type="text" placeholder="Escribe otro origen (puedes separar varios con comas)" style="margin-bottom:10px;">
 
         <!-- DESTINO: sigue siendo un select (normalmente es uno solo) -->
         <p class="form-section-title">Destino</p>
         <div class="input-row">
-            <select id="alertaHasta">
+            <select id="alertaHasta" onchange="checkOtro('alertaHasta')">
                 <option value="">Destino...</option>
                 <option>El Espinar</option>
                 <option>San Rafael</option>
@@ -905,7 +907,9 @@
                 <option>Madrid</option>
                 <option>Segovia</option>
                 <option>Ávila</option>
+                <option value="Otro">Otro lugar...</option>
             </select>
+            <input id="alertaHastaOtro" class="oculto" type="text" placeholder="Escribe el destino" style="margin-top:8px;">
         </div>
 
         <p class="form-section-title">Tu email</p>
@@ -1475,13 +1479,31 @@ function enviarWhatsApp() {
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
 }
 
+function toggleAlertaOrigenPill(el) {
+    el.classList.toggle('active');
+    if (el.dataset.val === 'Otro') {
+        document.getElementById('alertaOrigenOtro').classList.toggle('oculto', !el.classList.contains('active'));
+    }
+}
+
 /* ── CREAR ALERTA (con origen múltiple) ── */
 async function crearAlerta() {
-    // Recoge los orígenes seleccionados como pills
-    const origenesSeleccionados = [...document.querySelectorAll('#alertaOrigenPills .day-pill.active')]
-        .map(el => el.dataset.val);
+    // Recoge los orígenes seleccionados como pills (+ los escritos a mano en "Otro")
+    const activosOrigen = [...document.querySelectorAll('#alertaOrigenPills .day-pill.active')];
+    let origenesSeleccionados = activosOrigen.filter(el => el.dataset.val !== 'Otro').map(el => el.dataset.val);
+    const otroOrigenActivo = activosOrigen.some(el => el.dataset.val === 'Otro');
+    if (otroOrigenActivo) {
+        const extra = document.getElementById('alertaOrigenOtro').value.trim();
+        if (extra) {
+            origenesSeleccionados = origenesSeleccionados.concat(extra.split(',').map(s => s.trim()).filter(Boolean));
+        }
+    }
 
-    const hasta  = document.getElementById('alertaHasta').value;
+    const hastaSelect = document.getElementById('alertaHasta').value;
+    const hasta = hastaSelect === 'Otro'
+        ? document.getElementById('alertaHastaOtro').value.trim()
+        : hastaSelect;
+
     const email  = document.getElementById('alertaEmail').value.trim();
     const duracion = parseInt(document.getElementById('alertaDuracion').value);
 
@@ -1543,7 +1565,11 @@ async function crearAlerta() {
         document.querySelectorAll('#alertaOrigenPills .day-pill')
             .forEach(p => p.classList.remove('active'));
 
+        document.getElementById('alertaOrigenOtro').value = '';
+        document.getElementById('alertaOrigenOtro').classList.add('oculto');
         document.getElementById('alertaHasta').value = '';
+        document.getElementById('alertaHastaOtro').value = '';
+        document.getElementById('alertaHastaOtro').classList.add('oculto');
         document.getElementById('alertaEmail').value = '';
 
     } else {
