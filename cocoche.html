@@ -736,6 +736,16 @@
             </div>
         </div>
 
+        <p class="form-section-title">¿Pasas por alguna localidad? (opcional)</p>
+        <div class="day-pills" id="paradaPills">
+            <div class="day-pill" data-val="El Espinar" onclick="toggleParadaPill(this)">El Espinar</div>
+            <div class="day-pill" data-val="La Estación" onclick="toggleParadaPill(this)">La Estación</div>
+            <div class="day-pill" data-val="San Rafael" onclick="toggleParadaPill(this)">San Rafael</div>
+            <div class="day-pill" data-val="LASR" onclick="toggleParadaPill(this)">LASR</div>
+            <div class="day-pill" data-val="Otro" onclick="toggleParadaPill(this)">Otro</div>
+        </div>
+        <input id="paradaOtro" class="oculto" type="text" placeholder="Escribe otras localidades separadas por comas" style="margin-bottom:10px;">
+
         <p class="form-section-title">Hora de salida</p>
         <div class="input-row">
             <input id="hora" type="time">
@@ -1101,6 +1111,7 @@ function renderizar(data) {
             <div class="card-route">
                 ${base.desde} → ${base.hasta}
             </div>
+            ${base.paradas ? `<div class="hint" style="margin:0 0 10px;">🅿️ Pasa por: ${base.paradas}</div>` : ''}
             <div style="font-size:12px;color:var(--ink-light);margin-bottom:10px;">
                 ${viajes.length} ${viajes.length === 1 ? 'viaje publicado' : 'viajes publicados'}
             </div>
@@ -1148,6 +1159,33 @@ function generarPIN() {
 /* ── VALIDAR TELÉFONO ── */
 function validarTelefono(tel) {
     return /^\d{9}$/.test(tel.trim());
+}
+
+/* ── PARADAS INTERMEDIAS ── */
+function toggleParadaPill(el) {
+    el.classList.toggle('active');
+    if (el.dataset.val === 'Otro') {
+        document.getElementById('paradaOtro').classList.toggle('oculto', !el.classList.contains('active'));
+    }
+}
+
+function getParadas() {
+    const activos = [...document.querySelectorAll('#paradaPills .day-pill.active')];
+    let lista = activos.filter(el => el.dataset.val !== 'Otro').map(el => el.dataset.val);
+    const otroActivo = activos.some(el => el.dataset.val === 'Otro');
+    if (otroActivo) {
+        const extra = document.getElementById('paradaOtro').value.trim();
+        if (extra) {
+            lista = lista.concat(extra.split(',').map(s => s.trim()).filter(Boolean));
+        }
+    }
+    return lista.join(', ');
+}
+
+function resetParadas() {
+    document.querySelectorAll('#paradaPills .day-pill').forEach(p => p.classList.remove('active'));
+    document.getElementById('paradaOtro').value = '';
+    document.getElementById('paradaOtro').classList.add('oculto');
 }
 
 /* ── PUBLICAR ── */
@@ -1236,7 +1274,8 @@ async function publicarViaje() {
         hora:     document.getElementById('hora').value,
         nombre:   nombreVal,
         telefono: telefonoVal,
-        email:    document.getElementById('email').value.trim()
+        email:    document.getElementById('email').value.trim(),
+        paradas:  getParadas()
     };
 
     const pinCompartido = generarPIN();
@@ -1320,6 +1359,7 @@ async function publicarViaje() {
         document.getElementById('fechaInicioLV').value = '';
         document.getElementById('fechaInicioPers').value = '';
         document.querySelectorAll('#dayPills .day-pill').forEach(p => p.classList.remove('active'));
+        resetParadas();
 
         await cargar();
 
