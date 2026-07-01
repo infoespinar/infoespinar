@@ -746,17 +746,19 @@
         </div>
         <input id="paradaOtro" class="oculto" type="text" placeholder="Escribe otras localidades separadas por comas" style="margin-bottom:10px;">
 
-        <p class="form-section-title">Hora de salida</p>
-        <div class="input-row">
-            <input id="hora" type="time">
-        </div>
-
-        <p class="form-section-title">¿Cuándo viajas?</p>
+          <p class="form-section-title">¿Cuándo viajas?</p>
         <div class="recur-pills">
             <div class="recur-pill active" data-val="unica" onclick="setRecurrencia('unica')">📅 Fecha única</div>
             <div class="recur-pill" data-val="lv" onclick="setRecurrencia('lv')">🗓️ Lunes a Viernes</div>
             <div class="recur-pill" data-val="personalizada" onclick="setRecurrencia('personalizada')">✏️ Personalizada</div>
         </div>
+        
+        <p class="form-section-title">Hora de salida</p>
+        <div class="input-row">
+            <input id="hora" type="time">
+        </div>
+
+      
 
         <!-- FECHA ÚNICA -->
         <div id="seccion-unica" class="input-row">
