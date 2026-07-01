@@ -746,19 +746,17 @@
         </div>
         <input id="paradaOtro" class="oculto" type="text" placeholder="Escribe otras localidades separadas por comas" style="margin-bottom:10px;">
 
-          <p class="form-section-title">¿Cuándo viajas?</p>
-        <div class="recur-pills">
-            <div class="recur-pill active" data-val="unica" onclick="setRecurrencia('unica')">📅 Fecha única</div>
-            <div class="recur-pill" data-val="lv" onclick="setRecurrencia('lv')">🗓️ Lunes a Viernes</div>
-            <div class="recur-pill" data-val="personalizada" onclick="setRecurrencia('personalizada')">✏️ Personalizada</div>
-        </div>
-        
         <p class="form-section-title">Hora de salida</p>
         <div class="input-row">
             <input id="hora" type="time">
         </div>
 
-      
+        <p class="form-section-title">¿Cuándo viajas?</p>
+        <div class="recur-pills">
+            <div class="recur-pill active" data-val="unica" onclick="setRecurrencia('unica')">📅 Fecha única</div>
+            <div class="recur-pill" data-val="lv" onclick="setRecurrencia('lv')">🗓️ Lunes a Viernes</div>
+            <div class="recur-pill" data-val="personalizada" onclick="setRecurrencia('personalizada')">✏️ Personalizada</div>
+        </div>
 
         <!-- FECHA ÚNICA -->
         <div id="seccion-unica" class="input-row">
@@ -771,6 +769,19 @@
             <div id="horaVueltaWrap" class="oculto" style="margin-top:8px;">
                 <input id="horaVuelta" type="time" placeholder="Hora de vuelta">
                 <p class="hint" id="hintVuelta">Se publicará el viaje de vuelta a esta hora, con origen y destino invertidos.</p>
+
+                <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px;">
+                    <p class="form-section-title" style="margin:0;">¿Pasas por alguna localidad en la vuelta? (opcional)</p>
+                    <button type="button" class="btn-copy-pin" id="btnMismasParadas" onclick="copiarParadasIda()" style="padding:6px 12px; font-size:12px;">🔁 Mismas que en la ida</button>
+                </div>
+                <div class="day-pills" id="paradaPillsVuelta">
+                    <div class="day-pill" data-val="El Espinar" onclick="toggleParadaPillVuelta(this)">El Espinar</div>
+                    <div class="day-pill" data-val="La Estación" onclick="toggleParadaPillVuelta(this)">La Estación</div>
+                    <div class="day-pill" data-val="San Rafael" onclick="toggleParadaPillVuelta(this)">San Rafael</div>
+                    <div class="day-pill" data-val="LASR" onclick="toggleParadaPillVuelta(this)">LASR</div>
+                    <div class="day-pill" data-val="Otro" onclick="toggleParadaPillVuelta(this)">Otro</div>
+                </div>
+                <input id="paradaOtroVuelta" class="oculto" type="text" placeholder="Escribe otras localidades separadas por comas" style="margin-bottom:10px;">
             </div>
         </div>
 
@@ -969,6 +980,7 @@ function setRecurrencia(val) {
         document.getElementById('addVuelta').checked = false;
         document.getElementById('horaVueltaWrap').classList.add('oculto');
         document.getElementById('vueltaToggle').classList.remove('activo');
+        resetParadasVuelta();
     }
 }
 
@@ -1190,6 +1202,52 @@ function resetParadas() {
     document.getElementById('paradaOtro').classList.add('oculto');
 }
 
+function toggleParadaPillVuelta(el) {
+    el.classList.toggle('active');
+    if (el.dataset.val === 'Otro') {
+        document.getElementById('paradaOtroVuelta').classList.toggle('oculto', !el.classList.contains('active'));
+    }
+}
+
+function getParadasVuelta() {
+    const activos = [...document.querySelectorAll('#paradaPillsVuelta .day-pill.active')];
+    let lista = activos.filter(el => el.dataset.val !== 'Otro').map(el => el.dataset.val);
+    const otroActivo = activos.some(el => el.dataset.val === 'Otro');
+    if (otroActivo) {
+        const extra = document.getElementById('paradaOtroVuelta').value.trim();
+        if (extra) {
+            lista = lista.concat(extra.split(',').map(s => s.trim()).filter(Boolean));
+        }
+    }
+    return lista.join(', ');
+}
+
+function copiarParadasIda() {
+    document.querySelectorAll('#paradaPillsVuelta .day-pill').forEach(p => p.classList.remove('active'));
+
+    const activosIda = [...document.querySelectorAll('#paradaPills .day-pill.active')];
+    activosIda.forEach(el => {
+        const destino = document.querySelector(`#paradaPillsVuelta .day-pill[data-val="${el.dataset.val}"]`);
+        if (destino) destino.classList.add('active');
+    });
+
+    const otroActivoIda = activosIda.some(el => el.dataset.val === 'Otro');
+    const otroInputVuelta = document.getElementById('paradaOtroVuelta');
+    if (otroActivoIda) {
+        otroInputVuelta.value = document.getElementById('paradaOtro').value;
+        otroInputVuelta.classList.remove('oculto');
+    } else {
+        otroInputVuelta.value = '';
+        otroInputVuelta.classList.add('oculto');
+    }
+}
+
+function resetParadasVuelta() {
+    document.querySelectorAll('#paradaPillsVuelta .day-pill').forEach(p => p.classList.remove('active'));
+    document.getElementById('paradaOtroVuelta').value = '';
+    document.getElementById('paradaOtroVuelta').classList.add('oculto');
+}
+
 /* ── PUBLICAR ── */
 async function publicarViaje() {
     if (!document.getElementById('aceptaPrivacidad').checked) {
@@ -1302,7 +1360,8 @@ async function publicarViaje() {
                 hora: horaVuelta,
                 fecha: fechas[0],
                 pin: pinCompartido,
-                sendEmail: false
+                sendEmail: false,
+                paradas: getParadasVuelta()
             };
             await fetch(URL_SCRIPT, {
                 method: 'POST',
@@ -1362,6 +1421,7 @@ async function publicarViaje() {
         document.getElementById('fechaInicioPers').value = '';
         document.querySelectorAll('#dayPills .day-pill').forEach(p => p.classList.remove('active'));
         resetParadas();
+        resetParadasVuelta();
 
         await cargar();
 
