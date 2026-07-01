@@ -748,7 +748,7 @@
 
         <p class="form-section-title">Hora de salida</p>
         <div class="input-row">
-            <input id="hora" type="time" step="300" onchange="redondearHora(this)">
+            <select id="hora"></select>
         </div>
 
         <p class="form-section-title">¿Cuándo viajas?</p>
@@ -767,7 +767,7 @@
                 <label for="addVuelta" onclick="event.stopPropagation()">🔄 Añadir viaje de vuelta</label>
             </div>
             <div id="horaVueltaWrap" class="oculto" style="margin-top:8px;">
-                <input id="horaVuelta" type="time" step="300" placeholder="Hora de vuelta" onchange="redondearHora(this)">
+                <select id="horaVuelta"></select>
                 <p class="hint" id="hintVuelta">Se publicará el viaje de vuelta a esta hora, con origen y destino invertidos.</p>
 
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px;">
@@ -952,6 +952,9 @@
 const URL_SCRIPT = "https://script.google.com/macros/s/AKfycbwjuHCwcSSBL4AGzlYiTTzCwdAqwpqKLUZSYmOpUm1uOl_yx9iXCOLsxu3CAWf3lUeB/exec";
 let todosLosViajes = [];
 let recurrenciaActual = 'unica';
+
+generarOpcionesHora('hora', 'Hora de salida...');
+generarOpcionesHora('horaVuelta', 'Hora de vuelta...');
 
 /* ── UI HELPERS ── */
 function abrirFormulario() {
@@ -1180,14 +1183,17 @@ function validarTelefono(tel) {
 }
 
 /* ── REDONDEAR HORA A MÚLTIPLOS DE 5 MINUTOS ── */
-function redondearHora(input) {
-    if (!input.value) return;
-    const [h, m] = input.value.split(':').map(Number);
-    let totalMin = Math.round((h * 60 + m) / 5) * 5;
-    if (totalMin >= 1440) totalMin -= 1440;
-    const hh = String(Math.floor(totalMin / 60)).padStart(2, '0');
-    const mm = String(totalMin % 60).padStart(2, '0');
-    input.value = `${hh}:${mm}`;
+function generarOpcionesHora(selectId, textoVacio) {
+    const select = document.getElementById(selectId);
+    if (!select) return;
+    let opciones = `<option value="">${textoVacio}</option>`;
+    for (let m = 0; m < 24 * 60; m += 5) {
+        const hh = String(Math.floor(m / 60)).padStart(2, '0');
+        const mm = String(m % 60).padStart(2, '0');
+        const valor = `${hh}:${mm}`;
+        opciones += `<option value="${valor}">${valor}</option>`;
+    }
+    select.innerHTML = opciones;
 }
 
 /* ── PARADAS INTERMEDIAS ── */
