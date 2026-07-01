@@ -748,7 +748,7 @@
 
         <p class="form-section-title">Hora de salida</p>
         <div class="input-row">
-            <input id="hora" type="time">
+            <input id="hora" type="time" step="300" onchange="redondearHora(this)">
         </div>
 
         <p class="form-section-title">¿Cuándo viajas?</p>
@@ -767,7 +767,7 @@
                 <label for="addVuelta" onclick="event.stopPropagation()">🔄 Añadir viaje de vuelta</label>
             </div>
             <div id="horaVueltaWrap" class="oculto" style="margin-top:8px;">
-                <input id="horaVuelta" type="time" placeholder="Hora de vuelta">
+                <input id="horaVuelta" type="time" step="300" placeholder="Hora de vuelta" onchange="redondearHora(this)">
                 <p class="hint" id="hintVuelta">Se publicará el viaje de vuelta a esta hora, con origen y destino invertidos.</p>
 
                 <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:10px;">
@@ -1056,7 +1056,7 @@ function nombreDia(isoStr) {
 function filtrar() {
     const texto = document.getElementById('buscador').value.toLowerCase();
     const filtrados = todosLosViajes.filter(v =>
-        [v.desde, v.hasta, v.fecha, v.hora, v.nombre, v.tipo]
+        [v.desde, v.hasta, v.fecha, v.hora, v.nombre, v.tipo, v.paradas]
             .some(c => String(c).toLowerCase().includes(texto))
     );
     renderizar(filtrados);
@@ -1177,6 +1177,17 @@ function generarPIN() {
 /* ── VALIDAR TELÉFONO ── */
 function validarTelefono(tel) {
     return /^\d{9}$/.test(tel.trim());
+}
+
+/* ── REDONDEAR HORA A MÚLTIPLOS DE 5 MINUTOS ── */
+function redondearHora(input) {
+    if (!input.value) return;
+    const [h, m] = input.value.split(':').map(Number);
+    let totalMin = Math.round((h * 60 + m) / 5) * 5;
+    if (totalMin >= 1440) totalMin -= 1440;
+    const hh = String(Math.floor(totalMin / 60)).padStart(2, '0');
+    const mm = String(totalMin % 60).padStart(2, '0');
+    input.value = `${hh}:${mm}`;
 }
 
 /* ── PARADAS INTERMEDIAS ── */
