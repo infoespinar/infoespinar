@@ -6,14 +6,31 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Restaurantes y Bares | infoespinar.com</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
+        :root {
+            --bg: #182920;
+            --surface: #faf5e8;
+            --text: #241d13;
+            --text-muted: #7c715a;
+            --text-on-dark: #f2ecdb;
+            --text-on-dark-muted: #c3ccbc;
+            --line: #e6dcc0;
+            --line-dark: rgba(242,236,219,0.14);
+            --accent: #c6902f;
+            --accent-hover: #a97620;
+            --chip-bg: #f1e3bf;
+            --glow: rgba(198,144,47,0.16);
+            --line-strong: #ddd0a4;
+            --accent-soft: var(--chip-bg);
+        }
+
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #f4f6f9;
-            color: #334155;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-on-dark);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -22,44 +39,36 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        svg.icon { width: 16px; height: 16px; flex-shrink: 0; }
+
         /* ── ENCABEZADO ── */
         .header {
-            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
-            color: white;
+            background: var(--bg);
+            border-bottom: 1px solid var(--line-dark);
             text-align: center;
-            padding: 25px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 20px 20px;
         }
 
         .header-logo-link {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
-            color: white;
-            background: rgba(255,255,255,0.08);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.15);
-            transition: background 0.2s, transform 0.2s;
-        }
-        .header-logo-link:hover {
-            background: rgba(255,255,255,0.15);
-            transform: translateY(-1px);
+            color: var(--text-on-dark);
         }
 
         .header-bandera {
-            width: 32px;
-            height: 32px;
+            width: 26px;
+            height: 26px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 5px;
             aspect-ratio: 1 / 1;
         }
 
         .header h1 {
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
@@ -74,39 +83,53 @@
 
         /* ── TÍTULO DE SECCIÓN ── */
         .titulo-seccion-principal {
-            font-size: 26px;
-            font-weight: 900;
+            font-family: 'Fraunces', serif;
+            font-size: 36px;
+            font-weight: 500;
             text-align: center;
-            margin: 20px 0;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            margin: 34px 0 8px;
+            letter-spacing: -0.3px;
+            color: var(--text-on-dark);
         }
-        .txt-rojo  { color: #dc2626; }
-        .txt-naranja { color: #ea580c; }
+        .txt-acento { color: var(--accent); font-style: italic; }
+
+        .subtitulo-seccion {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-on-dark-muted);
+            margin-bottom: 18px;
+        }
+
+        .divisor-pinar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            color: var(--accent);
+            opacity: 0.75;
+        }
 
         .titulo-bloque {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #475569;
-            margin: 25px 0 12px 4px;
-            font-weight: 700;
+            color: var(--text-on-dark-muted);
+            margin: 30px 0 12px 4px;
+            font-weight: 600;
         }
 
         /* ── MAPA ── */
         .contenedor-mapa-fijo {
             width: 100%;
-            height: 350px;
-            margin-bottom: 25px;
+            height: 340px;
+            margin-bottom: 20px;
         }
         .map-wrapper {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: 14px;
-            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            border: 1px solid var(--line-dark);
             position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
         }
         .map-wrapper iframe {
             position: absolute;
@@ -115,193 +138,231 @@
             width: 100%;
             height: calc(100% + 60px);
             border: 0;
+            filter: saturate(0.9) brightness(0.97);
         }
 
         /* ── BANNER PUBLICITARIO ── */
         .banner-comercio {
             width: 100%;
-            height: 120px;
-            border-radius: 14px;
-            overflow: hidden;
-            position: relative;
+            border-radius: 8px;
+            border: 1px dashed var(--line-strong);
             display: flex;
             align-items: center;
+            gap: 14px;
             text-decoration: none;
-            background-color: #1e293b;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            background-color: var(--surface);
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s, background-color 0.2s;
         }
-        .banner-img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.35;
-            transition: transform 0.3s ease;
+        .banner-comercio:hover {
+            border-color: var(--accent);
+            background-color: var(--accent-soft);
         }
-        .banner-comercio:hover .banner-img { transform: scale(1.02); }
-        .banner-info { position: relative; padding: 15px 20px; z-index: 2; }
+        .banner-icono {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .banner-icono svg { width: 18px; height: 18px; color: var(--accent); }
+        .banner-info { flex: 1; }
         .banner-label {
-            display: inline-block;
-            background: #dc2626;
-            color: #fff;
-            font-size: 9px;
-            font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 4px;
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            color: var(--accent);
+            margin-bottom: 3px;
         }
         .banner-nombre {
-            color: white;
-            font-size: 19px;
-            font-weight: 700;
+            font-family: 'Fraunces', serif;
+            color: var(--text);
+            font-size: 17px;
+            font-weight: 500;
             margin: 0;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
-            letter-spacing: 0.5px;
             line-height: 1.2;
         }
         .banner-sub {
-            color: rgba(255,255,255,0.95);
-            font-size: 12px;
+            color: var(--text-muted);
+            font-size: 12.5px;
             margin-top: 3px;
-            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
         /* ── BUSCADOR ── */
-        .contenedor-buscador { margin-bottom: 20px; width: 100%; }
+        .contenedor-buscador { margin-bottom: 22px; width: 100%; position: relative; }
+        .buscador-icono {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
         .input-buscador {
             width: 100%;
-            padding: 14px 16px;
+            padding: 13px 16px 13px 42px;
             font-size: 15px;
-            border: 2px solid #cbd5e1;
-            border-radius: 12px;
-            font-family: 'Lato', sans-serif;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            border: 1px solid transparent;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            background: var(--surface);
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            color: var(--text);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.18);
         }
-        .input-buscador:focus { border-color: #dc2626; }
+        .input-buscador::placeholder { color: var(--text-muted); }
+        .input-buscador:focus { border-color: var(--accent); }
 
         /* ── GRID DE TARJETAS ── */
         .grid-comercios {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 16px;
+            gap: 14px;
             width: 100%;
             padding-bottom: 25px;
             visibility: hidden;
         }
 
         .tarjeta-comercio {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            border-top: 4px solid #dc2626;
-            border-radius: 14px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            border-radius: 6px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 4px 18px var(--glow);
+            transition: box-shadow 0.15s ease, transform 0.15s ease;
             -webkit-tap-highlight-color: transparent;
         }
-        .tarjeta-comercio:active {
-            transform: scale(0.99);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        .tarjeta-comercio:hover {
+            box-shadow: 0 6px 24px rgba(198,144,47,0.28);
+            transform: translateY(-1px);
         }
 
+        /* Colores por núcleo de población */
+        .nucleo-sr { border-left-color: #cf5a38; }
+        .nucleo-ee { border-left-color: #2f8f83; }
+        .nucleo-le { border-left-color: #8a3a63; }
+        .nucleo-la { border-left-color: #3c6ea5; }
+
+        .chip-nucleo.chip-sr { background: #f7e0d8; color: #a8452b; }
+        .chip-nucleo.chip-ee { background: #d9efec; color: #206a60; }
+        .chip-nucleo.chip-le { background: #f1dfe9; color: #6d2a4c; }
+        .chip-nucleo.chip-la { background: #dbe7f2; color: #2b5580; }
+
         .info-comercio {
-            padding: 20px;
+            padding: 20px 22px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .nombre-comercio {
+            font-family: 'Fraunces', serif;
             font-size: 19px;
-            font-weight: 700;
-            color: #dc2626;
-            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 6px;
             line-height: 1.3;
         }
 
-        .burbuja-nucleo {
-            display: inline-block;
-            background-color: #fff1f2;
-            color: #9f1239;
-            font-size: 11px;
+        .chip-nucleo {
+            display: inline-flex;
+            align-self: flex-start;
+            align-items: center;
+            gap: 4px;
+            background-color: var(--accent-soft);
+            color: var(--accent);
+            font-size: 10.5px;
             font-weight: 700;
-            padding: 3px 8px;
+            padding: 4px 9px;
             border-radius: 20px;
             text-transform: uppercase;
-            margin: 6px 0 8px;
-            border: 1px solid #fecdd3;
+            letter-spacing: 0.5px;
+            margin: 2px 0 10px;
         }
+        .chip-nucleo svg { width: 11px; height: 11px; }
 
         .enlace-web {
-            display: inline-block;
-            font-size: 13.5px;
-            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 400;
             margin-bottom: 8px;
             word-break: break-all;
         }
-        .enlace-web:hover { text-decoration: underline; color: #dc2626; }
+        .enlace-web:hover { color: var(--accent); }
 
         .direccion-comercio {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
             font-size: 13px;
-            color: #64748b;
+            color: var(--text-muted);
             margin-bottom: 20px;
             line-height: 1.4;
             margin-top: 2px;
         }
+        .direccion-comercio svg { margin-top: 2px; color: var(--text-muted); }
 
         /* ── BOTONES ── */
         .bloque-botones {
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
-        .fila-contacto { display: flex; gap: 10px; }
+        .fila-contacto { display: flex; gap: 8px; }
 
         .btn {
             text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 700;
-            padding: 11px 14px;
-            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 6px;
             text-align: center;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            transition: opacity 0.2s;
+            transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+            border: 1px solid var(--line-strong);
+            background: var(--surface);
+            color: var(--text);
         }
-        .btn:hover { opacity: 0.9; }
-        .btn-llamar   { background-color: #0f172a; flex: 1; }
-        .btn-whatsapp { background-color: #10b981; flex: 1; }
-        .btn-maps     { background-color: #1a73e8; width: 100%; }
-        .btn-email    { background-color: #facc15; color: #000000; width: 100%; }
+        .btn:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-llamar   { flex: 1; }
+        .btn-whatsapp { flex: 1; }
+        .btn-maps {
+            width: 100%;
+            background-color: var(--accent);
+            border-color: var(--accent);
+            color: #ffffff;
+        }
+        .btn-maps:hover { background-color: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
+        .btn-email    { width: 100%; }
 
         /* ── AVISO ── */
         .disclaimer-box {
-            background-color: #f1f5f9;
-            border-left: 4px solid #64748b;
-            border-radius: 8px;
-            padding: 14px 16px;
-            margin: 30px 4px 15px 4px;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #475569;
-            text-align: justify;
+            border-top: 1px solid var(--line-dark);
+            padding: 18px 4px 0;
+            margin: 25px 4px 15px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: var(--text-on-dark-muted);
         }
+        .disclaimer-box strong { color: var(--text-on-dark); }
 
         /* ── RESPONSIVE ── */
         @media screen and (min-width: 768px) {
@@ -312,16 +373,16 @@
 
         /* ── FOOTER ── */
         .footer {
-            background-color: #1e293b;
-            color: #94a3b8;
+            background-color: var(--bg);
+            border-top: 1px solid var(--line-dark);
+            color: var(--text-on-dark-muted);
             text-align: center;
-            padding: 25px 20px;
-            margin-top: 30px;
-            font-size: 13px;
-            line-height: 1.6;
-            border-top: 3px solid #3b82f6;
+            padding: 22px 20px;
+            margin-top: 20px;
+            font-size: 12.5px;
+            line-height: 1.7;
         }
-        .footer a { color: #3b82f6; text-decoration: none; font-weight: 700; }
+        .footer a { color: var(--accent); text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -335,9 +396,17 @@
 
     <main class="main-container">
 
-        <h2 class="titulo-seccion-principal">
-            <span class="txt-rojo">Restaurantes</span> y <span class="txt-naranja">Bares</span>
-        </h2>
+        <h2 class="titulo-seccion-principal">Restaurantes <span class="txt-acento">y</span> Bares</h2>
+        <p class="subtitulo-seccion">Guía local de hostelería en El Espinar, San Rafael, La Estación y Los Ángeles</p>
+        <div class="divisor-pinar" aria-hidden="true">
+            <svg width="120" height="18" viewBox="0 0 120 18" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 15V9M6 9l4-6 4 6M4 12l6-9 6 9"/>
+                <path d="M30 9h20"/>
+                <path d="M60 15V9M56 9l4-6 4 6M54 12l6-9 6 9"/>
+                <path d="M80 9h20"/>
+                <path d="M110 15V9M106 9l4-6 4 6M104 12l6-9 6 9"/>
+            </svg>
+        </div>
 
         <div class="titulo-bloque">Localización de servicios</div>
         <div class="contenedor-mapa-fijo">
@@ -347,347 +416,352 @@
         </div>
 
         <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
-            <div class="banner-img"></div>
+            <div class="banner-icono">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
             <div class="banner-info">
                 <span class="banner-label">¿Eres comerciante?</span>
-                <h3 class="banner-nombre">¡Anuncia tu restaurante aquí!</h3>
+                <h3 class="banner-nombre">Anuncia tu restaurante aquí</h3>
                 <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
             </div>
         </a>
 
         <div class="titulo-bloque">Listado de profesionales</div>
         <div class="contenedor-buscador">
-            <input type="text" id="buscadorRestaurantes" class="input-buscador" placeholder="🔍 Buscar restaurante, bar, menú, núcleo...">
+            <span class="buscador-icono">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            </span>
+            <input type="text" id="buscadorRestaurantes" class="input-buscador" placeholder="Buscar restaurante, bar, menú, núcleo...">
         </div>
 
         <div class="grid-comercios" id="gridRestaurantes">
 
-            <div class="tarjeta-comercio" data-search="restaurante las farolas san rafael paseo apeadero comer cenar menu comida">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante las farolas san rafael paseo apeadero comer cenar menu comida">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Las Farolas</div>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 P.º Apeadero, 1, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>P.º Apeadero, 1, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921702667" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921702667" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Las+Farolas+Paseo+Apeadero+1+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Las+Farolas+Paseo+Apeadero+1+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante avenida san rafael travesia alto del leon menu tradicional raciones casera">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante avenida san rafael travesia alto del leon menu tradicional raciones casera">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Avenida</div>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 31, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Tr.ª Alto del León, 31, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921171011" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921171011" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Avenida+Travesia+Alto+del+Leon+31+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Avenida+Travesia+Alto+del+Leon+31+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="pizzeria royal san rafael travesia alto del leon pizzas italianas cenar comida a domicilio">
+            <div class="tarjeta-comercio nucleo-sr" data-search="pizzeria royal san rafael travesia alto del leon pizzas italianas cenar comida a domicilio">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Pizzería Royal</div>
-                    <a href="http://pizzeriaroyal.es/" target="_blank" rel="noopener" class="enlace-web">🌐 pizzeriaroyal.es</a>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 25, San Rafael</div>
+                    <a href="http://pizzeriaroyal.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>pizzeriaroyal.es</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Tr.ª Alto del León, 25, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921476306" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921476306" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Pizzeria+Royal+Travesia+Alto+del+Leon+25+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Pizzeria+Royal+Travesia+Alto+del+Leon+25+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante terpa san rafael travesia alto del leon raciones menu carnes asados">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante terpa san rafael travesia alto del leon raciones menu carnes asados">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Terpa</div>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 23, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Tr.ª Alto del León, 23, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921171017" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921171017" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Terpa+Travesia+Alto+del+Leon+23+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Terpa+Travesia+Alto+del+Leon+23+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante chino qingdao quingdao san rafael travesia alto del leon comida asiatica rollito arroz tallarines para llevar">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante chino qingdao quingdao san rafael travesia alto del leon comida asiatica rollito arroz tallarines para llevar">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Chino Qingdao</div>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 23, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Tr.ª Alto del León, 23, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921042441" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921042441" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Chino+Qingdao+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Chino+Qingdao+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="la pizzeria san rafael calle serrano pizzas pasta artesanal cenar comida">
+            <div class="tarjeta-comercio nucleo-sr" data-search="la pizzeria san rafael calle serrano pizzas pasta artesanal cenar comida">
                 <div class="info-comercio">
                     <div class="nombre-comercio">La Pizzería</div>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 C. Serrano, 1, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Serrano, 1, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921171868" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921171868" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=La+Pizzeria+Calle+Serrano+1+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=La+Pizzeria+Calle+Serrano+1+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante asador la vina san rafael carretera segovia asados cordero cochinillo carnes menu">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante asador la vina san rafael carretera segovia asados cordero cochinillo carnes menu">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Asador La Viña</div>
-                    <a href="http://www.asadorlavina.es/" target="_blank" rel="noopener" class="enlace-web">🌐 asadorlavina.es</a>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Ctra. Segovia, 19, San Rafael</div>
+                    <a href="http://www.asadorlavina.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>asadorlavina.es</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. Segovia, 19, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921171557" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34669577194" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34921171557" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34669577194" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Asador+La+Vina+Carretera+Segovia+19+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:info@asadorlavina.es" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Asador+La+Vina+Carretera+Segovia+19+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:info@asadorlavina.es" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante entrepinos bar el espinar tapas">
+            <div class="tarjeta-comercio nucleo-ee" data-search="restaurante entrepinos bar el espinar tapas">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Entre Pinos, Bar & Tapas</div>
-                    <span class="burbuja-nucleo">El Espinar</span>
-                    <div class="direccion-comercio">📍 C. Santa Bárbara, 2, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Santa Bárbara, 2, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34690048769" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34690048769" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Entre+Pinos+Bar+Tapas+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:bar.entrepinos@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Entre+Pinos+Bar+Tapas+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:bar.entrepinos@gmail.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante jara san rafael carretera segovia comida tradicional croquetas carnes menu diario">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante jara san rafael carretera segovia comida tradicional croquetas carnes menu diario">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Jara</div>
-                    <a href="https://restaurantejarasanrafael.es/" target="_blank" rel="noopener" class="enlace-web">🌐 restaurantejarasanrafael.es</a>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Ctra. Segovia, 6, San Rafael</div>
+                    <a href="https://restaurantejarasanrafael.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>restaurantejarasanrafael.es</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. Segovia, 6, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921171165" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34663818786" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34921171165" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34663818786" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Jara+Carretera+Segovia+6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:restaurantejarasanrafael@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Jara+Carretera+Segovia+6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:restaurantejarasanrafael@gmail.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="como en casa para llevar san rafael carretera segovia asador de pollos croquetas comida casera preparada">
+            <div class="tarjeta-comercio nucleo-sr" data-search="como en casa para llevar san rafael carretera segovia asador de pollos croquetas comida casera preparada">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Como en Casa (Para Llevar)</div>
-                    <a href="https://www.asadordepolloscomoencasa.com/" target="_blank" rel="noopener" class="enlace-web">🌐 asadordepolloscomoencasa.com</a>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Ctra. Segovia, 4, San Rafael</div>
+                    <a href="https://www.asadordepolloscomoencasa.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>asadordepolloscomoencasa.com</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. Segovia, 4, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34643466827" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34643466827" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34643466827" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34643466827" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Como+en+Casa+Carretera+Segovia+4+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Como+en+Casa+Carretera+Segovia+4+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante volvoreta san rafael calle pinar comer carnes cocina casera menu">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante volvoreta san rafael calle pinar comer carnes cocina casera menu">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Volvoreta</div>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 C. Pinar, 2, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Pinar, 2, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921171582" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921171582" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Volvoreta+Calle+Pinar+2+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Volvoreta+Calle+Pinar+2+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="bar restaurante la terraza la estacion carretera de la garganta del herrerillo terraza raciones menu">
+            <div class="tarjeta-comercio nucleo-le" data-search="bar restaurante la terraza la estacion carretera de la garganta del herrerillo terraza raciones menu">
                 <div class="info-comercio">
                     <div class="nombre-comercio">La Terraza del Herrerillo</div>
-                    <a href="http://www.laterrazadelherrerillo.es/" target="_blank" rel="noopener" class="enlace-web">🌐 laterrazadelherrerillo.es</a>
-                    <span class="burbuja-nucleo">La Estación</span>
-                    <div class="direccion-comercio">📍 Ctra. de La Garganta, 44, La Estación</div>
+                    <a href="http://www.laterrazadelherrerillo.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>laterrazadelherrerillo.es</a>
+                    <span class="chip-nucleo chip-le"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>La Estación</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. de La Garganta, 44, La Estación</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921188202" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921188202" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=La+Terraza+del+Herrerillo+Carretera+de+La+Garganta+44+La+Estacion" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=La+Terraza+del+Herrerillo+Carretera+de+La+Garganta+44+La+Estacion" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="bar restaurante san antonio la estacion carretera de la garganta raciones comidas menu">
+            <div class="tarjeta-comercio nucleo-le" data-search="bar restaurante san antonio la estacion carretera de la garganta raciones comidas menu">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante San Antonio</div>
-                    <a href="http://www.sanantoniorestaurante.com/" target="_blank" rel="noopener" class="enlace-web">🌐 sanantoniorestaurante.com</a>
-                    <span class="burbuja-nucleo">La Estación</span>
-                    <div class="direccion-comercio">📍 Ctra. de La Garganta, La Estación</div>
+                    <a href="http://www.sanantoniorestaurante.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>sanantoniorestaurante.com</a>
+                    <span class="chip-nucleo chip-le"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>La Estación</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. de La Garganta, La Estación</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921188244" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921188244" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+San+Antonio+Carretera+de+La+Garganta+La+Estacion" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:hola@sanantoniorestaurante.com" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Restaurante+San+Antonio+Carretera+de+La+Garganta+La+Estacion" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:hola@sanantoniorestaurante.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="asador alto de los angeles lasr los angeles de san rafael calle rio tajo carnes parrilla asados">
+            <div class="tarjeta-comercio nucleo-la" data-search="asador alto de los angeles lasr los angeles de san rafael calle rio tajo carnes parrilla asados">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Asador Alto de los Ángeles</div>
-                    <span class="burbuja-nucleo">Los Ángeles de S.R.</span>
-                    <div class="direccion-comercio">📍 C. Río Tajo, 5, Los Ángeles de San Rafael</div>
+                    <span class="chip-nucleo chip-la"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Río Tajo, 5, Los Ángeles de San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34605241308" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34605241308" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34605241308" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34605241308" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Asador+Alto+de+los+Angeles+Calle+Rio+Tajo+5+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Asador+Alto+de+los+Angeles+Calle+Rio+Tajo+5+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante baguettinn baguetin lasr los angeles de san rafael calle rio tajo bocadillos raciones hamburguesas">
+            <div class="tarjeta-comercio nucleo-la" data-search="restaurante baguettinn baguetin lasr los angeles de san rafael calle rio tajo bocadillos raciones hamburguesas">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Baguettinn</div>
-                    <a href="https://restaurantebaguettin.shop/" target="_blank" rel="noopener" class="enlace-web">🌐 restaurantebaguettin.shop</a>
-                    <span class="burbuja-nucleo">Los Ángeles de S.R.</span>
-                    <div class="direccion-comercio">📍 C. Río Tajo, s/n, Los Ángeles de San Rafael</div>
+                    <a href="https://restaurantebaguettin.shop/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>restaurantebaguettin.shop</a>
+                    <span class="chip-nucleo chip-la"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Río Tajo, s/n, Los Ángeles de San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34602627516" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34602627516" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34602627516" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34602627516" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Baguettinn+Calle+Rio+Tajo+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Baguettinn+Calle+Rio+Tajo+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="mimarmita mi marmita para llevar lasr los angeles de san rafael avenida de belgica comida casera preparada">
+            <div class="tarjeta-comercio nucleo-la" data-search="mimarmita mi marmita para llevar lasr los angeles de san rafael avenida de belgica comida casera preparada">
                 <div class="info-comercio">
                     <div class="nombre-comercio">MiMarmita (Para Llevar)</div>
-                    <a href="https://mimarmita.net/" target="_blank" rel="noopener" class="enlace-web">🌐 mimarmita.net</a>
-                    <span class="burbuja-nucleo">Los Ángeles de S.R.</span>
-                    <div class="direccion-comercio">📍 Av. de Bélgica, 46, Los Ángeles de San Rafael</div>
+                    <a href="https://mimarmita.net/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>mimarmita.net</a>
+                    <span class="chip-nucleo chip-la"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Av. de Bélgica, 46, Los Ángeles de San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34630739617" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34630739617" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34630739617" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34630739617" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=MiMarmita+Avenida+de+Belgica+46+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=MiMarmita+Avenida+de+Belgica+46+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="los jardines de la braseria san rafael calle calzada finca la casona del pinar brasa carnes eventos cenar">
+            <div class="tarjeta-comercio nucleo-sr" data-search="los jardines de la braseria san rafael calle calzada finca la casona del pinar brasa carnes eventos cenar">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Los Jardines de la Brasería</div>
-                    <a href="http://www.fincalacasonadelpinar.com/restaurante-los-jardines-de-la-braseria/" target="_blank" rel="noopener" class="enlace-web">🌐 fincalacasonadelpinar.com</a>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 C. Calzada, 4, San Rafael</div>
+                    <a href="http://www.fincalacasonadelpinar.com/restaurante-los-jardines-de-la-braseria/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>fincalacasonadelpinar.com</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Calzada, 4, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921171790" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921171790" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Los+Jardines+de+la+Braseria+Calle+Calzada+4+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Los+Jardines+de+la+Braseria+Calle+Calzada+4+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="hamburgueseria los rosales el espinar paseo de las penitas hamburguesas patatas bocadillos cenar perritos">
+            <div class="tarjeta-comercio nucleo-ee" data-search="hamburgueseria los rosales el espinar paseo de las penitas hamburguesas patatas bocadillos cenar perritos">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Hamburguesería Los Rosales</div>
-                    <span class="burbuja-nucleo">El Espinar</span>
-                    <div class="direccion-comercio">📍 P.º de las Peñitas, 11, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>P.º de las Peñitas, 11, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921181737" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921181737" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Hamburguesia+Los+Rosales+Paseo+de+las+Penitas+11+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Hamburguesia+Los+Rosales+Paseo+de+las+Penitas+11+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="lr gastrobar el espinar paseo de las penitas raciones tapas moderno cenar cañas">
+            <div class="tarjeta-comercio nucleo-ee" data-search="lr gastrobar el espinar paseo de las penitas raciones tapas moderno cenar cañas">
                 <div class="info-comercio">
                     <div class="nombre-comercio">LR Gastrobar</div>
-                    <span class="burbuja-nucleo">El Espinar</span>
-                    <div class="direccion-comercio">📍 P.º de las Peñitas, 11, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>P.º de las Peñitas, 11, El Espinar</div>
                     <div class="bloque-botones">
-                        <a href="https://maps.google.com/?q=LR+Gastrobar+Paseo+de+las+Penitas+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=LR+Gastrobar+Paseo+de+las+Penitas+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="pizzeria la pineta el espinar paseo de las penitas pizzas italianas horno cenas">
+            <div class="tarjeta-comercio nucleo-ee" data-search="pizzeria la pineta el espinar paseo de las penitas pizzas italianas horno cenas">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Pizzería La Pineta</div>
-                    <a href="https://www.lapinetaelespinar.es/" target="_blank" rel="noopener" class="enlace-web">🌐 lapinetaelespinar.es</a>
-                    <span class="burbuja-nucleo">El Espinar</span>
-                    <div class="direccion-comercio">📍 P.º de las Peñitas, 13, El Espinar</div>
+                    <a href="https://www.lapinetaelespinar.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>lapinetaelespinar.es</a>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>P.º de las Peñitas, 13, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34648534102" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34648534102" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34648534102" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34648534102" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Pizzeria+La+Pineta+Paseo+de+las+Penitas+13+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:hola@lapinetaelespinar.es" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Pizzeria+La+Pineta+Paseo+de+las+Penitas+13+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:hola@lapinetaelespinar.es" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante el espino el espinar plaza altozano raciones carnes menu tradicional casero">
+            <div class="tarjeta-comercio nucleo-ee" data-search="restaurante el espino el espinar plaza altozano raciones carnes menu tradicional casero">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante El Espino</div>
-                    <a href="https://restauranteelespino.makro.rest/" target="_blank" rel="noopener" class="enlace-web">🌐 restauranteelespino.makro.rest</a>
-                    <span class="burbuja-nucleo">El Espinar</span>
-                    <div class="direccion-comercio">📍 Pl. Altozano, 4, El Espinar</div>
+                    <a href="https://restauranteelespino.makro.rest/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>restauranteelespino.makro.rest</a>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Pl. Altozano, 4, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921182360" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921182360" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+El+Espino+Plaza+Altozano+4+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Restaurante+El+Espino+Plaza+Altozano+4+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="restaurante plaza hostal san rafael travesia alto del leon menu comer cenar comida tradicional casera alojamiento">
+            <div class="tarjeta-comercio nucleo-sr" data-search="restaurante plaza hostal san rafael travesia alto del leon menu comer cenar comida tradicional casera alojamiento">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Restaurante Plaza Hostal</div>
-                    <a href="https://www.restauranteplazahostal.com/" target="_blank" rel="noopener" class="enlace-web">🌐 restauranteplazahostal.com</a>
-                    <span class="burbuja-nucleo">San Rafael</span>
-                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 6, San Rafael</div>
+                    <a href="https://www.restauranteplazahostal.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>restauranteplazahostal.com</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Tr.ª Alto del León, 6, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921172031" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921172031" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Restaurante+Plaza+Hostal+Travesia+Alto+del+Leon+6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:info@restauranteplazahostal.com" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Restaurante+Plaza+Hostal+Travesia+Alto+del+Leon+6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:info@restauranteplazahostal.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
