@@ -82,6 +82,7 @@
         .cartel-fecha { background: #9f1239; border-radius: 8px; padding: 5px 10px; text-align: center; line-height: 1.1; flex-shrink: 0; }
         .fecha-dia { display: block; font-size: 20px; font-weight: 900; color: #fff; }
         .fecha-mes { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #f0c060; }
+        .fecha-hora { display: block; font-size: 12px; font-weight: 900; color: #fff; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.3px; }
 
         .cartel-cat { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
         .cat-música    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
@@ -454,7 +455,14 @@ async function cargarEventos() {
 
         const ordenados = [...eventos]
             .filter(ev => parseFecha(ev.fecha) >= hoy && (ev.aprobado || '').toLowerCase().trim() === 'ok')
-            .sort((a, b) => parseFecha(a.fecha) - parseFecha(b.fecha));
+            .sort((a, b) => {
+                const difFecha = parseFecha(a.fecha) - parseFecha(b.fecha);
+                if (difFecha !== 0) return difFecha;
+                // mismo día: ordena por hora (los eventos sin hora van al final del día)
+                const horaA = formatHora(a.hora) || '99:99';
+                const horaB = formatHora(b.hora) || '99:99';
+                return horaA.localeCompare(horaB);
+            });
         let mesActual = null;
         let marqueeHTML = '';
 
@@ -495,11 +503,12 @@ async function cargarEventos() {
                         <div class="cartel-fecha">
                             <span class="fecha-dia">${String(fecha.getDate()).padStart(2, '0')}</span>
                             <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
+                            ${hora ? `<span class="fecha-hora">${hora}</span>` : ''}
                         </div>
                         <span class="cartel-cat cat-${catClase}">${catClase}</span>
                     </div>
                     <div class="cartel-titulo">${ev.titulo}</div>
-                    <div class="cartel-lugar">${lugar}${hora ? ' · ' + hora + 'h' : ''}${ev.url ? ' <span class="cartel-web" title="Ver más info">🌐</span>' : ''}</div>
+                    <div class="cartel-lugar">${lugar}${ev.url ? ' <span class="cartel-web" title="Ver más info">🌐</span>' : ''}</div>
                 </${bodyTag}>
                 <button class="cartel-share" title="Compartir evento" aria-label="Compartir ${ev.titulo}"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>`;
 
