@@ -257,6 +257,12 @@
                     <input class="form-input" id="f-fecha" type="date">
                 </div>
                 <div class="form-group">
+                    <label class="form-label">Hora <span style="font-weight:400;text-transform:none">(opcional)</span></label>
+                    <input class="form-input" id="f-hora" type="time">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
                     <label class="form-label">Categoría *</label>
                     <select class="form-select" id="f-categoria">
                         <option value="">— Elige —</option>
@@ -275,16 +281,16 @@
                         <option>JUVENIL</option>
                     </select>
                 </div>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Lugar *</label>
-                <select class="form-select" id="f-lugar">
-                    <option value="">— Elige —</option>
-                    <option>EL ESPINAR</option>
-                    <option>SAN RAFAEL</option>
-                    <option>LASR</option>
-                    <option>LA ESTACIÓN</option>
-                </select>
+                <div class="form-group">
+                    <label class="form-label">Lugar *</label>
+                    <select class="form-select" id="f-lugar">
+                        <option value="">— Elige —</option>
+                        <option>EL ESPINAR</option>
+                        <option>SAN RAFAEL</option>
+                        <option>LASR</option>
+                        <option>LA ESTACIÓN</option>
+                    </select>
+                </div>
             </div>
             <div class="form-group">
                 <label class="form-label">Enlace web <span style="font-weight:400;text-transform:none">(opcional)</span></label>
@@ -341,6 +347,17 @@ function parseFecha(s) {
         if (!isNaN(y) && !isNaN(m) && !isNaN(d)) return new Date(y, m - 1, d);
     }
     return new Date();
+}
+
+// Normaliza "9:5", "09:05", "9.5", "9h" etc a "HH:MM" para mostrar en la tarjeta
+function formatHora(s) {
+    if (!s || typeof s !== 'string') return null;
+    const limpia = s.trim().replace('.', ':').replace(/h$/i, '');
+    const match = limpia.match(/^(\d{1,2}):?(\d{0,2})$/);
+    if (!match) return limpia || null;
+    const h = String(match[1]).padStart(2, '0');
+    const m = String(match[2] || '00').padStart(2, '0');
+    return `${h}:${m}`;
 }
 
 function csvToObjects(csvText) {
@@ -449,6 +466,7 @@ async function cargarEventos() {
             const mesKey = `${fecha.getMonth()}-${fecha.getFullYear()}`;
             const catClase = ev.categoria ? ev.categoria.toLowerCase().trim() : 'cultura';
             const lugar = ev.lugar || 'El Espinar';
+            const hora = formatHora(ev.hora);
 
             marqueeHTML += `<span>${ev.titulo}</span>`;
 
@@ -481,7 +499,7 @@ async function cargarEventos() {
                         <span class="cartel-cat cat-${catClase}">${catClase}</span>
                     </div>
                     <div class="cartel-titulo">${ev.titulo}</div>
-                    <div class="cartel-lugar">${lugar}${ev.url ? ' <span class="cartel-web" title="Ver más info">🌐</span>' : ''}</div>
+                    <div class="cartel-lugar">${lugar}${hora ? ' · ' + hora + 'h' : ''}${ev.url ? ' <span class="cartel-web" title="Ver más info">🌐</span>' : ''}</div>
                 </${bodyTag}>
                 <button class="cartel-share" title="Compartir evento" aria-label="Compartir ${ev.titulo}"><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></button>`;
 
@@ -492,7 +510,7 @@ async function cargarEventos() {
                 const imagenUrl = ev.imagen && !ev.imagen.includes('unsplash') ? ev.imagen : null;
 const shareData = {
     title: ev.titulo,
-    text: `📅 ${ev.titulo}\n📍 ${lugar} · ${String(fecha.getDate()).padStart(2,'0')} de ${MESES_LARGO[fecha.getMonth()]}}`,
+    text: `📅 ${ev.titulo}\n📍 ${lugar} · ${String(fecha.getDate()).padStart(2,'0')} de ${MESES_LARGO[fecha.getMonth()]}${hora ? ' · ' + hora + 'h' : ''}`,
     url: imagenUrl
 };
                 if (navigator.share) {
@@ -610,6 +628,7 @@ async function subirImagen(file) {
 document.getElementById('btn-submit').addEventListener('click', async () => {
     const titulo    = document.getElementById('f-titulo').value.trim().toUpperCase();
     const fecha     = document.getElementById('f-fecha').value;
+    const hora      = document.getElementById('f-hora').value; // HH:MM, opcional
     const categoria = document.getElementById('f-categoria').value;
     const lugar     = document.getElementById('f-lugar').value.trim();
     const url       = document.getElementById('f-url').value.trim();
@@ -634,7 +653,7 @@ document.getElementById('btn-submit').addEventListener('click', async () => {
         await fetch(APPS_SCRIPT_URL, {
             method: 'POST', mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ titulo, fecha: fechaSheet, lugar, categoria, url: url || '', imagen: imagenUrl })
+            body: JSON.stringify({ titulo, fecha: fechaSheet, hora, lugar, categoria, url: url || '', imagen: imagenUrl })
         });
         document.getElementById('modal-body').querySelectorAll('.form-group, .btn-submit, .form-aviso').forEach(el => el.style.display = 'none');
         document.getElementById('form-ok').style.display = 'flex';
