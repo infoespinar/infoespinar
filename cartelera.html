@@ -82,7 +82,10 @@
         .cartel-fecha { background: #9f1239; border-radius: 8px; padding: 5px 10px; text-align: center; line-height: 1.1; flex-shrink: 0; }
         .fecha-dia { display: block; font-size: 20px; font-weight: 900; color: #fff; }
         .fecha-mes { display: block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #f0c060; }
-        .fecha-hora { display: block; font-size: 12px; font-weight: 900; color: #fff; margin-top: 4px; padding-top: 4px; border-top: 1px solid rgba(255,255,255,0.25); letter-spacing: 0.3px; }
+        .cartel-fecha-group { display: flex; align-items: center; gap: 6px; }
+        .cartel-hora { background: #9f1239; border-radius: 8px; padding: 6px 9px; display: flex; align-items: center; gap: 4px; flex-shrink: 0; }
+        .hora-icono { font-size: 10px; line-height: 1; }
+        .hora-valor { font-size: 13px; font-weight: 900; color: #fff; letter-spacing: 0.3px; line-height: 1; }
 
         .cartel-cat { font-size: 9px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 9px; border-radius: 20px; border: 1px solid currentColor; }
         .cat-música    { color: #7c3aed; border-color: #7c3aed; background: rgba(124,58,237,0.08); }
@@ -500,10 +503,12 @@ async function cargarEventos() {
                 </div>
                 <${bodyTag} class="cartel-body${ev.url ? ' cartel-body--link' : ''}" ${bodyAttr}>
                     <div class="cartel-meta">
-                        <div class="cartel-fecha">
-                            <span class="fecha-dia">${String(fecha.getDate()).padStart(2, '0')}</span>
-                            <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
-                            ${hora ? `<span class="fecha-hora">${hora}</span>` : ''}
+                        <div class="cartel-fecha-group">
+                            <div class="cartel-fecha">
+                                <span class="fecha-dia">${String(fecha.getDate()).padStart(2, '0')}</span>
+                                <span class="fecha-mes">${MESES_CORTO[fecha.getMonth()]}</span>
+                            </div>
+                            ${hora ? `<div class="cartel-hora"><span class="hora-icono">🕒</span><span class="hora-valor">${hora}</span></div>` : ''}
                         </div>
                         <span class="cartel-cat cat-${catClase}">${catClase}</span>
                     </div>
