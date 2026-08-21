@@ -6,95 +6,392 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Mascotas | infoespinar.com</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
-        
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Lato', sans-serif; background-color: #f4f6f9; color: #334155; min-height: 100vh; }
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
-        .header {
-            background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
-            color: white;
-            text-align: center;
-            padding: 25px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #fbf3e8;
+            --surface: #ffffff;
+            --text: #2c2013;
+            --text-muted: #8a7a63;
+            --line: #ecdfc7;
+            --line-strong: #ddc9a3;
+            --amber: #d97706;
+            --amber-hover: #b8630a;
+            --amber-soft: #fce9cf;
+            --terracota: #c2410c;
+            --terracota-soft: #fbe2d3;
+            --teal: #0e7490;
+            --teal-soft: #daeef2;
+            --glow: rgba(217,119,6,0.10);
         }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        svg.icon { width: 16px; height: 16px; flex-shrink: 0; }
+
+        /* ── ENCABEZADO ── */
+        .header {
+            background: linear-gradient(120deg, var(--terracota) 0%, var(--amber) 100%);
+            text-align: center;
+            padding: 20px 20px;
+        }
         .header-logo-link {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            transition: background 0.2s, transform 0.2s;
+            color: #ffffff;
         }
-
-        .header-logo-link:hover {
-            background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-1px);
-        }
-
         .header-bandera {
-            width: 32px;
-            height: 32px;
+            width: 26px;
+            height: 26px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 5px;
             aspect-ratio: 1 / 1;
         }
-
         .header h1 {
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
-        
-        
-       .main-container { max-width: 1200px; margin: 0 auto; padding: 20px 12px; }
-        .titulo-seccion-principal { font-size: 26px; font-weight: 900; text-align: center; margin: 20px 0; text-transform: uppercase; color: #d97706; }
-        .titulo-bloque { font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #475569; margin: 25px 0 12px 4px; font-weight: 700; }
 
-        .contenedor-mapa-fijo { width: 100%; height: 300px; margin-bottom: 25px; }
-        .map-wrapper { width: 100%; height: 100%; overflow: hidden; border-radius: 14px; border: 1px solid #cbd5e1; position: relative; }
-        .map-wrapper iframe { position: absolute; top: -60px; left: 0; width: 100%; height: calc(100% + 60px); border: 0; }
-        
-        .banner-comercio { width: 100%; height: 120px; border-radius: 14px; overflow: hidden; position: relative; display: flex; align-items: center; text-decoration: none; background-color: #1e293b; box-shadow: 0 4px 10px rgba(0,0,0,0.1); margin-bottom: 25px; }
-        .banner-info { padding: 15px 20px; z-index: 2; }
-        .banner-label { display: inline-block; background: #d97706; color: #fff; font-size: 9px; font-weight: bold; padding: 3px 8px; border-radius: 4px; margin-bottom: 4px; text-transform: uppercase; }
-        .banner-nombre { color: white; font-size: 19px; font-weight: 700; margin: 0; }
+        /* ── CONTENEDOR PRINCIPAL ── */
+        .main-container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 15px 12px;
+            flex-grow: 1;
+        }
 
-        .input-buscador { width: 100%; padding: 16px; border: 2px solid #e2e8f0; border-radius: 14px; margin-bottom: 25px; font-size: 16px; outline: none; }
+        /* ── TÍTULO DE SECCIÓN ── */
+        .titulo-seccion-principal {
+            font-family: 'Fraunces', serif;
+            font-size: 36px;
+            font-weight: 500;
+            text-align: center;
+            margin: 34px 0 8px;
+            letter-spacing: -0.3px;
+            color: var(--terracota);
+        }
+        .txt-acento { color: var(--teal); font-style: italic; }
 
-        .grid-comercios { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; width: 100%; }
-        .tarjeta-comercio { background: #ffffff; border: 1px solid #e2e8f0; border-top: 4px solid #d97706; border-radius: 14px; padding: 20px; display: flex; flex-direction: column; }
-        .nombre-comercio { font-size: 18px; font-weight: 700; color: #d97706; margin-bottom: 8px; }
-        .enlace-web { display: block; font-size: 13px; color: #475569; text-decoration: none; margin-bottom: 10px; }
-        .direccion-comercio { font-size: 13px; color: #64748b; margin-bottom: 15px; }
-        
-        .btn-group { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
-        .btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 10px; border-radius: 8px; font-size: 13px; font-weight: 700; text-decoration: none; color: white; }
-        .btn-llamar { background-color: #0f172a; }
-        .btn-whatsapp { background-color: #10b981; }
-        .btn-email { background-color: #f59e0b; color: #fff; }
+        .subtitulo-seccion {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
 
-        .disclaimer-box { background-color: #f1f5f9; border-left: 4px solid #64748b; padding: 15px; margin-top: 40px; font-size: 13px; color: #475569; }
-        .footer { text-align: center; padding: 25px; color: #64748b; font-size: 12px; }
+        .divisor-huella {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 30px;
+            color: var(--amber);
+            opacity: 0.7;
+        }
+        .divisor-huella .linea { width: 34px; height: 1px; background: currentColor; }
+
+        .titulo-bloque {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            margin: 30px 0 12px 4px;
+            font-weight: 600;
+        }
+
+        /* ── MAPA ── */
+        .contenedor-mapa-fijo {
+            width: 100%;
+            height: 340px;
+            margin-bottom: 20px;
+        }
+        .map-wrapper {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            position: relative;
+        }
+        .map-wrapper iframe {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 100%;
+            height: calc(100% + 60px);
+            border: 0;
+        }
+
+        /* ── BANNER PUBLICITARIO ── */
+        .banner-comercio {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px dashed var(--line-strong);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            background-color: var(--surface);
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s, background-color 0.2s;
+        }
+        .banner-comercio:hover {
+            border-color: var(--amber);
+            background-color: var(--amber-soft);
+        }
+        .banner-icono {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--amber-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .banner-icono svg { width: 18px; height: 18px; color: var(--amber); }
+        .banner-info { flex: 1; }
+        .banner-label {
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--amber);
+            margin-bottom: 3px;
+        }
+        .banner-nombre {
+            font-family: 'Fraunces', serif;
+            color: var(--text);
+            font-size: 17px;
+            font-weight: 500;
+            margin: 0;
+            line-height: 1.2;
+        }
+        .banner-sub {
+            color: var(--text-muted);
+            font-size: 12.5px;
+            margin-top: 3px;
+            line-height: 1.4;
+        }
+
+        /* ── BUSCADOR ── */
+        .contenedor-buscador { margin-bottom: 22px; width: 100%; position: relative; }
+        .buscador-icono {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+        .input-buscador {
+            width: 100%;
+            padding: 13px 16px 13px 42px;
+            font-size: 15px;
+            border: 1px solid var(--line-strong);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            background: var(--surface);
+            outline: none;
+            transition: border-color 0.2s;
+            color: var(--text);
+        }
+        .input-buscador::placeholder { color: var(--text-muted); }
+        .input-buscador:focus { border-color: var(--amber); }
+
+        /* ── GRID DE TARJETAS ── */
+        .grid-comercios {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 16px;
+            width: 100%;
+            padding-bottom: 25px;
+            visibility: hidden;
+        }
+
+        .tarjeta-comercio {
+            background: linear-gradient(180deg, var(--surface) 0%, #fffaf1 100%);
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--amber);
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 3px 10px var(--glow);
+            transition: box-shadow 0.15s ease, transform 0.15s ease;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .tarjeta-comercio:hover {
+            box-shadow: 0 6px 18px rgba(194,65,12,0.16);
+            transform: translateY(-2px);
+        }
+
+        .nucleo-ee { border-top-color: var(--terracota); }
+        .nucleo-la { border-top-color: var(--teal); }
+
+        .chip-nucleo.chip-sr { background: var(--amber-soft); color: var(--amber-hover); }
+        .chip-nucleo.chip-ee { background: var(--terracota-soft); color: var(--terracota); }
+        .chip-nucleo.chip-la { background: var(--teal-soft); color: var(--teal); }
+
+        .info-comercio {
+            padding: 22px 22px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .nombre-comercio {
+            font-family: 'Fraunces', serif;
+            font-size: 19px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 6px;
+            line-height: 1.3;
+        }
+
+        .chip-nucleo {
+            display: inline-flex;
+            align-self: flex-start;
+            align-items: center;
+            gap: 4px;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 4px 9px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 2px 0 10px;
+        }
+        .chip-nucleo svg { width: 11px; height: 11px; }
+
+        .enlace-web {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 400;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+        .enlace-web svg { color: var(--amber); opacity: 0.85; }
+        .enlace-web:hover { color: var(--amber-hover); }
+
+        .direccion-comercio {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.4;
+            margin-top: 2px;
+        }
+        .direccion-comercio svg { margin-top: 2px; color: var(--amber); opacity: 0.85; }
+
+        /* ── BOTONES ── */
+        .bloque-botones {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .fila-contacto { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        .btn {
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 20px;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+            border: 1px solid var(--line-strong);
+            background: var(--surface);
+            color: var(--text);
+        }
+        .btn:hover { border-color: var(--amber); color: var(--amber-hover); }
+        .btn-llamar   { flex: 1; min-width: 110px; }
+        .btn-whatsapp { flex: 1; min-width: 110px; }
+        .btn-maps {
+            width: 100%;
+            background-color: var(--amber);
+            border-color: var(--amber);
+            color: #ffffff;
+        }
+        .btn-maps:hover { background-color: var(--amber-hover); border-color: var(--amber-hover); color: #fff; }
+        .btn-email    { width: 100%; }
+
+        /* ── AVISO ── */
+        .disclaimer-box {
+            border-top: 1px solid var(--line);
+            padding: 18px 4px 0;
+            margin: 25px 4px 15px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: var(--text-muted);
+        }
+        .disclaimer-box strong { color: var(--text); }
+
+        /* ── RESPONSIVE ── */
+        @media screen and (min-width: 768px) {
+            .grid-comercios { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background-color: var(--terracota);
+            color: #fbe2d3;
+            text-align: center;
+            padding: 22px 20px;
+            margin-top: 20px;
+            font-size: 12.5px;
+            line-height: 1.7;
+        }
+        .footer a { color: #fff3e0; text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
 
     <header class="header">
         <a href="index.html" class="header-logo-link">
-            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera"> 
+            <img src="https://i.imgur.com/di5CaLV.png" class="header-bandera" alt="Bandera El Espinar">
             <h1>infoespinar.com</h1>
         </a>
     </header>
 
     <main class="main-container">
-        <h2 class="titulo-seccion-principal">Mascotas 🐾​</h2>
+
+        <h2 class="titulo-seccion-principal">Mascotas <span class="txt-acento">&</span> Veterinarios</h2>
+        <p class="subtitulo-seccion">Clínicas, guarderías y alimentación animal en El Espinar, San Rafael y Los Ángeles</p>
+        <div class="divisor-huella" aria-hidden="true">
+            <span class="linea"></span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="8" cy="7" r="2"/><circle cx="12.5" cy="5" r="2"/><circle cx="17" cy="7" r="2"/><circle cx="19" cy="11" r="2"/><path d="M12.5 12c-3 0-6 2.2-6 5 0 1.8 1.5 3 3.4 3 1 0 1.6-.4 2.6-.4s1.6.4 2.6.4c1.9 0 3.4-1.2 3.4-3 0-2.8-3-5-6-5z"/></svg>
+            <span class="linea"></span>
+        </div>
 
         <div class="titulo-bloque">Localización de servicios</div>
         <div class="contenedor-mapa-fijo">
@@ -103,78 +400,190 @@
             </div>
         </div>
 
-        <a href="mailto:info@infoespinar.com" class="banner-comercio">
+        <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
+            <div class="banner-icono">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
             <div class="banner-info">
                 <span class="banner-label">¿Eres comerciante?</span>
-                <h3 class="banner-nombre">¡Anuncia tu negocio aquí!</h3>
+                <h3 class="banner-nombre">Anuncia tu negocio aquí</h3>
+                <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
             </div>
         </a>
 
-        <input type="text" id="buscador" class="input-buscador" placeholder="🔍 Buscar veterinario, alimentación, guardería...">
+        <div class="titulo-bloque">Listado de profesionales</div>
+        <div class="contenedor-buscador">
+            <span class="buscador-icono">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            </span>
+            <input type="text" id="buscador" class="input-buscador" placeholder="Buscar veterinario, alimentación, guardería o por núcleo...">
+        </div>
 
         <div class="grid-comercios" id="gridComercios">
-            <div class="tarjeta-comercio" data-nombre="BEA-VET San Rafael">
-                <div class="nombre-comercio">BEA-VET</div>
-                <div class="direccion-comercio">📍 P.º Apeadero, 13, San Rafael</div>
-                <div class="btn-group"><a href="tel:+34677327010" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34677327010" class="btn btn-whatsapp">💬 WhatsApp</a></div>
+
+            <div class="tarjeta-comercio nucleo-sr" data-search="bea-vet veterinario san rafael paseo apeadero consulta animales">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">BEA-VET</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>P.º Apeadero, 13, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34677327010" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34677327010" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=BEA-VET+Paseo+Apeadero+13+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                    </div>
+                </div>
             </div>
-            <div class="tarjeta-comercio" data-nombre="Centro Veterinario San Rafael">
-                <div class="nombre-comercio">Centro Veterinario San Rafael</div>
-                <div class="direccion-comercio">📍 Tr.ª Alto del León, 7, San Rafael</div>
-                <div class="btn-group"><a href="tel:+34921171594" class="btn btn-llamar">📞 Llamar</a></div>
+
+            <div class="tarjeta-comercio nucleo-sr" data-search="centro veterinario san rafael travesia alto del leon consulta animales">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Centro Veterinario San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Tr.ª Alto del León, 7, San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921171594" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Centro+Veterinario+San+Rafael+Travesia+Alto+del+Leon+7" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                    </div>
+                </div>
             </div>
-            <div class="tarjeta-comercio" data-nombre="Vetiva Alimentación El Espinar">
-                <div class="nombre-comercio">Vetiva Alimentación</div>
-                <a href="http://vetivanimal.com/" class="enlace-web">🌐 vetivanimal.com</a>
-                <div class="direccion-comercio">📍 Ctra. Coruña, 19, El Espinar</div>
-                <div class="btn-group"><a href="tel:+34602014015" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34602014015" class="btn btn-whatsapp">💬 WhatsApp</a><a href="mailto:vetivalternativa@gmail.com" class="btn btn-email">📧 Email</a></div>
+
+            <div class="tarjeta-comercio nucleo-ee" data-search="vetiva alimentacion el espinar carretera coruña pienso animales">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Vetiva Alimentación</div>
+                    <a href="http://vetivanimal.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>vetivanimal.com</a>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. Coruña, 19, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34602014015" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34602014015" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Vetiva+Alimentacion+Carretera+Coruña+19+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:vetivalternativa@gmail.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
+                    </div>
+                </div>
             </div>
-            <div class="tarjeta-comercio" data-nombre="Clinica Veterinaria El Espinar">
-                <div class="nombre-comercio">Clinica Veterinaria El Espinar</div>
-                <a href="http://www.clinicaelespinar.es/" class="enlace-web">🌐 clinicaelespinar.es</a>
-                <div class="direccion-comercio">📍 P.º de las Peñitas, 22, El Espinar</div>
-                <div class="btn-group"><a href="tel:+34921181396" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34606745641" class="btn btn-whatsapp">💬 WhatsApp</a><a href="mailto:cvelespinar@hotmail.com" class="btn btn-email">📧 Email</a></div>
+
+            <div class="tarjeta-comercio nucleo-ee" data-search="clinica veterinaria el espinar paseo de las penitas consulta animales">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Clínica Veterinaria El Espinar</div>
+                    <a href="http://www.clinicaelespinar.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>clinicaelespinar.es</a>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>P.º de las Peñitas, 22, El Espinar</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34921181396" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34606745641" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Clinica+Veterinaria+El+Espinar+Paseo+de+las+Penitas+22" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:cvelespinar@hotmail.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
+                    </div>
+                </div>
             </div>
-            <div class="tarjeta-comercio" data-nombre="Los Ángeles Veterinarios LASR">
-                <div class="nombre-comercio">Los Ángeles Veterinarios</div>
-                <a href="https://www.losangelesveterinarios.com/" class="enlace-web">🌐 losangelesveterinarios.com</a>
-                <div class="direccion-comercio">📍 C. Río Tajo, 42, Los Ángeles de San Rafael</div>
-                <div class="btn-group"><a href="tel:+34689497017" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34689497017" class="btn btn-whatsapp">💬 WhatsApp</a><a href="mailto:pacientes@losangelesveterinarios.com" class="btn btn-email">📧 Email</a></div>
+
+            <div class="tarjeta-comercio nucleo-la" data-search="los angeles veterinarios lasr rio tajo consulta animales los angeles de san rafael">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Los Ángeles Veterinarios</div>
+                    <a href="https://www.losangelesveterinarios.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>losangelesveterinarios.com</a>
+                    <span class="chip-nucleo chip-la"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Río Tajo, 42, Los Ángeles de San Rafael</div>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34689497017" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34689497017" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
+                        </div>
+                        <a href="https://maps.google.com/?q=Los+Angeles+Veterinarios+Calle+Rio+Tajo+42+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:pacientes@losangelesveterinarios.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
+                    </div>
+                </div>
             </div>
-            <div class="tarjeta-comercio" data-nombre="Anumanu Nutrición Bienestar Animal">
-                <div class="nombre-comercio">Anumanu Nutrición</div>
-                <a href="https://www.anumanu.es/" class="enlace-web">🌐 anumanu.es</a>
-                <div class="btn-group"><a href="tel:+34654050468" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34654050468" class="btn btn-whatsapp">💬 WhatsApp</a><a href="mailto:animal@anumanu.es" class="btn btn-email">📧 Email</a></div>
+
+            <div class="tarjeta-comercio" data-search="anumanu nutricion bienestar animal">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Anumanu Nutrición</div>
+                    <a href="https://www.anumanu.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>anumanu.es</a>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34654050468" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34654050468" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
+                        </div>
+                        <a href="mailto:animal@anumanu.es" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
+                    </div>
+                </div>
             </div>
-            <div class="tarjeta-comercio" data-nombre="Oasiscan Guardería Canina LASR">
-                <div class="nombre-comercio">Oasiscan Guardería Canina</div>
-                <a href="http://www.oasiscan.es/" class="enlace-web">🌐 oasiscan.es</a>
-                <div class="btn-group"><a href="tel:+34622555468" class="btn btn-llamar">📞 Llamar</a><a href="https://wa.me/34622555468" class="btn btn-whatsapp">💬 WhatsApp</a><a href="mailto:oasiscansegovia@gmail.com" class="btn btn-email">📧 Email</a></div>
+
+            <div class="tarjeta-comercio nucleo-la" data-search="oasiscan guarderia canina lasr los angeles de san rafael perros">
+                <div class="info-comercio">
+                    <div class="nombre-comercio">Oasiscan Guardería Canina</div>
+                    <a href="http://www.oasiscan.es/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>oasiscan.es</a>
+                    <span class="chip-nucleo chip-la"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Los Ángeles de S.R.</span>
+                    <div class="bloque-botones">
+                        <div class="fila-contacto">
+                            <a href="tel:+34622555468" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34622555468" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
+                        </div>
+                        <a href="mailto:oasiscansegovia@gmail.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
+                    </div>
+                </div>
             </div>
+
         </div>
 
         <div class="disclaimer-box">
             <strong>Nota:</strong> Esta información se facilita como servicio a los ciudadanos. Los datos han sido recopilados de fuentes públicas. Si observa algún error o desea actualizar su información, por favor póngase en contacto con nosotros.
         </div>
+
     </main>
 
     <footer class="footer">
         <p>© 2026 InfoEspinar. Todos los derechos reservados.</p>
+        <p>Página optimizada de forma nativa para móviles y PC.</p>
+        <p>Contacto: <a href="mailto:info@infoespinar.com">info@infoespinar.com</a></p>
     </footer>
 
     <script>
-        const grid = document.getElementById("gridComercios");
-        const cards = Array.from(grid.children);
-        cards.sort(() => Math.random() - 0.5);
-        cards.forEach(card => grid.appendChild(card));
+    document.addEventListener("DOMContentLoaded", function() {
+        const contenedor = document.getElementById("gridComercios");
+        const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
+        const buscador = document.getElementById("buscador");
 
-        document.getElementById("buscador").addEventListener("input", function() {
-            const term = this.value.toLowerCase();
-            cards.forEach(card => {
-                const name = card.getAttribute("data-nombre").toLowerCase();
-                card.style.display = name.includes(term) ? "flex" : "none";
+        for (let i = tarjetas.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
+        }
+
+        tarjetas.forEach(tarjeta => contenedor.appendChild(tarjeta));
+        contenedor.style.visibility = "visible";
+
+        buscador.addEventListener("input", function() {
+            const termino = buscador.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+
+            tarjetas.forEach(tarjeta => {
+                const textoTarjeta = tarjeta.getAttribute("data-search").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                if (textoTarjeta.includes(termino)) {
+                    tarjeta.style.display = "flex";
+                } else {
+                    tarjeta.style.display = "none";
+                }
             });
+
+            actualizarAltura();
         });
+
+        actualizarAltura();
+    });
+
+    function actualizarAltura() {
+        const grid = document.getElementById('gridComercios');
+        if(grid && window.parent && window.parent.postMessage) {
+            window.parent.postMessage({type: 'resize', height: document.body.scrollHeight + 30}, '*');
+        }
+    }
+    window.addEventListener('resize', actualizarAltura);
+    setTimeout(actualizarAltura, 350);
     </script>
 </body>
 </html>
