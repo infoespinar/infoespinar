@@ -226,7 +226,7 @@
         }
 
         .tarjeta-comercio {
-            background: var(--surface);
+            background: linear-gradient(180deg, var(--surface) 0%, #faf6ef 100%);
             border: 1px solid var(--line);
             border-top: 3px solid var(--forest);
             border-radius: 10px;
@@ -260,9 +260,20 @@
             font-family: 'Fraunces', serif;
             font-size: 19px;
             font-weight: 500;
-            color: var(--text);
+            color: var(--walnut);
             margin-bottom: 6px;
             line-height: 1.3;
+        }
+
+        .nombre-comercio::after {
+            content: "";
+            display: block;
+            width: 26px;
+            height: 2px;
+            background: var(--walnut);
+            opacity: 0.55;
+            border-radius: 2px;
+            margin-top: 7px;
         }
 
         .chip-nucleo {
@@ -291,7 +302,9 @@
             margin-bottom: 8px;
             word-break: break-all;
         }
+        .enlace-web svg { color: var(--walnut); opacity: 0.75; }
         .enlace-web:hover { color: var(--forest); }
+        .enlace-web:hover svg { color: var(--forest); opacity: 1; }
 
         .direccion-comercio {
             display: flex;
@@ -303,7 +316,7 @@
             line-height: 1.4;
             margin-top: 2px;
         }
-        .direccion-comercio svg { margin-top: 2px; color: var(--text-muted); }
+        .direccion-comercio svg { margin-top: 2px; color: var(--walnut); opacity: 0.75; }
 
         /* ── BOTONES ── */
         .bloque-botones {
