@@ -6,18 +6,33 @@
     <link rel="icon" type="image/png" href="favicon.png">
     <title>Belleza y Bienestar | infoespinar.com</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap');
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg: #f7f2fa;
+            --surface: #ffffff;
+            --text: #241736;
+            --text-muted: #6e6180;
+            --line: #e8def5;
+            --line-strong: #d5c3ec;
+            --violeta: #7c3aed;
+            --violeta-hover: #6425d0;
+            --violeta-soft: #ede4fb;
+            --rosa: #be185d;
+            --rosa-soft: #fbe1ec;
+            --salvia: #4d7c62;
+            --salvia-soft: #e1ebe4;
+            --dorado: #a4720a;
+            --dorado-soft: #f6e9d0;
+            --glow: rgba(124,58,237,0.10);
         }
 
         body {
-            font-family: 'Lato', sans-serif;
-            background-color: #f5f0f9;
-            color: #1e1030;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
@@ -26,49 +41,44 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        /* HEADER */
-        .header {
-            background: linear-gradient(135deg, #3b0764 0%, #7c3aed 100%);
-            color: white;
-            text-align: center;
-            padding: 25px 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.10);
-        }
+        svg.icon { width: 16px; height: 16px; flex-shrink: 0; }
 
+        /* ── ENCABEZADO ── */
+        .header {
+            background: linear-gradient(120deg, #3b0764 0%, var(--violeta) 100%);
+            text-align: center;
+            padding: 20px 20px;
+            position: relative;
+        }
+        .header::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--rosa), var(--dorado));
+        }
         .header-logo-link {
             display: inline-flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             text-decoration: none;
-            color: white;
-            background: rgba(255,255,255,0.10);
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.18);
-            transition: background 0.2s, transform 0.2s;
+            color: #ffffff;
         }
-
-        .header-logo-link:hover {
-            background: rgba(255,255,255,0.18);
-            transform: translateY(-1px);
-        }
-
         .header-bandera {
-            width: 32px;
-            height: 32px;
+            width: 26px;
+            height: 26px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 5px;
             aspect-ratio: 1 / 1;
         }
-
         .header h1 {
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
         }
 
-        /* CONTENEDOR PRINCIPAL */
+        /* ── CONTENEDOR PRINCIPAL ── */
         .main-container {
             max-width: 1200px;
             width: 100%;
@@ -77,44 +87,58 @@
             flex-grow: 1;
         }
 
-        /* TÍTULO SECCIÓN */
+        /* ── TÍTULO DE SECCIÓN ── */
         .titulo-seccion-principal {
-            font-size: 26px;
-            font-weight: 900;
+            font-family: 'Fraunces', serif;
+            font-size: 36px;
+            font-weight: 500;
             text-align: center;
-            margin: 20px 0;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
+            margin: 34px 0 8px;
+            letter-spacing: -0.3px;
+            color: #3b0764;
         }
-        .txt-belleza  { color: #7c3aed; }
-        .txt-bienestar{ color: #1e1030; }
+        .txt-acento { color: var(--rosa); font-style: italic; }
+
+        .subtitulo-seccion {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .divisor-flor {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+        .divisor-flor .linea { width: 30px; height: 1px; background: var(--line-strong); }
+        .divisor-flor svg { color: var(--violeta); opacity: 0.75; }
 
         .titulo-bloque {
             font-size: 11px;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            color: #5b4a6e;
-            margin: 25px 0 12px 4px;
-            font-weight: 700;
+            color: var(--text-muted);
+            margin: 30px 0 12px 4px;
+            font-weight: 600;
         }
 
-        /* MAPA */
+        /* ── MAPA ── */
         .contenedor-mapa-fijo {
             width: 100%;
-            height: 350px;
-            margin-bottom: 25px;
+            height: 340px;
+            margin-bottom: 20px;
         }
-
         .map-wrapper {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            border-radius: 14px;
-            border: 1px solid #c4b5e8;
+            border-radius: 8px;
+            border: 1px solid var(--line);
             position: relative;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04);
         }
-
         .map-wrapper iframe {
             position: absolute;
             top: -60px;
@@ -124,97 +148,86 @@
             border: 0;
         }
 
-        /* BANNER */
+        /* ── BANNER PUBLICITARIO ── */
         .banner-comercio {
             width: 100%;
-            height: 120px;
-            border-radius: 14px;
-            overflow: hidden;
-            position: relative;
+            border-radius: 8px;
+            border: 1px dashed var(--line-strong);
             display: flex;
             align-items: center;
+            gap: 14px;
             text-decoration: none;
-            background-color: #1e1030;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            margin-bottom: 25px;
+            background-color: var(--surface);
+            padding: 18px 20px;
+            margin-bottom: 20px;
+            transition: border-color 0.2s, background-color 0.2s;
         }
-
-        .banner-img {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.35;
-            transition: transform 0.3s ease;
+        .banner-comercio:hover {
+            border-color: var(--violeta);
+            background-color: var(--violeta-soft);
         }
-
-        .banner-comercio:hover .banner-img {
-            transform: scale(1.02);
+        .banner-icono {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--violeta-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
-
-        .banner-info {
-            position: relative;
-            padding: 15px 20px;
-            z-index: 2;
-        }
-
+        .banner-icono svg { width: 18px; height: 18px; color: var(--violeta); }
+        .banner-info { flex: 1; }
         .banner-label {
-            display: inline-block;
-            background: #7c3aed;
-            color: #fff;
-            font-size: 9px;
-            font-weight: bold;
-            padding: 3px 8px;
-            border-radius: 4px;
+            display: block;
+            font-size: 10px;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            margin-bottom: 4px;
+            color: var(--violeta);
+            margin-bottom: 3px;
         }
-
         .banner-nombre {
-            color: white;
-            font-size: 19px;
-            font-weight: 700;
+            font-family: 'Fraunces', serif;
+            color: var(--text);
+            font-size: 17px;
+            font-weight: 500;
             margin: 0;
-            text-shadow: 0px 2px 4px rgba(0,0,0,0.6);
-            letter-spacing: 0.5px;
             line-height: 1.2;
         }
-
         .banner-sub {
-            color: rgba(255,255,255,0.95);
-            font-size: 12px;
+            color: var(--text-muted);
+            font-size: 12.5px;
             margin-top: 3px;
-            text-shadow: 0px 1px 3px rgba(0,0,0,0.5);
-            line-height: 1.3;
+            line-height: 1.4;
         }
 
-        /* BUSCADOR */
-        .contenedor-buscador {
-            margin-bottom: 20px;
-            width: 100%;
+        /* ── BUSCADOR ── */
+        .contenedor-buscador { margin-bottom: 22px; width: 100%; position: relative; }
+        .buscador-icono {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
         }
-
         .input-buscador {
             width: 100%;
-            padding: 14px 16px;
+            padding: 13px 16px 13px 42px;
             font-size: 15px;
-            border: 2px solid #c4b5e8;
-            border-radius: 12px;
-            font-family: 'Lato', sans-serif;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.02);
+            border: 1px solid var(--line-strong);
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            background: var(--surface);
             outline: none;
             transition: border-color 0.2s;
-            background: #fff;
+            color: var(--text);
         }
+        .input-buscador::placeholder { color: var(--text-muted); }
+        .input-buscador:focus { border-color: var(--violeta); }
 
-        .input-buscador:focus {
-            border-color: #7c3aed;
-        }
-
-        /* GRID */
+        /* ── GRID DE TARJETAS ── */
         .grid-comercios {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -224,156 +237,152 @@
             visibility: hidden;
         }
 
-        /* TARJETA */
         .tarjeta-comercio {
-            background: #ffffff;
-            border: 1px solid #e2d9f3;
-            border-top: 4px solid #7c3aed;
-            border-radius: 14px;
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+            background: linear-gradient(180deg, var(--surface) 0%, #fbf7fd 100%);
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--violeta);
+            border-radius: 12px;
             display: flex;
             flex-direction: column;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 3px 10px var(--glow);
+            transition: box-shadow 0.15s ease, transform 0.15s ease;
             -webkit-tap-highlight-color: transparent;
         }
-
-        .tarjeta-comercio:active {
-            transform: scale(0.99);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        .tarjeta-comercio:hover {
+            box-shadow: 0 6px 18px rgba(124,58,237,0.18);
+            transform: translateY(-2px);
         }
 
+        .nucleo-ee { border-top-color: var(--rosa); }
+        .nucleo-le { border-top-color: var(--salvia); }
+        .nucleo-la { border-top-color: var(--dorado); }
+
+        .chip-nucleo.chip-sr { background: var(--violeta-soft); color: var(--violeta-hover); }
+        .chip-nucleo.chip-ee { background: var(--rosa-soft); color: var(--rosa); }
+        .chip-nucleo.chip-le { background: var(--salvia-soft); color: var(--salvia); }
+        .chip-nucleo.chip-la { background: var(--dorado-soft); color: var(--dorado); }
+
         .info-comercio {
-            padding: 20px;
+            padding: 22px 22px 20px;
             display: flex;
             flex-direction: column;
             flex-grow: 1;
         }
 
         .nombre-comercio {
+            font-family: 'Fraunces', serif;
             font-size: 19px;
-            font-weight: 700;
-            color: #6d28d9;
-            margin-bottom: 5px;
+            font-weight: 500;
+            color: #3b0764;
+            margin-bottom: 6px;
             line-height: 1.3;
         }
 
+        .chip-nucleo {
+            display: inline-flex;
+            align-self: flex-start;
+            align-items: center;
+            gap: 4px;
+            font-size: 10.5px;
+            font-weight: 700;
+            padding: 4px 9px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 2px 0 10px;
+        }
+        .chip-nucleo svg { width: 11px; height: 11px; }
+
         .enlace-web {
-            display: inline-block;
-            font-size: 13.5px;
-            color: #475569;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text-muted);
             text-decoration: none;
             font-weight: 400;
             margin-bottom: 8px;
             word-break: break-all;
         }
-        .enlace-web:hover {
-            text-decoration: underline;
-            color: #7c3aed;
-        }
-
-        /* BURBUJAS */
-        .contenedor-burbujas {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 2px;
-            margin-bottom: 8px;
-        }
-
-        .burbuja-nucleo {
-            display: inline-block;
-            background-color: #f3f0fa;
-            color: #5b21b6;
-            font-size: 11px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 20px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: 1px solid #ddd6fe;
-        }
+        .enlace-web svg { color: var(--violeta); opacity: 0.85; }
+        .enlace-web:hover { color: var(--violeta); }
 
         .direccion-comercio {
+            display: flex;
+            align-items: flex-start;
+            gap: 7px;
             font-size: 13px;
-            color: #64748b;
+            color: var(--text-muted);
             margin-bottom: 20px;
             line-height: 1.4;
             margin-top: 2px;
         }
+        .direccion-comercio svg { margin-top: 2px; color: var(--violeta); opacity: 0.7; }
 
-        /* BOTONES */
+        /* ── BOTONES ── */
         .bloque-botones {
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
         }
-
-        .fila-contacto {
-            display: flex;
-            gap: 10px;
-        }
+        .fila-contacto { display: flex; gap: 8px; flex-wrap: wrap; }
 
         .btn {
             text-decoration: none;
-            font-size: 13.5px;
-            font-weight: 700;
-            padding: 11px 14px;
-            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 14px;
+            border-radius: 20px;
             text-align: center;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
+            transition: background-color 0.15s, border-color 0.15s, color 0.15s;
+            border: 1px solid var(--line-strong);
+            background: var(--surface);
+            color: var(--text);
+        }
+        .btn:hover { border-color: var(--violeta); color: var(--violeta-hover); }
+        .btn-llamar   { flex: 1; min-width: 110px; }
+        .btn-whatsapp { flex: 1; min-width: 110px; }
+        .btn-maps {
+            width: 100%;
+            background-color: var(--violeta);
+            border-color: var(--violeta);
             color: #ffffff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            transition: opacity 0.2s;
         }
-        .btn:hover { opacity: 0.9; }
+        .btn-maps:hover { background-color: var(--violeta-hover); border-color: var(--violeta-hover); color: #fff; }
+        .btn-email    { width: 100%; }
 
-        .btn-llamar  { background-color: #1e1030; flex: 1; }
-        .btn-whatsapp{ background-color: #10b981; flex: 1; }
-        .btn-maps    { background-color: #1a73e8; width: 100%; }
-        .btn-email   { background-color: #facc15; color: #000000; width: 100%; }
-
-        /* DISCLAIMER */
+        /* ── AVISO ── */
         .disclaimer-box {
-            background-color: #f5f0f9;
-            border-left: 4px solid #a78bfa;
-            border-radius: 8px;
-            padding: 14px 16px;
-            margin: 30px 4px 15px 4px;
-            font-size: 13px;
-            line-height: 1.5;
-            color: #475569;
-            text-align: justify;
+            border-top: 1px solid var(--line);
+            padding: 18px 4px 0;
+            margin: 25px 4px 15px;
+            font-size: 12.5px;
+            line-height: 1.6;
+            color: var(--text-muted);
         }
+        .disclaimer-box strong { color: var(--text); }
 
-        /* RESPONSIVE */
+        /* ── RESPONSIVE ── */
         @media screen and (min-width: 768px) {
-            .grid-comercios {
-                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-                gap: 16px;
-            }
+            .grid-comercios { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
         }
 
-        /* FOOTER */
+        /* ── FOOTER ── */
         .footer {
             background-color: #1e1030;
-            color: #94a3b8;
+            color: #c9b8e0;
             text-align: center;
-            padding: 25px 20px;
-            margin-top: 30px;
-            font-size: 13px;
-            line-height: 1.6;
-            border-top: 3px solid #7c3aed;
+            padding: 22px 20px;
+            margin-top: 20px;
+            font-size: 12.5px;
+            line-height: 1.7;
         }
-
-        .footer a {
-            color: #a78bfa;
-            text-decoration: none;
-            font-weight: 700;
-        }
+        .footer a { color: #e8a8cc; text-decoration: none; font-weight: 600; }
     </style>
 </head>
 <body>
@@ -387,9 +396,13 @@
 
     <main class="main-container">
 
-        <h2 class="titulo-seccion-principal">
-            <span class="txt-belleza">Belleza</span> y <span class="txt-bienestar">Bienestar</span>
-        </h2>
+        <h2 class="titulo-seccion-principal">Belleza <span class="txt-acento">y</span> Bienestar</h2>
+        <p class="subtitulo-seccion">Peluquerías, estética, uñas y yoga en El Espinar, San Rafael, La Estación y Los Ángeles</p>
+        <div class="divisor-flor" aria-hidden="true">
+            <span class="linea"></span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="3"/><ellipse cx="12" cy="5.5" rx="2.6" ry="4"/><ellipse cx="12" cy="18.5" rx="2.6" ry="4"/><ellipse cx="5.5" cy="12" rx="4" ry="2.6"/><ellipse cx="18.5" cy="12" rx="4" ry="2.6"/></svg>
+            <span class="linea"></span>
+        </div>
 
         <div class="titulo-bloque">Localización de servicios</div>
         <div class="contenedor-mapa-fijo">
@@ -399,277 +412,251 @@
         </div>
 
         <a href="mailto:info@infoespinar.com?subject=Anuncio%20en%20el%20tabl%C3%B3n%20de%20InfoEspinar" class="banner-comercio">
-            <div class="banner-img"></div>
+            <div class="banner-icono">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+            </div>
             <div class="banner-info">
                 <span class="banner-label">¿Eres comerciante?</span>
-                <h3 class="banner-nombre">¡Anuncia tu negocio aquí!</h3>
+                <h3 class="banner-nombre">Anuncia tu negocio aquí</h3>
                 <div class="banner-sub">Dale visibilidad a tu negocio y llega a todos los vecinos de la zona. Pulsa para informarte.</div>
             </div>
         </a>
 
         <div class="titulo-bloque">Listado de profesionales</div>
         <div class="contenedor-buscador">
-            <input type="text" id="buscadorBienestar" class="input-buscador" placeholder="🔍 Buscar peluquería, centro de estética, uñas, yoga o por núcleo...">
+            <span class="buscador-icono">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            </span>
+            <input type="text" id="buscadorBienestar" class="input-buscador" placeholder="Buscar peluquería, centro de estética, uñas, yoga o por núcleo...">
         </div>
 
         <div class="grid-comercios" id="gridComercios">
 
-            <div class="tarjeta-comercio" data-search="nataraja yoga school la estacion c chatun yoga meditacion bienestar pilates deporte">
+            <div class="tarjeta-comercio nucleo-le" data-search="nataraja yoga school la estacion c chatun yoga meditacion bienestar pilates deporte">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Nataraja Yoga School</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">La Estación</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Chatún, 20, D, La Estación de El Espinar</div>
+                    <span class="chip-nucleo chip-le"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>La Estación</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Chatún, 20, D, La Estación de El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34691151960" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34691151960" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34691151960" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34691151960" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Nataraja+Yoga+School+La+Estacion+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Nataraja+Yoga+School+La+Estacion+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="centro de estetica en armonia san rafael c doña leocadia gomez belleza uñas masajes facial">
+            <div class="tarjeta-comercio nucleo-sr" data-search="centro de estetica en armonia san rafael c doña leocadia gomez belleza uñas masajes facial">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Centro de Estética En Armonía</div>
-                    <a href="https://www.facebook.com/enarmoniasanrafael" target="_blank" rel="noopener" class="enlace-web">🌐 Facebook Oficial</a>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">San Rafael</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Doña Leocadia Gómez, 5, San Rafael</div>
+                    <a href="https://www.facebook.com/enarmoniasanrafael" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>Facebook Oficial</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Doña Leocadia Gómez, 5, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34688955975" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34688955975" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34688955975" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34688955975" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Centro+Estetica+En+Armonia+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:enarmoniasanrafael@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Centro+Estetica+En+Armonia+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:enarmoniasanrafael@gmail.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="peluqueria mar perez san rafael travesia alto del leon cortes peinados tintes pelo">
+            <div class="tarjeta-comercio nucleo-sr" data-search="peluqueria mar perez san rafael travesia alto del leon cortes peinados tintes pelo">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Peluquería Mar Pérez</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">San Rafael</span>
-                    </div>
-                    <div class="direccion-comercio">📍 Tr.ª Alto del León, 26, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Tr.ª Alto del León, 26, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34665865414" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34665865414" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34665865414" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34665865414" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Peluqueria+Mar+Perez+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Peluqueria+Mar+Perez+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="peluqueria za z&a san rafael ctra coruña estetica corte cabello mujer hombre">
+            <div class="tarjeta-comercio nucleo-sr" data-search="peluqueria za z&a san rafael ctra coruña estetica corte cabello mujer hombre">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Peluquería Z&A</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">San Rafael</span>
-                    </div>
-                    <div class="direccion-comercio">📍 Ctra. Coruña, 1, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. Coruña, 1, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34600650534" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34600650534" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34600650534" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34600650534" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Peluqueria+Z+A+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Peluqueria+Z+A+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="peluqueria raquel san rafael c serrano peinados color corte lavado">
+            <div class="tarjeta-comercio nucleo-sr" data-search="peluqueria raquel san rafael c serrano peinados color corte lavado">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Peluquería Raquel</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">San Rafael</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Serrano, 12, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Serrano, 12, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921172036" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921172036" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Peluqueria+Raquel+Calle+Serrano+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Peluqueria+Raquel+Calle+Serrano+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="peluqueria caballeros rafa san rafael n-6 n6 barberia barbero corte pelo hombre chico">
+            <div class="tarjeta-comercio nucleo-sr" data-search="peluqueria caballeros rafa san rafael n-6 n6 barberia barbero corte pelo hombre chico">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Peluquería Caballeros Rafa</div>
-                    <a href="http://www.peluqueriarafa.com/" target="_blank" rel="noopener" class="enlace-web">🌐 peluqueriarafa.com</a>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">San Rafael</span>
-                    </div>
-                    <div class="direccion-comercio">📍 N-6, 9, San Rafael</div>
+                    <a href="http://www.peluqueriarafa.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>peluqueriarafa.com</a>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>N-6, 9, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34618813619" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34618813619" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34618813619" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34618813619" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Peluqueria+Caballeros+Rafa+N6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Peluqueria+Caballeros+Rafa+N6+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-     <div class="tarjeta-comercio" data-search="barberia fer caballeros peluqueria estilo hombre chico corte pelo barba">
-        <div class="info-comercio">
+            <div class="tarjeta-comercio nucleo-ee" data-search="barberia fer caballeros peluqueria estilo hombre chico corte pelo barba">
+                <div class="info-comercio">
                     <div class="nombre-comercio">Barbería Fer</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">El Espinar</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Bruno Ortega, 14, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Bruno Ortega, 14, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34628261214" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34628261214" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Barbería+Fer+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Barbería+Fer+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
-         </div>
+            </div>
 
-       
-            <div class="tarjeta-comercio" data-search="peluqueria celia feijoo benito san rafael ctra segovia estilismo tintes mechas">
+            <div class="tarjeta-comercio nucleo-sr" data-search="peluqueria celia feijoo benito san rafael ctra segovia estilismo tintes mechas">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Peluquería Celia Feijoo</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">San Rafael</span>
-                    </div>
-                    <div class="direccion-comercio">📍 Ctra. Segovia, 2, San Rafael</div>
+                    <span class="chip-nucleo chip-sr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>San Rafael</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ctra. Segovia, 2, San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34628516858" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34628516858" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34628516858" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34628516858" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Peluqueria+Celia+Feijoo+Ctra+Segovia+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Peluqueria+Celia+Feijoo+Ctra+Segovia+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="salon de uñas gg studio nails lasr los angeles de san rafael centro de negocios manicura pedicura gel semipermanente">
+            <div class="tarjeta-comercio nucleo-la" data-search="salon de uñas gg studio nails lasr los angeles de san rafael centro de negocios manicura pedicura gel semipermanente">
                 <div class="info-comercio">
                     <div class="nombre-comercio">GG Studio Nails</div>
-                    <a href="https://www.ggstudionails.com/" target="_blank" rel="noopener" class="enlace-web">🌐 ggstudionails.com</a>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">Los Ángeles de San Rafael</span>
-                    </div>
-                    <div class="direccion-comercio">📍 Centro de Negocios, Ofic. 2.3, Los Ángeles de San Rafael</div>
+                    <a href="https://www.ggstudionails.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>ggstudionails.com</a>
+                    <span class="chip-nucleo chip-la"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Los Ángeles de S.R.</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Centro de Negocios, Ofic. 2.3, Los Ángeles de San Rafael</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34672863672" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34672863672" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34672863672" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34672863672" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=GG+Studio+Nails+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=GG+Studio+Nails+Los+Angeles+de+San+Rafael" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="ester soto eventos el espinar c rey organizacion maquillaje novias bodas belleza">
+            <div class="tarjeta-comercio nucleo-ee" data-search="ester soto eventos el espinar c rey organizacion maquillaje novias bodas belleza">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Ester Soto Eventos</div>
-                    <a href="https://estersotoeventos.com/" target="_blank" rel="noopener" class="enlace-web">🌐 estersotoeventos.com</a>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">El Espinar</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Rey, 10, El Espinar</div>
+                    <a href="https://estersotoeventos.com/" target="_blank" rel="noopener" class="enlace-web"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>estersotoeventos.com</a>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Rey, 10, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34657599450" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34657599450" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34657599450" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34657599450" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Ester+Soto+Eventos+Calle+Rey+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:INFO@ESTERSOTOEVENTOS.COM" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Ester+Soto+Eventos+Calle+Rey+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:INFO@ESTERSOTOEVENTOS.COM" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="beauty by gema garrido el espinar av hontanilla estetica tratamientos limpieza facial pestañas">
+            <div class="tarjeta-comercio nucleo-ee" data-search="beauty by gema garrido el espinar av hontanilla estetica tratamientos limpieza facial pestañas">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Beauty by Gema Garrido</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">El Espinar</span>
-                    </div>
-                    <div class="direccion-comercio">📍 Av. Hontanilla, 8, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Av. Hontanilla, 8, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34670983649" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34670983649" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34670983649" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34670983649" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Beauty+by+Gema+Garrido+Avenida+Hontanilla+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Beauty+by+Gema+Garrido+Avenida+Hontanilla+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="alba array peluqueria y estetica el espinar c arquitecto aranguren corte mechas peinados maquillaje">
+            <div class="tarjeta-comercio nucleo-ee" data-search="alba array peluqueria y estetica el espinar c arquitecto aranguren corte mechas peinados maquillaje">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Alba Array Peluquería & Estética</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">El Espinar</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Arquitecto Aranguren, 10, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Arquitecto Aranguren, 10, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34600441665" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34600441665" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34600441665" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34600441665" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Alba+Array+Peluqueria+Estetica+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Alba+Array+Peluqueria+Estetica+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="centro de belleza flor de vida el espinar c la luna julia perez corporales cejas depilacion">
+            <div class="tarjeta-comercio nucleo-ee" data-search="centro de belleza flor de vida el espinar c la luna julia perez corporales cejas depilacion">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Centro de Belleza Flor de Vida</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">El Espinar</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. la Luna, 2, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. la Luna, 2, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34624092987" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34624092987" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34624092987" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34624092987" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Centro+de+Belleza+Flor+de+Vida+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
-                        <a href="mailto:flordevidabyjuliaperez@gmail.com" class="btn btn-email">📧 Enviar Email</a>
+                        <a href="https://maps.google.com/?q=Centro+de+Belleza+Flor+de+Vida+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
+                        <a href="mailto:flordevidabyjuliaperez@gmail.com" class="btn btn-email"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 6 10-6"/></svg>Enviar Email</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="fantastic nails el espinar c sepulveda uñas acrilicas manicura pedicura estetica de uñas">
+            <div class="tarjeta-comercio nucleo-ee" data-search="fantastic nails el espinar c sepulveda uñas acrilicas manicura pedicura estetica de uñas">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Fantastic Nails</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">El Espinar</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Sepúlveda, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Sepúlveda, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34636446587" class="btn btn-llamar">📞 Llamar</a>
-                            <a href="https://wa.me/34636446587" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 WhatsApp</a>
+                            <a href="tel:+34636446587" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
+                            <a href="https://wa.me/34636446587" target="_blank" rel="noopener" class="btn btn-whatsapp"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>WhatsApp</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Fantastic+Nails+Calle+Sepulveda+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Fantastic+Nails+Calle+Sepulveda+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
 
-            <div class="tarjeta-comercio" data-search="peluqueria rocio el espinar c segovia corte de pelo peinado señora caballero">
+            <div class="tarjeta-comercio nucleo-ee" data-search="peluqueria rocio el espinar c segovia corte de pelo peinado señora caballero">
                 <div class="info-comercio">
                     <div class="nombre-comercio">Peluquería Rocío</div>
-                    <div class="contenedor-burbujas">
-                        <span class="burbuja-nucleo">El Espinar</span>
-                    </div>
-                    <div class="direccion-comercio">📍 C. Segovia, 22, El Espinar</div>
+                    <span class="chip-nucleo chip-ee"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>El Espinar</span>
+                    <div class="direccion-comercio"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>C. Segovia, 22, El Espinar</div>
                     <div class="bloque-botones">
                         <div class="fila-contacto">
-                            <a href="tel:+34921181153" class="btn btn-llamar">📞 Llamar</a>
+                            <a href="tel:+34921181153" class="btn btn-llamar"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Llamar</a>
                         </div>
-                        <a href="https://maps.google.com/?q=Peluqueria+Rocio+Calle+Segovia+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps">📍 Ver en Maps</a>
+                        <a href="https://maps.google.com/?q=Peluqueria+Rocio+Calle+Segovia+El+Espinar" target="_blank" rel="noopener" class="btn btn-maps"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.5-7-11a7 7 0 0 1 14 0c0 4.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Ver en Maps</a>
                     </div>
                 </div>
             </div>
@@ -694,7 +681,6 @@
         const tarjetas = Array.from(contenedor.getElementsByClassName("tarjeta-comercio"));
         const buscador = document.getElementById("buscadorBienestar");
 
-        // Fisher-Yates - orden aleatorio en cada visita
         for (let i = tarjetas.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [tarjetas[i], tarjetas[j]] = [tarjetas[j], tarjetas[i]];
