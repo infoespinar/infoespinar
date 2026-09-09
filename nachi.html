@@ -219,12 +219,12 @@ h1{
 <div class="petals" aria-hidden="true">✦　·　✧　·　✦　　·　✧　　✦</div>
 
 <nav class="nav">
- <a href="#d16"><span class="n">1</span>北京</a><a href="#d17"><span class="n">2</span>故宫</a><a href="#d18"><span class="n">3</span>长城</a>
- <a href="#d19"><span class="n">4</span>Vuelo</a><a href="#d20"><span class="n">5</span>张家界</a><a href="#d21"><span class="n">6</span>袁家界</a>
- <a href="#d22"><span class="n">7</span>大峡谷</a><a href="#d23"><span class="n">8</span>天门山</a>
- <a href="#d24"><span class="n">9</span>芙蓉镇</a><a href="#d25"><span class="n">10</span>凤凰</a><a href="#d26"><span class="n">11</span>沱江</a>
- <a href="#d27"><span class="n">12</span>阳朔</a><a href="#d28"><span class="n">13</span>漓江</a><a href="#d29"><span class="n">14</span>遇龙河</a>
- <a href="#d30"><span class="n">15</span>阳朔</a><a href="#d31"><span class="n">16</span>重庆</a><a href="#d1nov"><span class="n">17</span>回程</a>
+ <a href="#d16">Viernes 16</a><a href="#d17">Sábado 17</a><a href="#d18">Domingo 18</a>
+ <a href="#d19">Lunes 19</a><a href="#d20">Martes 20</a><a href="#d21">Miércoles 21</a>
+ <a href="#d22">Jueves 22</a><a href="#d23">Viernes 23</a><a href="#d24">Sábado 24</a>
+ <a href="#d25">Domingo 25</a><a href="#d26">Lunes 26</a><a href="#d27">Martes 27</a>
+ <a href="#d28">Miércoles 28</a><a href="#d29">Jueves 29</a><a href="#d30">Viernes 30</a>
+ <a href="#d31">Sábado 31</a><a href="#d1nov">Domingo 1</a>
 </nav>
 
 <main class="wrap">
@@ -504,7 +504,7 @@ function imgFallback(el){
 function openDidi(nombreEs,nombreCn){
   var destino=nombreCn||nombreEs||'';
   var titulo=nombreEs ? ('🚕 Pedir coche · '+nombreEs) : '🚕 Pedir coche · DiDi en Alipay';
-  var texto='En China, DiDi funciona mejor como miniprograma dentro de Alipay: usa directamente tu tarjeta extranjera y traduce los mensajes con el conductor. Pulsa "Abrir Alipay" y, dentro, busca 滴滴出行 (DiDi) en el buscador de miniprogramas.'
+  var texto='En China, DiDi funciona mejor como miniprograma dentro de Alipay: usa directamente tu tarjeta extranjera y traduce los mensajes con el conductor. Pulsa "Abrir Alipay" y, dentro, busca 滴滴出行 (DiDi) en el buscador de miniprogramas. Para ubicarlo o navegar, "AMap (高德)" es la opción más usada en China y abrirá tu app si la tienes instalada.'
     +(destino ? (' Dirección a indicar: “'+destino+'”.') : '');
   document.getElementById('mt').textContent=titulo;
   document.getElementById('mb').textContent=texto;
@@ -512,7 +512,10 @@ function openDidi(nombreEs,nombreCn){
   var actions='<a class="btn" href="alipays://platformapi/startapp">Abrir Alipay</a>'
     +'<a class="btn gold" href="https://www.didiglobal.com/" target="_blank">DiDi (web/app)</a>';
   if(destino){
-    actions+='<a class="btn" href="https://map.baidu.com/search/'+q+'" target="_blank">🗺 Baidu Maps</a>'
+    // AMap (高德地图): enlace web oficial con callnative=1 -> si tienes la app
+    // instalada la abre directamente; si no, muestra el mapa en el navegador.
+    actions+='<a class="btn gold" href="https://uri.amap.com/search?keyword='+q+'&src=infoespinar&callnative=1" target="_blank">🗺 AMap (高德)</a>'
+      +'<a class="btn" href="https://map.baidu.com/search/'+q+'" target="_blank">🗺 Baidu Maps</a>'
       +'<a class="btn gold" href="https://www.google.com/maps/search/?api=1&query='+q+'" target="_blank">🗺 Google Maps</a>';
   }
   document.getElementById('ma').innerHTML=actions;
