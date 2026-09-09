@@ -5,16 +5,15 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>龙行中国 · China 2026</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
-
 :root{
+  --serif-cjk:"Songti SC","STSong","Noto Serif SC","PMingLiU","SimSun",serif;
   --red:#e0263a; --red2:#a3122a; --gold:#ffb93d; --jade:#2bb99c; --violet:#8b5cf6;
   --cream:#f4ead7; --ink:#17110e; --muted:#e3d4bb;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
-  margin:0;background:#210b18;color:#fff7e8;font-family:Inter,system-ui,sans-serif;
+  margin:0;background:#210b18;color:#fff7e8;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
   overflow-x:hidden;
   background-image:
     radial-gradient(circle at 8% 8%,rgba(255,203,92,.34),transparent 22%),
@@ -44,7 +43,7 @@ body:before{
 .lantern{width:22px;height:34px;border-radius:48% 48% 42% 42%;background:linear-gradient(90deg,#b91630,#ffb93d,#d51f3a);border:1px solid rgba(255,220,150,.55)}
 .lantern:before{content:"";position:absolute;left:4px;right:4px;top:7px;height:2px;background:rgba(255,238,190,.6);box-shadow:0 8px rgba(255,238,190,.35)}
 .lantern:after{content:"";position:absolute;left:9px;bottom:-10px;width:3px;height:10px;background:#ffb93d;box-shadow:0 7px 0 -1px #ffb93d}
-.coin{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,206,98,.75);box-shadow:inset 0 0 0 5px rgba(255,206,98,.12);font-family:"Noto Serif SC";font-size:13px;text-align:center;line-height:24px;color:#ffd36b}
+.coin{width:28px;height:28px;border-radius:50%;border:2px solid rgba(255,206,98,.75);box-shadow:inset 0 0 0 5px rgba(255,206,98,.12);font-family:var(--serif-cjk);font-size:13px;text-align:center;line-height:24px;color:#ffd36b}
 .cloud{font-size:38px;color:rgba(255,239,196,.18)}
 @keyframes floatUp{0%{transform:translate3d(0,110vh,0) rotate(0deg)}50%{transform:translate3d(30px,50vh,0) rotate(90deg)}100%{transform:translate3d(-25px,-15vh,0) rotate(180deg)}}
 
@@ -59,13 +58,13 @@ body:before{
 .top:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(20,6,15,.55),transparent 75%)}
 .kicker{letter-spacing:.34em;text-transform:uppercase;color:#ffd36b;font-size:.75rem;font-weight:800;text-shadow:0 0 15px rgba(255,179,53,.4)}
 h1{
- font-family:"Noto Serif SC",serif;font-size:clamp(5rem,15vw,12rem);line-height:.78;
+ font-family:var(--serif-cjk);font-size:clamp(5rem,15vw,12rem);line-height:.78;
  margin:18px 0 10px;letter-spacing:-.05em;
  background:linear-gradient(120deg,#ffe9b0,#ffb93d 40%,#e0263a 70%,#8b5cf6);
  -webkit-background-clip:text;background-clip:text;color:transparent;
  text-shadow:6px 8px 0 rgba(156,17,28,.35);
 }
-.hero-sub{font-family:"Noto Serif SC",serif;font-size:clamp(1.2rem,2.5vw,2rem);color:#ffca58}
+.hero-sub{font-family:var(--serif-cjk);font-size:clamp(1.2rem,2.5vw,2rem);color:#ffca58}
 .hero-meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:35px}
 .pill{border:1px solid rgba(255,202,88,.5);padding:9px 13px;border-radius:999px;font-size:.78rem;
  background:linear-gradient(135deg,rgba(188,21,37,.5),rgba(255,164,42,.1));box-shadow:0 8px 25px rgba(0,0,0,.25);
@@ -89,7 +88,7 @@ h1{
  margin:55px 0 25px;display:flex;align-items:end;justify-content:space-between;gap:20px;
  border-bottom:1px solid rgba(255,202,88,.25);padding-bottom:15px;
 }
-.city h2{font-family:"Noto Serif SC",serif;font-size:clamp(2rem,5vw,4rem);margin:0;
+.city h2{font-family:var(--serif-cjk);font-size:clamp(2rem,5vw,4rem);margin:0;
  background:linear-gradient(90deg,#ffe9b0,var(--jade));-webkit-background-clip:text;background-clip:text;color:transparent}
 .city .cn{color:var(--gold);font-size:1rem;letter-spacing:.1em}
 
@@ -102,19 +101,19 @@ h1{
  overflow:hidden;
 }
 .day:before{content:"";position:absolute;left:0;top:0;width:5px;height:100%;background:linear-gradient(var(--red),var(--gold),var(--jade))}
-.day:after{content:"福";position:absolute;right:-15px;top:-35px;font-family:"Noto Serif SC";font-size:13rem;color:rgba(255,198,79,.05);pointer-events:none}
+.day:after{content:"福";position:absolute;right:-15px;top:-35px;font-family:var(--serif-cjk);font-size:13rem;color:rgba(255,198,79,.05);pointer-events:none}
 .day-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
 .daynum{
  flex:none;width:58px;height:58px;border-radius:16px;display:flex;flex-direction:column;
- align-items:center;justify-content:center;font-family:"Noto Serif SC",serif;font-weight:900;
+ align-items:center;justify-content:center;font-family:var(--serif-cjk);font-weight:900;
  background:linear-gradient(135deg,var(--red),var(--violet));box-shadow:0 10px 25px rgba(0,0,0,.35);
 }
 .daynum b{font-size:1.5rem;line-height:1}
 .daynum span{font-size:.55rem;letter-spacing:.1em;color:#ffe9b0}
 .date{color:var(--gold);font-weight:800;letter-spacing:.06em;font-size:.82rem;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
-.date .weekday-cn{font-family:"Noto Serif SC";font-size:.9rem;color:#ffe9b0;letter-spacing:.04em;padding:4px 8px;border:1px solid rgba(255,202,88,.28);border-radius:999px;background:rgba(255,185,61,.08)}
-.day h3{font-family:"Noto Serif SC",serif;font-size:clamp(1.5rem,3vw,2.5rem);margin:7px 0}
-.day-cn{font-family:"Noto Serif SC";color:#e8b98a;font-size:1.05rem}
+.date .weekday-cn{font-family:var(--serif-cjk);font-size:.9rem;color:#ffe9b0;letter-spacing:.04em;padding:4px 8px;border:1px solid rgba(255,202,88,.28);border-radius:999px;background:rgba(255,185,61,.08)}
+.day h3{font-family:var(--serif-cjk);font-size:clamp(1.5rem,3vw,2.5rem);margin:7px 0}
+.day-cn{font-family:var(--serif-cjk);color:#e8b98a;font-size:1.05rem}
 .note{color:var(--muted);line-height:1.7;max-width:850px}
 .timeline{margin-top:25px;display:grid;gap:13px}
 .stop{
@@ -127,7 +126,7 @@ h1{
 .stop:hover{transform:translateY(-3px) scale(1.005);background:rgba(224,38,58,.2);border-color:rgba(255,202,88,.35);box-shadow:0 15px 35px rgba(0,0,0,.25)}
 .time{font-weight:800;color:var(--gold);font-size:.8rem}
 .stop h4{margin:0 0 3px;font-size:1rem}
-.stop .cn{font-family:"Noto Serif SC";color:#bfe8dc;font-size:.88rem}
+.stop .cn{font-family:var(--serif-cjk);color:#bfe8dc;font-size:.88rem}
 .cn,.day-cn{cursor:pointer;transition:color .2s}
 .cn:hover,.day-cn:hover{color:#ffe9b0}
 .stop p{margin:6px 0 0;color:#d3c4b3;font-size:.86rem;line-height:1.5}
@@ -140,9 +139,23 @@ h1{
 }
 .btn:hover{background:linear-gradient(120deg,var(--red),var(--violet))}
 .btn.gold{background:linear-gradient(120deg,rgba(255,185,61,.25),rgba(43,185,156,.2));color:#ffe9b0}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0 5px}
+#searchBox{
+ flex:1;min-width:220px;padding:12px 16px;border-radius:999px;border:1px solid rgba(255,202,88,.3);
+ background:rgba(255,255,255,.05);color:#fff3da;font-size:.9rem;outline:none;
+}
+#searchBox::placeholder{color:#bfa88f}
+#searchBox:focus{border-color:var(--gold);background:rgba(255,255,255,.08)}
+.day.is-today{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,185,61,.25),0 30px 90px rgba(0,0,0,.45)}
+.today-badge{display:inline-block;margin-left:8px;padding:3px 10px;border-radius:999px;background:linear-gradient(120deg,var(--gold),var(--red));color:#2a0a17;font-weight:800;font-size:.68rem;letter-spacing:.06em;vertical-align:middle}
+.nav a.is-today{border-color:var(--gold);background:rgba(255,185,61,.18)}
+.nav a.is-past{opacity:.45}
+.day.is-past-hidden{display:none}
+.day.is-hidden-search{display:none}
 .heroimg{
  width:100%;height:290px;object-fit:cover;border-radius:20px;margin:20px 0;
  border:1px solid rgba(255,202,88,.2);box-shadow:0 18px 50px rgba(0,0,0,.4);
+ background:linear-gradient(135deg,rgba(224,38,58,.25),rgba(139,92,246,.2));
 }
 .hotel{
  margin-top:20px;padding:18px;border-radius:18px;background:rgba(43,185,156,.08);
@@ -160,7 +173,7 @@ h1{
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.72);backdrop-filter:blur(8px);z-index:50;display:none;align-items:center;justify-content:center;padding:20px}
 .modal.open{display:flex}
 .modalbox{max-width:600px;width:100%;background:#22091a;border:1px solid rgba(255,202,88,.35);border-radius:24px;padding:28px;box-shadow:0 30px 100px #000}
-.modalbox h3{font-family:"Noto Serif SC";margin-top:0;color:#ffe9b0}
+.modalbox h3{font-family:var(--serif-cjk);margin-top:0;color:#ffe9b0}
 .close{float:right;border:0;background:none;color:var(--muted);font-size:1.5rem;cursor:pointer}
 .modal-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .res-item{padding:11px 0;border-bottom:1px solid rgba(255,202,88,.16)}
@@ -216,65 +229,72 @@ h1{
 
 <main class="wrap">
 
+<div class="toolbar">
+  <input id="searchBox" type="search" placeholder="🔍 Buscar un lugar, comida o actividad…" oninput="filterDays(this.value)">
+  <button id="pastToggle" class="btn gold" style="display:none" onclick="togglePast()"></button>
+</div>
+<p id="noResults" style="display:none;color:var(--muted);text-align:center;padding:30px 0">Sin resultados para esa búsqueda.</p>
+
+
 <section class="city"><div><div class="cn">北京 · BĚIJĪNG</div><h2>Pekín</h2></div><div style="color:#c9a98f">16 → 19 OCT</div></section>
 
-<article class="day" id="d16">
+<article class="day" id="d16" data-date="2026-10-16">
  <div class="day-head">
   <div class="daynum"><b>1</b><span>DÍA</span></div>
   <div><div class="date">Viernes 16<span class="weekday-cn">星期五</span></div><h3>Llegada & primera toma de contacto</h3><div class="day-cn">抵达北京 · Dìdá Běijīng</div></div>
  </div>
- <img class="heroimg" src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1600&q=85" alt="China">
+ <img class="heroimg" onerror="imgFallback(this)" src="https://images.unsplash.com/photo-1508804185872-d7badad00f7d?auto=format&fit=crop&w=1600&q=85" alt="China">
  <p class="note">Llegada a las 17:35 · traslado al hotel · check-in · pato laqueado · paseo nocturno por Wangfujing.</p>
  <div class="timeline">
   <div class="stop"><div class="time">17:35</div><div><h4>Llegada a Pekín</h4><div class="cn">北京 · Běijīng</div><p>Primer contacto con la ciudad y traslado hacia Wangfujing.</p></div><div class="actions"><button class="btn" onclick="showInfo('Llegada a Pekín','Aeropuerto pendiente de confirmar: PEK o PKX.')">ℹ Detalles</button></div></div>
-  <div class="stop"><div class="time">NOCHE</div><div><h4>Wangfujing</h4><div class="cn">王府井 · Wángfǔjǐng</div><p>Paseo peatonal y primera cena con pato laqueado.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">OPCIONAL</div><div><h4>Templo Lama</h4><div class="cn">雍和宫 · Yōnghé Gōng</div><p>Comprobar visita. El templo no abre de noche; en temporada de octubre su horario oficial llega hasta las 17:00.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">NOCHE</div><div><h4>Wangfujing</h4><div class="cn">王府井 · Wángfǔjǐng</div><p>Paseo peatonal y primera cena con pato laqueado.</p></div><div class="actions"><button class="btn" onclick="openDidi('Wangfujing','王府井')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">OPCIONAL</div><div><h4>Templo Lama</h4><div class="cn">雍和宫 · Yōnghé Gōng</div><p>Comprobar visita. El templo no abre de noche; en temporada de octubre su horario oficial llega hasta las 17:00.</p></div><div class="actions"><button class="btn" onclick="openDidi('Templo Lama','雍和宫')">🚕 DiDi</button></div></div>
  </div>
  <div class="hotel"><b>🏨 Lavande Hotel (Tiananmen Wangfujing)</b><small>Base en Pekín · guardar aquí la reserva cuando la tengamos.</small></div>
  <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d17">
+<article class="day" id="d17" data-date="2026-10-17">
  <div class="day-head">
   <div class="daynum"><b>2</b><span>DÍA</span></div>
   <div><div class="date">Sábado 17<span class="weekday-cn">星期六</span></div><h3>El eje imperial histórico & hutongs</h3><div class="day-cn">皇城中轴线 · Huángchéng zhōu zhóuxiàn</div></div>
  </div>
- <img class="heroimg" src="https://upload.wikimedia.org/wikipedia/commons/5/5b/China_%28Beijing%29_Aerial_view_of_Forbidden_City_%2838884882275%29.jpg" alt="Ciudad Prohibida">
+ <img class="heroimg" onerror="imgFallback(this)" src="https://upload.wikimedia.org/wikipedia/commons/5/5b/China_%28Beijing%29_Aerial_view_of_Forbidden_City_%2838884882275%29.jpg" alt="Ciudad Prohibida">
  <div class="timeline">
-  <div class="stop"><div class="time">MAÑANA</div><div><h4>Plaza de Tiananmen</h4><div class="cn">天安门广场 · Tiān'ānmén Guǎngchǎng</div><p>Reserva previa. Punto de entrada al eje imperial.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">3 h</div><div><h4>Ciudad Prohibida · Palacio Imperial</h4><div class="cn">故宫 · Gùgōng</div><p>Recorrido de sur a norte por los patios y salas imperiales.</p></div><div class="actions"><button class="btn gold" onclick="showInfo('故宫 · Ciudad Prohibida','Reserva / entrada → pendiente de añadir')">🎟 Reserva</button><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">MEDIODÍA</div><div><h4>Parque Jingshan</h4><div class="cn">景山公园 · Jǐngshān Gōngyuán</div><p>Subida a Wanchun Pavilion para la panorámica sobre los tejados dorados.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">TARDE</div><div><h4>Nanluoguxiang + Hutongs</h4><div class="cn">南锣鼓巷 · Nánluógǔxiàng</div><p>Paseo a pie hacia las Torres del Tambor y la Campana.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">NOCHE</div><div><h4>Houhai / Shichahai</h4><div class="cn">什刹海 · Shíchàhǎi</div><p>Cena y cerveza artesana junto a los lagos.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">MAÑANA</div><div><h4>Plaza de Tiananmen</h4><div class="cn">天安门广场 · Tiān'ānmén Guǎngchǎng</div><p>Reserva previa. Punto de entrada al eje imperial.</p></div><div class="actions"><button class="btn" onclick="openDidi('Plaza de Tiananmen','天安门广场')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">3 h</div><div><h4>Ciudad Prohibida · Palacio Imperial</h4><div class="cn">故宫 · Gùgōng</div><p>Recorrido de sur a norte por los patios y salas imperiales.</p></div><div class="actions"><button class="btn gold" onclick="showInfo('故宫 · Ciudad Prohibida','Reserva / entrada → pendiente de añadir')">🎟 Reserva</button><button class="btn" onclick="openDidi('Ciudad Prohibida','故宫')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">MEDIODÍA</div><div><h4>Parque Jingshan</h4><div class="cn">景山公园 · Jǐngshān Gōngyuán</div><p>Subida a Wanchun Pavilion para la panorámica sobre los tejados dorados.</p></div><div class="actions"><button class="btn" onclick="openDidi('Parque Jingshan','景山公园')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">TARDE</div><div><h4>Nanluoguxiang + Hutongs</h4><div class="cn">南锣鼓巷 · Nánluógǔxiàng</div><p>Paseo a pie hacia las Torres del Tambor y la Campana.</p></div><div class="actions"><button class="btn" onclick="openDidi('Nanluoguxiang','南锣鼓巷')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">NOCHE</div><div><h4>Houhai / Shichahai</h4><div class="cn">什刹海 · Shíchàhǎi</div><p>Cena y cerveza artesana junto a los lagos.</p></div><div class="actions"><button class="btn" onclick="openDidi('Houhai · Shichahai','什刹海')">🚕 DiDi</button></div></div>
  </div>
  <div class="warning">💡 <b>Templo Lama:</b> mejor moverlo aquí durante el día si no se visita el viernes. El horario oficial de octubre es 09:00–17:00.</div>
  <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d18">
+<article class="day" id="d18" data-date="2026-10-18">
  <div class="day-head">
   <div class="daynum"><b>3</b><span>DÍA</span></div>
   <div><div class="date">Domingo 18<span class="weekday-cn">星期日</span></div><h3>La Gran Muralla & vanguardia</h3><div class="day-cn">长城 · Chángchéng</div></div>
  </div>
- <img class="heroimg" src="https://images.trvl-media.com/place/553248635975094603/58ef46ad-ec2c-444d-8956-85d59c0eff9b.jpg" alt="Gran Muralla de Mutianyu">
+ <img class="heroimg" onerror="imgFallback(this)" src="https://images.trvl-media.com/place/553248635975094603/58ef46ad-ec2c-444d-8956-85d59c0eff9b.jpg" alt="Gran Muralla de Mutianyu">
  <div class="timeline">
-  <div class="stop"><div class="time">07:30–14:00</div><div><h4>Gran Muralla · Mutianyu</h4><div class="cn">慕田峪长城 · Mùtiányù Chángchéng</div><p>Teleférico · torres · caminata panorámica · bajada en tobogán.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">15:30–18:30</div><div><h4>Distrito de Arte 798</h4><div class="cn">798艺术区 · 798 Yìshùqū</div><p>Galerías, esculturas, cafeterías de diseño y antiguas naves industriales.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">07:30–14:00</div><div><h4>Gran Muralla · Mutianyu</h4><div class="cn">慕田峪长城 · Mùtiányù Chángchéng</div><p>Teleférico · torres · caminata panorámica · bajada en tobogán.</p></div><div class="actions"><button class="btn" onclick="openDidi('Gran Muralla · Mutianyu','慕田峪长城')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">15:30–18:30</div><div><h4>Distrito de Arte 798</h4><div class="cn">798艺术区 · 798 Yìshùqū</div><p>Galerías, esculturas, cafeterías de diseño y antiguas naves industriales.</p></div><div class="actions"><button class="btn" onclick="openDidi('Distrito de Arte 798','798艺术区')">🚕 DiDi</button></div></div>
   <div class="stop"><div class="time">TARDE-NOCHE</div><div><h4>Masaje recuperador</h4><div class="cn">足疗 · Zúliáo</div><p>Masaje de pies y espalda después de la Muralla.</p></div><div class="actions"><button class="btn gold" onclick="showInfo('Masaje','Lugar pendiente de elegir cerca de la ruta de vuelta.')">＋ Añadir</button></div></div>
-  <div class="stop"><div class="time">NOCHE</div><div><h4>Sanlitun</h4><div class="cn">三里屯 · Sānlǐtún</div><p>Cena en el barrio moderno y cosmopolita.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">NOCHE</div><div><h4>Sanlitun</h4><div class="cn">三里屯 · Sānlǐtún</div><p>Cena en el barrio moderno y cosmopolita.</p></div><div class="actions"><button class="btn" onclick="openDidi('Sanlitun','三里屯')">🚕 DiDi</button></div></div>
  </div>
  <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d19">
+<article class="day" id="d19" data-date="2026-10-19">
  <div class="day-head">
   <div class="daynum"><b>4</b><span>DÍA</span></div>
   <div><div class="date">Lunes 19<span class="weekday-cn">星期一</span></div><h3>Dos complejos imperiales & vuelo</h3><div class="day-cn">皇家园林 · Huángjiā yuánlín</div></div>
  </div>
  <div class="timeline">
-  <div class="stop"><div class="time">07:30–11:30</div><div><h4>Palacio de Verano</h4><div class="cn">颐和园 · Yíhéyuán</div><p>Gran Corredor · Barco de Mármol · Torre del Incienso Budista · lago Kunming.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">07:30–11:30</div><div><h4>Palacio de Verano</h4><div class="cn">颐和园 · Yíhéyuán</div><p>Gran Corredor · Barco de Mármol · Torre del Incienso Budista · lago Kunming.</p></div><div class="actions"><button class="btn" onclick="openDidi('Palacio de Verano','颐和园')">🚕 DiDi</button></div></div>
   <div class="stop"><div class="time">11:30–12:15</div><div><h4>Traslado hacia el sur</h4><div class="cn">前往天坛 · Qiánwǎng Tiāntán</div><p>Taxi o metro + comida rápida.</p></div><div class="actions"></div></div>
-  <div class="stop"><div class="time">12:15–14:00</div><div><h4>Templo del Cielo</h4><div class="cn">天坛 · Tiāntán</div><p>Salón de la Oración por la Buena Cosecha · Altar Circular · parque.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">12:15–14:00</div><div><h4>Templo del Cielo</h4><div class="cn">天坛 · Tiāntán</div><p>Salón de la Oración por la Buena Cosecha · Altar Circular · parque.</p></div><div class="actions"><button class="btn" onclick="openDidi('Templo del Cielo','天坛')">🚕 DiDi</button></div></div>
   <div class="stop"><div class="time">14:00–17:15</div><div><h4>Equipaje → aeropuerto</h4><div class="cn">机场 · Jīchǎng</div><p>Recoger equipaje y traslado al aeropuerto. Falta confirmar PEK o PKX.</p></div><div class="actions"><button class="btn gold" onclick="showInfo('Aeropuerto','PEK Capital o PKX Daxing — pendiente de confirmar con el billete.')">✈ Ver</button></div></div>
   <div class="stop"><div class="time">19:15–21:45</div><div><h4>Vuelo Pekín → Zhangjiajie</h4><div class="cn">北京 → 张家界 · Běijīng → Zhāngjiājiè</div><p>Llegada y traslado aproximado de 38 min a Wulingyuan.</p></div><div class="actions"><button class="btn gold" onclick="showInfo('Vuelo','Aquí podremos adjuntar el billete / reserva cuando me lo pases.')">🎟 Reserva</button></div></div>
  </div>
@@ -284,26 +304,26 @@ h1{
 
 <section class="city"><div><div class="cn">张家界 · ZHĀNGJIĀJIÈ</div><h2>Zhangjiajie</h2></div><div style="color:#c9a98f">20 → 23 OCT</div></section>
 
-<article class="day" id="d20">
+<article class="day" id="d20" data-date="2026-10-20">
  <div class="day-head">
   <div class="daynum"><b>5</b><span>DÍA</span></div>
   <div><div class="date">Martes 20<span class="weekday-cn">星期二</span></div><h3>El valle y las maravillas subterráneas</h3><div class="day-cn">金鞭溪 · Jīnbiān Xī</div></div>
  </div>
  <div class="timeline">
-  <div class="stop"><div class="time">09:00–13:30</div><div><h4>Arroyo del Látigo Dorado</h4><div class="cn">金鞭溪 · Jīnbiān Xī</div><p>Ruta de unos 6 km, llana, por el fondo del cañón entre columnas de roca.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">14:30–17:00</div><div><h4>Cueva del Dragón Amarillo</h4><div class="cn">黄龙洞 · Huánglóng Dòng</div><p>Pasadizos, estalagmitas y tramo en barca por el río subterráneo.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">09:00–13:30</div><div><h4>Arroyo del Látigo Dorado</h4><div class="cn">金鞭溪 · Jīnbiān Xī</div><p>Ruta de unos 6 km, llana, por el fondo del cañón entre columnas de roca.</p></div><div class="actions"><button class="btn" onclick="openDidi('Arroyo del Látigo Dorado','金鞭溪')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">14:30–17:00</div><div><h4>Cueva del Dragón Amarillo</h4><div class="cn">黄龙洞 · Huánglóng Dòng</div><p>Pasadizos, estalagmitas y tramo en barca por el río subterráneo.</p></div><div class="actions"><button class="btn" onclick="openDidi('Cueva del Dragón Amarillo','黄龙洞')">🚕 DiDi</button></div></div>
   <div class="stop"><div class="time">NOCHE</div><div><h4>Sanxiaguo + masaje de pies</h4><div class="cn">三下锅 · Sānxiàguō</div><p>Cena local y recuperación para el día de montaña.</p></div><div class="actions"></div></div>
  </div>
  <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d21">
+<article class="day" id="d21" data-date="2026-10-21">
  <div class="day-head">
   <div class="daynum"><b>6</b><span>DÍA</span></div>
   <div><div class="date">Miércoles 21<span class="weekday-cn">星期三</span></div><h3>Las cumbres de Avatar & Tianzi</h3><div class="day-cn">袁家界 · Yuánjiājiè</div></div>
  </div>
  <div class="timeline">
-  <div class="stop"><div class="time">MADRUGÓN</div><div><h4>Ascensor Bailong</h4><div class="cn">百龙天梯 · Bǎilóng Tiāntī</div><p>Subida a la zona alta del parque para comenzar Yuanjiajie.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">MADRUGÓN</div><div><h4>Ascensor Bailong</h4><div class="cn">百龙天梯 · Bǎilóng Tiāntī</div><p>Subida a la zona alta del parque para comenzar Yuanjiajie.</p></div><div class="actions"><button class="btn" onclick="openDidi('Ascensor Bailong','百龙天梯')">🚕 DiDi</button></div></div>
   <div class="stop"><div class="time">MAÑANA</div><div><h4>Yuanjiajie</h4><div class="cn">袁家界 · Yuánjiājiè</div><p>Miradores de la llamada Montaña Aleluya y Primer Puente Bajo el Cielo.</p></div><div class="actions"></div></div>
   <div class="stop"><div class="time">TARDE</div><div><h4>Reserva de Tianzi</h4><div class="cn">天子山 · Tiānzǐ Shān</div><p>Formaciones de picos y descenso final en teleférico de Tianzi.</p></div><div class="actions"></div></div>
   <div class="stop"><div class="time">NOCHE</div><div><h4>Wulingyuan</h4><div class="cn">武陵源 · Wǔlíngyuán</div><p>Cena y descanso.</p></div><div class="actions"></div></div>
@@ -311,49 +331,49 @@ h1{
  <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d22">
+<article class="day" id="d22" data-date="2026-10-22">
  <div class="day-head">
   <div class="daynum"><b>7</b><span>DÍA</span></div>
   <div><div class="date">Jueves 22<span class="weekday-cn">星期四</span></div><h3>Vértigo en el Gran Cañón & cambio de base</h3><div class="day-cn">大峡谷 · Dàxiágǔ</div></div>
  </div>
  <div class="timeline">
-  <div class="stop"><div class="time">MAÑANA</div><div><h4>Zhangjiajie Grand Canyon</h4><div class="cn">张家界大峡谷 · Zhāngjiājiè Dàxiágǔ</div><p>Puente de cristal + opciones de aventura: toboganes, tirolina, vía ferrata o puenting.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">MAÑANA</div><div><h4>Zhangjiajie Grand Canyon</h4><div class="cn">张家界大峡谷 · Zhāngjiājiè Dàxiágǔ</div><p>Puente de cristal + opciones de aventura: toboganes, tirolina, vía ferrata o puenting.</p></div><div class="actions"><button class="btn" onclick="openDidi('Zhangjiajie Grand Canyon','张家界大峡谷')">🚕 DiDi</button></div></div>
   <div class="stop"><div class="time">TARDE</div><div><h4>Posible paseo en barca</h4><div class="cn">游船 · Yóuchuán</div><p>Regreso a Wulingyuan, equipaje y taxi (~45 min) a Zhangjiajie ciudad.</p></div><div class="actions"></div></div>
-  <div class="stop"><div class="time">NOCHE</div><div><h4>Centro de Zhangjiajie</h4><div class="cn">张家界市 · Zhāngjiājiè Shì</div><p>Paseo y cena cerca de la zona del teleférico.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">NOCHE</div><div><h4>Centro de Zhangjiajie</h4><div class="cn">张家界市 · Zhāngjiājiè Shì</div><p>Paseo y cena cerca de la zona del teleférico.</p></div><div class="actions"><button class="btn" onclick="openDidi('Centro de Zhangjiajie','张家界市')">🚕 DiDi</button></div></div>
  </div>
  <div class="hotel"><b>🏨 Yearn Stay Hotel</b><small>Floor 4, Bojin Apartment Building, Huatiancheng, Yongding District, 427000 Zhangjiajie, Hunan, China</small></div>
  <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d23">
+<article class="day" id="d23" data-date="2026-10-23">
  <div class="day-head">
   <div class="daynum"><b>8</b><span>DÍA</span></div>
   <div><div class="date">Viernes 23<span class="weekday-cn">星期五</span></div><h3>La Puerta del Cielo & altas dosis de adrenalina</h3><div class="day-cn">天门山 · Tiānmén Shān</div></div>
  </div>
- <img class="heroimg" src="https://sailingstonetravel.b-cdn.net/wp-content/uploads/2019/05/Tianmen-Mountain-Zhangjiajie-48-copy.jpg" alt="Pasarela de cristal de Tianmen">
+ <img class="heroimg" onerror="imgFallback(this)" src="https://sailingstonetravel.b-cdn.net/wp-content/uploads/2019/05/Tianmen-Mountain-Zhangjiajie-48-copy.jpg" alt="Pasarela de cristal de Tianmen">
  <div class="timeline">
-  <div class="stop"><div class="time">MAÑANA</div><div><h4>Vía Ferrata Gran Pared · Qixing Mountain</h4><div class="cn">七星山 · Qīxīng Shān</div><p>3–4 horas de recorrido vertical por acantilados.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
-  <div class="stop"><div class="time">TARDE</div><div><h4>Montaña Tianmen</h4><div class="cn">天门山 · Tiānmén Shān</div><p>Pasarelas de cristal + Puerta del Cielo + 999 escalones.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">MAÑANA</div><div><h4>Vía Ferrata Gran Pared · Qixing Mountain</h4><div class="cn">七星山 · Qīxīng Shān</div><p>3–4 horas de recorrido vertical por acantilados.</p></div><div class="actions"><button class="btn" onclick="openDidi('Vía Ferrata · Qixing Mountain','七星山')">🚕 DiDi</button></div></div>
+  <div class="stop"><div class="time">TARDE</div><div><h4>Montaña Tianmen</h4><div class="cn">天门山 · Tiānmén Shān</div><p>Pasarelas de cristal + Puerta del Cielo + 999 escalones.</p></div><div class="actions"><button class="btn" onclick="openDidi('Montaña Tianmen','天门山')">🚕 DiDi</button></div></div>
  </div>
  <div class="warning">⚠️ <b>Importante para la versión final:</b> revisaremos el estado operativo de Tianmen Mountain y su sistema de acceso/transporte justo antes del viaje. Las condiciones pueden cambiar.</div>
  <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d24">
+<article class="day" id="d24" data-date="2026-10-24">
   <div class="day-head"><div class="daynum"><b>9</b><span>DÍA</span></div>
   <div><div class="date">Sábado 24<span class="weekday-cn">星期六</span></div><h3>Tianmen Mountain & rumbo a Furong Town</h3><div class="day-cn">天门山 → 芙蓉镇 · Tiānmén Shān → Fúróng Zhèn</div></div></div>
   <div class="timeline">
-    <div class="stop"><div class="time">08:00–14:00</div><div><h4>Tianmen Mountain</h4><div class="cn">天门山 · Tiānmén Shān</div><p>Teleférico urbano, pasarelas de cristal, escaleras mecánicas interiores hacia la Cueva de la Puerta del Cielo y descenso en autobús por la carretera de las 99 curvas.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+    <div class="stop"><div class="time">08:00–14:00</div><div><h4>Tianmen Mountain</h4><div class="cn">天门山 · Tiānmén Shān</div><p>Teleférico urbano, pasarelas de cristal, escaleras mecánicas interiores hacia la Cueva de la Puerta del Cielo y descenso en autobús por la carretera de las 99 curvas.</p></div><div class="actions"><button class="btn" onclick="openDidi('Tianmen Mountain','天门山')">🚕 DiDi</button></div></div>
     <div class="stop"><div class="time">OPCIONES</div><div><h4>Lago Baofeng</h4><div class="cn">宝峰湖 · Bǎofēng Hú</div><p>Alternativa relajada: lago verde esmeralda entre picos, paseo en barca tradicional y canciones locales.</p></div><div class="actions"></div></div>
     <div class="stop"><div class="time">OPCIONES</div><div><h4>Poblado Antiguo de Dayong</h4><div class="cn">大庸古城 · Dàyōng Gǔchéng</div><p>Paseo por el casco histórico reconstruido junto al río Lishui, arquitectura Tujia y compras de artesanía o té.</p></div><div class="actions"></div></div>
-    <div class="stop"><div class="time">16:00–17:30</div><div><h4>Traslado a Furong Town</h4><div class="cn">张家界 → 芙蓉镇 · Zhāngjiājiè → Fúróng Zhèn</div><p>Opción recomendada: DiDi directo de hotel a hotel (~75 min). Alternativa: tren HSR Zhangjiajiexi → Furongzhen (~23 min) + taxi local.</p></div><div class="actions"><button class="btn" onclick="openDidi()">🚕 DiDi</button></div></div>
+    <div class="stop"><div class="time">16:00–17:30</div><div><h4>Traslado a Furong Town</h4><div class="cn">张家界 → 芙蓉镇 · Zhāngjiājiè → Fúróng Zhèn</div><p>Opción recomendada: DiDi directo de hotel a hotel (~75 min). Alternativa: tren HSR Zhangjiajiexi → Furongzhen (~23 min) + taxi local.</p></div><div class="actions"><button class="btn" onclick="openDidi('Furong Town','芙蓉镇')">🚕 DiDi</button></div></div>
     <div class="stop"><div class="time">NOCHE</div><div><h4>Furong Town iluminado</h4><div class="cn">芙蓉镇 · Fúróng Zhèn</div><p>Check-in, calles empedradas, Gran Cascada iluminada, Palacio Tuwang y cena con vistas.</p></div><div class="actions"></div></div>
   </div>
   <div class="hotel"><b>🏨 Furong Town</b><small>Hotel pendiente de elegir.</small></div>
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d25">
+<article class="day" id="d25" data-date="2026-10-25">
   <div class="day-head"><div class="daynum"><b>10</b><span>DÍA</span></div>
   <div><div class="date">Domingo 25<span class="weekday-cn">星期日</span></div><h3>Mañana en Furong & salida a Fenghuang</h3><div class="day-cn">芙蓉镇 → 凤凰古城 · Fúróng Zhèn → Fènghuáng Gǔchéng</div></div></div>
   <div class="timeline">
@@ -366,7 +386,7 @@ h1{
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d26">
+<article class="day" id="d26" data-date="2026-10-26">
   <div class="day-head"><div class="daynum"><b>11</b><span>DÍA</span></div>
   <div><div class="date">Lunes 26<span class="weekday-cn">星期一</span></div><h3>Mañana en Fenghuang & enlace al siguiente destino</h3><div class="day-cn">凤凰古城 · Fènghuáng Gǔchéng</div></div></div>
   <div class="timeline">
@@ -376,7 +396,7 @@ h1{
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d27">
+<article class="day" id="d27" data-date="2026-10-27">
   <div class="day-head"><div class="daynum"><b>12</b><span>DÍA</span></div>
   <div><div class="date">Martes 27<span class="weekday-cn">星期二</span></div><h3>Traslado largo hacia Yangshuo</h3><div class="day-cn">前往阳朔 · Qiánwǎng Yángshuò</div></div></div>
   <div class="timeline">
@@ -386,7 +406,7 @@ h1{
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d28">
+<article class="day" id="d28" data-date="2026-10-28">
   <div class="day-head"><div class="daynum"><b>13</b><span>DÍA</span></div>
   <div><div class="date">Miércoles 28<span class="weekday-cn">星期三</span></div><h3>Yangshuo · río Li & amanecer</h3><div class="day-cn">阳朔 · 桂林山水 · Yángshuò · Guìlín Shānshuǐ</div></div></div>
   <div class="timeline">
@@ -396,7 +416,7 @@ h1{
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d29">
+<article class="day" id="d29" data-date="2026-10-29">
   <div class="day-head"><div class="daynum"><b>14</b><span>DÍA</span></div>
   <div><div class="date">Jueves 29<span class="weekday-cn">星期四</span></div><h3>Yangshuo · rutas & río Yulong</h3><div class="day-cn">遇龙河 · Yùlóng Hé</div></div></div>
   <div class="timeline">
@@ -406,7 +426,7 @@ h1{
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d30">
+<article class="day" id="d30" data-date="2026-10-30">
   <div class="day-head"><div class="daynum"><b>15</b><span>DÍA</span></div>
   <div><div class="date">Viernes 30<span class="weekday-cn">星期五</span></div><h3>Último día en Yangshuo</h3><div class="day-cn">阳朔 · Yángshuò</div></div></div>
   <div class="timeline">
@@ -416,7 +436,7 @@ h1{
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d31">
+<article class="day" id="d31" data-date="2026-10-31">
   <div class="day-head"><div class="daynum"><b>16</b><span>DÍA</span></div>
   <div><div class="date">Sábado 31<span class="weekday-cn">星期六</span></div><h3>Tren a Chongqing & noche en Hongyadong</h3><div class="day-cn">重庆 · Chóngqìng</div></div></div>
   <div class="timeline">
@@ -427,7 +447,7 @@ h1{
   <div class="backtop"><a href="#inicio" class="btn gold">⬆ Arriba</a></div>
 </article>
 
-<article class="day" id="d1nov">
+<article class="day" id="d1nov" data-date="2026-11-01">
   <div class="day-head"><div class="daynum"><b>17</b><span>DÍA</span></div>
   <div><div class="date">Domingo 1 noviembre<span class="weekday-cn">星期日</span></div><h3>Mañana en Chongqing & vuelo de regreso</h3><div class="day-cn">重庆 → 马德里 · Chóngqìng → Mǎdélǐ</div></div></div>
   <div class="timeline">
@@ -461,16 +481,41 @@ function showInfo(t,b,actionsHtml){
 }
 function closeInfo(){document.getElementById('modal').classList.remove('open')}
 
-// --- DiDi vía Alipay ---
+// --- Fallback de imágenes ---
+// Si una foto no carga (habitual en China sin VPN, Unsplash/Wikimedia suelen estar
+// bloqueados), la sustituimos por un SVG incrustado (sin red) para que nunca se vea rota.
+function imgFallback(el){
+  el.onerror=null;
+  el.src="data:image/svg+xml;utf8,"+encodeURIComponent(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450">'+
+    '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">'+
+    '<stop offset="0%" stop-color="%23e0263a"/><stop offset="55%" stop-color="%237e3a8a"/>'+
+    '<stop offset="100%" stop-color="%232bb99c"/></linearGradient></defs>'+
+    '<rect width="800" height="450" fill="url(%23g)"/>'+
+    '<text x="400" y="245" font-family="serif" font-size="150" fill="rgba(255,255,255,.14)" text-anchor="middle">福</text>'+
+    '</svg>'
+  );
+}
+
+// --- DiDi vía Alipay + mapas ---
 // DiDi funciona en China como miniprograma dentro de Alipay (más estable con
-// tarjetas extranjeras que la app independiente). Intentamos abrir Alipay
-// directamente; si no está instalada, se ofrece la web de DiDi como alternativa.
-function openDidi(){
-  document.getElementById('mt').textContent='🚕 Pedir coche · DiDi en Alipay';
-  document.getElementById('mb').textContent='En China, DiDi funciona mejor como miniprograma dentro de Alipay: usa directamente tu tarjeta extranjera y traduce los mensajes con el conductor. Pulsa "Abrir Alipay" y, dentro, busca 滴滴出行 (DiDi) en el buscador de miniprogramas. Si Alipay no está instalada, usa la app independiente de DiDi.';
-  document.getElementById('ma').innerHTML=
-   '<a class="btn" href="alipays://platformapi/startapp">Abrir Alipay</a>'+
-   '<a class="btn gold" href="https://www.didiglobal.com/" target="_blank">Abrir DiDi (web / app)</a>';
+// tarjetas extranjeras que la app independiente). Añadimos también enlaces de
+// mapa: Baidu funciona sin VPN dentro de China, Google Maps fuera / con VPN.
+function openDidi(nombreEs,nombreCn){
+  var destino=nombreCn||nombreEs||'';
+  var titulo=nombreEs ? ('🚕 Pedir coche · '+nombreEs) : '🚕 Pedir coche · DiDi en Alipay';
+  var texto='En China, DiDi funciona mejor como miniprograma dentro de Alipay: usa directamente tu tarjeta extranjera y traduce los mensajes con el conductor. Pulsa "Abrir Alipay" y, dentro, busca 滴滴出行 (DiDi) en el buscador de miniprogramas.'
+    +(destino ? (' Dirección a indicar: “'+destino+'”.') : '');
+  document.getElementById('mt').textContent=titulo;
+  document.getElementById('mb').textContent=texto;
+  var q=encodeURIComponent(destino);
+  var actions='<a class="btn" href="alipays://platformapi/startapp">Abrir Alipay</a>'
+    +'<a class="btn gold" href="https://www.didiglobal.com/" target="_blank">DiDi (web/app)</a>';
+  if(destino){
+    actions+='<a class="btn" href="https://map.baidu.com/search/'+q+'" target="_blank">🗺 Baidu Maps</a>'
+      +'<a class="btn gold" href="https://www.google.com/maps/search/?api=1&query='+q+'" target="_blank">🗺 Google Maps</a>';
+  }
+  document.getElementById('ma').innerHTML=actions;
   document.getElementById('modal').classList.add('open');
 }
 
@@ -525,7 +570,72 @@ function togglePinyin(){
   p.classList.toggle('active',pinyinMode);
   p.textContent=pinyinMode ? '汉 Ver en 汉字' : '中 Ver en Pinyin';
 }
-document.addEventListener('DOMContentLoaded',initPinyin);
+
+// --- Buscador: filtra tarjetas de día por texto ---
+function filterDays(q){
+  q=q.trim().toLowerCase();
+  var any=false;
+  document.querySelectorAll('.day').forEach(function(day){
+    var match = !q || day.textContent.toLowerCase().indexOf(q) !== -1;
+    day.classList.toggle('is-hidden-search', !match);
+    if(match) any=true;
+  });
+  document.querySelectorAll('.city').forEach(function(city){ city.style.display = q ? 'none' : ''; });
+  document.getElementById('noResults').style.display = (q && !any) ? 'block' : 'none';
+}
+
+// --- Día actual + ocultar días ya pasados ---
+var pastVisible=false;
+function markTodayAndPast(){
+  var today=new Date(); today.setHours(0,0,0,0);
+  var pastCount=0;
+  document.querySelectorAll('.day[data-date]').forEach(function(day){
+    var d=new Date(day.dataset.date+'T00:00:00');
+    var navLink=document.querySelector('.nav a[href="#'+day.id+'"]');
+    if(d.getTime()===today.getTime()){
+      day.classList.add('is-today');
+      var h3=day.querySelector('h3');
+      if(h3 && !h3.querySelector('.today-badge')){
+        var b=document.createElement('span'); b.className='today-badge'; b.textContent='HOY';
+        h3.appendChild(b);
+      }
+      if(navLink) navLink.classList.add('is-today');
+    } else if(d.getTime()<today.getTime()){
+      day.classList.add('is-past');
+      day.classList.add('is-past-hidden');
+      pastCount++;
+      if(navLink) navLink.classList.add('is-past');
+    }
+  });
+  var toggle=document.getElementById('pastToggle');
+  if(pastCount>0){
+    toggle.style.display='inline-flex';
+    toggle.textContent='📅 Mostrar '+pastCount+' día'+(pastCount>1?'s':'')+' pasado'+(pastCount>1?'s':'');
+  }
+}
+function togglePast(){
+  pastVisible=!pastVisible;
+  document.querySelectorAll('.day.is-past').forEach(function(day){
+    day.classList.toggle('is-past-hidden', !pastVisible);
+  });
+  var toggle=document.getElementById('pastToggle');
+  var n=document.querySelectorAll('.day.is-past').length;
+  toggle.textContent = pastVisible
+    ? '📅 Ocultar días pasados'
+    : '📅 Mostrar '+n+' día'+(n>1?'s':'')+' pasado'+(n>1?'s':'');
+}
+// Si se llega directamente a un día pasado por enlace/nav, se revela solo ese
+document.querySelectorAll('.nav a').forEach(function(a){
+  a.addEventListener('click',function(){
+    var day=document.querySelector(a.getAttribute('href'));
+    if(day && day.classList.contains('is-past-hidden')) day.classList.remove('is-past-hidden');
+  });
+});
+
+document.addEventListener('DOMContentLoaded',function(){
+  initPinyin();
+  markTodayAndPast();
+});
 </script>
 </body>
 </html>
