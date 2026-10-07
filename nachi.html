@@ -28,14 +28,16 @@ summary::before{content:"＋ ";color:var(--gold)}details[open] summary::before{c
 summary::-webkit-details-marker{display:none}.zh{color:var(--gold)}
 details .cu{background:var(--bg);border-left:3px solid var(--gold);padding:6px 8px;border-radius:4px}
 details .hi{margin-top:8px}
+.rv{background:var(--bg);border:1px solid var(--gold);border-radius:8px;padding:5px 8px;margin:4px 0;font-size:.82rem;word-break:break-all}.tp{font-size:.82rem;color:var(--mu);margin:6px 0}.warn{background:var(--bg);border-left:3px solid var(--red);padding:6px 10px;font-size:.85rem}
+details .hi2{margin-top:8px}
 details p{margin:6px 0 2px;font-size:.92rem}
 .tbl{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9rem}
 th,td{border:1px solid var(--bd);padding:6px 8px;text-align:left;vertical-align:top}th{background:var(--red);color:#fff}
 .note{font-size:.85rem;color:var(--mu);margin-top:16px}[hidden]{display:none}
 </style></head><body>
 <header><span class="dragon">🐉</span><h1>China 2026 <span style="color:#ffe3a0">中国</span></h1><p>16 oct – 2 nov · guía día a día con historia y datos</p></header>
-<nav><button class="on" data-t="it">Itinerario</button><button data-t="ho">Hoteles</button></nav>
-<main><section id="it"></section><section id="ho" hidden></section>
+<nav><button class="on" data-t="it">Itinerario</button><button data-t="ho">Hoteles</button><button data-t="re">Reservas</button></nav>
+<main><section id="it"></section><section id="ho" hidden></section><section id="re" hidden></section>
 <p class="note">Los días 21 a 24 dependen de lo que se acuerde con Mauro y su pareja. Datos aproximados: confirmadlos antes de ir.</p></main>
 <script>
 const A={
@@ -127,7 +129,7 @@ const D=[
 [0,30,"vie","A vuestro ritmo","Galería de los Diez Li en moto y espectáculo nocturno.",G,["sl","sj"]],
 ["Chongqing",31,"sáb","Tren a Chongqing","Tren 11:04 → 15:45. Drones a las 20:00 y paseo por Hongyadong.",S,["hy"]],
 [0,1,"dom","Chongqing y despedida","Teleférico 14:30, crucero 19:00 y hotpot. Taxi al aeropuerto sobre las 23:45.",J,["lz","sb","yc","ct","hp"]],
-[0,2,"lun","Regreso a Madrid","Vuelo 02:25, escala en Roma 07:05–10:30 y llegada 13:05.","",[]]];
+[0,2,"lun","Regreso a Madrid","Salida a las 02:25 desde Chongqing, escala en Roma 07:05–10:30 y llegada a Madrid 13:05.","",[]]];
 const hot=[["Pekín","Lavande Hotel (Tiananmen Wangfujing)","16–19 oct","Zona Wangfujing, metro Dengshikou"],
 ["Wulingyuan","Wangkeklai Homestay","19–22 oct","No. 33, Lane 1, Jundi Road, Wulingyuan"],
 ["Zhangjiajie","Yearn Stay Hotel","22–24 oct","4F Bojin Apartment Bldg, Huatiancheng, Yongding"],
@@ -136,10 +138,35 @@ const hot=[["Pekín","Lavande Hotel (Tiananmen Wangfujing)","16–19 oct","Zona 
 ["Yangshuo","Yuesu Waterfront Hotel","27–31 oct","No. 47 Jingfeng Road"],
 ["Chongqing","SEYA Panoramic – Cloud Eye","31 oct–1 nov","63F Lianhe Guoji, 201 Xinhua Road"],
 ["Chongqing","Jiting Riverview Hotel (Jiefangbei)","1–2 nov","Piso 28, mismo edificio"]];
+const RV=[
+[17,"Parque Jingshan","1598741455269676","7127","Puerta: No. 44 Jingshan West Street, Xicheng"],
+[18,"Gran Muralla de Mutianyu","1598741838268963","7102","Quedada 07:00 en la salida B de la estación Dongsi"],
+[19,"Palacio de Verano","1598741838285852","4896","Entrada combinada"],
+[20,"Parque Forestal de Zhangjiajie (4 días)","1598741838322076","9981","Entrada 08:00-09:00, puerta Este, línea B"],
+[22,"Gran Cañón de Zhangjiajie","1598742113494668","1914","Registro con pasaporte"],
+[31,"Tren Yangshuo → Chongqing","1598742459411310","2344","Salida 11:04, llegada 15:45"],
+[31,"Hotel SEYA Panoramic","1598741194832599","9712","Piso 63"],
+[1,"Hotel Jiting Riverview","1598741728876357","2857","Piso 28, mismo edificio"],
+[19,"Vuelo CA1953 PEK → DYG","PTJH1W","—","19:15 → 21:45"]];
+const T={
+17:"Plaza de Tiananmen: reserva gratuita con 7 días de antelación. Torre del Tambor: demostraciones sobre 09:30, 10:30, 11:30, 13:30, 14:30, 15:30 y 16:45 (confirmar). Metro: Gulou Dajie (L2/L8) o Shichahai (L8).",
+18:"Los pies, bien cuidados: masaje de pies y espalda. DiDi del 798 a Sanlitun, unos 30-40 CNY. Metro de vuelta: Tuanjiehu (L10) → L6 → L5 hasta Dengshikou.",
+19:"Salida al aeropuerto de Pekín PEK (no PKX), llegada sobre las 17:30. La Torre del Incienso se paga dentro del Palacio de Verano.",
+20:"Cueva del Dragón Amarillo: entrada en taquilla o días antes. Probad el estofado Sanxiaguo. Autobús público 1 o taxi de 15 min.",
+21:"Ascensor Bailong ~65 CNY y teleférico de Tianzi ~72 CNY, en taquilla.",
+22:"Autobús desde Wulingyuan a las 08:30 (~12 CNY). La vía ferrata se paga en taquilla.",
+23:"Vía ferrata Gran Pared en Qixing: opcional (3-4 h).",
+26:"Feishui: entrada 60-80 CNY en taquilla; DiDi 35-45 CNY por trayecto. Masaje de pies 60-100 CNY. Comprad la barca nocturna antes de las 19:30.",
+27:"Confirmad el tren (transbordos); la estación de Yangshuo queda lejos del centro.",
+30:"Balsa de bambú 160-320 CNY (2 personas, que gestione el hotel). Sanjie Liu 260-600+ CNY: comprar en Civitatis o Trip.com.",
+1:"Teleférico del Yangtze 30/50 CNY (ida / ida y vuelta) y crucero 140-180 CNY: comprar antes. Salida al aeropuerto hacia las 23:45.",
+2:"Vuelos: Hainan HU7991 Chongqing–Roma y Air Europa UX1040 Roma–Madrid."};
+const extra=d=>RV.filter(r=>r[0]==d).map(r=>`<div class="rv">🎟 <b>${r[1]}</b> · ${r[2]}${r[3]!="—"?" · PIN "+r[3]:""}</div>`).join("")+(T[d]?`<div class="tp">💡 ${T[d]}</div>`:"");
 const $=s=>document.getElementById(s);let o="";
 D.forEach(d=>{if(d[0])o+=`<div class="city">${d[0]}</div>`;
-o+=`<div class="day"><div class="badge"><b>${d[1]}</b><small>${d[2]}</small></div><div class="body"><h3>${d[3]}</h3><div class="intro">${d[4]}</div>${d[5]?`<span class="hotel">🛏 ${d[5]}</span>`:""}${d[6].map(k=>{const a=A[k];return `<details><summary>${a[1]} <span class="zh">${a[0]}</span></summary><p><b>⚡ Explicación flash:</b> ${a[2]}</p>${HI[k]?`<div class="hi"><b>📜 Historia</b>${HI[k].split("\n").map(t=>`<p>${t}</p>`).join("")}</div>`:""}${X[k]?`<p class="cu">✨ <b>Curiosidades:</b> ${X[k]}</p>`:""}</details>`}).join("")}</div></div>`});
+o+=`<div class="day"><div class="badge"><b>${d[1]}</b><small>${d[2]}</small></div><div class="body"><h3>${d[3]}</h3><div class="intro">${d[4]}</div>${d[5]?`<span class="hotel">🛏 ${d[5]}</span>`:""}${extra(d[1])}${d[6].map(k=>{const a=A[k];return `<details><summary>${a[1]} <span class="zh">${a[0]}</span></summary><p><b>⚡ Explicación flash:</b> ${a[2]}</p>${HI[k]?`<div class="hi"><b>📜 Historia</b>${HI[k].split("\n").map(t=>`<p>${t}</p>`).join("")}</div>`:""}${X[k]?`<p class="cu">✨ <b>Curiosidades:</b> ${X[k]}</p>`:""}</details>`}).join("")}</div></div>`});
 $("it").innerHTML=o;
 $("ho").innerHTML='<div class="tbl"><table><tr><th>Ciudad</th><th>Hotel</th><th>Noches</th><th>Dirección</th></tr>'+hot.map(h=>"<tr>"+h.map(c=>"<td>"+c+"</td>").join("")+"</tr>").join("")+"</table></div>";
-document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));["it","ho"].forEach(i=>$(i).hidden=i!==b.dataset.t);scrollTo(0,0)});
+$("re").innerHTML='<p class="warn">Esta pestaña tiene códigos de reserva y PIN: no compartáis la página con desconocidos.</p><div class="tbl"><table><tr><th>Día</th><th>Qué</th><th>Reserva</th><th>PIN</th><th>Nota</th></tr>'+RV.slice().sort((a,b)=>(a[0]<3?a[0]+40:a[0])-(b[0]<3?b[0]+40:b[0])).map(r=>"<tr><td>"+r[0]+(r[0]<3?" nov":" oct")+"</td><td>"+r[1]+"</td><td>"+r[2]+"</td><td>"+r[3]+"</td><td>"+r[4]+"</td></tr>").join("")+"</table></div>";
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button").forEach(x=>x.classList.toggle("on",x===b));["it","ho","re"].forEach(i=>$(i).hidden=i!==b.dataset.t);scrollTo(0,0)});
 </script></body></html>
