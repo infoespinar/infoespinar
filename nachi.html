@@ -28,7 +28,7 @@ summary::before{content:"＋ ";color:var(--gold)}details[open] summary::before{c
 summary::-webkit-details-marker{display:none}.zh{color:var(--gold)}
 details .cu{background:var(--bg);border-left:3px solid var(--gold);padding:6px 8px;border-radius:4px}
 details .hi{margin-top:8px}
-.rv{background:var(--bg);border:1px solid var(--gold);border-radius:8px;padding:5px 8px;margin:8px 0;font-size:.82rem;word-break:break-all}.tp{font-size:.85rem;color:var(--mu);margin:10px 0;line-height:1.5}.tr textarea{width:100%;min-height:80px;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);font:inherit}.tr button.b{background:var(--red);color:#fff;border:0;border-radius:20px;padding:8px 16px;margin:6px 6px 6px 0;font:inherit;cursor:pointer}.big{font-size:1.8rem;color:var(--red);margin:4px 0}.py{color:var(--mu)}
+.rv{background:var(--bg);border:1px solid var(--gold);border-radius:8px;padding:5px 8px;margin:8px 0;font-size:.82rem;overflow-wrap:anywhere}.nw{white-space:nowrap}.tp{font-size:.88rem;color:var(--mu);margin:12px 0;line-height:1.55}.tp ul{margin:6px 0 0;padding-left:20px}.tp li{margin:6px 0}.tr textarea{width:100%;min-height:80px;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);font:inherit}.tr button.b{background:var(--red);color:#fff;border:0;border-radius:20px;padding:8px 16px;margin:6px 6px 6px 0;font:inherit;cursor:pointer}.big{font-size:1.8rem;color:var(--red);margin:4px 0}.py{color:var(--mu)}
 .ph{border:1px solid var(--bd);border-left:4px solid var(--gold);border-radius:8px;padding:8px 12px;margin:8px 0;background:var(--card);cursor:pointer}.ph:active{background:var(--bg)}.es{font-weight:bold}.sp{margin-top:6px;background:var(--red);color:#fff;border:0;border-radius:20px;padding:7px 16px;font:inherit;font-size:.9rem;cursor:pointer}
 .hcard{display:flex;gap:12px;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px 14px;margin:12px 0;box-shadow:0 2px 6px rgba(0,0,0,.06);border-top:4px solid var(--red)}
 .hico{font-size:2rem;line-height:1}.hbody{flex:1;min-width:0}.hbody h3{margin:2px 0 6px;font-size:1.05rem}
@@ -44,7 +44,7 @@ details .hi{margin-top:8px}
 .rc[data-e="Vuelo"]{border-left-color:#2f6fb3}.rc[data-e="Tren"]{border-left-color:#2e8b57}.rc[data-e="Hotel"]{border-left-color:var(--red)}
 .rh{display:flex;gap:10px;align-items:center}.ri{font-size:1.6rem}.rt{font-weight:bold;line-height:1.2}.rs{color:var(--mu);font-size:.85rem;margin-top:2px}
 .rp,.rl{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-.pl{background:var(--bg);border:1px solid var(--gold);color:var(--tx);border-radius:20px;padding:4px 12px;font:inherit;font-size:.8rem;cursor:pointer}.pl b{font-family:ui-monospace,Menlo,monospace;letter-spacing:.03em;margin-left:4px}.pl.ok{background:var(--red);color:#fff;border-color:var(--red)}
+.pl{white-space:nowrap;background:var(--bg);border:1px solid var(--gold);color:var(--tx);border-radius:20px;padding:4px 12px;font:inherit;font-size:.8rem;cursor:pointer}.pl b{font-family:ui-monospace,Menlo,monospace;letter-spacing:.03em;margin-left:4px}.pl.ok{background:var(--red);color:#fff;border-color:var(--red)}
 .lk{background:var(--red);color:#fff;text-decoration:none;border-radius:20px;padding:4px 14px;font-size:.82rem}
 .rd{margin-top:8px;border-top:0;padding:0}.rd summary{color:var(--mu);font-size:.85rem}.rd ul{margin:6px 0 0;padding-left:18px;font-size:.84rem;color:var(--mu)}.rd li{margin:2px 0}
 .zh[data-z]{cursor:pointer}
@@ -174,23 +174,22 @@ const RV=[
 [19,"Vuelo CA1953 PEK → DYG","PTJH1W","—","19:15 → 21:45"],
 [16,"Hotel Lavande","1598740930787464","9186","Pekín"],[19,"Hotel Wangkelai","1598740982498436","3207","Wulingyuan"],[22,"Hotel Yearn Stay","1598740982330315","2050","Zhangjiajie"],[24,"Hotel Floral Furong","1598741147739384","4700","Furong"],[25,"Hotel Jiangshang Fenghuang","1598741148113012","4369","Fenghuang"],[27,"Hotel Yuesu","1598741148780642","4859","Yangshuo"]];
 const T={
-17:"Tiananmen: reserva de 06:27 a 12:00 por la Puerta Este, Security Check 03 (pasaporte original); es más fácil entrar sin bolso ni mochila. Audioguía de la Ciudad Prohibida: <a href=\"https://audio.totripchina.com/forbidden-city/2hr-route/?channel=trip\" target=\"_blank\" rel=\"noopener\">abrir</a>. Torre del Tambor: demostraciones sobre 09:30, 10:30, 11:30, 13:30, 14:30, 15:30 y 16:45 (confirmar). Metro: Gulou Dajie (L2/L8) o Shichahai (L8).",
-18:"Mutianyu: teleférico hasta la torre 14, bajar andando hasta la 6 y coger el tobogán. Masaje de pies y espalda después de la Muralla. DiDi del 798 a Sanlitun, unos 30-40 CNY. Metro de vuelta: Tuanjiehu (L10) → L6 → L5 hasta Dengshikou.",
-19:"Templo del Cielo: los lunes el interior está cerrado, así que se ve por fuera. Salida al aeropuerto de Pekín PEK (no PKX), llegada sobre las 17:30. La Torre del Incienso se paga dentro del Palacio de Verano.",
-20:"Cueva del Dragón Amarillo: entrada en taquilla o días antes. Probad el estofado Sanxiaguo. Autobús público 1 o taxi de 15 min.",
-21:"Ascensor Bailong ~65 CNY y teleférico de Tianzi ~72 CNY, en taquilla.",
-22:"Autobús desde Wulingyuan a las 08:30 (~12 CNY). La vía ferrata se paga en taquilla. Entrada del cañón válida del 20 al 23.",
-23:"Tianmen: solo funciona la ruta C. Sale de la estación de autobuses de las rutas B y C, no del teleférico del centro. Vía ferrata de Qixing opcional (3-4 h).",
-26:"Feishui: entrada 60-80 CNY en taquilla; DiDi 35-45 CNY por trayecto. Masaje de pies 60-100 CNY. Comprad la barca nocturna antes de las 19:30.",
-27:"Confirmad el tren (transbordos); la estación de Yangshuo queda lejos del centro.",
-24:"En principio, DiDi los cuatro juntos (75 min, 8–10 € por persona). Tip Instagram: vistas de la cascada desde el 12C Waterfall View Prime Location.",
-25:"El hotel de Furong ofrece traslado gratis a la estación: preguntad. El hotel de Fenghuang da entrada a la aldea Miao: ver si merece la pena.",
-31:"Si se puede, coger el metro hasta el Gran Teatro para las mejores vistas de Hongyadong (parque ribereño del Jiangtan) y cenar en la zona de Guanyinqiao.",
-28:"Balsa de bambú 160-320 CNY (máximo 2 personas): que la gestione el hotel.",
-30:"Colina de la Luna o Cueva de la Mariposa: 20-35 CNY. Sanjie Liu 260-600+ CNY: comprar antes en Civitatis o Trip.com.",
-1:"Teleférico del Yangtze 30/50 CNY y crucero 140-180 CNY: comprar antes. Tras Shibati: metro desde Jiaochangkou (L6, dirección Chayuan) hasta Shangxinjie y 5 min a pie a la estación Sur; el teleférico acaba en Xinhua Road, en la puerta del hotel. Salida al aeropuerto hacia las 23:45.",
-2:"Vuelos: Hainan HU7991 Chongqing–Roma y Air Europa UX1040 Roma–Madrid."};
-const extra=d=>RV.filter(r=>r[0]==d).map(r=>`<div class="rv">🎟 <b>${r[1]}</b> · ${r[2]}${r[3]!="—"?" · PIN "+r[3]:""}</div>`).join("")+(T[d]?`<div class="tp">💡 ${T[d]}</div>`:"");
+17:["Tiananmen: es más fácil entrar sin bolso ni mochila.","Audioguía de la Ciudad Prohibida: <a href=\"https://audio.totripchina.com/forbidden-city/2hr-route/?channel=trip\" target=\"_blank\" rel=\"noopener\">abrir</a>.","Torre del Tambor: demostraciones sobre las 09:30, 10:30, 11:30, 13:30, 14:30, 15:30 y 16:45 (confirmar en la puerta).","Metro: Gulou Dajie (líneas 2 y 8) o Shichahai (línea 8)."],
+18:["Piernas robóticas en Mutianyu: hace falta un móvil chino; se ven en la app de WeChat.","DiDi del 798 a Sanlitun: unos 20 min y 30-40 CNY.","Metro de vuelta al hotel: Tuanjiehu (línea 10) → línea 6 → línea 5 hasta Dengshikou."],
+19:["La entrada de la Torre del Incienso Budista se compra dentro del Palacio de Verano."],
+20:["Cueva del Dragón Amarillo: comprar la entrada allí o unos días antes."],
+21:["Ascensor Bailong: unos 65 CNY, en la taquilla del ascensor.","Teleférico de Tianzi: unos 72 CNY, en su taquilla."],
+22:["Autobús al cañón desde la estación de Wulingyuan: unos 12 CNY.","La entrada del cañón vale del 20 al 23. Se entra registrando el pasaporte."],
+23:["Billete de la ruta C: comprarlo antes, con pasaporte, para el día 23. Solo vale para esa fecha.","Mirad en el billete dónde se coge el autobús gratuito."],
+24:["Alternativa al DiDi: tren Zhangjiajiexi → Furongzhen (23 min) más taxi hasta el casco antiguo.","Tip Instagram: vistas de la cascada desde el 12C Waterfall View Prime Location."],
+25:["El hotel de Fenghuang da entrada a la aldea Miao: ver si merece la pena.","Comprar el billete del tren a mediodía."],
+26:["En DiDi, buscar «Feishui Valley Scenic Area» (凤凰飞水谷景区): 35-45 CNY por trayecto. Para volver, acordad la recogida con el taxista o pedid su WeChat.","Opción barata: furgonetas compartidas desde la estación de autobuses.","Masaje de pies: pedid precio cerrado antes de entrar (60-100 CNY por hora)."],
+27:["Puerta del Este: desde el puente Hongqiao, 3-4 minutos a pie (250 m) por la orilla, con el agua a la derecha."],
+28:["Balsa de bambú: 160-320 CNY por balsa.","Moto: preguntad al hotel qué scooter eléctrico alquilan a extranjeros y si incluye casco. La bici eléctrica es más sencilla."],
+29:["El amanecer es hacia las 7:00 (hora aproximada, no comprobada)."],
+30:["Impression Sanjie Liu: entradas de 260 a más de 600 CNY. Comprar en Civitatis o Trip.com; el sector B (VIP) tiene mejor panorámica."],
+1:["Teleférico del Yangtze: 30 CNY ida o 50 CNY ida y vuelta. Comprar antes (Trip.com o GetYourGuide) con los datos del pasaporte.","Crucero nocturno: 140-180 CNY. Comprar antes; el billete indica el muelle (suele ser el 7 o el 9 de Chaotianmen)."]};
+const extra=d=>RV.filter(r=>r[0]==d).map(r=>`<div class="rv">🎟 <b>${r[1]}</b> · <span class="nw">${r[2]}</span>${r[3]!="—"?` · <span class="nw">PIN ${r[3]}</span>`:""}</div>`).join("")+(T[d]?`<div class="tp"><b>💡 Consejos</b><ul>${T[d].map(x=>"<li>"+x+"</li>").join("")}</ul></div>`:"");
 const $=s=>document.getElementById(s);let o="";
 let ph="";D.forEach(d=>{if(d[0])o+=`<div class="city">${d[0]}</div>`;
 o+=`<div class="day"><div class="body"><div class="badge"><b>${d[1]}</b><small>${d[2]}</small></div><div class="hd"><h3>${d[3]}</h3>${d[5]&&d[5]!=ph?`<span class="hotel">🛏 ${d[5]}</span>`:""}</div><div class="intro">${d[4].split("\n").map(t=>"<p>"+t+"</p>").join("")}</div>${extra(d[1])}${d[6].map(k=>{const a=A[k];return `<details><summary>${a[1]} <span class="zh" data-z="${a[0]}">${a[0]} 🔊</span></summary><p><b>⚡ Explicación flash:</b> ${a[2]}</p>${HI[k]?`<div class="hi"><b>📜 Historia</b>${HI[k].split("\n").map(t=>`<p>${t}</p>`).join("")}</div>`:""}${X[k]?`<p class="cu">✨ <b>Curiosidades:</b> ${X[k]}</p>`:""}</details>`}).join("")}</div></div>`;ph=d[5]});
