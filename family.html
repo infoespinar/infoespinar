@@ -56,6 +56,7 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
   flex-direction:column;
   justify-content:flex-start;
   gap:6px;
+  z-index:2;
 }
 
 .tag{
@@ -80,6 +81,23 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 .past{filter:saturate(.7)}
 .past .art{opacity:.85}
 .next .desc{color:#6d5c52}
+
+.adorno{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:74px;
+  pointer-events:none;
+  opacity:.16;
+  z-index:1;
+}
+
+.adorno svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
 
 .bar{
   position:fixed;
@@ -428,6 +446,20 @@ if(st==="before"){
 let h='<section class="card hero"><h1>Viaje a China</h1><div class="zh">中国</div>'+hero
 +'<p>'+dd(first)+' – '+dd(last)+'</p><div class="hint">Desliza hacia arriba ↑</div></section>';
 
+const adorno='<div class="adorno">'
++'<svg viewBox="0 0 400 80" preserveAspectRatio="xMidYMax slice">'
++'<g fill="none" stroke="#b3201f" stroke-width="3" stroke-linecap="round">'
++'<path d="M20 62q18 -26 44 -12q10 -22 36 -14q22 -18 42 2q24 -8 34 14"/>'
++'<path d="M150 66q16 -22 40 -12q12 -20 38 -10q20 -16 40 4q22 -6 32 16"/>'
++'<path d="M280 62q16 -24 42 -12q12 -20 36 -10q22 -16 42 6"/>'
++'</g>'
++'<g fill="#c8962b" opacity=".55">'
++'<circle cx="200" cy="30" r="4"/>'
++'<circle cx="188" cy="38" r="2.5"/>'
++'<circle cx="212" cy="38" r="2.5"/>'
++'</g>'
++'</svg></div>';
+
 for(let n=0;n<D.length;n++){
   const d=D[n];
   let clase="next";
@@ -440,6 +472,7 @@ for(let n=0;n<D.length;n++){
 
   h+='<section class="card '+clase+'" data-d="'+d[0]+'">'
   +'<div class="art">'+imagen+foto+'</div>'
+  +adorno
   +'<div class="txt">'
   +'<span class="tag">'+etiqueta+'</span>'
   +'<div class="day">'+d[1][0].toUpperCase()+d[1].slice(1)+' '+dd(d[0])+'</div>'
