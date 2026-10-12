@@ -21,7 +21,7 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 .city{font-size:2rem;line-height:1.1;margin:0;color:#b3201f}
 .zh{font-size:1.1rem;color:#8a6a1f;letter-spacing:.1em}
 .ttl{font-size:1.25rem;font-weight:bold;margin:8px 0 0}
-.desc{font-size:1.05rem;line-height:1.55;margin:0;color:#3d2d26}
+.desc{font-size:1.02rem;line-height:1.5;margin:0;color:#3d2d26}
 .past{filter:saturate(.7)}
 .past .art{opacity:.85}
 .next .desc{color:#6d5c52}
@@ -40,7 +40,7 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 <div class="bar" id="bar"></div>
 <div class="car" id="car"></div>
 
-<audio id="musica" src="musica/china.mp3" loop preload="auto"></audio>
+<audio id="musica" src="musica/china.mp3" preload="auto"></audio>
 <button id="btnMusica">♪ Música</button>
 
 <script>
@@ -270,24 +270,41 @@ S.tren=function(i){
 };
 
 const D=[
-["2026-10-16","vie","Madrid → Pekín","北京","Salimos de viaje","Vuelo de madrugada desde Madrid. Aterrizamos en Pekín por la tarde y salimos a cenar el famoso pato laqueado.","avion"],
-["2026-10-17","sáb","Pekín","北京","La Ciudad Prohibida","Madrugamos para ver la gran plaza y recorrer el antiguo palacio de los emperadores. Por la tarde, paseo por callejones y lagos.","palacio"],
-["2026-10-18","dom","Pekín","北京","La Gran Muralla","Subimos a la Muralla China y bajamos en tobogán. Por la tarde, el barrio de arte y un masaje de pies.","muralla"],
-["2026-10-19","lun","Pekín → Zhangjiajie","北京 · 张家界","Palacios y vuelo","Última mañana en Pekín con el Palacio de Verano y el Templo del Cielo. Por la tarde volamos al sur.","templo"],
-["2026-10-20","mar","Zhangjiajie","张家界","El valle y la cueva","Primer paseo por el parque de las montañas de piedra y visita a una cueva con río subterráneo.","pilares"],
-["2026-10-21","mié","Zhangjiajie","张家界","Las montañas de Avatar","Subimos en un ascensor de cristal a las cumbres que inspiraron la película Avatar.","pilares"],
-["2026-10-22","jue","Zhangjiajie","张家界","El Gran Cañón","Cruzamos un puente de cristal a 300 metros de altura y paseamos por el fondo del cañón.","puente"],
-["2026-10-23","vie","Zhangjiajie","张家界","La Puerta del Cielo","Subimos a una montaña con un enorme arco natural en la roca.","tianmen"],
-["2026-10-24","sáb","Furong","芙蓉镇","El pueblo de la cascada","Viajamos a un pueblo antiguo colgado sobre una cascada. Cena con vistas.","cascada"],
-["2026-10-25","dom","Fenghuang","凤凰","La ciudad antigua","Tren hasta la ciudad de las casas sobre el río. Paseo al caer la tarde con las luces encendidas.","casas",0],
-["2026-10-26","lun","Fenghuang","凤凰","Un día entero en el pueblo","Excursión a un desfiladero con cascadas y, por la noche, paseo en barca bajo los puentes iluminados.","casas",1],
-["2026-10-27","mar","Fenghuang → Yangshuo","凤凰 · 阳朔","Día de trenes","Viaje largo con varios trenes hacia el sur, rumbo a un paisaje de montañas imposibles.","tren"],
-["2026-10-28","mié","Yangshuo","阳朔","El río en balsa","Paseo en balsa de bambú y, por la tarde, en bici entre arrozales.","karst","d"],
-["2026-10-29","jue","Yangshuo","阳朔","Amanecer en las colinas","Madrugón para ver salir el sol entre los picos y visita a un pueblo junto al río.","karst","s"],
-["2026-10-30","vie","Yangshuo","阳朔","Último día entre montañas","Ruta por carreteras de postal y, por la noche, un espectáculo sobre el río con luces.","karst","n"],
-["2026-10-31","sáb","Yangshuo → Chongqing","阳朔 · 重庆","Tren a Chongqing","Viajamos a la ciudad de los rascacielos y las luces. Paseo y cena con vistas.","ciudad"],
-["2026-11-01","dom","Chongqing","重庆","Despedida de China","Barrios antiguos, teleférico sobre el río y cena de hotpot antes de ir al aeropuerto.","ciudad"],
-["2026-11-02","lun","Chongqing → Madrid","重庆 · 马德里","¡De vuelta a casa!","Vuelo de madrugada con escala en Roma. Aterrizamos en Madrid a las 13:05.","avion"]
+["2026-10-16","vie","Madrid → Pekín","北京","Llegada y primera toma de contacto","Vuelo de madrugada desde Madrid. Al llegar por la tarde, traslado a Pekín, primera cena con el famoso pato laqueado y paseo nocturno por la animada calle peatonal de Wangfujing.","avion"],
+
+["2026-10-17","sáb","Pekín","北京","El eje imperial y los hutongs","Madrugada en la plaza de Tiananmen y recorrido de sur a norte por la Ciudad Prohibida, entre patios imperiales, salas ceremoniales y tejados dorados. Después subiremos al parque Jingshan para ver las mejores vistas del palacio y pasearemos por los hutongs tradicionales, las torres del Tambor y la Campana y los lagos de Houhai.","palacio"],
+
+["2026-10-18","dom","Pekín","北京","La Gran Muralla y el arte contemporáneo","Excursión al tramo de Mutianyu: subida en teleférico, caminata panorámica entre torres y bajada en tobogán. De vuelta a la ciudad, visitaremos el distrito de arte 798, con galerías, esculturas y antiguas naves industriales reconvertidas. Por la noche, masaje recuperador y cena en el moderno barrio de Sanlitun.","muralla"],
+
+["2026-10-19","lun","Pekín → Zhangjiajie","北京 · 张家界","Palacios imperiales y vuelo al sur","Por la mañana visitaremos el Palacio de Verano: el Gran Corredor, el Barco de Mármol y las vistas al lago Kunming desde la Torre del Incienso Budista. Después pasaremos por el Templo del Cielo y su gran parque, antes de volar hacia Zhangjiajie y instalarnos en Wulingyuan.","templo"],
+
+["2026-10-20","mar","Zhangjiajie","张家界","El valle y la cueva del dragón","Primer día en el parque nacional recorriendo el Arroyo del Látigo Dorado, una ruta llana junto al río entre columnas de piedra y con posibilidad de ver monos salvajes. Por la tarde, visita a la Cueva del Dragón Amarillo, con enormes salas, formaciones iluminadas y un tramo en barca por su río subterráneo.","pilares"],
+
+["2026-10-21","mié","Zhangjiajie","张家界","Las cumbres de Avatar y Tianzi","Subiremos en el ascensor de cristal Bailong, pegado al acantilado, hasta la zona de Yuanjiajie. Recorreremos los miradores de las montañas que inspiraron Avatar, cruzaremos el Primer Puente Bajo el Cielo y continuaremos hacia Tianzi, donde los picos se vuelven más finos y afilados. Bajaremos en teleférico entre la niebla y las agujas de roca.","pilares"],
+
+["2026-10-22","jue","Zhangjiajie","张家界","Vértigo en el Gran Cañón","Excursión al Gran Cañón de Zhangjiajie: cruzaremos el puente de cristal suspendido a unos 300 metros de altura, bajaremos al fondo del valle por pasarelas y cascadas y podremos elegir alguna actividad de aventura, como una vía ferrata o un tobogán. Terminaremos con un paseo en barca por el lago Shenquan.","puente"],
+
+["2026-10-23","vie","Zhangjiajie","张家界","La Puerta del Cielo","Dedicaremos la mañana a la montaña Tianmen: subida en teleférico, pasarelas colgadas y tramos de cristal, escaleras mecánicas dentro de la roca y visita al enorme arco natural de la Puerta del Cielo. Por la tarde, regreso tranquilo a Wulingyuan para pasear, cenar y recuperar fuerzas.","tianmen"],
+
+["2026-10-24","sáb","Zhangjiajie → Furong","张家界 · 芙蓉镇","Día flexible y pueblo de la cascada","Mañana libre para completar lo que nos haya quedado pendiente: el lago Baofeng con su paseo en barca, el poblado antiguo de Dayong o el parque cultural Tujia. Por la tarde viajaremos a Furong, donde pasearemos por sus calles empedradas y veremos la gran cascada iluminada y el palacio Tuwang.","cascada"],
+
+["2026-10-25","dom","Furong → Fenghuang","芙蓉镇 · 凤凰","De la cascada al río","Por la mañana veremos Furong con luz de día y cruzaremos la cascada por el paso tallado en la roca. Después tomaremos un tren corto hasta Fenghuang, la ciudad antigua de casas de madera colgadas sobre el río Tuojiang. Al caer la noche, paseo por sus puentes y calles iluminadas.","casas",0],
+
+["2026-10-26","lun","Fenghuang","凤凰","Fenghuang sin prisas","Día completo en la ciudad antigua. Por la mañana, excursión al desfiladero de Feishui, una ruta corta entre cascadas, paredes de roca y puentes colgantes. Por la tarde recorreremos los callejones, la pagoda Wanming y las orillas del río; por la noche, masaje tradicional de pies y paseo en barca de madera bajo los farolillos.","casas",1],
+
+["2026-10-27","mar","Fenghuang → Yangshuo","凤凰 · 阳朔","Ruta hacia el sur","Última mañana en Fenghuang para ver la muralla y la puerta Este del casco antiguo, con buenas vistas del río y los tejados. Después comenzaremos el traslado más largo del viaje hacia Yangshuo, en Guangxi. Al llegar, paseo por la animada West Street y cena de pescado a la cerveza.","tren"],
+
+["2026-10-28","mié","Yangshuo","阳朔","El río Yulong en balsa","Primer día completo entre los paisajes kársticos de Yangshuo. Por la mañana, paseo relajado en balsa de bambú por el río Yulong, un afluente tranquilo del río Li. Por la tarde, ruta en bici o moto eléctrica por caminos rurales, arrozales y pequeños pueblos rodeados de picos de piedra.","karst","d"],
+
+["2026-10-29","jue","Yangshuo","阳朔","Amanecer en Xianggong","Madrugón para ver salir el sol desde la colina de Xianggong, uno de los miradores más famosos del río Li. Después de desayunar y descansar, visitaremos Xingping, un pueblo tradicional junto al río, y pasearemos por sus miradores y rincones con vistas a las montañas.","karst","s"],
+
+["2026-10-30","vie","Yangshuo","阳朔","La Galería de los Diez Li","Día flexible para disfrutar de Yangshuo a nuestro ritmo. Recorreremos la carretera escénica de la Galería de los Diez Li, con paradas para fotografías, pueblos rurales y vistas de los picos kársticos. Por la noche, espectáculo Impression Sanjie Liu, representado al aire libre sobre el propio río con cientos de actores locales.","karst","n"],
+
+["2026-10-31","sáb","Yangshuo → Chongqing","阳朔 · 重庆","Tren a la ciudad de las luces","Por la mañana tomaremos el tren hacia Chongqing, la enorme ciudad montañosa construida entre el río Yangtsé y el Jialing. Al llegar, paseo por Hongyadong, con sus edificios tradicionales iluminados, y cena con vistas a la ciudad nocturna. Si el horario lo permite, espectáculo de drones.","ciudad"],
+
+["2026-11-01","dom","Chongqing","重庆","Despedida de China","Día para descubrir el carácter de Chongqing: veremos el tren cruzar un edificio en Liziba, recorreremos el barrio histórico de Shibati con sus escaleras y casas de té, y cruzaremos el río en el teleférico del Yangtsé. Por la noche, crucero por el río para ver la ciudad iluminada y cena de hotpot antes de ir al aeropuerto.","ciudad"],
+
+["2026-11-02","lun","Chongqing → Madrid","重庆 · 马德里","¡De vuelta a casa!","Vuelo de madrugada desde Chongqing con escala en Roma. Llegada a Madrid por la tarde, poniendo fin a un viaje por palacios imperiales, montañas de piedra, pueblos de río y ciudades de luces.","avion"]
 ];
 
 const q=new URLSearchParams(location.search).get("fecha");
@@ -359,6 +376,11 @@ if(tarjetaHoy){tarjetaHoy.scrollIntoView({block:"start"});}
 const musica=document.getElementById("musica");
 const boton=document.getElementById("btnMusica");
 let sonando=false;
+
+musica.addEventListener("ended",function(){
+  musica.currentTime=0;
+  musica.play().catch(function(){});
+});
 
 boton.addEventListener("click",function(){
   if(sonando){
