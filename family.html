@@ -10,14 +10,24 @@
 html,body{margin:0;height:100%}
 body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c1412;color:#2a1a14}
 
+.pista{
+  position:fixed;
+  top:0;left:0;right:0;
+  height:5px;
+  background:rgba(255,255,255,.25);
+  z-index:19;
+  pointer-events:none;
+}
+
 .progreso{
   position:fixed;
   top:0;left:0;
-  height:3px;
+  height:5px;
   width:0;
-  background:linear-gradient(90deg,#b3201f,#c8962b);
-  z-index:10;
-  transition:width .2s ease;
+  background:linear-gradient(90deg,#ffd36b,#b3201f);
+  box-shadow:0 0 6px rgba(0,0,0,.35);
+  z-index:20;
+  transition:width .25s ease;
 }
 
 .car{
@@ -101,7 +111,6 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 
 .past{filter:saturate(.7)}
 .past .art{opacity:.85}
-.next .desc{color:#6d5c52}
 
 .adorno{
   position:absolute;
@@ -122,7 +131,7 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 
 .bar{
   position:fixed;
-  top:calc(8px + env(safe-area-inset-top,0px));
+  top:calc(12px + env(safe-area-inset-top,0px));
   left:50%;
   transform:translateX(-50%);
   z-index:5;
@@ -169,6 +178,7 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 </head>
 <body>
 
+<div class="pista"></div>
 <div class="progreso" id="progreso"></div>
 <div class="bar" id="bar"></div>
 <div class="car" id="car"></div>
@@ -487,10 +497,12 @@ const adorno='<div class="adorno">'
 
 for(let n=0;n<D.length;n++){
   const d=D[n];
-  let clase="next";
-  let estado="Próximamente";
+
+  if(d[0]>today){continue;}
+
+  let clase="past";
+  let estado="✓ Hecho";
   if(d[0]===today){clase="now";estado="📍 Ahora";}
-  else if(d[0]<today){clase="past";estado="✓ Hecho";}
 
   const etiqueta=estado+" · Día "+(n+1)+" de "+D.length;
   const imagen=S[d[6]](n,d[7]);
@@ -509,18 +521,47 @@ for(let n=0;n<D.length;n++){
   +'</div></section>';
 }
 
+const siguiente=D.find(function(d){return d[0]>today;});
+
+if(siguiente){
+  const faltan=dif(today,siguiente[0]);
+
+  h+='<section class="card hero">'
+  +adorno
+  +'<h1>Próxima etapa</h1>'
+  +'<div class="zh">'+siguiente[3]+'</div>'
+  +'<div class="big">'+siguiente[2]+'</div>'
+  +'<p>'+siguiente[4]+'</p>'
+  +'<p>Se desbloquea el '+dd(siguiente[0])+'</p>'
+  +'<div class="hint">Faltan '+faltan+' '+(faltan===1?'día':'días')+'</div>'
+  +'</section>';
+}
+
 document.getElementById("car").innerHTML=h;
 
 const coche=document.getElementById("car");
 const barraProgreso=document.getElementById("progreso");
+let pendiente=false;
 
 function actualizarProgreso(){
+  pendiente=false;
   const total=coche.scrollHeight-coche.clientHeight;
-  const avance=total>0?(coche.scrollTop/total)*100:0;
+  const avance=total>0?Math.min(100,Math.max(0,(coche.scrollTop/total)*100)):0;
   barraProgreso.style.width=avance+"%";
 }
-coche.addEventListener("scroll",actualizarProgreso);
-actualizarProgreso();
+
+function pedirActualizacion(){
+  if(!pendiente){
+    pendiente=true;
+    requestAnimationFrame(actualizarProgreso);
+  }
+}
+
+coche.addEventListener("scroll",pedirActualizacion,{passive:true});
+window.addEventListener("resize",pedirActualizacion);
+window.addEventListener("load",pedirActualizacion);
+setInterval(pedirActualizacion,500);
+pedirActualizacion();
 
 function reloj(){
   const ahora=new Date();
