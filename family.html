@@ -32,6 +32,7 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 .hero p{margin:0;opacity:.92;font-size:1.05rem}
 .hint{margin-top:28px;font:.9rem system-ui,sans-serif;opacity:.8}
 .hero .zh{color:#ffe3a0;font-size:1.6rem}
+#btnMusica{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:9;border:0;border-radius:30px;padding:10px 16px;background:rgba(28,20,18,.78);color:#fff;font:600 .85rem system-ui,sans-serif;backdrop-filter:blur(6px)}
 </style>
 </head>
 <body>
@@ -39,45 +40,342 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 <div class="bar" id="bar"></div>
 <div class="car" id="car"></div>
 
+<audio id="musica" src="musica/china.mp3" loop preload="auto"></audio>
+<button id="btnMusica">♪ Música</button>
+
 <script>
-const G=(i,a,b)=>`<defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="240" fill="url(#g${i})"/>`;
-const sun=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" opacity=".92"/>`;
-const cloud=(x,y)=>`<g fill="#fff" opacity=".9"><ellipse cx="${x}" cy="${y}" rx="44" ry="14"/><ellipse cx="${x+26}" cy="${y-9}" rx="26" ry="14"/><ellipse cx="${x-24}" cy="${y-6}" rx="22" ry="11"/></g>`;
-const house=(x,y,w,c)=>`<rect x="${x}" y="${y}" width="${w}" height="${w*.55}" fill="${c}"/><path d="M${x-4} ${y}L${x+w/2} ${y-w*.38}L${x+w+4} ${y}Z" fill="#4a3a30"/><rect x="${x+w*.4}" y="${y+w*.14}" width="${w*.2}" height="${w*.22}" fill="#ffd36b"/>`;
-const lant=(x,y)=>`<circle cx="${x}" cy="${y}" r="9" fill="#ffb347" opacity=".35"/><circle cx="${x}" cy="${y}" r="4.5" fill="#d62d20"/>`;
+function fondo(i,a,b){
+  return '<defs><linearGradient id="g'+i+'" x1="0" y1="0" x2="0" y2="1">'
+  +'<stop offset="0" stop-color="'+a+'"/><stop offset="1" stop-color="'+b+'"/>'
+  +'</linearGradient></defs><rect width="400" height="240" fill="url(#g'+i+')"/>';
+}
 
-const S={
-avion:i=>G(i,"#7fb8e8","#eaf6ff")+sun(320,58,24,"#fff6c8")+cloud(70,140)+cloud(300,190)+cloud(220,58)+
-`<g transform="translate(200 118) rotate(-8)">
-<ellipse rx="86" ry="12" fill="#fff"/>
-<path d="M-8 0L-52 -58L-32 -58L30 0Z" fill="#dfe9f4"/>
-<path d="M-8 0L-52 58L-32 58L30 0Z" fill="#c8d6e6"/>
-<path d="M-74 -4L-92 -32L-72 -32L-50 -4Z" fill="#b3201f"/>
-<rect x="34" y="-5" width="40" height="5" rx="2" fill="#9db3cc"/>
-<circle cx="-30" cy="-2" r="3" fill="#7a8fa6"/><circle cx="-12" cy="-2" r="3" fill="#7a8fa6"/><circle cx="6" cy="-2" r="3" fill="#7a8fa6"/>
-</g>`,
+function sol(x,y,r,c){
+  return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+c+'" opacity=".92"/>';
+}
 
-palacio:i=>G(i,"#f8cd8f","#fdf5e6")+sun(330,52,24,"#ffe9a8")+
-`<rect y="188" width="400" height="52" fill="#9a2a22"/>
-<rect x="24" y="168" width="352" height="22" fill="#efe4cf"/>
-<rect x="64" y="132" width="272" height="38" fill="#b3201f"/>
-<rect x="84" y="142" width="232" height="20" fill="#8c1a17"/>
-<path d="M48 132Q200 84 352 132L324 144Q200 108 76 144Z" fill="#e8b23a"/>
-<path d="M108 100Q200 62 292 100L274 110Q200 82 126 110Z" fill="#e8b23a"/>
-<path d="M150 74Q200 48 250 74L238 82Q200 64 162 82Z" fill="#e8b23a"/>
-<rect x="194" y="40" width="12" height="10" fill="#e8b23a"/>
-${[92,124,156,188,220,252,284,316].map(x=>`<rect x="${x}" y="140" width="9" height="30" fill="#6d1210"/>`).join("")}
-<rect x="176" y="168" width="48" height="22" fill="#5c100e"/>
-<circle cx="200" cy="180" r="7" fill="#e8b23a"/>`,
+function nube(x,y){
+  return '<g fill="#fff" opacity=".9">'
+  +'<ellipse cx="'+x+'" cy="'+y+'" rx="44" ry="14"/>'
+  +'<ellipse cx="'+(x+26)+'" cy="'+(y-9)+'" rx="26" ry="14"/>'
+  +'<ellipse cx="'+(x-24)+'" cy="'+(y-6)+'" rx="22" ry="11"/></g>';
+}
 
-muralla:i=>G(i,"#b9d7ec","#f6f0e1")+sun(66,58,22,"#fff2c0")+
-`<path d="M0 168Q80 118 160 148T320 126T400 146V240H0Z" fill="#a3bfa4"/>
-<path d="M0 204Q100 138 200 170T400 148V240H0Z" fill="#6f9a72"/>
-<path d="M0 186L70 164L140 172L210 136L280 146L340 108L400 92" stroke="#8b7355" stroke-width="9" fill="none"/>
-${[[58,146],[198,118],[328,90]].map(([x,y])=>`<rect x="${x}" y="${y}" width="24" height="20" fill="#a08460"/><rect x="${x-3}" y="${y-5}" width="30" height="6" fill="#8b7355"/><rect x="${x+8}" y="${y-14}" width="8" height="10" fill="#8b7355"/>`).join("")}
-<path d="M28 190L48 206L68 190" stroke="#d9534f" stroke-width="6" fill="none"/>
-<circle cx="48" cy="212" r="5" fill="#d9534f"/>`,
+function casa(x,y,w,c){
+  return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+(w*.55)+'" fill="'+c+'"/>'
+  +'<path d="M'+(x-4)+' '+y+'L'+(x+w/2)+' '+(y-w*.38)+'L'+(x+w+4)+' '+y+'Z" fill="#4a3a30"/>'
+  +'<rect x="'+(x+w*.4)+'" y="'+(y+w*.14)+'" width="'+(w*.2)+'" height="'+(w*.22)+'" fill="#ffd36b"/>';
+}
 
-templo:i=>G(i,"#9fd0f5","#f5f2e7")+sun(70,58,20,"#fff6c8")+
-`<rect y="196" width="400" height="44" fill="#d9cdb4"/>
-<ellipse cx="200" cy="200"
+function farol(x,y){
+  return '<circle cx="'+x+'" cy="'+y+'" r="9" fill="#ffb347" opacity=".35"/>'
+  +'<circle cx="'+x+'" cy="'+y+'" r="4.5" fill="#d62d20"/>';
+}
+
+const S={};
+
+S.avion=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#7fb8e8","#eaf6ff")
+  +sol(320,58,24,"#fff6c8")
+  +nube(70,140)+nube(300,190)+nube(220,58)
+  +'<g transform="translate(200 118) rotate(-8)">'
+  +'<ellipse rx="86" ry="12" fill="#fff"/>'
+  +'<path d="M-8 0L-52 -58L-32 -58L30 0Z" fill="#dfe9f4"/>'
+  +'<path d="M-8 0L-52 58L-32 58L30 0Z" fill="#c8d6e6"/>'
+  +'<path d="M-74 -4L-92 -32L-72 -32L-50 -4Z" fill="#b3201f"/>'
+  +'<rect x="34" y="-5" width="40" height="5" rx="2" fill="#9db3cc"/>'
+  +'</g></svg>';
+};
+
+S.palacio=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#f8cd8f","#fdf5e6")
+  +sol(330,52,24,"#ffe9a8")
+  +'<rect y="188" width="400" height="52" fill="#9a2a22"/>'
+  +'<rect x="24" y="168" width="352" height="22" fill="#efe4cf"/>'
+  +'<rect x="64" y="132" width="272" height="38" fill="#b3201f"/>'
+  +'<rect x="84" y="142" width="232" height="20" fill="#8c1a17"/>'
+  +'<path d="M48 132Q200 84 352 132L324 144Q200 108 76 144Z" fill="#e8b23a"/>'
+  +'<path d="M108 100Q200 62 292 100L274 110Q200 82 126 110Z" fill="#e8b23a"/>'
+  +'<path d="M150 74Q200 48 250 74L238 82Q200 64 162 82Z" fill="#e8b23a"/>'
+  +'<rect x="194" y="40" width="12" height="10" fill="#e8b23a"/>'
+  +'<rect x="176" y="168" width="48" height="22" fill="#5c100e"/>'
+  +'<circle cx="200" cy="180" r="7" fill="#e8b23a"/>'
+  +'</svg>';
+};
+
+S.muralla=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#b9d7ec","#f6f0e1")
+  +sol(66,58,22,"#fff2c0")
+  +'<path d="M0 168Q80 118 160 148T320 126T400 146V240H0Z" fill="#a3bfa4"/>'
+  +'<path d="M0 204Q100 138 200 170T400 148V240H0Z" fill="#6f9a72"/>'
+  +'<path d="M0 186L70 164L140 172L210 136L280 146L340 108L400 92" stroke="#8b7355" stroke-width="9" fill="none"/>'
+  +'<rect x="58" y="146" width="24" height="20" fill="#a08460"/>'
+  +'<rect x="198" y="118" width="24" height="20" fill="#a08460"/>'
+  +'<rect x="328" y="90" width="24" height="20" fill="#a08460"/>'
+  +'<path d="M28 190L48 206L68 190" stroke="#d9534f" stroke-width="6" fill="none"/>'
+  +'<circle cx="48" cy="212" r="5" fill="#d9534f"/>'
+  +'</svg>';
+};
+
+S.templo=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#9fd0f5","#f5f2e7")
+  +sol(70,58,20,"#fff6c8")
+  +'<rect y="196" width="400" height="44" fill="#d9cdb4"/>'
+  +'<ellipse cx="200" cy="200" rx="132" ry="15" fill="#f2eee3"/>'
+  +'<ellipse cx="200" cy="188" rx="104" ry="12" fill="#fff"/>'
+  +'<rect x="154" y="132" width="92" height="58" fill="#b3201f"/>'
+  +'<path d="M100 134Q200 102 300 134L288 146H112Z" fill="#2a5db0"/>'
+  +'<path d="M128 106Q200 78 272 106L262 116H138Z" fill="#2a5db0"/>'
+  +'<path d="M156 84Q200 60 244 84L236 92H164Z" fill="#2a5db0"/>'
+  +'<rect x="196" y="46" width="8" height="18" fill="#e4a92a"/>'
+  +'<circle cx="200" cy="44" r="5" fill="#e4a92a"/>'
+  +'</svg>';
+};
+
+S.pilares=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#cfe8dc","#f7fbf5")
+  +'<path d="M0 240V150Q30 90 55 150V240Z" fill="#9cbfa8"/>'
+  +'<path d="M70 240V118Q100 48 132 118V240Z" fill="#7fa78d"/>'
+  +'<path d="M150 240V140Q180 72 212 140V240Z" fill="#8db49b"/>'
+  +'<path d="M240 240V104Q272 28 306 104V240Z" fill="#6d9b82"/>'
+  +'<path d="M330 240V136Q358 74 388 136V240Z" fill="#59856e"/>'
+  +'<ellipse cx="200" cy="164" rx="250" ry="24" fill="#fff" opacity=".45"/>'
+  +'<ellipse cx="200" cy="212" rx="250" ry="22" fill="#fff" opacity=".5"/>'
+  +'<rect y="226" width="400" height="14" fill="#5f9bb5"/>'
+  +'<path d="M172 230H228L220 238H180Z" fill="#c8b06a"/>'
+  +'<path d="M198 214H202L204 230H196Z" fill="#b3201f"/>'
+  +'<path d="M190 212H210L200 202Z" fill="#e8d9a0"/>'
+  +'</svg>';
+};
+
+S.puente=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#cfe3f2","#eef4ec")
+  +'<path d="M0 84L118 98L92 240H0Z" fill="#8a7765"/>'
+  +'<path d="M400 62L286 90L318 240H400Z" fill="#7a6857"/>'
+  +'<path d="M0 54L126 68L116 100L0 88Z" fill="#6b9a75"/>'
+  +'<path d="M400 34L278 62L288 92L400 64Z" fill="#6b9a75"/>'
+  +'<path d="M112 106L292 90" stroke="#456a8f" stroke-width="7"/>'
+  +'<path d="M112 98L292 82" stroke="#dfeef8" stroke-width="3"/>'
+  +'<ellipse cx="200" cy="222" rx="180" ry="16" fill="#fff" opacity=".55"/>'
+  +'<circle cx="150" cy="100" r="4" fill="#b3201f"/>'
+  +'<circle cx="250" cy="91" r="4" fill="#b3201f"/>'
+  +'</svg>';
+};
+
+S.tianmen=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#dfeadf","#f8f7ef")
+  +'<path d="M0 240L64 128Q104 84 156 132L204 240Z" fill="#9cbba7"/>'
+  +'<path d="M56 240L128 104Q200 18 274 104L352 240Z" fill="#4e7d62"/>'
+  +'<path d="M164 240V180Q200 112 238 180V240Z" fill="#e6efe6"/>'
+  +'<path d="M0 34L336 126" stroke="#4a4a4a" stroke-width="2" fill="none"/>'
+  +'<rect x="174" y="72" width="18" height="12" rx="2" fill="#b3201f"/>'
+  +'<ellipse cx="200" cy="222" rx="190" ry="18" fill="#fff" opacity=".5"/>'
+  +'</svg>';
+};
+
+S.cascada=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#b9d7c0","#eef3e6")
+  +'<path d="M0 58L172 48L168 240H0Z" fill="#4f7a58"/>'
+  +'<path d="M400 68L230 50L234 240H400Z" fill="#5a8662"/>'
+  +'<rect x="168" y="50" width="66" height="164" fill="#fff" opacity=".94"/>'
+  +'<ellipse cx="201" cy="216" rx="56" ry="13" fill="#fff" opacity=".85"/>'
+  +casa(24,152,46,"#8a6a4a")
+  +casa(90,128,40,"#8a6a4a")
+  +casa(260,136,44,"#8a6a4a")
+  +casa(328,158,50,"#8a6a4a")
+  +farol(40,142)+farol(285,128)+farol(350,150)
+  +'</svg>';
+};
+
+S.casas=function(i,noche){
+  var cielo=noche?"#2b2a55":"#f6c78c";
+  var horizonte=noche?"#e9976a":"#fbe9d0";
+  var agua=noche?"#26385a":"#6b8fa6";
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,cielo,horizonte)
+  +(noche?sol(320,50,14,"#fff3c4"):sol(320,58,22,"#fff2c0"))
+  +'<rect y="176" width="400" height="64" fill="'+agua+'"/>'
+  +casa(26,112,62,"#7a5a3a")
+  +casa(104,112,72,"#7a5a3a")
+  +casa(192,112,64,"#7a5a3a")
+  +casa(278,112,76,"#7a5a3a")
+  +farol(38,104)+farol(76,104)
+  +farol(116,104)+farol(164,104)
+  +farol(204,104)+farol(244,104)
+  +farol(290,104)+farol(342,104)
+  +'<path d="M20 190H380M40 205H360M60 220H340" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>'
+  +'</svg>';
+};
+
+S.karst=function(i,variante){
+  var colores;
+  if(variante==="s"){colores=["#f6a56b","#fbe2b8","#ffd66b"];}
+  else if(variante==="n"){colores=["#16213e","#46466e","#f4f1c8"];}
+  else{colores=["#bfe3ef","#f3f1dc","#fff2b8"];}
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,colores[0],colores[1])
+  +sol(320,62,20,colores[2])
+  +'<path d="M8 240V148Q38 82 66 148V240Z" fill="#8fb8a0"/>'
+  +'<path d="M120 240V126Q152 50 186 126V240Z" fill="#7fa78d"/>'
+  +'<path d="M238 240V140Q270 72 304 140V240Z" fill="#6d9b82"/>'
+  +'<path d="M330 240V118Q362 46 396 118V240Z" fill="#59856e"/>'
+  +'<ellipse cx="200" cy="180" rx="240" ry="22" fill="#fff" opacity=".45"/>'
+  +'<rect y="206" width="400" height="34" fill="#5f9bb5"/>'
+  +'<path d="M120 222q40 -12 80 0t80 0" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none"/>'
+  +'<path d="M168 224q20 -10 44 0" stroke="#e9e2c8" stroke-width="6" fill="none"/>'
+  +'<path d="M186 210h14l3 14h-20Z" fill="#b98d55"/>'
+  +'<path d="M182 208h22l-11 -12Z" fill="#e8d9a0"/>'
+  +'</svg>';
+};
+
+S.ciudad=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#14213d","#3a2f5b")
+  +sol(330,46,12,"#f4f1c8")
+  +'<rect x="8" y="80" width="42" height="112" fill="#1d2b4f"/>'
+  +'<rect x="54" y="40" width="30" height="152" fill="#1d2b4f"/>'
+  +'<rect x="90" y="96" width="44" height="96" fill="#1d2b4f"/>'
+  +'<rect x="140" y="22" width="34" height="170" fill="#1d2b4f"/>'
+  +'<rect x="180" y="72" width="40" height="120" fill="#1d2b4f"/>'
+  +'<rect x="226" y="46" width="30" height="146" fill="#1d2b4f"/>'
+  +'<rect x="262" y="92" width="46" height="100" fill="#1d2b4f"/>'
+  +'<rect x="314" y="30" width="34" height="162" fill="#1d2b4f"/>'
+  +'<rect y="192" width="400" height="48" fill="#12203a"/>'
+  +'<path d="M0 214q90 -10 180 0t220 0" stroke="#ffcf7a" stroke-opacity=".35" stroke-width="3" fill="none"/>'
+  +'</svg>';
+};
+
+S.tren=function(i){
+  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
+  +fondo(i,"#bfe0f5","#f4f1e2")
+  +sol(330,56,20,"#fff2c0")
+  +'<path d="M0 170Q100 120 200 160T400 140V240H0Z" fill="#8fbb8f"/>'
+  +'<path d="M0 205Q120 160 240 190T400 180V240H0Z" fill="#5f9a6a"/>'
+  +'<path d="M0 196H400" stroke="#6b6b6b" stroke-width="4"/>'
+  +'<rect x="30" y="162" width="80" height="32" rx="7" fill="#fff"/>'
+  +'<rect x="110" y="162" width="80" height="32" rx="7" fill="#fff"/>'
+  +'<rect x="190" y="162" width="80" height="32" rx="7" fill="#fff"/>'
+  +'<path d="M270 162H318Q346 168 352 194H270Z" fill="#fff"/>'
+  +'<circle cx="286" cy="196" r="6" fill="#444"/>'
+  +'<circle cx="336" cy="196" r="6" fill="#444"/>'
+  +'</svg>';
+};
+
+const D=[
+["2026-10-16","vie","Madrid → Pekín","北京","Salimos de viaje","Vuelo de madrugada desde Madrid. Aterrizamos en Pekín por la tarde y salimos a cenar el famoso pato laqueado.","avion"],
+["2026-10-17","sáb","Pekín","北京","La Ciudad Prohibida","Madrugamos para ver la gran plaza y recorrer el antiguo palacio de los emperadores. Por la tarde, paseo por callejones y lagos.","palacio"],
+["2026-10-18","dom","Pekín","北京","La Gran Muralla","Subimos a la Muralla China y bajamos en tobogán. Por la tarde, el barrio de arte y un masaje de pies.","muralla"],
+["2026-10-19","lun","Pekín → Zhangjiajie","北京 · 张家界","Palacios y vuelo","Última mañana en Pekín con el Palacio de Verano y el Templo del Cielo. Por la tarde volamos al sur.","templo"],
+["2026-10-20","mar","Zhangjiajie","张家界","El valle y la cueva","Primer paseo por el parque de las montañas de piedra y visita a una cueva con río subterráneo.","pilares"],
+["2026-10-21","mié","Zhangjiajie","张家界","Las montañas de Avatar","Subimos en un ascensor de cristal a las cumbres que inspiraron la película Avatar.","pilares"],
+["2026-10-22","jue","Zhangjiajie","张家界","El Gran Cañón","Cruzamos un puente de cristal a 300 metros de altura y paseamos por el fondo del cañón.","puente"],
+["2026-10-23","vie","Zhangjiajie","张家界","La Puerta del Cielo","Subimos a una montaña con un enorme arco natural en la roca.","tianmen"],
+["2026-10-24","sáb","Furong","芙蓉镇","El pueblo de la cascada","Viajamos a un pueblo antiguo colgado sobre una cascada. Cena con vistas.","cascada"],
+["2026-10-25","dom","Fenghuang","凤凰","La ciudad antigua","Tren hasta la ciudad de las casas sobre el río. Paseo al caer la tarde con las luces encendidas.","casas",0],
+["2026-10-26","lun","Fenghuang","凤凰","Un día entero en el pueblo","Excursión a un desfiladero con cascadas y, por la noche, paseo en barca bajo los puentes iluminados.","casas",1],
+["2026-10-27","mar","Fenghuang → Yangshuo","凤凰 · 阳朔","Día de trenes","Viaje largo con varios trenes hacia el sur, rumbo a un paisaje de montañas imposibles.","tren"],
+["2026-10-28","mié","Yangshuo","阳朔","El río en balsa","Paseo en balsa de bambú y, por la tarde, en bici entre arrozales.","karst","d"],
+["2026-10-29","jue","Yangshuo","阳朔","Amanecer en las colinas","Madrugón para ver salir el sol entre los picos y visita a un pueblo junto al río.","karst","s"],
+["2026-10-30","vie","Yangshuo","阳朔","Último día entre montañas","Ruta por carreteras de postal y, por la noche, un espectáculo sobre el río con luces.","karst","n"],
+["2026-10-31","sáb","Yangshuo → Chongqing","阳朔 · 重庆","Tren a Chongqing","Viajamos a la ciudad de los rascacielos y las luces. Paseo y cena con vistas.","ciudad"],
+["2026-11-01","dom","Chongqing","重庆","Despedida de China","Barrios antiguos, teleférico sobre el río y cena de hotpot antes de ir al aeropuerto.","ciudad"],
+["2026-11-02","lun","Chongqing → Madrid","重庆 · 马德里","¡De vuelta a casa!","Vuelo de madrugada con escala en Roma. Aterrizamos en Madrid a las 13:05.","avion"]
+];
+
+const q=new URLSearchParams(location.search).get("fecha");
+const fmt=function(z,d){return new Intl.DateTimeFormat("en-CA",{timeZone:z}).format(d);};
+const today=q||fmt("Asia/Shanghai",new Date());
+const todayES=q||fmt("Europe/Madrid",new Date());
+const dif=function(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5);};
+const first=D[0][0];
+const last=D[D.length-1][0];
+const cur=D.find(function(d){return d[0]===today;});
+let st="during";
+if(today<first){st="before";}
+if(today>last){st="after";}
+
+const meses={"10":"octubre","11":"noviembre"};
+function dd(d){
+  const partes=d.split("-");
+  return parseInt(partes[2],10)+" de "+meses[partes[1]];
+}
+
+let hero="";
+if(st==="before"){
+  hero='<div class="big">Faltan '+dif(todayES,first)+' días</div><p>para salir hacia China</p>';
+}else if(st==="after"){
+  hero='<div class="big">¡Ya hemos vuelto!</div><p>Gracias por acompañarnos</p>';
+}else{
+  hero='<div class="big">Ahora en '+cur[2]+'</div><p>'+cur[4]+'</p>';
+}
+
+let h='<section class="card hero"><h1>Viaje a China</h1><div class="zh">中国</div>'+hero
++'<p>'+dd(first)+' – '+dd(last)+'</p><div class="hint">Desliza hacia arriba ↑</div></section>';
+
+for(let n=0;n<D.length;n++){
+  const d=D[n];
+  let clase="next";
+  let etiqueta="Próximamente";
+  if(d[0]===today){clase="now";etiqueta="📍 Ahora";}
+  else if(d[0]<today){clase="past";etiqueta="✓ Hecho";}
+
+  const imagen=S[d[6]](n,d[7]);
+  const foto='<img src="fotos/dia-'+d[0].slice(5)+'.jpg" alt="" onerror="this.remove()">';
+
+  h+='<section class="card '+clase+'" data-d="'+d[0]+'">'
+  +'<div class="art">'+imagen+foto+'</div>'
+  +'<div class="txt">'
+  +'<span class="tag">'+etiqueta+'</span>'
+  +'<div class="day">'+d[1][0].toUpperCase()+d[1].slice(1)+' '+dd(d[0])+'</div>'
+  +'<h2 class="city">'+d[2]+'</h2>'
+  +'<div class="zh">'+d[3]+'</div>'
+  +'<div class="ttl">'+d[4]+'</div>'
+  +'<p class="desc">'+d[5]+'</p>'
+  +'</div></section>';
+}
+
+document.getElementById("car").innerHTML=h;
+
+function reloj(){
+  const ahora=new Date();
+  const china=new Intl.DateTimeFormat("es-ES",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit"}).format(ahora);
+  const espana=new Intl.DateTimeFormat("es-ES",{timeZone:"Europe/Madrid",hour:"2-digit",minute:"2-digit"}).format(ahora);
+  document.getElementById("bar").textContent="🇨🇳 "+china+"  ·  🇪🇸 "+espana;
+}
+reloj();
+setInterval(reloj,30000);
+
+const tarjetaHoy=document.querySelector(".card.now");
+if(tarjetaHoy){tarjetaHoy.scrollIntoView({block:"start"});}
+
+const musica=document.getElementById("musica");
+const boton=document.getElementById("btnMusica");
+let sonando=false;
+
+boton.addEventListener("click",function(){
+  if(sonando){
+    musica.pause();
+    boton.textContent="♪ Música";
+    sonando=false;
+  }else{
+    musica.volume=0.35;
+    musica.play().then(function(){
+      boton.textContent="⏸ Pausar";
+      sonando=true;
+    }).catch(function(){
+      boton.textContent="♪ Toca de nuevo";
+    });
+  }
+});
+</script>
+
+</body>
+</html>
