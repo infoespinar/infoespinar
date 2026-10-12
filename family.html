@@ -1,1 +1,84 @@
-
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<title>Viaje a China</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c1412;color:#2a1a14}
+.car{height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
+.card{height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;background:#fbf4e6;position:relative}
+.art{flex:0 0 54%;position:relative;overflow:hidden}.art svg,.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.txt{flex:1;padding:18px 24px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;justify-content:center;gap:6px}
+.tag{align-self:flex-start;font:600 .78rem system-ui,sans-serif;letter-spacing:.04em;padding:4px 12px;border-radius:20px;background:#e8d9bd;color:#5b4636}
+.now .tag{background:#b3201f;color:#fff}.past .tag{background:#dfe9d8;color:#3c5a35}
+.day{font:600 .95rem system-ui,sans-serif;color:#7a6558;margin-top:4px}
+.city{font-size:2rem;line-height:1.1;margin:0;color:#b3201f}.zh{font-size:1.1rem;color:#8a6a1f;letter-spacing:.1em}
+.ttl{font-size:1.25rem;font-weight:bold;margin:8px 0 0}.desc{font-size:1.05rem;line-height:1.55;margin:0;color:#3d2d26}
+.past{filter:saturate(.7)}.past .art{opacity:.85}.next .desc{color:#6d5c52}
+.bar{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:5;background:rgba(28,20,18,.72);color:#fff;font:600 .8rem system-ui,sans-serif;padding:6px 14px;border-radius:20px;white-space:nowrap;backdrop-filter:blur(6px)}
+.hero{justify-content:center;align-items:center;text-align:center;background:linear-gradient(160deg,#8e1413,#b3201f 55%,#c8962b);color:#fff;padding:24px}
+.hero h1{font-size:2.4rem;margin:0 0 6px}.hero .big{font-size:1.5rem;margin:18px 0 6px}.hero p{margin:0;opacity:.92;font-size:1.05rem}.hint{margin-top:28px;font:.9rem system-ui,sans-serif;opacity:.8}
+.hero .zh{color:#ffe3a0;font-size:1.6rem}
+</style></head><body>
+<div class="bar" id="bar"></div>
+<div class="car" id="car"></div>
+<script>
+const G=(i,a,b)=>`<defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient></defs><rect width="400" height="240" fill="url(#g${i})"/>`;
+const sun=(x,y,r,c)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" opacity=".92"/>`;
+const mist=(y,o)=>`<ellipse cx="200" cy="${y}" rx="260" ry="22" fill="#fff" opacity="${o}"/>`;
+const cloud=(x,y)=>`<g fill="#fff" opacity=".9"><ellipse cx="${x}" cy="${y}" rx="44" ry="14"/><ellipse cx="${x+26}" cy="${y-9}" rx="26" ry="14"/><ellipse cx="${x-24}" cy="${y-6}" rx="22" ry="11"/></g>`;
+const pil=(l,c)=>l.map(([x,w,h])=>`<path d="M${x} 240V${240-h}q${w/2} -12 ${w} 0V240Z" fill="${c}"/><circle cx="${x+w/2}" cy="${240-h-2}" r="${w/3.2}" fill="${c}"/>`).join("");
+const cone=(l,c)=>l.map(([x,w,h])=>`<path d="M${x} 205Q${x+w*.12} ${205-h} ${x+w/2} ${205-h}Q${x+w*.88} ${205-h} ${x+w} 205Z" fill="${c}"/>`).join("");
+const house=(x,y,w,c)=>`<rect x="${x}" y="${y}" width="${w}" height="${w*.55}" fill="${c}"/><path d="M${x-4} ${y}L${x+w/2} ${y-w*.38}L${x+w+4} ${y}Z" fill="#4a3a30"/><rect x="${x+w*.4}" y="${y+w*.14}" width="${w*.2}" height="${w*.22}" fill="#ffd36b"/>`;
+const lant=(x,y)=>`<circle cx="${x}" cy="${y}" r="9" fill="#ffb347" opacity=".35"/><circle cx="${x}" cy="${y}" r="4.5" fill="#d62d20"/>`;
+const S={
+avion:i=>G(i,"#8ec5f0","#e8f4ff")+sun(320,60,22,"#fff6c8")+cloud(80,150)+cloud(310,195)+cloud(230,60)+`<g transform="translate(190 112) rotate(-10)"><ellipse rx="78" ry="11" fill="#fff"/><path d="M-6 0L-46 -50L-30 -50L26 0Z" fill="#dce6f2"/><path d="M-6 0L-46 50L-30 50L26 0Z" fill="#c9d6e6"/><path d="M-68 -3L-82 -28L-66 -28L-48 -3Z" fill="#b3201f"/><rect x="30" y="-4" width="34" height="4" rx="2" fill="#9fb4cc"/></g>`,
+palacio:i=>G(i,"#f7c98b","#fdf3e3")+sun(330,56,24,"#ffe9a8")+`<rect y="176" width="400" height="64" fill="#8a1c1a"/><rect x="50" y="154" width="300" height="24" fill="#efe6d4"/><rect x="100" y="112" width="200" height="42" fill="#b3201f"/>`+[112,144,176,208,240,272].map(x=>`<rect x="${x}" y="114" width="10" height="40" fill="#7a1513"/>`).join("")+`<path d="M66 114Q200 62 334 114L312 126Q200 86 88 126Z" fill="#e4a92a"/><path d="M122 86Q200 46 278 86L264 95Q200 64 136 95Z" fill="#e4a92a"/><rect x="190" y="52" width="20" height="8" fill="#e4a92a"/>`,
+muralla:i=>G(i,"#bcd8ea","#f5efe0")+sun(70,62,22,"#fff2c0")+`<path d="M0 170Q80 120 160 150T320 130T400 150V240H0Z" fill="#9db8a0"/><path d="M0 205Q100 140 200 172T400 150V240H0Z" fill="#6f9a72"/><path d="M0 190L70 168L140 176L210 140L280 150L340 112L400 96" stroke="#8b7355" stroke-width="7" fill="none"/>`+[[62,150],[202,122],[332,94]].map(([x,y])=>`<rect x="${x}" y="${y}" width="20" height="18" fill="#a08460"/><rect x="${x-2}" y="${y-4}" width="24" height="5" fill="#8b7355"/>`).join(""),
+templo:i=>G(i,"#9fd0f5","#f4f1e6")+sun(70,60,20,"#fff6c8")+`<rect y="192" width="400" height="48" fill="#d9cdb4"/><ellipse cx="200" cy="198" rx="124" ry="14" fill="#f2eee3"/><ellipse cx="200" cy="187" rx="98" ry="11" fill="#fff"/><rect x="152" y="130" width="96" height="56" fill="#b3201f"/><path d="M104 132Q200 104 296 132L286 142H114Z" fill="#2a5db0"/><path d="M132 106Q200 80 268 106L260 114H140Z" fill="#2a5db0"/><path d="M160 84Q200 62 240 84L233 91H167Z" fill="#2a5db0"/><rect x="196" y="48" width="8" height="16" fill="#e4a92a"/>`,
+pilares:i=>G(i,"#d6ecdf","#f6faf4")+pil([[30,34,120],[110,28,150],[190,36,130],[290,30,160],[350,38,110]],"#a9c8b4")+mist(150,.45)+pil([[0,44,150],[70,40,180],[160,46,160],[250,42,190],[330,50,150]],"#6d9b82")+mist(205,.5)+pil([[20,56,110],[130,48,90],[240,60,120],[350,56,100]],"#3f6f5a"),
+puente:i=>G(i,"#cfe3f2","#eef4ec")+`<path d="M0 90L110 100L90 240H0Z" fill="#8a7765"/><path d="M400 70L290 92L320 240H400Z" fill="#7a6857"/><path d="M0 60L120 70L112 100L0 92Z" fill="#6b9a75"/><path d="M400 42L282 64L290 92L400 70Z" fill="#6b9a75"/><path d="M116 104L286 92" stroke="#456a8f" stroke-width="5"/><path d="M116 98L286 86" stroke="#9db7d0" stroke-width="2"/>`+[150,190,230].map(x=>`<circle cx="${x}" cy="${100-(x-116)*.07}" r="3" fill="#b3201f"/>`).join("")+mist(210,.6),
+tianmen:i=>G(i,"#dfeadf","#f7f6ee")+`<path d="M0 240L70 120Q110 80 160 130L200 240Z" fill="#9cbba7"/><path d="M60 240L130 100Q200 20 270 100L350 240Z" fill="#4e7d62"/><path d="M168 240V176Q200 112 232 176V240Z" fill="#e6efe6"/><path d="M0 30L330 122" stroke="#444" stroke-width="1.5"/><rect x="176" y="72" width="16" height="11" rx="2" fill="#b3201f"/>`+mist(214,.55),
+cascada:i=>G(i,"#b9d7c0","#eef3e6")+`<path d="M0 60L170 50L168 240H0Z" fill="#4f7a58"/><path d="M400 70L232 52L234 240H400Z" fill="#5a8662"/><rect x="170" y="52" width="62" height="160" fill="#fff" opacity=".92"/><ellipse cx="201" cy="214" rx="50" ry="12" fill="#fff" opacity=".8"/>`+house(26,150,44,"#8a6a4a")+house(92,128,38,"#8a6a4a")+house(262,138,42,"#8a6a4a")+house(330,160,48,"#8a6a4a")+lant(40,140)+lant(285,128)+lant(350,150),
+casas:(i,n)=>G(i,n?"#2b2a55":"#f5c58a",n?"#e9976a":"#fbe9d0")+(n?sun(320,50,14,"#fff3c4"):sun(320,60,22,"#fff2c0"))+`<rect y="176" width="400" height="64" fill="${n?"#26385a":"#6b8fa6"}"/>`+[[30,60],[110,70],[200,62],[286,74]].map(([x,w])=>`<rect x="${x+6}" y="146" width="3" height="32" fill="#4a3a30"/><rect x="${x+w-9}" y="146" width="3" height="32" fill="#4a3a30"/>`+house(x,114,w,"#7a5a3a")+lant(x+10,106)+lant(x+w-10,106)).join("")+`<path d="M20 190H380M40 205H360M60 220H340" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>`,
+karst:(i,v)=>{const c={d:["#bfe3ef","#f3f1dc","#fff2b8"],s:["#f6a56b","#fbe2b8","#ffd66b"],n:["#16213e","#46466e","#f4f1c8"]}[v||"d"];return G(i,c[0],c[1])+sun(v=="s"?210:320,v=="s"?140:62,v=="s"?30:20,c[2])+cone([[10,70,110],[130,60,130],[250,80,100],[340,60,120]],v=="n"?"#2a3d5a":"#8fb8a0")+mist(190,v=="n"?.15:.45)+cone([[-20,90,90],[80,80,70],[200,70,85],[300,100,75]],v=="n"?"#1e2f47":"#4f8a6a")+`<rect y="204" width="400" height="36" fill="${v=="n"?"#1b3550":"#5f9bb5"}"/><path d="M150 216H250L240 226H160Z" fill="#c8b06a"/><path d="M196 196H204L206 216H194Z" fill="#b3201f"/><path d="M188 194H212L200 183Z" fill="#e8d9a0"/>`},
+ciudad:i=>G(i,"#14213d","#3a2f5b")+sun(330,46,12,"#f4f1c8")+`<pattern id="w${i}" width="10" height="12" patternUnits="userSpaceOnUse"><rect x="2" y="2" width="4" height="5" fill="#ffd36b" opacity=".85"/></pattern>`+[[10,40,110],[56,30,150],[92,44,95],[142,34,170],[182,40,120],[228,30,145],[264,46,100],[316,34,160],[356,40,115]].map(([x,w,h])=>`<rect x="${x}" y="${192-h}" width="${w}" height="${h}" fill="#1d2b4f"/><rect x="${x}" y="${192-h}" width="${w}" height="${h}" fill="url(#w${i})"/>`).join("")+`<rect y="192" width="400" height="48" fill="#12203a"/>`+[40,150,205,300,340].map(x=>`<rect x="${x}" y="194" width="3" height="40" fill="#ffb347" opacity=".35"/>`).join(""),
+tren:i=>G(i,"#bfe0f5","#f4f1e2")+sun(330,56,20,"#fff2c0")+`<path d="M0 170Q100 120 200 160T400 140V240H0Z" fill="#8fbb8f"/><path d="M0 205Q120 160 240 190T400 180V240H0Z" fill="#5f9a6a"/><path d="M0 196H400" stroke="#6b6b6b" stroke-width="3"/>`+[40,120,200].map(x=>`<rect x="${x}" y="164" width="76" height="30" rx="6" fill="#fff"/><rect x="${x}" y="178" width="76" height="5" fill="#2a5db0"/>`+[8,26,44,62].map(d=>`<rect x="${x+d}" y="169" width="9" height="8" rx="2" fill="#7aa6c8"/>`).join("")).join("")+`<path d="M276 164H318Q344 170 350 194H276Z" fill="#fff"/><path d="M296 169H322Q334 173 338 183H296Z" fill="#7aa6c8"/>`
+};
+const D=[
+["2026-10-16","vie","Madrid → Pekín","北京","Salimos de viaje","Vuelo de madrugada desde Madrid. Aterrizamos en Pekín por la tarde y salimos a cenar el famoso pato laqueado.","avion"],
+["2026-10-17","sáb","Pekín","北京","La Ciudad Prohibida","Madrugamos para ver la gran plaza y recorrer el antiguo palacio de los emperadores. Por la tarde, paseo por callejones y lagos.","palacio"],
+["2026-10-18","dom","Pekín","北京","La Gran Muralla","Subimos a la Muralla China y bajamos en tobogán. Por la tarde, el barrio de arte y un masaje de pies.","muralla"],
+["2026-10-19","lun","Pekín → Zhangjiajie","北京 · 张家界","Palacios y vuelo","Última mañana en Pekín con el Palacio de Verano y el Templo del Cielo. Por la tarde volamos al sur.","templo"],
+["2026-10-20","mar","Zhangjiajie","张家界","El valle y la cueva","Primer paseo por el parque de las montañas de piedra y visita a una cueva con río subterráneo.","pilares"],
+["2026-10-21","mié","Zhangjiajie","张家界","Las montañas de Avatar","Subimos en un ascensor de cristal a las cumbres que inspiraron la película Avatar.","pilares"],
+["2026-10-22","jue","Zhangjiajie","张家界","El Gran Cañón","Cruzamos un puente de cristal a 300 metros de altura y paseamos por el fondo del cañón.","puente"],
+["2026-10-23","vie","Zhangjiajie","张家界","La Puerta del Cielo","Subimos a una montaña con un enorme arco natural en la roca.","tianmen"],
+["2026-10-24","sáb","Furong","芙蓉镇","El pueblo de la cascada","Viajamos a un pueblo antiguo colgado sobre una cascada. Cena con vistas.","cascada"],
+["2026-10-25","dom","Fenghuang","凤凰","La ciudad antigua","Tren hasta la ciudad de las casas sobre el río. Paseo al caer la tarde con las luces encendidas.","casas",0],
+["2026-10-26","lun","Fenghuang","凤凰","Un día entero en el pueblo","Excursión a un desfiladero con cascadas y, por la noche, paseo en barca bajo los puentes iluminados.","casas",1],
+["2026-10-27","mar","Fenghuang → Yangshuo","凤凰 · 阳朔","Día de trenes","Viaje largo con varios trenes hacia el sur, rumbo a un paisaje de montañas imposibles.","tren"],
+["2026-10-28","mié","Yangshuo","阳朔","El río en balsa","Paseo en balsa de bambú y, por la tarde, en bici entre arrozales.","karst","d"],
+["2026-10-29","jue","Yangshuo","阳朔","Amanecer en las colinas","Madrugón para ver salir el sol entre los picos y visita a un pueblo junto al río.","karst","s"],
+["2026-10-30","vie","Yangshuo","阳朔","Último día entre montañas","Ruta por carreteras de postal y, por la noche, un espectáculo sobre el río con luces.","karst","n"],
+["2026-10-31","sáb","Yangshuo → Chongqing","阳朔 · 重庆","Tren a Chongqing","Viajamos a la ciudad de los rascacielos y las luces. Paseo y cena con vistas.","ciudad"],
+["2026-11-01","dom","Chongqing","重庆","Despedida de China","Barrios antiguos, teleférico sobre el río y cena de hotpot antes de ir al aeropuerto.","ciudad"],
+["2026-11-02","lun","Chongqing → Madrid","重庆 · 马德里","¡De vuelta a casa!","Vuelo de madrugada con escala en Roma. Aterrizamos en Madrid a las 13:05.","avion"]];
+const q=new URLSearchParams(location.search).get("fecha");
+const fmt=(z,d)=>new Intl.DateTimeFormat("en-CA",{timeZone:z}).format(d);
+const today=q||fmt("Asia/Shanghai",new Date()),todayES=q||fmt("Europe/Madrid",new Date());
+const dif=(a,b)=>Math.round((Date.parse(b)-Date.parse(a))/864e5);
+const first=D[0][0],last=D[D.length-1][0];
+const cur=D.find(d=>d[0]==today);
+let st=today<first?"before":today>last?"after":"during";
+const dd=d=>{const[,m,n]=d.split("-");return+n+" de "+({"10":"octubre","11":"noviembre"})[m]};
+const hero=st=="before"?`<div class="big">Faltan ${dif(todayES,first)} días</div><p>para salir hacia China</p>`:st=="after"?`<div class="big">¡Ya hemos vuelto!</div><p>Gracias por acompañarnos</p>`:`<div class="big">Ahora en ${cur[2]}</div><p>${cur[4]}</p>`;
+let h=`<section class="card hero"><h1>Viaje a China</h1><div class="zh">中国</div>${hero}<p>${dd(first)} – ${dd(last)}</p><div class="hint">Desliza hacia arriba ↑</div></section>`;
+D.forEach((d,n)=>{const c=d[0]==today?"now":(d[0]<today?"past":"next"),t=c=="now"?"📍 Ahora":c=="past"?"✓ Hecho":"Próximamente";
+h+=`<section class="card ${c}" data-d="${d[0]}"><div class="art">${S[d[6]](n,d[7])}<img src="fotos/dia-${d[0].slice(5)}.jpg" alt="" onerror="this.remove()"></div><div class="txt"><span class="tag">${t}</span><div class="day">${d[1][0].toUpperCase()+d[1].slice(1)} ${dd(d[0])}</div><h2 class="city">${d[2]}</h2><div class="zh">${d[3]}</div><div class="ttl">${d[4]}</div><p class="desc">${d[5]}</p></div></section>`});
+document.getElementById("car").innerHTML=h;
+const clk=()=>{const n=new Date(),f=z=>new Intl.DateTimeFormat("es-ES",{timeZone:z,hour:"2-digit",minute:"2-digit"}).format(n);document.getElementById("bar").textContent="🇨🇳 "+f("Asia/Shanghai")+"  ·  🇪🇸 "+f("Europe/Madrid")};
+clk();setInterval(clk,30000);
+const now=document.querySelector(".card.now");if(now)now.scrollIntoView({block:"start"});
+</script></body></html>
