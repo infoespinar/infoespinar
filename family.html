@@ -165,15 +165,32 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
   z-index:9;
   border:0;
   border-radius:30px;
-  padding:10px 16px;
-  background:rgba(28,20,18,.78);
-  color:#fff;
+  background:rgba(28,20,18,.55);
+  color:rgba(255,255,255,.85);
   font:600 .85rem system-ui,sans-serif;
   backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  transition:background .2s ease,color .2s ease;
 }
 
-#btnMusica{right:14px}
-#btnInicio{left:14px}
+#btnMusica{
+  right:14px;
+  padding:10px 16px;
+}
+
+#btnInicio{
+  left:14px;
+  width:38px;
+  height:38px;
+  padding:0;
+  font-size:1rem;
+  line-height:1;
+}
+
+#btnInicio:hover{
+  background:rgba(28,20,18,.75);
+  color:#fff;
+}
 </style>
 </head>
 <body>
@@ -184,7 +201,7 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 <div class="car" id="car"></div>
 
 <audio id="musica" src="musica/china.mp3" preload="auto"></audio>
-<button id="btnInicio">↑ Inicio</button>
+<button id="btnInicio" aria-label="Volver al inicio">↑</button>
 <button id="btnMusica">♪ Música</button>
 
 <script>
@@ -432,178 +449,4 @@ const D=[
 
 ["2026-10-24","sáb","Zhangjiajie → Furong","张家界 · 芙蓉镇","Día flexible y pueblo de la cascada","Mañana libre para completar lo que nos haya quedado pendiente: el lago Baofeng con su paseo en barca, el poblado antiguo de Dayong o el parque cultural Tujia. Por la tarde viajaremos a Furong, donde pasearemos por sus calles empedradas y veremos la gran cascada iluminada y el palacio Tuwang.","cascada"],
 
-["2026-10-25","dom","Furong → Fenghuang","芙蓉镇 · 凤凰","De la cascada al río","Por la mañana veremos Furong con luz de día y cruzaremos la cascada por el paso tallado en la roca. Después tomaremos un tren corto hasta Fenghuang, la ciudad antigua de casas de madera colgadas sobre el río Tuojiang. Al caer la noche, paseo por sus puentes y calles iluminadas.","casas",0],
-
-["2026-10-26","lun","Fenghuang","凤凰","Fenghuang sin prisas","Día completo en la ciudad antigua. Por la mañana, excursión al desfiladero de Feishui, una ruta corta entre cascadas, paredes de roca y puentes colgantes. Por la tarde recorreremos los callejones, la pagoda Wanming y las orillas del río; por la noche, masaje tradicional de pies y paseo en barca de madera bajo los farolillos.","casas",1],
-
-["2026-10-27","mar","Fenghuang → Yangshuo","凤凰 · 阳朔","Ruta hacia el sur","Última mañana en Fenghuang para ver la muralla y la puerta Este del casco antiguo, con buenas vistas del río y los tejados. Después comenzaremos el traslado más largo del viaje hacia Yangshuo, en Guangxi. Al llegar, paseo por la animada West Street y cena de pescado a la cerveza.","tren"],
-
-["2026-10-28","mié","Yangshuo","阳朔","El río Yulong en balsa","Primer día completo entre los paisajes kársticos de Yangshuo. Por la mañana, paseo relajado en balsa de bambú por el río Yulong, un afluente tranquilo del río Li. Por la tarde, ruta en bici o moto eléctrica por caminos rurales, arrozales y pequeños pueblos rodeados de picos de piedra.","karst","d"],
-
-["2026-10-29","jue","Yangshuo","阳朔","Amanecer en Xianggong","Madrugón para ver salir el sol desde la colina de Xianggong, uno de los miradores más famosos del río Li. Después de desayunar y descansar, visitaremos Xingping, un pueblo tradicional junto al río, y pasearemos por sus miradores y rincones con vistas a las montañas.","karst","s"],
-
-["2026-10-30","vie","Yangshuo","阳朔","La Galería de los Diez Li","Día flexible para disfrutar de Yangshuo a nuestro ritmo. Recorreremos la carretera escénica de la Galería de los Diez Li, con paradas para fotografías, pueblos rurales y vistas de los picos kársticos. Por la noche, espectáculo Impression Sanjie Liu, representado al aire libre sobre el propio río con cientos de actores locales.","karst","n"],
-
-["2026-10-31","sáb","Yangshuo → Chongqing","阳朔 · 重庆","Tren a la ciudad de las luces","Por la mañana tomaremos el tren hacia Chongqing, la enorme ciudad montañosa construida entre el río Yangtsé y el Jialing. Al llegar, paseo por Hongyadong, con sus edificios tradicionales iluminados, y cena con vistas a la ciudad nocturna. Si el horario lo permite, espectáculo de drones.","ciudad"],
-
-["2026-11-01","dom","Chongqing","重庆","Despedida de China","Día para descubrir el carácter de Chongqing: veremos el tren cruzar un edificio en Liziba, recorreremos el barrio histórico de Shibati con sus escaleras y casas de té, y cruzaremos el río en el teleférico del Yangtsé. Por la noche, crucero por el río para ver la ciudad iluminada y cena de hotpot antes de ir al aeropuerto.","ciudad"],
-
-["2026-11-02","lun","Chongqing → Madrid","重庆 · 马德里","¡De vuelta a casa!","Vuelo de madrugada desde Chongqing con escala en Roma. Llegada a Madrid por la tarde, poniendo fin a un viaje por palacios imperiales, montañas de piedra, pueblos de río y ciudades de luces.","avion"]
-];
-
-const q=new URLSearchParams(location.search).get("fecha");
-const fmt=function(z,d){return new Intl.DateTimeFormat("en-CA",{timeZone:z}).format(d);};
-const today=q||fmt("Asia/Shanghai",new Date());
-const todayES=q||fmt("Europe/Madrid",new Date());
-const dif=function(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5);};
-const first=D[0][0];
-const last=D[D.length-1][0];
-const cur=D.find(function(d){return d[0]===today;});
-let st="during";
-if(today<first){st="before";}
-if(today>last){st="after";}
-
-const meses={"10":"octubre","11":"noviembre"};
-function dd(d){
-  const partes=d.split("-");
-  return parseInt(partes[2],10)+" de "+meses[partes[1]];
-}
-
-let hero="";
-if(st==="before"){
-  hero='<div class="big">Faltan '+dif(todayES,first)+' días</div><p>para salir hacia China</p>';
-}else if(st==="after"){
-  hero='<div class="big">¡Ya hemos vuelto!</div><p>Gracias por acompañarnos</p>';
-}else{
-  hero='<div class="big">Ahora en '+cur[2]+'</div><p>'+cur[4]+'</p>';
-}
-
-let h='<section class="card hero"><h1>Viaje a China</h1><div class="zh">中国</div>'+hero
-+'<p>'+dd(first)+' – '+dd(last)+'</p><div class="hint">Desliza hacia arriba ↑</div></section>';
-
-const adorno='<div class="adorno">'
-+'<svg viewBox="0 0 400 80" preserveAspectRatio="xMidYMax slice">'
-+'<g fill="none" stroke="#b3201f" stroke-width="3" stroke-linecap="round">'
-+'<path d="M20 62q18 -26 44 -12q10 -22 36 -14q22 -18 42 2q24 -8 34 14"/>'
-+'<path d="M150 66q16 -22 40 -12q12 -20 38 -10q20 -16 40 4q22 -6 32 16"/>'
-+'<path d="M280 62q16 -24 42 -12q12 -20 36 -10q22 -16 42 6"/>'
-+'</g>'
-+'<g fill="#c8962b" opacity=".55">'
-+'<circle cx="200" cy="30" r="4"/>'
-+'<circle cx="188" cy="38" r="2.5"/>'
-+'<circle cx="212" cy="38" r="2.5"/>'
-+'</g>'
-+'</svg></div>';
-
-for(let n=0;n<D.length;n++){
-  const d=D[n];
-
-  if(d[0]>today){continue;}
-
-  let clase="past";
-  let estado="✓ Hecho";
-  if(d[0]===today){clase="now";estado="📍 Ahora";}
-
-  const etiqueta=estado+" · Día "+(n+1)+" de "+D.length;
-  const imagen=S[d[6]](n,d[7]);
-  const foto='<img src="fotos/dia-'+d[0].slice(5)+'.jpg" alt="" onerror="this.remove()">';
-
-  h+='<section class="card '+clase+'" data-d="'+d[0]+'">'
-  +'<div class="art">'+imagen+foto+'</div>'
-  +adorno
-  +'<div class="txt">'
-  +'<span class="tag">'+etiqueta+'</span>'
-  +'<div class="day">'+d[1][0].toUpperCase()+d[1].slice(1)+' '+dd(d[0])+'</div>'
-  +'<h2 class="city">'+d[2]+'</h2>'
-  +'<div class="zh">'+d[3]+'</div>'
-  +'<div class="ttl">'+d[4]+'</div>'
-  +'<p class="desc">'+d[5]+'</p>'
-  +'</div></section>';
-}
-
-const siguiente=D.find(function(d){return d[0]>today;});
-
-if(siguiente){
-  const faltan=dif(today,siguiente[0]);
-
-  h+='<section class="card hero">'
-  +adorno
-  +'<h1>Próxima etapa</h1>'
-  +'<div class="zh">'+siguiente[3]+'</div>'
-  +'<div class="big">'+siguiente[2]+'</div>'
-  +'<p>'+siguiente[4]+'</p>'
-  +'<p>Se desbloquea el '+dd(siguiente[0])+'</p>'
-  +'<div class="hint">Faltan '+faltan+' '+(faltan===1?'día':'días')+'</div>'
-  +'</section>';
-}
-
-document.getElementById("car").innerHTML=h;
-
-const coche=document.getElementById("car");
-const barraProgreso=document.getElementById("progreso");
-let pendiente=false;
-
-function actualizarProgreso(){
-  pendiente=false;
-  const total=coche.scrollHeight-coche.clientHeight;
-  const avance=total>0?Math.min(100,Math.max(0,(coche.scrollTop/total)*100)):0;
-  barraProgreso.style.width=avance+"%";
-}
-
-function pedirActualizacion(){
-  if(!pendiente){
-    pendiente=true;
-    requestAnimationFrame(actualizarProgreso);
-  }
-}
-
-coche.addEventListener("scroll",pedirActualizacion,{passive:true});
-window.addEventListener("resize",pedirActualizacion);
-window.addEventListener("load",pedirActualizacion);
-setInterval(pedirActualizacion,500);
-pedirActualizacion();
-
-function reloj(){
-  const ahora=new Date();
-  const china=new Intl.DateTimeFormat("es-ES",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit"}).format(ahora);
-  const espana=new Intl.DateTimeFormat("es-ES",{timeZone:"Europe/Madrid",hour:"2-digit",minute:"2-digit"}).format(ahora);
-  document.getElementById("bar").textContent="🇨🇳 "+china+"  ·  🇪🇸 "+espana;
-}
-reloj();
-setInterval(reloj,30000);
-
-const tarjetaHoy=document.querySelector(".card.now");
-if(tarjetaHoy){tarjetaHoy.scrollIntoView({block:"start"});}
-
-document.getElementById("btnInicio").addEventListener("click",function(){
-  coche.scrollTo({top:0,behavior:"smooth"});
-});
-
-const musica=document.getElementById("musica");
-const boton=document.getElementById("btnMusica");
-let sonando=false;
-
-musica.addEventListener("ended",function(){
-  musica.currentTime=0;
-  musica.play().catch(function(){});
-});
-
-boton.addEventListener("click",function(){
-  if(sonando){
-    musica.pause();
-    boton.textContent="♪ Música";
-    sonando=false;
-  }else{
-    musica.volume=0.35;
-    musica.play().then(function(){
-      boton.textContent="⏸ Pausar";
-      sonando=true;
-    }).catch(function(){
-      boton.textContent="♪ Toca de nuevo";
-    });
-  }
-});
-</script>
-
-</body>
-</html>
+["2026-10-25","dom","Furong → Fenghuang","芙蓉镇 · 凤凰","De la cascada al río","Por la mañana veremos Furong con luz de día y cruzaremos la cascada por el paso
