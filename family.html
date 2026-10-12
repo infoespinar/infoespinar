@@ -10,6 +10,16 @@
 html,body{margin:0;height:100%}
 body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c1412;color:#2a1a14}
 
+.progreso{
+  position:fixed;
+  top:0;left:0;
+  height:3px;
+  width:0;
+  background:linear-gradient(90deg,#b3201f,#c8962b);
+  z-index:10;
+  transition:width .2s ease;
+}
+
 .car{
   height:100vh;
   height:100dvh;
@@ -57,6 +67,17 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
   justify-content:flex-start;
   gap:6px;
   z-index:2;
+  animation:aparecer .5s ease both;
+}
+
+@keyframes aparecer{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:none}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .txt{animation:none}
+  .car{scroll-behavior:auto}
 }
 
 .tag{
@@ -129,9 +150,8 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
 .hint{margin-top:28px;font:.9rem system-ui,sans-serif;opacity:.8}
 .hero .zh{color:#ffe3a0;font-size:1.6rem}
 
-#btnMusica{
+#btnMusica,#btnInicio{
   position:fixed;
-  right:14px;
   bottom:calc(14px + env(safe-area-inset-bottom,0px));
   z-index:9;
   border:0;
@@ -142,14 +162,19 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
   font:600 .85rem system-ui,sans-serif;
   backdrop-filter:blur(6px);
 }
+
+#btnMusica{right:14px}
+#btnInicio{left:14px}
 </style>
 </head>
 <body>
 
+<div class="progreso" id="progreso"></div>
 <div class="bar" id="bar"></div>
 <div class="car" id="car"></div>
 
 <audio id="musica" src="musica/china.mp3" preload="auto"></audio>
+<button id="btnInicio">↑ Inicio</button>
 <button id="btnMusica">♪ Música</button>
 
 <script>
@@ -463,10 +488,11 @@ const adorno='<div class="adorno">'
 for(let n=0;n<D.length;n++){
   const d=D[n];
   let clase="next";
-  let etiqueta="Próximamente";
-  if(d[0]===today){clase="now";etiqueta="📍 Ahora";}
-  else if(d[0]<today){clase="past";etiqueta="✓ Hecho";}
+  let estado="Próximamente";
+  if(d[0]===today){clase="now";estado="📍 Ahora";}
+  else if(d[0]<today){clase="past";estado="✓ Hecho";}
 
+  const etiqueta=estado+" · Día "+(n+1)+" de "+D.length;
   const imagen=S[d[6]](n,d[7]);
   const foto='<img src="fotos/dia-'+d[0].slice(5)+'.jpg" alt="" onerror="this.remove()">';
 
@@ -485,6 +511,17 @@ for(let n=0;n<D.length;n++){
 
 document.getElementById("car").innerHTML=h;
 
+const coche=document.getElementById("car");
+const barraProgreso=document.getElementById("progreso");
+
+function actualizarProgreso(){
+  const total=coche.scrollHeight-coche.clientHeight;
+  const avance=total>0?(coche.scrollTop/total)*100:0;
+  barraProgreso.style.width=avance+"%";
+}
+coche.addEventListener("scroll",actualizarProgreso);
+actualizarProgreso();
+
 function reloj(){
   const ahora=new Date();
   const china=new Intl.DateTimeFormat("es-ES",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit"}).format(ahora);
@@ -496,6 +533,10 @@ setInterval(reloj,30000);
 
 const tarjetaHoy=document.querySelector(".card.now");
 if(tarjetaHoy){tarjetaHoy.scrollIntoView({block:"start"});}
+
+document.getElementById("btnInicio").addEventListener("click",function(){
+  coche.scrollTo({top:0,behavior:"smooth"});
+});
 
 const musica=document.getElementById("musica");
 const boton=document.getElementById("btnMusica");
