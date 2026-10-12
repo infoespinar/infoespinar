@@ -9,30 +9,117 @@
 *{box-sizing:border-box}
 html,body{margin:0;height:100%}
 body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c1412;color:#2a1a14}
-.car{height:100vh;height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;-webkit-overflow-scrolling:touch}
-.card{height:100vh;height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;background:#fbf4e6;position:relative}
-.art{flex:0 0 54%;position:relative;overflow:hidden}
-.art svg,.art img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.txt{flex:1;padding:18px 24px calc(22px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;justify-content:center;gap:6px}
-.tag{align-self:flex-start;font:600 .78rem system-ui,sans-serif;letter-spacing:.04em;padding:4px 12px;border-radius:20px;background:#e8d9bd;color:#5b4636}
+
+.car{
+  height:100vh;
+  height:100dvh;
+  overflow-y:scroll;
+  scroll-snap-type:y proximity;
+  scroll-behavior:smooth;
+  -webkit-overflow-scrolling:touch;
+}
+
+.card{
+  min-height:100vh;
+  min-height:100dvh;
+  scroll-snap-align:start;
+  display:flex;
+  flex-direction:column;
+  background:#fbf4e6;
+  position:relative;
+}
+
+.art{
+  flex:0 0 auto;
+  height:42vh;
+  height:42dvh;
+  position:relative;
+  overflow:hidden;
+}
+
+.art svg,.art img{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.txt{
+  flex:1 1 auto;
+  padding:18px 22px calc(26px + env(safe-area-inset-bottom,0px));
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  gap:6px;
+}
+
+.tag{
+  align-self:flex-start;
+  font:600 .78rem system-ui,sans-serif;
+  letter-spacing:.04em;
+  padding:4px 12px;
+  border-radius:20px;
+  background:#e8d9bd;
+  color:#5b4636;
+}
+
 .now .tag{background:#b3201f;color:#fff}
 .past .tag{background:#dfe9d8;color:#3c5a35}
+
 .day{font:600 .95rem system-ui,sans-serif;color:#7a6558;margin-top:4px}
-.city{font-size:2rem;line-height:1.1;margin:0;color:#b3201f}
-.zh{font-size:1.1rem;color:#8a6a1f;letter-spacing:.1em}
-.ttl{font-size:1.25rem;font-weight:bold;margin:8px 0 0}
-.desc{font-size:1.02rem;line-height:1.5;margin:0;color:#3d2d26}
+.city{font-size:1.75rem;line-height:1.1;margin:0;color:#b3201f}
+.zh{font-size:1.05rem;color:#8a6a1f;letter-spacing:.1em}
+.ttl{font-size:1.15rem;font-weight:bold;margin:8px 0 0}
+.desc{font-size:.98rem;line-height:1.5;margin:0;color:#3d2d26}
+
 .past{filter:saturate(.7)}
 .past .art{opacity:.85}
 .next .desc{color:#6d5c52}
-.bar{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);z-index:5;background:rgba(28,20,18,.72);color:#fff;font:600 .8rem system-ui,sans-serif;padding:6px 14px;border-radius:20px;white-space:nowrap;backdrop-filter:blur(6px)}
-.hero{justify-content:center;align-items:center;text-align:center;background:linear-gradient(160deg,#8e1413,#b3201f 55%,#c8962b);color:#fff;padding:24px}
+
+.bar{
+  position:fixed;
+  top:calc(8px + env(safe-area-inset-top,0px));
+  left:50%;
+  transform:translateX(-50%);
+  z-index:5;
+  background:rgba(28,20,18,.72);
+  color:#fff;
+  font:600 .8rem system-ui,sans-serif;
+  padding:6px 14px;
+  border-radius:20px;
+  white-space:nowrap;
+  backdrop-filter:blur(6px);
+}
+
+.hero{
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  background:linear-gradient(160deg,#8e1413,#b3201f 55%,#c8962b);
+  color:#fff;
+  padding:24px;
+}
+
 .hero h1{font-size:2.4rem;margin:0 0 6px}
 .hero .big{font-size:1.5rem;margin:18px 0 6px}
 .hero p{margin:0;opacity:.92;font-size:1.05rem}
 .hint{margin-top:28px;font:.9rem system-ui,sans-serif;opacity:.8}
 .hero .zh{color:#ffe3a0;font-size:1.6rem}
-#btnMusica{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:9;border:0;border-radius:30px;padding:10px 16px;background:rgba(28,20,18,.78);color:#fff;font:600 .85rem system-ui,sans-serif;backdrop-filter:blur(6px)}
+
+#btnMusica{
+  position:fixed;
+  right:14px;
+  bottom:calc(14px + env(safe-area-inset-bottom,0px));
+  z-index:9;
+  border:0;
+  border-radius:30px;
+  padding:10px 16px;
+  background:rgba(28,20,18,.78);
+  color:#fff;
+  font:600 .85rem system-ui,sans-serif;
+  backdrop-filter:blur(6px);
+}
 </style>
 </head>
 <body>
