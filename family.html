@@ -1162,4 +1162,12 @@ btnMusica.addEventListener("click",async()=>{
     await musica.play();
     audioEstado.textContent="Música activada";
   }catch(error){
-    audioEs
+    audioEstado.textContent=
+      "No se ha podido reproducir la música. Comprueba el archivo de audio.";
+    btnMusica.title="No se pudo reproducir: vuelve a intentarlo";
+    actualizarAudio();
+  }
+});
+</script>
+</body>
+</html>
