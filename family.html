@@ -280,7 +280,13 @@ button:focus-visible{
 }
 
 #btnInicio{left:14px}
-#btnMusica{right:14px}
+
+#btnMusica{
+  right:14px;
+  font-size:1.35rem;
+  font-weight:400;
+  padding-bottom:2px;
+}
 
 #btnInicio:hover,#btnMusica:hover{
   background:rgba(28,20,18,.75);
@@ -289,13 +295,13 @@ button:focus-visible{
 
 .aviso-musica{
   position:fixed;
-  right:58px;
-  bottom:calc(60px + env(safe-area-inset-bottom,0px));
+  right:54px;
+  bottom:calc(61px + env(safe-area-inset-bottom,0px));
   z-index:13;
-  max-width:170px;
-  padding:9px 12px;
+  max-width:175px;
+  padding:10px 14px;
   border:1px solid rgba(255,227,160,.65);
-  border-radius:16px;
+  border-radius:22px;
   background:rgba(93,16,15,.92);
   color:#ffe3a0;
   font:600 .78rem system-ui,sans-serif;
@@ -303,19 +309,6 @@ button:focus-visible{
   text-align:center;
   box-shadow:0 5px 16px rgba(0,0,0,.25);
   animation:flotarMusica 2.4s ease-in-out infinite;
-}
-
-.aviso-musica::after{
-  content:"";
-  position:absolute;
-  right:-10px;
-  bottom:8px;
-  width:0;
-  height:0;
-  border-top:8px solid transparent;
-  border-bottom:8px solid transparent;
-  border-left:12px solid #5d100f;
-  transform:rotate(28deg);
 }
 
 @keyframes flotarMusica{
@@ -1169,12 +1162,4 @@ btnMusica.addEventListener("click",async()=>{
     await musica.play();
     audioEstado.textContent="Música activada";
   }catch(error){
-    audioEstado.textContent=
-      "No se ha podido reproducir la música. Comprueba el archivo de audio.";
-    btnMusica.title="No se pudo reproducir: vuelve a intentarlo";
-    actualizarAudio();
-  }
-});
-</script>
-</body>
-</html>
+    audioEs
