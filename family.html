@@ -51,6 +51,7 @@ button:focus-visible{outline:3px solid #c8962b;outline-offset:3px}
 .hero p{font-size:1.05rem;line-height:1.5;margin:5px 0;opacity:.94}
 .hero .zh{font-size:1.6rem;color:#ffe3a0}
 .hint{margin-top:25px;font:.9rem system-ui,sans-serif;opacity:.8}
+.hero .nota{font-size:.85rem;opacity:.85;margin:16px auto 0;max-width:300px;line-height:1.4}
 .hero .adorno{opacity:.25}
 .hero .adorno svg{color:#ffe3a0}
 #btnInicio,#btnMusica{position:fixed;bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:12;width:38px;height:38px;border:0;border-radius:50%;padding:0;background:rgba(28,20,18,.55);color:rgba(255,255,255,.85);font:600 1rem system-ui,sans-serif;display:grid;place-items:center;backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
@@ -246,6 +247,7 @@ detalles:[
 titulo:"Trenes, escaleras y una despedida",
 resumen:"Liziba, Shibati, teleférico del Yangtsé, crucero nocturno y hotpot. A las 23:45 salimos al aeropuerto.",
 detalles:[
+["Cambio de hotel","Pasamos al Jiting High-altitude Riverview (Jiefangbei Cloud Eye), en el piso 28 del mismo edificio."],
 ["Liziba","A las 09:00, estación de la línea 2 donde el monorraíl atraviesa un edificio. Mirador a nivel de calle; tip: Pabellón Lansheng."],
 ["Shibati","A las 11:00, escaleras y casas de té. Almuerzo de comida callejera o fideos; aquí están los helados en tacitas panda."],
 ["Teleférico del Yangtsé","A las 14:30, de la estación sur a la norte (Xinhua Road), junto al hotel. Entradas con antelación (Trip.com o GetYourGuide), con los mismos datos del pasaporte; unos 30 RMB ida o 50 ida y vuelta."],
@@ -309,12 +311,28 @@ function fechaValida(s){
   return !isNaN(n)&&n.toISOString().slice(0,10)===s;
 }
 const fechaPrueba=fechaValida(parametro)?parametro:null;
-function hoy(){return fechaPrueba||fechaZona("Asia/Shanghai")}
+function hoy(){
+  if(fechaPrueba)return fechaPrueba;
+  const f=fechaZona("Asia/Shanghai");
+  // El día 16 se desbloquea al despegar de Madrid (00:35 del 16, hora española = 22:35 UTC del 15)
+  if(f==="2026-10-16"&&Date.now()<Date.UTC(2026,9,15,22,35))return "2026-10-15";
+  return f;
+}
 function distancia(a,b){return Math.round((Date.parse(b+"T00:00:00Z")-Date.parse(a+"T00:00:00Z"))/86400000)}
 function fechaTexto(s){return new Intl.DateTimeFormat("es-ES",{timeZone:"UTC",day:"numeric",month:"long"}).format(new Date(s+"T00:00:00Z"))}
 function diaSemana(s){
   const t=new Intl.DateTimeFormat("es-ES",{timeZone:"UTC",weekday:"short"}).format(new Date(s+"T00:00:00Z"));
   return t.charAt(0).toUpperCase()+t.slice(1);
+}
+
+function desbloqueo(f){
+  return f===D[0].fecha?Date.UTC(2026,9,15,22,35):Date.parse(f+"T00:00:00+08:00");
+}
+function cuando(f){
+  const t=new Date(desbloqueo(f));
+  const dia=new Intl.DateTimeFormat("es-ES",{timeZone:"Europe/Madrid",weekday:"long",day:"numeric",month:"long"}).format(t);
+  const hora=new Intl.DateTimeFormat("es-ES",{timeZone:"Europe/Madrid",hour:"2-digit",minute:"2-digit"}).format(t);
+  return `${dia} a las ${hora}`;
 }
 
 let fechaMostrada="";
@@ -344,7 +362,7 @@ function generarWeb(irAHoy){
     estado=`<div class="big">Hoy: ${actual.ciudad}</div><p>${actual.titulo}</p>`;
   }
 
-  let html=`<section class="card hero"><h1>Viaje a China</h1><div class="zh">中国</div>${estado}<p>${fechaTexto(primera)} – ${fechaTexto(ultima)}</p><div class="hint">Desliza hacia arriba ↑</div>${adorno}</section>`;
+  let html=`<section class="card hero"><h1>Viaje a China</h1><div class="zh">中国</div>${estado}<p>${fechaTexto(primera)} – ${fechaTexto(ultima)}</p><p class="nota">${fecha<primera?`El primer día se desbloquea el ${cuando(primera)} (hora de España), al despegar. Después, uno nuevo cada medianoche en China.`:"Cada día nuevo se desbloquea a medianoche en China."}</p><div class="hint">Desliza hacia arriba ↑</div>${adorno}</section>`;
 
   D.forEach((d,n)=>{
     if(d.fecha>fecha)return;
@@ -376,7 +394,7 @@ function generarWeb(irAHoy){
   const siguiente=D.find(d=>d.fecha>fecha);
   if(siguiente){
     const faltan=distancia(fecha,siguiente.fecha);
-    html+=`<section class="card hero"><h2>Próxima etapa</h2><div class="zh">${siguiente.zh}</div><div class="big">${siguiente.ciudad}</div><p>${siguiente.titulo}</p><p>Se descubre el ${fechaTexto(siguiente.fecha)}</p><div class="hint">${faltan===1?"Mañana, un nuevo día del viaje":`Faltan ${faltan} días`}</div>${adorno}</section>`;
+    html+=`<section class="card hero"><h2>Próxima etapa</h2><div class="zh">${siguiente.zh}</div><div class="big">${siguiente.ciudad}</div><p>${siguiente.titulo}</p><p>Se desbloquea el ${cuando(siguiente.fecha)} (hora de España)</p><div class="hint">${faltan===1?"Mañana, un nuevo día del viaje":`Faltan ${faltan} días`}</div>${adorno}</section>`;
   }
 
   if(observador)observador.disconnect();
