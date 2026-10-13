@@ -30,6 +30,7 @@ button:focus-visible{
   z-index:19;
   pointer-events:none;
 }
+
 .progreso{
   position:fixed;
   top:0;left:0;
@@ -49,6 +50,7 @@ button:focus-visible{
   scroll-snap-type:y mandatory;
   -webkit-overflow-scrolling:touch;
 }
+
 .card{
   height:100vh;
   height:100dvh;
@@ -61,12 +63,14 @@ button:focus-visible{
   overflow:hidden;
   isolation:isolate;
 }
+
 .art{
   flex:0 0 32vh;
   flex:0 0 32dvh;
   position:relative;
   overflow:hidden;
 }
+
 .art svg,.art img{
   position:absolute;
   inset:0;
@@ -74,11 +78,13 @@ button:focus-visible{
   height:100%;
   object-fit:cover;
 }
+
 .content{
   position:relative;
   flex:1;
   min-height:0;
 }
+
 .txt{
   height:100%;
   overflow-y:auto;
@@ -87,6 +93,7 @@ button:focus-visible{
   z-index:2;
   -webkit-overflow-scrolling:touch;
 }
+
 .tag{
   display:inline-block;
   font:600 .75rem system-ui,sans-serif;
@@ -96,35 +103,42 @@ button:focus-visible{
   color:#5b4636;
   margin-bottom:8px;
 }
+
 .now .tag{background:#b3201f;color:white}
 .past .tag{background:#dfe9d8;color:#3c5a35}
 .past .art{filter:saturate(.7);opacity:.85}
+
 .day{
   font:600 .9rem system-ui,sans-serif;
   color:#7a6558;
   margin-bottom:5px;
 }
+
 .city{
   font-size:1.65rem;
   line-height:1.15;
   margin:0;
   color:#b3201f;
 }
+
 .zh{
   font-size:1rem;
   color:#8a6a1f;
   letter-spacing:.1em;
   margin-top:5px;
 }
+
 .ttl{
   font-size:1.1rem;
   margin:12px 0 7px;
 }
+
 .desc{
   font-size:.97rem;
   line-height:1.5;
   margin:0;
 }
+
 .more,.back{
   display:inline-flex;
   align-items:center;
@@ -136,7 +150,9 @@ button:focus-visible{
   padding:9px 13px;
   font-size:.82rem;
 }
+
 .more{margin-top:15px}
+
 .gesture{
   font:.73rem system-ui,sans-serif;
   color:#8b7867;
@@ -153,29 +169,36 @@ button:focus-visible{
   -webkit-overflow-scrolling:touch;
   animation:panelIn .25s ease;
 }
+
 .details h3{
   color:#b3201f;
   font-size:1.3rem;
   margin:15px 0 8px;
 }
+
 .detail-block{margin:17px 0}
+
 .detail-block h4{
   color:#8a6a1f;
   font:600 .86rem system-ui,sans-serif;
   margin:0 0 6px;
 }
+
 .detail-block p{
   font-size:.98rem;
   line-height:1.6;
   margin:0;
 }
+
 @keyframes panelIn{
   from{opacity:0;transform:translateX(-18px)}
   to{opacity:1;transform:none}
 }
+
 .card.entering .txt{
   animation:textIn .45s ease both;
 }
+
 @keyframes textIn{
   from{opacity:.35;transform:translateY(9px)}
   to{opacity:1;transform:none}
@@ -183,13 +206,20 @@ button:focus-visible{
 
 .adorno{
   position:absolute;
-  left:0;right:0;bottom:0;
+  left:0;
+  right:0;
+  bottom:0;
   height:74px;
   opacity:.16;
   pointer-events:none;
   z-index:1;
 }
-.adorno svg{width:100%;height:100%;display:block}
+
+.adorno svg{
+  width:100%;
+  height:100%;
+  display:block;
+}
 
 .bar{
   position:fixed;
@@ -215,16 +245,19 @@ button:focus-visible{
   color:white;
   padding:70px 24px 85px;
 }
+
 .hero h1{font-size:2.4rem;margin:0 0 7px}
 .hero h2{font-size:2rem;margin:0 0 10px}
 .hero .big{font-size:1.5rem;margin:20px 0 8px}
 .hero p{font-size:1.05rem;line-height:1.5;margin:5px 0;opacity:.94}
 .hero .zh{font-size:1.6rem;color:#ffe3a0}
+
 .hint{
   margin-top:25px;
   font:.9rem system-ui,sans-serif;
   opacity:.8;
 }
+
 .hero .adorno{opacity:.25}
 .hero .adorno svg{color:#ffe3a0}
 
@@ -245,11 +278,49 @@ button:focus-visible{
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
 }
+
 #btnInicio{left:14px}
 #btnMusica{right:14px}
+
 #btnInicio:hover,#btnMusica:hover{
   background:rgba(28,20,18,.75);
   color:white;
+}
+
+.aviso-musica{
+  position:fixed;
+  right:58px;
+  bottom:calc(60px + env(safe-area-inset-bottom,0px));
+  z-index:13;
+  max-width:170px;
+  padding:9px 12px;
+  border:1px solid rgba(255,227,160,.65);
+  border-radius:16px;
+  background:rgba(93,16,15,.92);
+  color:#ffe3a0;
+  font:600 .78rem system-ui,sans-serif;
+  line-height:1.25;
+  text-align:center;
+  box-shadow:0 5px 16px rgba(0,0,0,.25);
+  animation:flotarMusica 2.4s ease-in-out infinite;
+}
+
+.aviso-musica::after{
+  content:"";
+  position:absolute;
+  right:-10px;
+  bottom:8px;
+  width:0;
+  height:0;
+  border-top:8px solid transparent;
+  border-bottom:8px solid transparent;
+  border-left:12px solid #5d100f;
+  transform:rotate(28deg);
+}
+
+@keyframes flotarMusica{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-5px)}
 }
 
 .sr-only{
@@ -292,6 +363,10 @@ button:focus-visible{
 <button type="button" id="btnInicio" aria-label="Volver al inicio" title="Volver al inicio">↑</button>
 
 <button type="button" id="btnMusica" aria-label="Música de fondo" aria-pressed="false" title="Reproducir música">♪</button>
+
+<div class="aviso-musica" id="avisoMusica">
+  ¿Ponemos banda sonora? →
+</div>
 
 <div id="audioEstado" class="sr-only" role="status"></div>
 
@@ -642,6 +717,7 @@ function ilustracion(d,i){
     case "karst":
       const nuit=d.variante==="n";
       const dawn=d.variante==="s";
+
       p=sol(dawn?205:325,dawn?115:52,dawn?28:18,"#ffe9aa")+
       [[0,85,95],[90,72,135],[190,90,100],[298,110,155]]
       .map(([x,w,h],n)=>
@@ -652,15 +728,20 @@ function ilustracion(d,i){
       <path d="M166 222H236L228 230H174Z" fill="#c5a56c"/>
       <path d="M196 202H206V222H196Z" fill="#b3201f"/>
       <path d="M190 202H212L201 190Z" fill="#efdaaa"/>`;
-      return svg(i,nuit?"#1a2645":dawn?"#f4b078":"#bfdfeb",
-        nuit?"#565376":dawn?"#f8deaf":"#f5f0d9",p);
+
+      return svg(
+        i,
+        nuit?"#1a2645":dawn?"#f4b078":"#bfdfeb",
+        nuit?"#565376":dawn?"#f8deaf":"#f5f0d9",
+        p
+      );
 
     case "ciudad":
       p=sol(330,45,12,"#fff1c7")+
       `<defs>
-      <pattern id="w${i}" width="12" height="14" patternUnits="userSpaceOnUse">
-        <rect x="3" y="3" width="4" height="6" fill="#ffd078" opacity=".8"/>
-      </pattern>
+        <pattern id="w${i}" width="12" height="14" patternUnits="userSpaceOnUse">
+          <rect x="3" y="3" width="4" height="6" fill="#ffd078" opacity=".8"/>
+        </pattern>
       </defs>`+
       [[8,40,110],[55,29,150],[91,42,95],[141,35,173],[185,35,125],
       [229,30,144],[269,40,105],[319,32,160],[362,35,113]]
@@ -669,6 +750,7 @@ function ilustracion(d,i){
       <rect x="${x}" y="${192-h}" width="${w}" height="${h}" fill="url(#w${i})"/>`).join("")+
       `<rect y="192" width="400" height="48" fill="#14253e"/>
       <path d="M0 214Q100 201 200 215T400 214" stroke="#c7a56e" opacity=".4" fill="none"/>`;
+
       return svg(i,"#13213c","#463c61",p);
 
     default:
@@ -680,6 +762,7 @@ function ilustracion(d,i){
       <path d="M45 183H331" stroke="#2f64a1" stroke-width="5"/>`+
       [55,86,117,148,179,210,241].map(x=>
       `<rect x="${x}" y="170" width="19" height="9" rx="2" fill="#8cafcb"/>`).join("");
+
       return svg(i,"#c1dff0","#f7f0dd",p);
   }
 }
@@ -701,6 +784,7 @@ const adorno=`<div class="adorno" aria-hidden="true">
 
 const car=document.getElementById("car");
 const progreso=document.getElementById("progreso");
+const avisoMusica=document.getElementById("avisoMusica");
 const reducido=window.matchMedia("(prefers-reduced-motion: reduce)");
 
 function fechaZona(zona){
@@ -712,6 +796,7 @@ function fechaZona(zona){
   }).formatToParts(new Date());
 
   const valor=tipo=>partes.find(p=>p.type===tipo).value;
+
   return `${valor("year")}-${valor("month")}-${valor("day")}`;
 }
 
@@ -719,7 +804,9 @@ const parametro=new URLSearchParams(location.search).get("fecha");
 
 function fechaValida(s){
   if(!s || !/^\d{4}-\d{2}-\d{2}$/.test(s))return false;
+
   const n=new Date(s+"T00:00:00Z");
+
   return !isNaN(n) && n.toISOString().slice(0,10)===s;
 }
 
@@ -758,11 +845,17 @@ let observador=null;
 function actualizarProgreso(){
   const total=car.scrollHeight-car.clientHeight;
   const porcentaje=total>0?car.scrollTop/total*100:0;
+
   progreso.style.width=Math.max(0,Math.min(100,porcentaje))+"%";
+
+  if(car.scrollTop>80){
+    avisoMusica.hidden=true;
+  }
 }
 
 function generarWeb(irAHoy){
   const fecha=hoy();
+
   fechaMostrada=fecha;
 
   const actual=D.find(d=>d.fecha===fecha);
@@ -773,6 +866,7 @@ function generarWeb(irAHoy){
 
   if(fecha<primera){
     const faltan=distancia(fecha,primera);
+
     estado=`<div class="big">Faltan ${faltan} ${faltan===1?"día":"días"}</div>
     <p>para empezar nuestra aventura</p>`;
   }else if(fecha>ultima){
@@ -879,7 +973,9 @@ function generarWeb(irAHoy){
     </section>`;
   }
 
-  if(observador)observador.disconnect();
+  if(observador){
+    observador.disconnect();
+  }
 
   car.innerHTML=html;
 
@@ -898,8 +994,11 @@ function generarWeb(irAHoy){
 
   if(irAHoy){
     const tarjeta=car.querySelector(".now");
+
     car.scrollTop=tarjeta?tarjeta.offsetTop:0;
   }
+
+  avisoMusica.hidden=false;
 
   actualizarProgreso();
 }
@@ -911,11 +1010,15 @@ function cambiarDetalle(card,abrir,enfocar){
 
   panel.hidden=!abrir;
   resumen.hidden=abrir;
+
   boton.setAttribute("aria-expanded",String(abrir));
 
   if(abrir){
     panel.scrollTop=0;
-    if(enfocar)panel.querySelector(".back").focus();
+
+    if(enfocar){
+      panel.querySelector(".back").focus();
+    }
   }else if(enfocar){
     boton.focus();
   }
@@ -1004,6 +1107,8 @@ document.getElementById("btnInicio").addEventListener("click",()=>{
     top:0,
     behavior:reducido.matches?"auto":"smooth"
   });
+
+  avisoMusica.hidden=false;
 });
 
 function reloj(){
@@ -1053,6 +1158,8 @@ musica.addEventListener("pause",actualizarAudio);
 musica.addEventListener("ended",actualizarAudio);
 
 btnMusica.addEventListener("click",async()=>{
+  avisoMusica.hidden=true;
+
   if(!musica.paused){
     musica.pause();
     return;
