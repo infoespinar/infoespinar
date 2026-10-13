@@ -368,6 +368,8 @@ button:focus-visible{
 <script>
 "use strict";
 
+const MOSTRAR_TODOS_LOS_DIAS = true;
+
 const D=[
 {
   fecha:"2026-10-16",ciudad:"Madrid → Pekín",zh:"北京",arte:"avion",
@@ -879,11 +881,11 @@ function generarWeb(irAHoy){
   </section>`;
 
   D.forEach((d,n)=>{
-    if(d.fecha>fecha)return;
+    if(!MOSTRAR_TODOS_LOS_DIAS && d.fecha>fecha)return;
 
     const actual=d.fecha===fecha;
 
-    html+=`<section class="card day-card ${actual?"now":"past"}"
+    html+=`<section class="card day-card ${actual?"now":d.fecha<fecha?"past":"next"}"
       data-fecha="${d.fecha}"
       aria-label="${fechaTexto(d.fecha)}: ${d.ciudad}">
 
@@ -900,7 +902,7 @@ function generarWeb(irAHoy){
         ${adorno}
 
         <div class="txt" id="resumen-${n}">
-          <span class="tag">${actual?"📍 Hoy":"✓ Día pasado"} · Día ${n+1} de ${D.length}</span>
+          <span class="tag">${actual?"📍 Hoy":d.fecha<fecha?"✓ Día pasado":"Próximamente"} · Día ${n+1} de ${D.length}</span>
 
           <div class="day">${diaSemana(d.fecha)} ${fechaTexto(d.fecha)}</div>
 
@@ -945,7 +947,7 @@ function generarWeb(irAHoy){
     </section>`;
   });
 
-  const siguiente=D.find(d=>d.fecha>fecha);
+  const siguiente=MOSTRAR_TODOS_LOS_DIAS ? null : D.find(d=>d.fecha>fecha);
 
   if(siguiente){
     const faltan=distancia(fecha,siguiente.fecha);
@@ -984,7 +986,7 @@ function generarWeb(irAHoy){
     car.querySelectorAll(".day-card").forEach(c=>observador.observe(c));
   }
 
-  if(irAHoy){
+  if(irAHoy && !MOSTRAR_TODOS_LOS_DIAS){
     const tarjeta=car.querySelector(".now");
 
     car.scrollTop=tarjeta?tarjeta.offsetTop:0;
