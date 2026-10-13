@@ -4,11 +4,23 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#b3201f">
 <title>Viaje a China</title>
+
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c1412;color:#2a1a14}
+html,body{margin:0;height:100%;overflow:hidden}
+body{
+  font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;
+  background:#1c1412;
+  color:#2a1a14;
+}
+button{font-family:system-ui,sans-serif;cursor:pointer}
+button:focus-visible{
+  outline:3px solid #c8962b;
+  outline-offset:3px;
+}
+[hidden]{display:none!important}
 
 .pista{
   position:fixed;
@@ -18,27 +30,25 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
   z-index:19;
   pointer-events:none;
 }
-
 .progreso{
   position:fixed;
   top:0;left:0;
   height:5px;
   width:0;
   background:linear-gradient(90deg,#ffd36b,#b3201f);
-  box-shadow:0 0 6px rgba(0,0,0,.35);
   z-index:20;
-  transition:width .25s ease;
+  pointer-events:none;
+  transition:width .2s ease;
 }
 
 .car{
   height:100vh;
   height:100dvh;
-  overflow-y:scroll;
+  overflow-y:auto;
+  overflow-x:hidden;
   scroll-snap-type:y mandatory;
-  scroll-behavior:smooth;
   -webkit-overflow-scrolling:touch;
 }
-
 .card{
   height:100vh;
   height:100dvh;
@@ -49,15 +59,14 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
   background:#fbf4e6;
   position:relative;
   overflow:hidden;
+  isolation:isolate;
 }
-
 .art{
   flex:0 0 32vh;
   flex:0 0 32dvh;
   position:relative;
   overflow:hidden;
 }
-
 .art svg,.art img{
   position:absolute;
   inset:0;
@@ -65,558 +74,837 @@ body{font-family:Georgia,"Songti SC","Noto Serif CJK SC",serif;background:#1c141
   height:100%;
   object-fit:cover;
 }
-
-.txt{
-  flex:1 1 auto;
+.content{
+  position:relative;
+  flex:1;
   min-height:0;
+}
+.txt{
+  height:100%;
   overflow-y:auto;
-  -webkit-overflow-scrolling:touch;
-  padding:16px 22px calc(22px + env(safe-area-inset-bottom,0px));
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-start;
-  gap:6px;
+  padding:16px 22px calc(76px + env(safe-area-inset-bottom,0px));
+  position:relative;
   z-index:2;
-  animation:aparecer .5s ease both;
+  -webkit-overflow-scrolling:touch;
 }
-
-@keyframes aparecer{
-  from{opacity:0;transform:translateY(10px)}
-  to{opacity:1;transform:none}
-}
-
-@media (prefers-reduced-motion:reduce){
-  .txt{animation:none}
-  .car{scroll-behavior:auto}
-}
-
 .tag{
-  align-self:flex-start;
-  font:600 .78rem system-ui,sans-serif;
-  letter-spacing:.04em;
-  padding:4px 12px;
+  display:inline-block;
+  font:600 .75rem system-ui,sans-serif;
+  padding:4px 11px;
   border-radius:20px;
   background:#e8d9bd;
   color:#5b4636;
+  margin-bottom:8px;
+}
+.now .tag{background:#b3201f;color:white}
+.past .tag{background:#dfe9d8;color:#3c5a35}
+.past .art{filter:saturate(.7);opacity:.85}
+.day{
+  font:600 .9rem system-ui,sans-serif;
+  color:#7a6558;
+  margin-bottom:5px;
+}
+.city{
+  font-size:1.65rem;
+  line-height:1.15;
+  margin:0;
+  color:#b3201f;
+}
+.zh{
+  font-size:1rem;
+  color:#8a6a1f;
+  letter-spacing:.1em;
+  margin-top:5px;
+}
+.ttl{
+  font-size:1.1rem;
+  margin:12px 0 7px;
+}
+.desc{
+  font-size:.97rem;
+  line-height:1.5;
+  margin:0;
+}
+.more,.back{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid rgba(179,32,31,.22);
+  border-radius:22px;
+  color:#a0221e;
+  background:rgba(179,32,31,.06);
+  padding:9px 13px;
+  font-size:.82rem;
+}
+.more{margin-top:15px}
+.gesture{
+  font: .73rem system-ui,sans-serif;
+  color:#8b7867;
+  margin:8px 0 0;
 }
 
-.now .tag{background:#b3201f;color:#fff}
-.past .tag{background:#dfe9d8;color:#3c5a35}
-
-.day{font:600 .95rem system-ui,sans-serif;color:#7a6558;margin-top:4px}
-.city{font-size:1.65rem;line-height:1.1;margin:0;color:#b3201f}
-.zh{font-size:1rem;color:#8a6a1f;letter-spacing:.1em}
-.ttl{font-size:1.1rem;font-weight:bold;margin:7px 0 0}
-.desc{font-size:.95rem;line-height:1.45;margin:0;color:#3d2d26}
-
-.past{filter:saturate(.7)}
-.past .art{opacity:.85}
+.details{
+  position:absolute;
+  inset:0;
+  z-index:4;
+  background:#fbf4e6;
+  overflow-y:auto;
+  padding:16px 22px calc(76px + env(safe-area-inset-bottom,0px));
+  -webkit-overflow-scrolling:touch;
+  animation:panelIn .25s ease;
+}
+.details h3{
+  color:#b3201f;
+  font-size:1.3rem;
+  margin:15px 0 8px;
+}
+.detail-block{margin:17px 0}
+.detail-block h4{
+  color:#8a6a1f;
+  font:600 .86rem system-ui,sans-serif;
+  margin:0 0 6px;
+}
+.detail-block p{
+  font-size:.98rem;
+  line-height:1.6;
+  margin:0;
+}
+@keyframes panelIn{
+  from{opacity:0;transform:translateX(-18px)}
+  to{opacity:1;transform:none}
+}
+.card.entering .txt{
+  animation:textIn .45s ease both;
+}
+@keyframes textIn{
+  from{opacity:.35;transform:translateY(9px)}
+  to{opacity:1;transform:none}
+}
 
 .adorno{
   position:absolute;
-  left:0;
-  right:0;
-  bottom:0;
+  left:0;right:0;bottom:0;
   height:74px;
-  pointer-events:none;
   opacity:.16;
+  pointer-events:none;
   z-index:1;
 }
-
-.adorno svg{
-  width:100%;
-  height:100%;
-  display:block;
-}
-
+.adorno svg{width:100%;height:100%;display:block}
 .bar{
   position:fixed;
   top:calc(12px + env(safe-area-inset-top,0px));
   left:50%;
   transform:translateX(-50%);
-  z-index:5;
+  z-index:8;
   background:rgba(28,20,18,.72);
-  color:#fff;
+  color:white;
   font:600 .8rem system-ui,sans-serif;
   padding:6px 14px;
   border-radius:20px;
   white-space:nowrap;
   backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
 }
-
 .hero{
   justify-content:center;
   align-items:center;
   text-align:center;
   background:linear-gradient(160deg,#8e1413,#b3201f 55%,#c8962b);
-  color:#fff;
-  padding:24px;
+  color:white;
+  padding:70px 24px 85px;
 }
+.hero h1{font-size:2.4rem;margin:0 0 7px}
+.hero h2{font-size:2rem;margin:0 0 10px}
+.hero .big{font-size:1.5rem;margin:20px 0 8px}
+.hero p{font-size:1.05rem;line-height:1.5;margin:5px 0;opacity:.94}
+.hero .zh{font-size:1.6rem;color:#ffe3a0}
+.hint{
+  margin-top:25px;
+  font:.9rem system-ui,sans-serif;
+  opacity:.8;
+}
+.hero .adorno{opacity:.25}
+.hero .adorno svg{color:#ffe3a0}
 
-.hero h1{font-size:2.4rem;margin:0 0 6px}
-.hero .big{font-size:1.5rem;margin:18px 0 6px}
-.hero p{margin:0;opacity:.92;font-size:1.05rem}
-.hint{margin-top:28px;font:.9rem system-ui,sans-serif;opacity:.8}
-.hero .zh{color:#ffe3a0;font-size:1.6rem}
-
-#btnMusica,#btnInicio{
+#btnInicio,#btnMusica{
   position:fixed;
   bottom:calc(14px + env(safe-area-inset-bottom,0px));
-  z-index:9;
+  z-index:12;
+  width:38px;height:38px;
   border:0;
   border-radius:50%;
-  width:38px;
-  height:38px;
   padding:0;
   background:rgba(28,20,18,.55);
   color:rgba(255,255,255,.85);
-  font-size:1rem;
-  line-height:1;
+  font:600 1rem system-ui,sans-serif;
+  display:grid;
+  place-items:center;
   backdrop-filter:blur(6px);
   -webkit-backdrop-filter:blur(6px);
-  transition:background .2s ease,color .2s ease;
 }
-
-#btnMusica{right:14px}
 #btnInicio{left:14px}
-
-#btnMusica:hover,#btnInicio:hover{
+#btnMusica{right:14px}
+#btnInicio:hover,#btnMusica:hover{
   background:rgba(28,20,18,.75);
-  color:#fff;
+  color:white;
+}
+.sr-only{
+  position:absolute;
+  width:1px;height:1px;
+  padding:0;margin:-1px;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+  border:0;
+}
+@media(max-height:600px){
+  .art{flex-basis:26vh;flex-basis:26dvh}
+  .txt,.details{padding-top:12px}
+  .city{font-size:1.4rem}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation:none!important;
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
 }
 </style>
 </head>
+
 <body>
-
-<div class="pista"></div>
-<div class="progreso" id="progreso"></div>
+<div class="pista" aria-hidden="true"></div>
+<div class="progreso" id="progreso" aria-hidden="true"></div>
 <div class="bar" id="bar"></div>
-<div class="car" id="car"></div>
+<main class="car" id="car" aria-label="Diario del viaje a China"></main>
 
-<audio id="musica" src="musica/china.mp3" preload="auto"></audio>
-<button id="btnInicio" aria-label="Volver al inicio">↑</button>
-<button id="btnMusica" aria-label="Reproducir o pausar música" aria-pressed="false">♪</button>
+<audio id="musica" src="musica/china.mp3" loop preload="metadata"></audio>
+<button type="button" id="btnInicio" aria-label="Volver al inicio" title="Volver al inicio">↑</button>
+<button type="button" id="btnMusica" aria-label="Música de fondo" aria-pressed="false" title="Reproducir música">♪</button>
+<div id="audioEstado" class="sr-only" role="status"></div>
+
+<noscript>Activa JavaScript para ver el diario del viaje.</noscript>
 
 <script>
-function fondo(i,a,b){
-  return '<defs><linearGradient id="g'+i+'" x1="0" y1="0" x2="0" y2="1">'
-  +'<stop offset="0" stop-color="'+a+'"/><stop offset="1" stop-color="'+b+'"/>'
-  +'</linearGradient></defs><rect width="400" height="240" fill="url(#g'+i+')"/>';
-}
+"use strict";
 
-function sol(x,y,r,c){
-  return '<circle cx="'+x+'" cy="'+y+'" r="'+r+'" fill="'+c+'" opacity=".92"/>';
-}
-
-function nube(x,y){
-  return '<g fill="#fff" opacity=".9">'
-  +'<ellipse cx="'+x+'" cy="'+y+'" rx="44" ry="14"/>'
-  +'<ellipse cx="'+(x+26)+'" cy="'+(y-9)+'" rx="26" ry="14"/>'
-  +'<ellipse cx="'+(x-24)+'" cy="'+(y-6)+'" rx="22" ry="11"/></g>';
-}
-
-function casa(x,y,w,c){
-  return '<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+(w*.55)+'" fill="'+c+'"/>'
-  +'<path d="M'+(x-4)+' '+y+'L'+(x+w/2)+' '+(y-w*.38)+'L'+(x+w+4)+' '+y+'Z" fill="#4a3a30"/>'
-  +'<rect x="'+(x+w*.4)+'" y="'+(y+w*.14)+'" width="'+(w*.2)+'" height="'+(w*.22)+'" fill="#ffd36b"/>';
-}
-
-function farol(x,y){
-  return '<circle cx="'+x+'" cy="'+y+'" r="9" fill="#ffb347" opacity=".35"/>'
-  +'<circle cx="'+x+'" cy="'+y+'" r="4.5" fill="#d62d20"/>';
-}
-
-const S={};
-
-S.avion=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#7fb8e8","#eaf6ff")
-  +sol(320,58,24,"#fff6c8")
-  +nube(70,140)+nube(300,190)+nube(220,58)
-  +'<g transform="translate(200 118) rotate(-8)">'
-  +'<ellipse rx="86" ry="12" fill="#fff"/>'
-  +'<path d="M-8 0L-52 -58L-32 -58L30 0Z" fill="#dfe9f4"/>'
-  +'<path d="M-8 0L-52 58L-32 58L30 0Z" fill="#c8d6e6"/>'
-  +'<path d="M-74 -4L-92 -32L-72 -32L-50 -4Z" fill="#b3201f"/>'
-  +'<rect x="34" y="-5" width="40" height="5" rx="2" fill="#9db3cc"/>'
-  +'</g></svg>';
-};
-
-S.palacio=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#f8cd8f","#fdf5e6")
-  +sol(330,52,24,"#ffe9a8")
-  +'<rect y="188" width="400" height="52" fill="#9a2a22"/>'
-  +'<rect x="24" y="168" width="352" height="22" fill="#efe4cf"/>'
-  +'<rect x="64" y="132" width="272" height="38" fill="#b3201f"/>'
-  +'<rect x="84" y="142" width="232" height="20" fill="#8c1a17"/>'
-  +'<path d="M48 132Q200 84 352 132L324 144Q200 108 76 144Z" fill="#e8b23a"/>'
-  +'<path d="M108 100Q200 62 292 100L274 110Q200 82 126 110Z" fill="#e8b23a"/>'
-  +'<path d="M150 74Q200 48 250 74L238 82Q200 64 162 82Z" fill="#e8b23a"/>'
-  +'<rect x="194" y="40" width="12" height="10" fill="#e8b23a"/>'
-  +'<rect x="176" y="168" width="48" height="22" fill="#5c100e"/>'
-  +'<circle cx="200" cy="180" r="7" fill="#e8b23a"/>'
-  +'</svg>';
-};
-
-S.muralla=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#b9d7ec","#f6f0e1")
-  +sol(66,58,22,"#fff2c0")
-  +'<path d="M0 168Q80 118 160 148T320 126T400 146V240H0Z" fill="#a3bfa4"/>'
-  +'<path d="M0 204Q100 138 200 170T400 148V240H0Z" fill="#6f9a72"/>'
-  +'<path d="M0 186L70 164L140 172L210 136L280 146L340 108L400 92" stroke="#8b7355" stroke-width="9" fill="none"/>'
-  +'<rect x="58" y="146" width="24" height="20" fill="#a08460"/>'
-  +'<rect x="198" y="118" width="24" height="20" fill="#a08460"/>'
-  +'<rect x="328" y="90" width="24" height="20" fill="#a08460"/>'
-  +'<path d="M28 190L48 206L68 190" stroke="#d9534f" stroke-width="6" fill="none"/>'
-  +'<circle cx="48" cy="212" r="5" fill="#d9534f"/>'
-  +'</svg>';
-};
-
-S.templo=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#9fd0f5","#f5f2e7")
-  +sol(70,58,20,"#fff6c8")
-  +'<rect y="196" width="400" height="44" fill="#d9cdb4"/>'
-  +'<ellipse cx="200" cy="200" rx="132" ry="15" fill="#f2eee3"/>'
-  +'<ellipse cx="200" cy="188" rx="104" ry="12" fill="#fff"/>'
-  +'<rect x="154" y="132" width="92" height="58" fill="#b3201f"/>'
-  +'<path d="M100 134Q200 102 300 134L288 146H112Z" fill="#2a5db0"/>'
-  +'<path d="M128 106Q200 78 272 106L262 116H138Z" fill="#2a5db0"/>'
-  +'<path d="M156 84Q200 60 244 84L236 92H164Z" fill="#2a5db0"/>'
-  +'<rect x="196" y="46" width="8" height="18" fill="#e4a92a"/>'
-  +'<circle cx="200" cy="44" r="5" fill="#e4a92a"/>'
-  +'</svg>';
-};
-
-S.pilares=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#cfe8dc","#f7fbf5")
-  +'<path d="M0 240V150Q30 90 55 150V240Z" fill="#9cbfa8"/>'
-  +'<path d="M70 240V118Q100 48 132 118V240Z" fill="#7fa78d"/>'
-  +'<path d="M150 240V140Q180 72 212 140V240Z" fill="#8db49b"/>'
-  +'<path d="M240 240V104Q272 28 306 104V240Z" fill="#6d9b82"/>'
-  +'<path d="M330 240V136Q358 74 388 136V240Z" fill="#59856e"/>'
-  +'<ellipse cx="200" cy="164" rx="250" ry="24" fill="#fff" opacity=".45"/>'
-  +'<ellipse cx="200" cy="212" rx="250" ry="22" fill="#fff" opacity=".5"/>'
-  +'<rect y="226" width="400" height="14" fill="#5f9bb5"/>'
-  +'<path d="M172 230H228L220 238H180Z" fill="#c8b06a"/>'
-  +'<path d="M198 214H202L204 230H196Z" fill="#b3201f"/>'
-  +'<path d="M190 212H210L200 202Z" fill="#e8d9a0"/>'
-  +'</svg>';
-};
-
-S.puente=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#cfe3f2","#eef4ec")
-  +'<path d="M0 84L118 98L92 240H0Z" fill="#8a7765"/>'
-  +'<path d="M400 62L286 90L318 240H400Z" fill="#7a6857"/>'
-  +'<path d="M0 54L126 68L116 100L0 88Z" fill="#6b9a75"/>'
-  +'<path d="M400 34L278 62L288 92L400 64Z" fill="#6b9a75"/>'
-  +'<path d="M112 106L292 90" stroke="#456a8f" stroke-width="7"/>'
-  +'<path d="M112 98L292 82" stroke="#dfeef8" stroke-width="3"/>'
-  +'<ellipse cx="200" cy="222" rx="180" ry="16" fill="#fff" opacity=".55"/>'
-  +'<circle cx="150" cy="100" r="4" fill="#b3201f"/>'
-  +'<circle cx="250" cy="91" r="4" fill="#b3201f"/>'
-  +'</svg>';
-};
-
-S.tianmen=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#dfeadf","#f8f7ef")
-  +'<path d="M0 240L64 128Q104 84 156 132L204 240Z" fill="#9cbba7"/>'
-  +'<path d="M56 240L128 104Q200 18 274 104L352 240Z" fill="#4e7d62"/>'
-  +'<path d="M164 240V180Q200 112 238 180V240Z" fill="#e6efe6"/>'
-  +'<path d="M0 34L336 126" stroke="#4a4a4a" stroke-width="2" fill="none"/>'
-  +'<rect x="174" y="72" width="18" height="12" rx="2" fill="#b3201f"/>'
-  +'<ellipse cx="200" cy="222" rx="190" ry="18" fill="#fff" opacity=".5"/>'
-  +'</svg>';
-};
-
-S.cascada=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#b9d7c0","#eef3e6")
-  +'<path d="M0 58L172 48L168 240H0Z" fill="#4f7a58"/>'
-  +'<path d="M400 68L230 50L234 240H400Z" fill="#5a8662"/>'
-  +'<rect x="168" y="50" width="66" height="164" fill="#fff" opacity=".94"/>'
-  +'<ellipse cx="201" cy="216" rx="56" ry="13" fill="#fff" opacity=".85"/>'
-  +casa(24,152,46,"#8a6a4a")
-  +casa(90,128,40,"#8a6a4a")
-  +casa(260,136,44,"#8a6a4a")
-  +casa(328,158,50,"#8a6a4a")
-  +farol(40,142)+farol(285,128)+farol(350,150)
-  +'</svg>';
-};
-
-S.casas=function(i,noche){
-  var cielo=noche?"#2b2a55":"#f6c78c";
-  var horizonte=noche?"#e9976a":"#fbe9d0";
-  var agua=noche?"#26385a":"#6b8fa6";
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,cielo,horizonte)
-  +(noche?sol(320,50,14,"#fff3c4"):sol(320,58,22,"#fff2c0"))
-  +'<rect y="176" width="400" height="64" fill="'+agua+'"/>'
-  +casa(26,112,62,"#7a5a3a")
-  +casa(104,112,72,"#7a5a3a")
-  +casa(192,112,64,"#7a5a3a")
-  +casa(278,112,76,"#7a5a3a")
-  +farol(38,104)+farol(76,104)
-  +farol(116,104)+farol(164,104)
-  +farol(204,104)+farol(244,104)
-  +farol(290,104)+farol(342,104)
-  +'<path d="M20 190H380M40 205H360M60 220H340" stroke="#fff" stroke-opacity=".18" stroke-width="2"/>'
-  +'</svg>';
-};
-
-S.karst=function(i,variante){
-  var colores;
-  if(variante==="s"){colores=["#f6a56b","#fbe2b8","#ffd66b"];}
-  else if(variante==="n"){colores=["#16213e","#46466e","#f4f1c8"];}
-  else{colores=["#bfe3ef","#f3f1dc","#fff2b8"];}
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,colores[0],colores[1])
-  +sol(320,62,20,colores[2])
-  +'<path d="M8 240V148Q38 82 66 148V240Z" fill="#8fb8a0"/>'
-  +'<path d="M120 240V126Q152 50 186 126V240Z" fill="#7fa78d"/>'
-  +'<path d="M238 240V140Q270 72 304 140V240Z" fill="#6d9b82"/>'
-  +'<path d="M330 240V118Q362 46 396 118V240Z" fill="#59856e"/>'
-  +'<ellipse cx="200" cy="180" rx="240" ry="22" fill="#fff" opacity=".45"/>'
-  +'<rect y="206" width="400" height="34" fill="#5f9bb5"/>'
-  +'<path d="M120 222q40 -12 80 0t80 0" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none"/>'
-  +'<path d="M168 224q20 -10 44 0" stroke="#e9e2c8" stroke-width="6" fill="none"/>'
-  +'<path d="M186 210h14l3 14h-20Z" fill="#b98d55"/>'
-  +'<path d="M182 208h22l-11 -12Z" fill="#e8d9a0"/>'
-  +'</svg>';
-};
-
-S.ciudad=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#14213d","#3a2f5b")
-  +sol(330,46,12,"#f4f1c8")
-  +'<rect x="8" y="80" width="42" height="112" fill="#1d2b4f"/>'
-  +'<rect x="54" y="40" width="30" height="152" fill="#1d2b4f"/>'
-  +'<rect x="90" y="96" width="44" height="96" fill="#1d2b4f"/>'
-  +'<rect x="140" y="22" width="34" height="170" fill="#1d2b4f"/>'
-  +'<rect x="180" y="72" width="40" height="120" fill="#1d2b4f"/>'
-  +'<rect x="226" y="46" width="30" height="146" fill="#1d2b4f"/>'
-  +'<rect x="262" y="92" width="46" height="100" fill="#1d2b4f"/>'
-  +'<rect x="314" y="30" width="34" height="162" fill="#1d2b4f"/>'
-  +'<rect y="192" width="400" height="48" fill="#12203a"/>'
-  +'<path d="M0 214q90 -10 180 0t220 0" stroke="#ffcf7a" stroke-opacity=".35" stroke-width="3" fill="none"/>'
-  +'</svg>';
-};
-
-S.tren=function(i){
-  return '<svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice">'
-  +fondo(i,"#bfe0f5","#f4f1e2")
-  +sol(330,56,20,"#fff2c0")
-  +'<path d="M0 170Q100 120 200 160T400 140V240H0Z" fill="#8fbb8f"/>'
-  +'<path d="M0 205Q120 160 240 190T400 180V240H0Z" fill="#5f9a6a"/>'
-  +'<path d="M0 196H400" stroke="#6b6b6b" stroke-width="4"/>'
-  +'<rect x="30" y="162" width="80" height="32" rx="7" fill="#fff"/>'
-  +'<rect x="110" y="162" width="80" height="32" rx="7" fill="#fff"/>'
-  +'<rect x="190" y="162" width="80" height="32" rx="7" fill="#fff"/>'
-  +'<path d="M270 162H318Q346 168 352 194H270Z" fill="#fff"/>'
-  +'<circle cx="286" cy="196" r="6" fill="#444"/>'
-  +'<circle cx="336" cy="196" r="6" fill="#444"/>'
-  +'</svg>';
-};
-
+/* Información pública del viaje. No incluye datos de reservas. */
 const D=[
-["2026-10-16","vie","Madrid → Pekín","北京","Llegada y primera toma de contacto","Vuelo de madrugada desde Madrid. Al llegar por la tarde, traslado a Pekín, primera cena con el famoso pato laqueado y paseo nocturno por la animada calle peatonal de Wangfujing.","avion"],
-
-["2026-10-17","sáb","Pekín","北京","El eje imperial y los hutongs","Madrugada en la plaza de Tiananmen y recorrido de sur a norte por la Ciudad Prohibida, entre patios imperiales, salas ceremoniales y tejados dorados. Después subiremos al parque Jingshan para ver las mejores vistas del palacio y pasearemos por los hutongs tradicionales, las torres del Tambor y la Campana y los lagos de Houhai.","palacio"],
-
-["2026-10-18","dom","Pekín","北京","La Gran Muralla y el arte contemporáneo","Excursión al tramo de Mutianyu: subida en teleférico, caminata panorámica entre torres y bajada en tobogán. De vuelta a la ciudad, visitaremos el distrito de arte 798, con galerías, esculturas y antiguas naves industriales reconvertidas. Por la noche, masaje recuperador y cena en el moderno barrio de Sanlitun.","muralla"],
-
-["2026-10-19","lun","Pekín → Zhangjiajie","北京 · 张家界","Palacios imperiales y vuelo al sur","Por la mañana visitaremos el Palacio de Verano: el Gran Corredor, el Barco de Mármol y las vistas al lago Kunming desde la Torre del Incienso Budista. Después pasaremos por el Templo del Cielo y su gran parque, antes de volar hacia Zhangjiajie y instalarnos en Wulingyuan.","templo"],
-
-["2026-10-20","mar","Zhangjiajie","张家界","El valle y la cueva del dragón","Primer día en el parque nacional recorriendo el Arroyo del Látigo Dorado, una ruta llana junto al río entre columnas de piedra y con posibilidad de ver monos salvajes. Por la tarde, visita a la Cueva del Dragón Amarillo, con enormes salas, formaciones iluminadas y un tramo en barca por su río subterráneo.","pilares"],
-
-["2026-10-21","mié","Zhangjiajie","张家界","Las cumbres de Avatar y Tianzi","Subiremos en el ascensor de cristal Bailong, pegado al acantilado, hasta la zona de Yuanjiajie. Recorreremos los miradores de las montañas que inspiraron Avatar, cruzaremos el Primer Puente Bajo el Cielo y continuaremos hacia Tianzi, donde los picos se vuelven más finos y afilados. Bajaremos en teleférico entre la niebla y las agujas de roca.","pilares"],
-
-["2026-10-22","jue","Zhangjiajie","张家界","Vértigo en el Gran Cañón","Excursión al Gran Cañón de Zhangjiajie: cruzaremos el puente de cristal suspendido a unos 300 metros de altura, bajaremos al fondo del valle por pasarelas y cascadas y podremos elegir alguna actividad de aventura, como una vía ferrata o un tobogán. Terminaremos con un paseo en barca por el lago Shenquan.","puente"],
-
-["2026-10-23","vie","Zhangjiajie","张家界","La Puerta del Cielo","Dedicaremos la mañana a la montaña Tianmen: subida en teleférico, pasarelas colgadas y tramos de cristal, escaleras mecánicas dentro de la roca y visita al enorme arco natural de la Puerta del Cielo. Por la tarde, regreso tranquilo a Wulingyuan para pasear, cenar y recuperar fuerzas.","tianmen"],
-
-["2026-10-24","sáb","Zhangjiajie → Furong","张家界 · 芙蓉镇","Día flexible y pueblo de la cascada","Mañana libre para completar lo que nos haya quedado pendiente: el lago Baofeng con su paseo en barca, el poblado antiguo de Dayong o el parque cultural Tujia. Por la tarde viajaremos a Furong, donde pasearemos por sus calles empedradas y veremos la gran cascada iluminada y el palacio Tuwang.","cascada"],
-
-["2026-10-25","dom","Furong → Fenghuang","芙蓉镇 · 凤凰","De la cascada al río","Por la mañana veremos Furong con luz de día y cruzaremos la cascada por el paso tallado en la roca. Después tomaremos un tren corto hasta Fenghuang, la ciudad antigua de casas de madera colgadas sobre el río Tuojiang. Al caer la noche, paseo por sus puentes y calles iluminadas.","casas",0],
-
-["2026-10-26","lun","Fenghuang","凤凰","Fenghuang sin prisas","Día completo en la ciudad antigua. Por la mañana, excursión al desfiladero de Feishui, una ruta corta entre cascadas, paredes de roca y puentes colgantes. Por la tarde recorreremos los callejones, la pagoda Wanming y las orillas del río; por la noche, masaje tradicional de pies y paseo en barca de madera bajo los farolillos.","casas",1],
-
-["2026-10-27","mar","Fenghuang → Yangshuo","凤凰 · 阳朔","Ruta hacia el sur","Última mañana en Fenghuang para ver la muralla y la puerta Este del casco antiguo, con buenas vistas del río y los tejados. Después comenzaremos el traslado más largo del viaje hacia Yangshuo, en Guangxi. Al llegar, paseo por la animada West Street y cena de pescado a la cerveza.","tren"],
-
-["2026-10-28","mié","Yangshuo","阳朔","El río Yulong en balsa","Primer día completo entre los paisajes kársticos de Yangshuo. Por la mañana, paseo relajado en balsa de bambú por el río Yulong, un afluente tranquilo del río Li. Por la tarde, ruta en bici o moto eléctrica por caminos rurales, arrozales y pequeños pueblos rodeados de picos de piedra.","karst","d"],
-
-["2026-10-29","jue","Yangshuo","阳朔","Amanecer en Xianggong","Madrugón para ver salir el sol desde la colina de Xianggong, uno de los miradores más famosos del río Li. Después de desayunar y descansar, visitaremos Xingping, un pueblo tradicional junto al río, y pasearemos por sus miradores y rincones con vistas a las montañas.","karst","s"],
-
-["2026-10-30","vie","Yangshuo","阳朔","La Galería de los Diez Li","Día flexible para disfrutar de Yangshuo a nuestro ritmo. Recorreremos la carretera escénica de la Galería de los Diez Li, con paradas para fotografías, pueblos rurales y vistas de los picos kársticos. Por la noche, espectáculo Impression Sanjie Liu, representado al aire libre sobre el propio río con cientos de actores locales.","karst","n"],
-
-["2026-10-31","sáb","Yangshuo → Chongqing","阳朔 · 重庆","Tren a la ciudad de las luces","Por la mañana tomaremos el tren hacia Chongqing, la enorme ciudad montañosa construida entre el río Yangtsé y el Jialing. Al llegar, paseo por Hongyadong, con sus edificios tradicionales iluminados, y cena con vistas a la ciudad nocturna. Si el horario lo permite, espectáculo de drones.","ciudad"],
-
-["2026-11-01","dom","Chongqing","重庆","Despedida de China","Día para descubrir el carácter de Chongqing: veremos el tren cruzar un edificio en Liziba, recorreremos el barrio histórico de Shibati con sus escaleras y casas de té, y cruzaremos el río en el teleférico del Yangtsé. Por la noche, crucero por el río para ver la ciudad iluminada y cena de hotpot antes de ir al aeropuerto.","ciudad"],
-
-["2026-11-02","lun","Chongqing → Madrid","重庆 · 马德里","¡De vuelta a casa!","Vuelo de madrugada desde Chongqing con escala en Roma. Llegada a Madrid por la tarde, poniendo fin a un viaje por palacios imperiales, montañas de piedra, pueblos de río y ciudades de luces.","avion"]
+{
+  fecha:"2026-10-16",ciudad:"Madrid → Pekín",zh:"北京",arte:"avion",
+  titulo:"Primeras luces de Pekín",
+  resumen:"Volamos desde Madrid y llegamos a Pekín por la tarde. Empezamos el viaje con una cena de pato laqueado y un paseo por la calle peatonal de Wangfujing.",
+  detalles:[
+    ["Llegada","Primera toma de contacto con la capital china, sin una agenda exigente después del viaje."],
+    ["La primera cena","El pato laqueado será el protagonista. Siji Minfu aparece en el itinerario como una de las opciones para probarlo."],
+    ["Paseo nocturno","Recorreremos Wangfujing entre tiendas y luces antes de descansar para el día imperial."]
+  ]
+},
+{
+  fecha:"2026-10-17",ciudad:"Pekín",zh:"北京",arte:"palacio",
+  titulo:"Palacios, tejados y callejones",
+  resumen:"Tiananmen y la Ciudad Prohibida por la mañana; vistas desde Jingshan y paseo por los hutongs por la tarde. Cerramos el día junto a los lagos de Houhai.",
+  detalles:[
+    ["El eje imperial","Recorreremos la Ciudad Prohibida de sur a norte, pasando por sus patios principales y salas imperiales."],
+    ["La panorámica","Al salir por la puerta norte, subiremos a Jingshan para contemplar el conjunto de tejados del palacio."],
+    ["Pekín tradicional","Seguiremos hacia Nanluoguxiang y las torres del Tambor y la Campana. Si encaja, intentaremos ver una demostración de tambores."],
+    ["Últimas visitas","El Templo Lama queda como posibilidad si hay tiempo. La noche será para las terrazas y el ambiente de Houhai."]
+  ]
+},
+{
+  fecha:"2026-10-18",ciudad:"Pekín",zh:"北京",arte:"muralla",
+  titulo:"De la Muralla al arte moderno",
+  resumen:"Visitamos la Gran Muralla en Mutianyu, con subida en teleférico y bajada en tobogán. Después cambiamos las montañas por el arte del distrito 798 y el ambiente de Sanlitun.",
+  detalles:[
+    ["Entre torres","La ruta prevista enlaza la torre 14 con la 6, caminando por la Muralla antes del descenso en tobogán."],
+    ["Cambio de escenario","El distrito 798 reúne galerías, esculturas, cafeterías y naves industriales reconvertidas."],
+    ["Final del día","Cena en Sanlitun, la cara más moderna de Pekín. Un masaje de pies o espalda queda como opción si hay tiempo."]
+  ]
+},
+{
+  fecha:"2026-10-19",ciudad:"Pekín → Zhangjiajie",zh:"北京 · 张家界",arte:"templo",
+  titulo:"Jardines imperiales y rumbo al sur",
+  resumen:"Nos despedimos de Pekín en el Palacio de Verano. Si el tiempo lo permite, pasearemos por el parque del Templo del Cielo antes de volar hacia Zhangjiajie.",
+  detalles:[
+    ["Palacio de Verano","Recorreremos el Gran Corredor y el Barco de Mármol, con la subida a la Torre del Incienso Budista como parte del plan."],
+    ["El lago Kunming","Las vistas al lago serán una de las últimas imágenes de la capital."],
+    ["Visita opcional","El itinerario plantea el Templo del Cielo como paseo exterior y por su parque, no como visita interior."],
+    ["Nuevo paisaje","Por la noche llegaremos a la región de Zhangjiajie y continuaremos hacia Wulingyuan."]
+  ]
+},
+{
+  fecha:"2026-10-20",ciudad:"Zhangjiajie",zh:"张家界",arte:"pilares",
+  titulo:"El valle y el mundo subterráneo",
+  resumen:"Caminamos junto al Arroyo del Látigo Dorado, mirando los pilares de roca desde abajo. Por la tarde entramos en la Cueva del Dragón Amarillo y navegamos por su río subterráneo.",
+  detalles:[
+    ["A ras del valle","La caminata prevista es de unos seis kilómetros por el fondo del cañón, entre bosque, agua y columnas de piedra."],
+    ["El paisaje desde abajo","Este día se centra en el valle; mañana veremos las cumbres y los miradores elevados."],
+    ["Cueva del Dragón Amarillo","El recorrido combina grandes salas, pasadizos y formaciones iluminadas, con un tramo en barca."],
+    ["Sabores de Hunan","Por la noche podremos probar Sanxiaguo, el estofado local mencionado en el itinerario."]
+  ]
+},
+{
+  fecha:"2026-10-21",ciudad:"Zhangjiajie",zh:"张家界",arte:"pilares",
+  titulo:"Las cumbres de Avatar",
+  resumen:"El ascensor Bailong nos lleva a las alturas de Yuanjiajie. Seguimos por los miradores de la Montaña Aleluya y el puente natural, antes de recorrer Tianzi y bajar en teleférico.",
+  detalles:[
+    ["La subida","Empezamos con Bailong, el ascensor de cristal situado junto al acantilado."],
+    ["Yuanjiajie","La ruta incluye los miradores de la Montaña Aleluya y el Primer Puente Bajo el Cielo, un puente de roca natural."],
+    ["Tianzi","Continuaremos hacia los picos más finos y afilados, con el parque Helong y el Pico Imperial de los Pinceles entre los puntos previstos."],
+    ["Regreso al valle","El teleférico de Tianzi será la despedida de las alturas. Después, cena y descanso en Wulingyuan."]
+  ]
+},
+{
+  fecha:"2026-10-22",ciudad:"Zhangjiajie",zh:"张家界",arte:"puente",
+  titulo:"Cristal sobre el Gran Cañón",
+  resumen:"Cruzamos el puente de cristal y descendemos al cañón para caminar entre pasarelas y cascadas. Las actividades de aventura son opcionales; después nos trasladamos al centro de Zhangjiajie.",
+  detalles:[
+    ["El puente","La primera parte del recorrido es el puente de cristal, con vistas sobre el vacío del cañón."],
+    ["Descenso y senderos","Seguiremos hacia el fondo del valle por las opciones disponibles y caminaremos junto a riachuelos y cascadas."],
+    ["Aventura opcional","El itinerario contempla vía ferrata, toboganes o tirolinas como posibilidades, no como actividades obligatorias."],
+    ["Agua y ciudad","El paseo en barca por Shenquan queda en el plan si encaja. La noche será ya en el centro urbano de Zhangjiajie."]
+  ]
+},
+{
+  fecha:"2026-10-23",ciudad:"Zhangjiajie",zh:"张家界",arte:"tianmen",
+  titulo:"La Puerta del Cielo",
+  resumen:"Subimos a Tianmen para ver su enorme arco natural y recorrer los senderos de montaña y pasarelas de cristal. Después dejamos tiempo para comer y pasear por la ciudad.",
+  detalles:[
+    ["La montaña","La versión actual del plan utiliza el teleférico exprés para llegar a la zona de la Puerta del Cielo."],
+    ["El arco natural","La subida hacia el arco puede combinar escalones y escaleras mecánicas, según el recorrido elegido."],
+    ["En las alturas","Los senderos colgados y las pasarelas de cristal completan la visita a la cima."],
+    ["Después de Tianmen","Tarde tranquila en Zhangjiajie. Qixing Mountain y su vía ferrata quedan únicamente como alternativa adicional."]
+  ]
+},
+{
+  fecha:"2026-10-24",ciudad:"Zhangjiajie → Furong",zh:"张家界 · 芙蓉镇",arte:"cascada",
+  titulo:"Un día flexible y una cascada",
+  resumen:"Dejamos la mañana abierta para completar visitas o descansar. Por la tarde llegamos a Furong, donde las calles empedradas y la cascada iluminada cambian el ritmo del viaje.",
+  detalles:[
+    ["Elegiremos una opción","La mañana no incluye todas las alternativas: podremos escoger entre Baofeng, Dayong, el parque cultural Tujia o un rato de descanso."],
+    ["Baofeng","La opción de naturaleza propone un paseo en barca entre montañas."],
+    ["Dayong o cultura Tujia","Las alternativas urbanas se centran en arquitectura de madera, calles tradicionales, artesanía y cultura local."],
+    ["Furong de noche","Recorreremos el entorno de la gran cascada y el palacio Tuwang, con cena en una terraza con vistas si encaja."]
+  ]
+},
+{
+  fecha:"2026-10-25",ciudad:"Furong → Fenghuang",zh:"芙蓉镇 · 凤凰",arte:"casas",
+  titulo:"De la cascada al río",
+  resumen:"Vemos Furong con luz de día antes de viajar a Fenghuang. Allí nos esperan el río Tuojiang, el puente Hongqiao y las casas de madera que se iluminan al anochecer.",
+  detalles:[
+    ["Furong por la mañana","Pasearemos por el pueblo y el paso junto a la cascada para verlo con una luz distinta a la noche anterior."],
+    ["Comida local","El tofu de arroz aparece como una de las especialidades para probar antes de salir."],
+    ["Primera mirada a Fenghuang","Llegaremos por la tarde y recorreremos el entorno de Hongqiao, las pagodas y las casas tradicionales sobre el río."],
+    ["Luces sobre el agua","Esta noche será para descubrir el casco antiguo desde sus orillas y puentes; el paseo en barca queda para el día siguiente."]
+  ]
+},
+{
+  fecha:"2026-10-26",ciudad:"Fenghuang",zh:"凤凰",arte:"casas",variante:"n",
+  titulo:"Fenghuang sin prisas",
+  resumen:"Una excursión al desfiladero de Feishui abre el día. Después volvemos a los callejones, la pagoda Wanming y el río, con un paseo nocturno en barca para despedirnos del pueblo.",
+  detalles:[
+    ["Feishui","La excursión prevista combina cascadas, paredes de roca y puentes colgantes de madera."],
+    ["La tarde en el pueblo","Seguiremos por las calles interiores y los puntos de vista hacia Wanming, sin repetir una ruta rígida."],
+    ["Artesanía y gastronomía","Habrá espacio para mirar artesanía de plata y probar platos como el pescado en sopa agria o el pato con arroz glutinoso."],
+    ["La noche","El masaje de pies queda como posibilidad antes de cenar y navegar bajo los puentes iluminados."]
+  ]
+},
+{
+  fecha:"2026-10-27",ciudad:"Fenghuang → Yangshuo",zh:"凤凰 · 阳朔",arte:"tren",
+  titulo:"Un viaje hacia nuevos paisajes",
+  resumen:"Nos despedimos de Fenghuang y viajamos en tren hacia Yangshuo con un transbordo. Al llegar, dejamos las excursiones para mañana y paseamos por West Street.",
+  detalles:[
+    ["Despedida breve","Si hay margen antes de salir, podremos acercarnos a la puerta Este y la antigua muralla para una última panorámica."],
+    ["Día de traslado","La jornada está dedicada principalmente al viaje hacia Guangxi, sin añadir una excursión larga al llegar."],
+    ["West Street","El primer paseo por Yangshuo será por su calle más animada."],
+    ["La cena","El pescado a la cerveza figura en el plan como primera especialidad local para probar."]
+  ]
+},
+{
+  fecha:"2026-10-28",ciudad:"Yangshuo",zh:"阳朔",arte:"karst",
+  titulo:"Bambú, agua y caminos rurales",
+  resumen:"Navegamos en balsa de bambú por el río Yulong y dedicamos la tarde a los caminos rurales de Yangshuo, entre campos, pueblos y montañas.",
+  detalles:[
+    ["El río Yulong","El paseo previsto utiliza balsas de bambú impulsadas con pértiga, para disfrutar del agua y las montañas a un ritmo tranquilo."],
+    ["La tarde rural","Continuaremos en bici o con la opción de transporte que elijamos, parando donde apetezca."],
+    ["Un paisaje distinto","Este día se centra en la experiencia del río y el campo. Los miradores elevados y Xingping quedan para otra jornada."]
+  ]
+},
+{
+  fecha:"2026-10-29",ciudad:"Yangshuo",zh:"阳朔",arte:"karst",variante:"s",
+  titulo:"Amanecer sobre el río Li",
+  resumen:"Madrugamos para contemplar el amanecer desde Xianggong. Después visitamos Xingping y los rincones del río Li, con una jornada pensada para disfrutar de las vistas.",
+  detalles:[
+    ["Xianggong","La primera excursión del día será al mirador, para ver cómo la luz cambia entre los picos y las curvas del río."],
+    ["Después del madrugón","Dejaremos tiempo para desayunar y descansar antes de continuar."],
+    ["Xingping","Pasearemos por el pueblo tradicional y los puntos de vista junto al río Li."],
+    ["Plan flexible","La visita al amanecer podrá cambiar de día según el tiempo, manteniendo la jornada sin prisas."]
+  ]
+},
+{
+  fecha:"2026-10-30",ciudad:"Yangshuo",zh:"阳朔",arte:"karst",variante:"n",
+  titulo:"Caminos de postal y luces sobre el río",
+  resumen:"Recorremos la Galería de los Diez Li a nuestro ritmo. Por la noche cerramos la estancia en Yangshuo con el espectáculo Impression Sanjie Liu.",
+  detalles:[
+    ["La ruta escénica","La mañana será para los caminos rurales, pequeñas poblaciones y paradas para fotografías entre montañas."],
+    ["Opciones de visita","La Colina de la Luna o la Cueva de la Mariposa quedan como posibles paradas, no como visitas obligatorias."],
+    ["Tarde abierta","Tiempo para pasear, descansar o volver a West Street antes de la función."],
+    ["El espectáculo","Impression Sanjie Liu utiliza el río y las montañas como escenario, con luces y un amplio reparto de actores locales."]
+  ]
+},
+{
+  fecha:"2026-10-31",ciudad:"Yangshuo → Chongqing",zh:"阳朔 · 重庆",arte:"ciudad",
+  titulo:"Llegada a la ciudad de las luces",
+  resumen:"Viajamos en tren a Chongqing. La primera noche será para Hongyadong y sus edificios iluminados, con el espectáculo de drones como posibilidad si se celebra.",
+  detalles:[
+    ["Cambio de escala","Dejamos atrás los paisajes rurales para conocer la gran ciudad entre el Yangtsé y el Jialing."],
+    ["Hongyadong","Pasearemos por el entorno de sus edificios tradicionales y buscaremos vistas de la fachada iluminada."],
+    ["Desde la otra orilla","El entorno del Gran Teatro aparece como opción para contemplar Hongyadong desde enfrente."],
+    ["La noche","El espectáculo de drones depende de su programación. Guanyinqiao queda como posible zona para cenar."]
+  ]
+},
+{
+  fecha:"2026-11-01",ciudad:"Chongqing",zh:"重庆",arte:"ciudad",
+  titulo:"Trenes, escaleras y una despedida",
+  resumen:"Vemos Liziba y el barrio de Shibati, cruzamos el Yangtsé en teleférico y despedimos China con un crucero nocturno y una cena de hotpot.",
+  detalles:[
+    ["Liziba","Nos acercaremos al mirador para observar el tren atravesando el edificio y pasear por los alrededores."],
+    ["Shibati","Continuaremos entre escaleras, arquitectura tradicional y casas de té, con tiempo para probar comida local."],
+    ["El río desde arriba","El teleférico ofrecerá otra perspectiva de la ciudad. Jiefangbei o un mirador quedan como opciones para la tarde."],
+    ["Últimas luces","El crucero nocturno permitirá ver la ciudad desde el agua. Después cenaremos hotpot antes de salir hacia el aeropuerto."]
+  ]
+},
+{
+  fecha:"2026-11-02",ciudad:"Chongqing → Madrid",zh:"重庆 · 马德里",arte:"avion",
+  titulo:"De vuelta a casa",
+  resumen:"Volamos de madrugada desde Chongqing, hacemos escala en Roma y llegamos a Madrid al mediodía. Termina nuestro recorrido por China.",
+  detalles:[
+    ["El regreso","La ruta de vuelta enlaza Chongqing, Roma y Madrid."],
+    ["Fin del viaje","Nos llevamos palacios imperiales, montañas de piedra, pueblos junto al agua y las luces de Chongqing."]
+  ]
+}
 ];
 
-const q=new URLSearchParams(location.search).get("fecha");
-const fmt=function(z,d){return new Intl.DateTimeFormat("en-CA",{timeZone:z}).format(d);};
-const today=q||fmt("Asia/Shanghai",new Date());
-const todayES=q||fmt("Europe/Madrid",new Date());
-const dif=function(a,b){return Math.round((Date.parse(b)-Date.parse(a))/864e5);};
-const first=D[0][0];
-const last=D[D.length-1][0];
-const cur=D.find(function(d){return d[0]===today;});
-let st="during";
-if(today<first){st="before";}
-if(today>last){st="after";}
-
-const meses={"10":"octubre","11":"noviembre"};
-function dd(d){
-  const partes=d.split("-");
-  return parseInt(partes[2],10)+" de "+meses[partes[1]];
+/* Ilustraciones vectoriales de respaldo. */
+function svg(i,a,b,cuerpo){
+  return `<svg xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice"
+    aria-hidden="true">
+    <defs><linearGradient id="g${i}" x1="0" y1="0" x2="0" y2="1">
+    <stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/>
+    </linearGradient></defs>
+    <rect width="400" height="240" fill="url(#g${i})"/>
+    ${cuerpo}</svg>`;
 }
-
-let hero="";
-if(st==="before"){
-  hero='<div class="big">Faltan '+dif(todayES,first)+' días</div><p>para salir hacia China</p>';
-}else if(st==="after"){
-  hero='<div class="big">¡Ya hemos vuelto!</div><p>Gracias por acompañarnos</p>';
-}else{
-  hero='<div class="big">Ahora en '+cur[2]+'</div><p>'+cur[4]+'</p>';
+function sol(x,y,r,c){
+  return `<circle cx="${x}" cy="${y}" r="${r}" fill="${c}" opacity=".9"/>`;
 }
-
-let h='<section class="card hero"><h1>Viaje a China</h1><div class="zh">中国</div>'+hero
-+'<p>'+dd(first)+' – '+dd(last)+'</p><div class="hint">Desliza hacia arriba ↑</div></section>';
-
-const adorno='<div class="adorno">'
-+'<svg viewBox="0 0 400 80" preserveAspectRatio="xMidYMax slice">'
-+'<g fill="none" stroke="#b3201f" stroke-width="3" stroke-linecap="round">'
-+'<path d="M20 62q18 -26 44 -12q10 -22 36 -14q22 -18 42 2q24 -8 34 14"/>'
-+'<path d="M150 66q16 -22 40 -12q12 -20 38 -10q20 -16 40 4q22 -6 32 16"/>'
-+'<path d="M280 62q16 -24 42 -12q12 -20 36 -10q22 -16 42 6"/>'
-+'</g>'
-+'<g fill="#c8962b" opacity=".55">'
-+'<circle cx="200" cy="30" r="4"/>'
-+'<circle cx="188" cy="38" r="2.5"/>'
-+'<circle cx="212" cy="38" r="2.5"/>'
-+'</g>'
-+'</svg></div>';
-
-for(let n=0;n<D.length;n++){
-  const d=D[n];
-
-  if(d[0]>today){continue;}
-
-  let clase="past";
-  let estado="✓ Hecho";
-  if(d[0]===today){clase="now";estado="📍 Ahora";}
-
-  const etiqueta=estado+" · Día "+(n+1)+" de "+D.length;
-  const imagen=S[d[6]](n,d[7]);
-  const foto='<img src="fotos/dia-'+d[0].slice(5)+'.jpg" alt="" onerror="this.remove()">';
-
-  h+='<section class="card '+clase+'" data-d="'+d[0]+'">'
-  +'<div class="art">'+imagen+foto+'</div>'
-  +adorno
-  +'<div class="txt">'
-  +'<span class="tag">'+etiqueta+'</span>'
-  +'<div class="day">'+d[1][0].toUpperCase()+d[1].slice(1)+' '+dd(d[0])+'</div>'
-  +'<h2 class="city">'+d[2]+'</h2>'
-  +'<div class="zh">'+d[3]+'</div>'
-  +'<div class="ttl">'+d[4]+'</div>'
-  +'<p class="desc">'+d[5]+'</p>'
-  +'</div></section>';
+function casa(x,y,w){
+  return `<rect x="${x}" y="${y}" width="${w}" height="${w*.55}" fill="#866345"/>
+  <path d="M${x-5} ${y}L${x+w/2} ${y-w*.35}L${x+w+5} ${y}Z" fill="#49382e"/>
+  <rect x="${x+w*.4}" y="${y+8}" width="${w*.2}" height="15" fill="#ffd36b"/>
+  <circle cx="${x+8}" cy="${y-3}" r="4" fill="#d52b20"/>`;
 }
-
-const siguiente=D.find(function(d){return d[0]>today;});
-
-if(siguiente){
-  const faltan=dif(today,siguiente[0]);
-
-  h+='<section class="card hero">'
-  +adorno
-  +'<h1>Próxima etapa</h1>'
-  +'<div class="zh">'+siguiente[3]+'</div>'
-  +'<div class="big">'+siguiente[2]+'</div>'
-  +'<p>'+siguiente[4]+'</p>'
-  +'<p>Se desbloquea el '+dd(siguiente[0])+'</p>'
-  +'<div class="hint">Faltan '+faltan+' '+(faltan===1?'día':'días')+'</div>'
-  +'</section>';
-}
-
-document.getElementById("car").innerHTML=h;
-
-const coche=document.getElementById("car");
-const barraProgreso=document.getElementById("progreso");
-let pendiente=false;
-
-function actualizarProgreso(){
-  pendiente=false;
-  const total=coche.scrollHeight-coche.clientHeight;
-  const avance=total>0?Math.min(100,Math.max(0,(coche.scrollTop/total)*100)):0;
-  barraProgreso.style.width=avance+"%";
-}
-
-function pedirActualizacion(){
-  if(!pendiente){
-    pendiente=true;
-    requestAnimationFrame(actualizarProgreso);
+function ilustracion(d,i){
+  let p="";
+  switch(d.arte){
+    case "avion":
+      p=sol(320,55,23,"#fff1bf")+
+      `<g fill="white" opacity=".7">
+      <ellipse cx="70" cy="175" rx="65" ry="18"/>
+      <ellipse cx="325" cy="195" rx="80" ry="21"/></g>
+      <g transform="translate(200 115) rotate(-10)">
+      <ellipse rx="85" ry="12" fill="white"/>
+      <path d="M-8 0L-50 -55H-30L30 0Z" fill="#dbe7f3"/>
+      <path d="M-8 0L-50 55H-30L30 0Z" fill="#c7d8e9"/>
+      <path d="M-72 0L-88 -32H-67L-48 0Z" fill="#b3201f"/>
+      </g>`;
+      return svg(i,"#8bc4eb","#edf8ff",p);
+    case "palacio":
+      p=sol(325,55,23,"#fff0b8")+
+      `<rect y="185" width="400" height="55" fill="#a23224"/>
+      <rect x="40" y="165" width="320" height="23" fill="#f4e5c9"/>
+      <rect x="75" y="127" width="250" height="40" fill="#b3201f"/>
+      <path d="M45 127Q200 72 355 127L325 140Q200 102 75 140Z" fill="#dda72b"/>
+      <path d="M110 99Q200 56 290 99L272 111Q200 80 128 111Z" fill="#dda72b"/>
+      <rect x="184" y="143" width="32" height="42" fill="#741613"/>`;
+      return svg(i,"#f5cb8d","#fff4e1",p);
+    case "muralla":
+      p=sol(70,55,21,"#fff1bf")+
+      `<path d="M0 170Q90 95 170 145T400 120V240H0Z" fill="#9fb99a"/>
+      <path d="M0 210Q110 135 220 175T400 160V240H0Z" fill="#608969"/>
+      <path d="M0 190L75 163L145 172L215 135L285 145L350 100L400 90"
+      stroke="#ac906b" stroke-width="10" fill="none"/>`+
+      [[65,147],[205,119],[340,84]].map(([x,y])=>
+      `<rect x="${x}" y="${y}" width="22" height="20" fill="#967958"/>
+      <rect x="${x-3}" y="${y-5}" width="28" height="6" fill="#806344"/>`).join("");
+      return svg(i,"#bbd8e7","#f6efe1",p);
+    case "templo":
+      p=sol(65,55,20,"#fff4c3")+
+      `<ellipse cx="200" cy="204" rx="125" ry="16" fill="#e1d4bd"/>
+      <ellipse cx="200" cy="190" rx="98" ry="12" fill="white"/>
+      <rect x="151" y="130" width="98" height="60" fill="#b3201f"/>
+      <path d="M100 131Q200 98 300 131L284 144H116Z" fill="#2b5b9f"/>
+      <path d="M131 105Q200 77 269 105L257 116H143Z" fill="#2b5b9f"/>
+      <path d="M158 82Q200 59 242 82L231 92H169Z" fill="#2b5b9f"/>
+      <circle cx="200" cy="53" r="6" fill="#d6a431"/>`;
+      return svg(i,"#9dcdf1","#f4f0df",p);
+    case "pilares":
+      p=[[0,50,125],[70,48,165],[148,52,145],[239,48,190],[329,60,155]]
+      .map(([x,w,h],n)=>
+      `<path d="M${x} 240V${240-h}Q${x+w/2} ${210-h} ${x+w} ${240-h}V240Z"
+      fill="${["#91b19e","#709c82","#88ac96","#4d7b62","#628c73"][n]}"/>`).join("")+
+      `<ellipse cx="200" cy="169" rx="240" ry="20" fill="white" opacity=".38"/>
+      <ellipse cx="200" cy="216" rx="240" ry="19" fill="white" opacity=".48"/>`;
+      return svg(i,"#d0e6dd","#f3f8ec",p);
+    case "puente":
+      p=`<path d="M0 70L115 100L90 240H0Z" fill="#69816c"/>
+      <path d="M400 55L285 90L315 240H400Z" fill="#54755f"/>
+      <path d="M110 108L292 91" stroke="#527c9d" stroke-width="8"/>
+      <path d="M110 98L292 81" stroke="#bcd2e0" stroke-width="3"/>
+      <ellipse cx="200" cy="216" rx="185" ry="22" fill="white" opacity=".6"/>`;
+      return svg(i,"#c9e1ec","#f4f4e8",p);
+    case "tianmen":
+      p=`<path d="M40 240L120 110Q200 15 279 110L365 240Z" fill="#557d60"/>
+      <path d="M165 240V173Q201 106 238 173V240Z" fill="#e7eee1"/>
+      <path d="M0 35L328 124" stroke="#4b4742" stroke-width="2"/>
+      <rect x="177" y="76" width="19" height="13" rx="3" fill="#b3201f"/>
+      <ellipse cx="200" cy="226" rx="230" ry="16" fill="white" opacity=".4"/>`;
+      return svg(i,"#d5e5df","#f7f4e8",p);
+    case "cascada":
+      p=`<path d="M0 65L168 51V240H0Z" fill="#4b7955"/>
+      <path d="M400 70L232 51V240H400Z" fill="#638565"/>
+      <rect x="168" y="51" width="64" height="169" fill="#effaff"/>
+      <ellipse cx="200" cy="222" rx="60" ry="12" fill="white"/>`+
+      casa(20,145,53)+casa(93,121,42)+casa(260,134,47)+casa(328,153,52);
+      return svg(i,"#bcdbc4","#f1f1df",p);
+    case "casas":
+      p=sol(323,50,d.variante==="n"?13:21,"#fff0ba")+
+      `<rect y="180" width="400" height="60" fill="#496883"/>`+
+      [25,110,200,288].map(x=>casa(x,115,67)+
+      `<path d="M${x+8} 150V180M${x+58} 150V180" stroke="#49382e" stroke-width="4"/>`).join("")+
+      `<path d="M20 202H375M48 220H350" stroke="#ffcf7d" stroke-opacity=".35"/>`;
+      return svg(i,d.variante==="n"?"#29284d":"#eac599",
+        d.variante==="n"?"#a57065":"#fbead0",p);
+    case "karst":
+      const nuit=d.variante==="n", dawn=d.variante==="s";
+      p=sol(dawn?205:325,dawn?115:52,dawn?28:18,"#ffe9aa")+
+      [[0,85,95],[90,72,135],[190,90,100],[298,110,155]]
+      .map(([x,w,h],n)=>
+      `<path d="M${x} 210Q${x+w*.2} ${210-h} ${x+w/2} ${210-h}
+      Q${x+w*.8} ${210-h} ${x+w} 210Z"
+      fill="${nuit?"#293f52":n%2?"#669779":"#8aad91"}"/>`).join("")+
+      `<rect y="208" width="400" height="32" fill="${nuit?"#1c3850":"#689eac"}"/>
+      <path d="M166 222H236L228 230H174Z" fill="#c5a56c"/>
+      <path d="M196 202H206V222H196Z" fill="#b3201f"/>
+      <path d="M190 202H212L201 190Z" fill="#efdaaa"/>`;
+      return svg(i,nuit?"#1a2645":dawn?"#f4b078":"#bfdfeb",
+        nuit?"#565376":dawn?"#f8deaf":"#f5f0d9",p);
+    case "ciudad":
+      p=sol(330,45,12,"#fff1c7")+
+      `<defs><pattern id="w${i}" width="12" height="14" patternUnits="userSpaceOnUse">
+      <rect x="3" y="3" width="4" height="6" fill="#ffd078" opacity=".8"/>
+      </pattern></defs>`+
+      [[8,40,110],[55,29,150],[91,42,95],[141,35,173],[185,35,125],
+      [229,30,144],[269,40,105],[319,32,160],[362,35,113]]
+      .map(([x,w,h])=>
+      `<rect x="${x}" y="${192-h}" width="${w}" height="${h}" fill="#1b2946"/>
+      <rect x="${x}" y="${192-h}" width="${w}" height="${h}" fill="url(#w${i})"/>`).join("")+
+      `<rect y="192" width="400" height="48" fill="#14253e"/>
+      <path d="M0 214Q100 201 200 215T400 214" stroke="#c7a56e" opacity=".4" fill="none"/>`;
+      return svg(i,"#13213c","#463c61",p);
+    default:
+      p=sol(325,54,19,"#fff0bd")+
+      `<path d="M0 177Q90 108 200 163T400 142V240H0Z" fill="#91b68f"/>
+      <path d="M0 203H400" stroke="#777" stroke-width="4"/>
+      <rect x="40" y="164" width="230" height="35" rx="7" fill="white"/>
+      <path d="M270 164H317Q341 174 350 199H270Z" fill="white"/>
+      <path d="M45 183H331" stroke="#2f64a1" stroke-width="5"/>`+
+      [55,86,117,148,179,210,241].map(x=>
+      `<rect x="${x}" y="170" width="19" height="9" rx="2" fill="#8cafcb"/>`).join("");
+      return svg(i,"#c1dff0","#f7f0dd",p);
   }
 }
 
-coche.addEventListener("scroll",pedirActualizacion,{passive:true});
-window.addEventListener("resize",pedirActualizacion);
-window.addEventListener("load",pedirActualizacion);
-setInterval(pedirActualizacion,500);
-pedirActualizacion();
+const adorno=`<div class="adorno" aria-hidden="true">
+<svg viewBox="0 0 400 80" preserveAspectRatio="xMidYMax slice">
+<g fill="none" stroke="currentColor" color="#b3201f"
+stroke-width="3" stroke-linecap="round">
+<path d="M20 62q18 -26 44 -12q10 -22 36 -14q22 -18 42 2q24 -8 34 14"/>
+<path d="M150 66q16 -22 40 -12q12 -20 38 -10q20 -16 40 4q22 -6 32 16"/>
+<path d="M280 62q16 -24 42 -12q12 -20 36 -10q22 -16 42 6"/>
+</g>
+<g fill="#c8962b">
+<circle cx="200" cy="30" r="4"/>
+<circle cx="188" cy="38" r="2.5"/>
+<circle cx="212" cy="38" r="2.5"/>
+</g></svg></div>`;
 
+const car=document.getElementById("car");
+const progreso=document.getElementById("progreso");
+const reducido=window.matchMedia("(prefers-reduced-motion: reduce)");
+
+/* Fecha ISO explícita para no depender del formato del navegador. */
+function fechaZona(zona){
+  const partes=new Intl.DateTimeFormat("en",{
+    timeZone:zona,year:"numeric",month:"2-digit",day:"2-digit"
+  }).formatToParts(new Date());
+  const valor=tipo=>partes.find(p=>p.type===tipo).value;
+  return `${valor("year")}-${valor("month")}-${valor("day")}`;
+}
+const parametro=new URLSearchParams(location.search).get("fecha");
+function fechaValida(s){
+  if(!s || !/^\d{4}-\d{2}-\d{2}$/.test(s))return false;
+  const n=new Date(s+"T00:00:00Z");
+  return !isNaN(n) && n.toISOString().slice(0,10)===s;
+}
+const fechaPrueba=fechaValida(parametro)?parametro:null;
+function hoy(){return fechaPrueba||fechaZona("Asia/Shanghai")}
+function distancia(a,b){
+  return Math.round(
+    (Date.parse(b+"T00:00:00Z")-Date.parse(a+"T00:00:00Z"))/86400000
+  );
+}
+function fechaTexto(s){
+  return new Intl.DateTimeFormat("es-ES",{
+    timeZone:"UTC",day:"numeric",month:"long"
+  }).format(new Date(s+"T00:00:00Z"));
+}
+function diaSemana(s){
+  const texto=new Intl.DateTimeFormat("es-ES",{
+    timeZone:"UTC",weekday:"short"
+  }).format(new Date(s+"T00:00:00Z"));
+  return texto.charAt(0).toUpperCase()+texto.slice(1);
+}
+
+let fechaMostrada="";
+let observador=null;
+
+function actualizarProgreso(){
+  const total=car.scrollHeight-car.clientHeight;
+  const porcentaje=total>0?car.scrollTop/total*100:0;
+  progreso.style.width=Math.max(0,Math.min(100,porcentaje))+"%";
+}
+
+function generarWeb(irAHoy){
+  const fecha=hoy();
+  fechaMostrada=fecha;
+  const actual=D.find(d=>d.fecha===fecha);
+  const primera=D[0].fecha;
+  const ultima=D[D.length-1].fecha;
+
+  let estado="";
+  if(fecha<primera){
+    const faltan=distancia(fecha,primera);
+    estado=`<div class="big">Faltan ${faltan} ${faltan===1?"día":"días"}</div>
+    <p>para empezar nuestra aventura</p>`;
+  }else if(fecha>ultima){
+    estado=`<div class="big">¡Ya hemos vuelto!</div>
+    <p>Gracias por acompañarnos</p>`;
+  }else{
+    estado=`<div class="big">Hoy: ${actual.ciudad}</div>
+    <p>${actual.titulo}</p>`;
+  }
+
+  let html=`<section class="card hero">
+    <h1>Viaje a China</h1>
+    <div class="zh">中国</div>
+    ${estado}
+    <p>${fechaTexto(primera)} – ${fechaTexto(ultima)}</p>
+    <div class="hint">Desliza hacia arriba ↑</div>
+    ${adorno}
+  </section>`;
+
+  D.forEach((d,n)=>{
+    if(d.fecha>fecha)return;
+    const actual=d.fecha===fecha;
+    html+=`<section class="card day-card ${actual?"now":"past"}"
+      data-fecha="${d.fecha}" aria-label="${fechaTexto(d.fecha)}: ${d.ciudad}">
+      <div class="art">
+        ${ilustracion(d,n)}
+        <img src="fotos/dia-${d.fecha.slice(5)}.jpg"
+          alt="${d.ciudad}" loading="lazy" onerror="this.remove()">
+      </div>
+      <div class="content">
+        ${adorno}
+        <div class="txt" id="resumen-${n}">
+          <span class="tag">${actual?"📍 Hoy":"✓ Día pasado"} · Día ${n+1} de ${D.length}</span>
+          <div class="day">${diaSemana(d.fecha)} ${fechaTexto(d.fecha)}</div>
+          <h2 class="city">${d.ciudad}</h2>
+          <div class="zh">${d.zh}</div>
+          <h3 class="ttl">${d.titulo}</h3>
+          <p class="desc">${d.resumen}</p>
+          <button type="button" class="more"
+            aria-expanded="false" aria-controls="detalle-${n}">
+            ＋ Más detalles
+          </button>
+          <p class="gesture">También puedes deslizar hacia la derecha →</p>
+        </div>
+        <div class="details" id="detalle-${n}" hidden
+          role="region" aria-label="Información ampliada del ${fechaTexto(d.fecha)}">
+          <button type="button" class="back">← Resumen</button>
+          <div class="day" style="margin-top:14px">${fechaTexto(d.fecha)}</div>
+          <h3>${d.titulo}</h3>
+          ${d.detalles.map(([t,p])=>`
+          <section class="detail-block">
+            <h4>${t}</h4><p>${p}</p>
+          </section>`).join("")}
+          <p class="gesture">Desliza hacia la izquierda para volver ←</p>
+        </div>
+      </div>
+    </section>`;
+  });
+
+  const siguiente=D.find(d=>d.fecha>fecha);
+  if(siguiente){
+    const faltan=distancia(fecha,siguiente.fecha);
+    html+=`<section class="card hero">
+      <h2>Próxima etapa</h2>
+      <div class="zh">${siguiente.zh}</div>
+      <div class="big">${siguiente.ciudad}</div>
+      <p>${siguiente.titulo}</p>
+      <p>Se descubre el ${fechaTexto(siguiente.fecha)}</p>
+      <div class="hint">${faltan===1?"Mañana, un nuevo día del viaje":
+        `Faltan ${faltan} días`}</div>
+      ${adorno}
+    </section>`;
+  }
+
+  if(observador)observador.disconnect();
+  car.innerHTML=html;
+
+  if("IntersectionObserver" in window){
+    observador=new IntersectionObserver(entradas=>{
+      entradas.forEach(entrada=>{
+        entrada.target.classList.toggle("entering",entrada.isIntersecting);
+      });
+    },{root:car,threshold:.6});
+    car.querySelectorAll(".day-card").forEach(c=>observador.observe(c));
+  }
+
+  if(irAHoy){
+    const tarjeta=car.querySelector(".now");
+    car.scrollTop=tarjeta?tarjeta.offsetTop:0;
+  }
+  actualizarProgreso();
+}
+
+/* Panel ampliado: botón y gesto lateral. */
+function cambiarDetalle(card,abrir,enfocar){
+  const resumen=card.querySelector(".txt");
+  const panel=card.querySelector(".details");
+  const boton=resumen.querySelector(".more");
+
+  panel.hidden=!abrir;
+  resumen.hidden=abrir;
+  boton.setAttribute("aria-expanded",String(abrir));
+
+  if(abrir){
+    panel.scrollTop=0;
+    if(enfocar)panel.querySelector(".back").focus();
+  }else if(enfocar){
+    boton.focus();
+  }
+}
+
+car.addEventListener("click",e=>{
+  const abrir=e.target.closest(".more");
+  const cerrar=e.target.closest(".back");
+  if(abrir)cambiarDetalle(abrir.closest(".day-card"),true,true);
+  if(cerrar)cambiarDetalle(cerrar.closest(".day-card"),false,true);
+});
+
+document.addEventListener("keydown",e=>{
+  if(e.key!=="Escape")return;
+  const panel=car.querySelector(".details:not([hidden])");
+  if(panel)cambiarDetalle(panel.closest(".day-card"),false,true);
+});
+
+let toque=null;
+car.addEventListener("touchstart",e=>{
+  if(e.touches.length!==1){toque=null;return}
+  const card=e.target.closest(".day-card");
+  if(!card || e.target.closest("button,a")){toque=null;return}
+  toque={
+    card,x:e.touches[0].clientX,y:e.touches[0].clientY
+  };
+},{passive:true});
+
+car.addEventListener("touchend",e=>{
+  if(!toque || !e.changedTouches.length)return;
+  const dx=e.changedTouches[0].clientX-toque.x;
+  const dy=e.changedTouches[0].clientY-toque.y;
+  const card=toque.card;
+  toque=null;
+
+  /* Un movimiento vertical no activa el panel. */
+  if(Math.abs(dx)<65 || Math.abs(dx)<Math.abs(dy)*1.6)return;
+
+  const abierto=!card.querySelector(".details").hidden;
+  if(dx>0 && !abierto)cambiarDetalle(card,true,false);
+  if(dx<0 && abierto)cambiarDetalle(card,false,false);
+},{passive:true});
+
+car.addEventListener("touchcancel",()=>{toque=null},{passive:true});
+car.addEventListener("scroll",actualizarProgreso,{passive:true});
+window.addEventListener("resize",actualizarProgreso);
+
+document.getElementById("btnInicio").addEventListener("click",()=>{
+  car.querySelectorAll(".details:not([hidden])").forEach(panel=>{
+    cambiarDetalle(panel.closest(".day-card"),false,false);
+  });
+  car.scrollTo({top:0,behavior:reducido.matches?"auto":"smooth"});
+});
+
+/* Reloj y actualización al cambiar el día en China. */
 function reloj(){
   const ahora=new Date();
-  const china=new Intl.DateTimeFormat("es-ES",{timeZone:"Asia/Shanghai",hour:"2-digit",minute:"2-digit"}).format(ahora);
-  const espana=new Intl.DateTimeFormat("es-ES",{timeZone:"Europe/Madrid",hour:"2-digit",minute:"2-digit"}).format(ahora);
-  document.getElementById("bar").textContent="🇨🇳 "+china+"  ·  🇪🇸 "+espana;
+  const hora=zona=>new Intl.DateTimeFormat("es-ES",{
+    timeZone:zona,hour:"2-digit",minute:"2-digit"
+  }).format(ahora);
+  document.getElementById("bar").textContent=
+    "🇨🇳 "+hora("Asia/Shanghai")+" · 🇪🇸 "+hora("Europe/Madrid");
+
+  if(hoy()!==fechaMostrada)generarWeb(true);
 }
+generarWeb(true);
 reloj();
 setInterval(reloj,30000);
-
-const tarjetaHoy=document.querySelector(".card.now");
-if(tarjetaHoy){tarjetaHoy.scrollIntoView({block:"start"});}
-
-document.getElementById("btnInicio").addEventListener("click",function(){
-  coche.scrollTo({top:0,behavior:"smooth"});
+document.addEventListener("visibilitychange",()=>{
+  if(!document.hidden)reloj();
 });
 
+/* Audio: un mismo reproductor durante toda la navegación. */
 const musica=document.getElementById("musica");
-const boton=document.getElementById("btnMusica");
-let sonando=false;
+const btnMusica=document.getElementById("btnMusica");
+const audioEstado=document.getElementById("audioEstado");
+musica.volume=.35;
 
-musica.addEventListener("ended",function(){
-  musica.currentTime=0;
-  musica.play().catch(function(){});
-});
+function actualizarAudio(){
+  const activo=!musica.paused && !musica.ended;
+  btnMusica.textContent=activo?"⏸":"♪";
+  btnMusica.setAttribute("aria-pressed",String(activo));
+  btnMusica.title=activo?"Pausar música":"Reproducir música";
+}
+musica.addEventListener("play",actualizarAudio);
+musica.addEventListener("pause",actualizarAudio);
+musica.addEventListener("ended",actualizarAudio);
 
-boton.addEventListener("click",function(){
-  if(sonando){
+btnMusica.addEventListener("click",async()=>{
+  if(!musica.paused){
     musica.pause();
-    boton.textContent="♪";
-    boton.setAttribute("aria-pressed","false");
-    sonando=false;
-  }else{
-    musica.volume=0.35;
-    musica.play().then(function(){
-      boton.textContent="⏸";
-      boton.setAttribute("aria-pressed","true");
-      sonando=true;
-    }).catch(function(){
-      boton.textContent="♪";
-      boton.setAttribute("aria-pressed","false");
-    });
+    return;
+  }
+  try{
+    await musica.play();
+    audioEstado.textContent="Música activada";
+  }catch(error){
+    audioEstado.textContent=
+      "No se ha podido reproducir la música. Comprueba el archivo de audio.";
+    btnMusica.title="No se pudo reproducir: vuelve a intentarlo";
+    actualizarAudio();
   }
 });
 </script>
-
 </body>
 </html>
