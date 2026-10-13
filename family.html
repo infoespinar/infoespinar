@@ -707,7 +707,7 @@ function ilustracion(d,i){
       return svg(i,d.variante==="n"?"#29284d":"#eac599",
         d.variante==="n"?"#a57065":"#fbead0",p);
 
-    case "karst":
+    case "karst":{
       const nuit=d.variante==="n";
       const dawn=d.variante==="s";
 
@@ -728,6 +728,7 @@ function ilustracion(d,i){
         nuit?"#565376":dawn?"#f8deaf":"#f5f0d9",
         p
       );
+    }
 
     case "ciudad":
       p=sol(330,45,12,"#fff1c7")+
@@ -743,7 +744,6 @@ function ilustracion(d,i){
       <rect x="${x}" y="${192-h}" width="${w}" height="${h}" fill="url(#w${i})"/>`).join("")+
       `<rect y="192" width="400" height="48" fill="#14253e"/>
       <path d="M0 214Q100 201 200 215T400 214" stroke="#c7a56e" opacity=".4" fill="none"/>`;
-
       return svg(i,"#13213c","#463c61",p);
 
     default:
@@ -755,7 +755,6 @@ function ilustracion(d,i){
       <path d="M45 183H331" stroke="#2f64a1" stroke-width="5"/>`+
       [55,86,117,148,179,210,241].map(x=>
       `<rect x="${x}" y="170" width="19" height="9" rx="2" fill="#8cafcb"/>`).join("");
-
       return svg(i,"#c1dff0","#f7f0dd",p);
   }
 }
@@ -1163,11 +1162,4 @@ btnMusica.addEventListener("click",async()=>{
     audioEstado.textContent="Música activada";
   }catch(error){
     audioEstado.textContent=
-      "No se ha podido reproducir la música. Comprueba el archivo de audio.";
-    btnMusica.title="No se pudo reproducir: vuelve a intentarlo";
-    actualizarAudio();
-  }
-});
-</script>
-</body>
-</html>
+      "No
