@@ -114,7 +114,7 @@ th,td{border:1px solid var(--bd);padding:6px 8px;text-align:left;vertical-align:
 <div class="hrt"><span>北京</span><i></i><span>张家界</span><i></i><span>凤凰</span><i></i><span>阳朔</span><i></i><span>重庆</span></div><div class="mean"></div></header>
 <nav><button class="on" data-t="it">Itinerario</button><button data-t="re">Reservas</button><button data-t="tr">Frases</button></nav>
 <main><section id="it"></section><section id="tp" hidden></section><section id="ho" hidden></section><section id="re" hidden></section><section id="tr" hidden></section>
-<p class="note">Los días 21 a 24 dependen de lo que se acuerde con Mauro y su pareja. Datos aproximados: confirmadlos antes de ir. El tiempo (máx / mín) se actualiza solo con la previsión real cuando hay conexión y el día está a menos de 16 días; si no, muestra la última guardada o temperaturas típicas de la época.</p></main>
+<p class="note">Los días 21 a 24 dependen de lo que se acuerde con Mauro y su pareja. Datos aproximados: confirmadlos antes de ir. El tiempo (máx / mín) se actualiza con la previsión disponible al abrir la página; la cobertura depende del proveedor y del horizonte de previsión. Si la fecha aún no está cubierta o no hay conexión, muestra la última previsión guardada o temperaturas orientativas de la época.</p></main>
 <button id="hoy" hidden>📍 Hoy</button>
 <input type="file" id="qrf" accept="image/*" style="display:none">
 <div id="ov" hidden><div class="ob"><div id="oc"></div><button class="ox">Cerrar</button></div></div>
@@ -400,8 +400,11 @@ const SCENE=`<svg class="wxi" viewBox="0 0 360 150" role="img" aria-label="Ropa 
 const wxOpen=el=>{const n=+el.dataset.d,d=D.find(x=>x[1]==n),w=WX[n];show(`<div class="wxh"><div class="wxe">${w[0]}</div><div><div class="wxd">${d[2][0].toUpperCase()+d[2].slice(1)} ${n} ${n<3?"nov":"oct"}</div><div class="wxt">${w[1]}° / ${w[2]}°</div></div></div>${SCENE}<div class="wxb"><div class="wxs"><b>衣</b> Qué ponerse</div><ul>${outfit(n).map(x=>"<li>"+x+"</li>").join("")}</ul><p class="onote">${wxNote(n)}</p></div>`);document.querySelector(".ob").classList.add("wxc")};
 document.addEventListener("click",ev=>{const w=ev.target.closest(".wx");if(w)wxOpen(w)});document.addEventListener("keydown",ev=>{const w=ev.target.closest&&ev.target.closest(".wx");if(w&&(ev.key=="Enter"||ev.key==" ")){ev.preventDefault();wxOpen(w)}});
 const LIVE={},fmt=t=>new Date(t).toLocaleString("es-ES",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}),wxNote=n=>{const l=LIVE[n];return l?(l.fresh?(l.src=="qw"?"Previsión de QWeather (servicio meteorológico chino), actualizada al abrir la página.":"Previsión real de Open-Meteo, actualizada al abrir la página."):"Última previsión guardada ("+fmt(l.t)+"); no hay conexión para actualizarla."):n>=16&&n<=19?"Previsión guardada del 14 de octubre.":"Temperaturas típicas de la época; se actualizarán con la previsión real cuando falten menos de 16 días."};
-// QWeather (previsión china): pega aquí tu API KEY (Consola > Proyectos > Credenciales). Sin clave, solo se usa Open-Meteo.
-const QW_HOST="nn7dnbxebp.re.qweatherapi.com",QW_KEY="";
+// QWeather: introduce una CLAVE NUEVA aquí si decides llamar a la API directamente desde el navegador.
+// IMPORTANTE: esta clave será visible para cualquiera que inspeccione el código fuente de la web.
+// Para mantenerla privada, usa un pequeño proxy/backend y no la incluyas en este HTML.
+// Sin clave, el código usa Open-Meteo como alternativa.
+const QW_HOST="nn7dnbxebp.re.qweatherapi.com",QW_KEY="7faafc4c6301452f9b21766fe37bf6fd";
 (()=>{const LOC={bj:[39.9042,116.4074],wl:[29.3466,110.55],zj:[29.117,110.479],fr:[28.97,109.97],fh:[27.9486,109.599],ys:[24.7784,110.4967],cq:[29.563,106.5516]},DL={16:"bj",17:"bj",18:"bj",19:"bj",20:"wl",21:"wl",22:"wl",23:"zj",24:"fr",25:"fh",26:"fh",27:"ys",28:"ys",29:"ys",30:"ys",31:"cq",1:"cq",2:"cq"},ks=Object.keys(LOC),
 ic=c=>c==0?"☀️":c==1?"🌤️":c==2?"⛅":c==3?"☁️":c<=48?"🌫️":c<=57?"🌦️":c<=67?"🌧️":c<=77?"🌨️":c==80?"🌦️":c<=82?"🌧️":c<=86?"🌨️":"⛈️",
 qic=c=>c==100?"☀️":c==101||c==102?"🌤️":c==103?"⛅":c==104?"☁️":c==300||c==301||c==309?"🌦️":c>=302&&c<=304?"⛈️":c>=305&&c<=399?"🌧️":c>=400&&c<=499?"🌨️":c>=500&&c<=515?"🌫️":"☁️",
