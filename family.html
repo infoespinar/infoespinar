@@ -317,54 +317,72 @@ function textoMapa(d){
 }
 function mapaSVG(d,i){
  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
- // Coordenadas aproximadas solo para orientar a la familia; no es un mapa de navegación.
- const places={
-  'Madrid':[-3.70,40.42],'Pekín':[116.40,39.90],'Zhangjiajie':[110.48,29.12],
-  'Wulingyuan':[110.55,29.35],'Furong':[109.95,28.17],'Fenghuang':[109.60,27.95],
-  'Yangshuo':[110.49,24.78],'Chongqing':[106.55,29.56],'Roma':[12.50,41.90]
- };
- const frame=(content,aria=d.ciudad)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" role="img" aria-label="Mapa orientativo de ${esc(aria)}"><defs><linearGradient id="bg${i}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8edda"/><stop offset="1" stop-color="#e9dfc8"/></linearGradient><pattern id="dots${i}" width="18" height="18" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r=".8" fill="#b8c9a8" opacity=".65"/></pattern></defs><rect width="360" height="300" rx="12" fill="url(#bg${i})"/><rect x="0" y="0" width="360" height="300" fill="url(#dots${i})"/>${content}<text x="16" y="22" font-family="system-ui,sans-serif" font-size="8" letter-spacing="1.3" fill="#a28a6a">DIARIO DE VIAJE · MAPA ORIENTATIVO</text><path d="M0 270Q80 258 150 272T360 265V300H0Z" fill="#d9c8a9" opacity=".25"/></svg>`;
- const pin=(x,y,label,anchor='start',small=false)=>`<g><circle cx="${x}" cy="${y}" r="${small?4:5}" fill="#b3201f" stroke="#fff8eb" stroke-width="2"/><text x="${x+(anchor==='start'?7:-7)}" y="${y+3}" text-anchor="${anchor}" font-family="system-ui,sans-serif" font-size="${small?8.2:9.5}" font-weight="600" fill="#6b382b" paint-order="stroke" stroke="#f8edda" stroke-width="3" stroke-linejoin="round">${esc(label)}</text></g>`;
- const names=d.ciudad.split('→').map(x=>x.trim());
- const project=(lon,lat,b)=>[24+(lon-b.minLon)/(b.maxLon-b.minLon)*312,43+(b.maxLat-lat)/(b.maxLat-b.minLat)*202];
- const path=(a,b,dash='')=>`<path d="M${a[0]} ${a[1]} Q${(a[0]+b[0])/2} ${(a[1]+b[1])/2-13} ${b[0]} ${b[1]}" fill="none" stroke="#b3201f" stroke-width="2.8" stroke-linecap="round" ${dash?'stroke-dasharray="5 6"':''}/>`;
+ const places={Madrid:[-3.70,40.42],Roma:[12.50,41.90],Pekín:[116.40,39.90],Zhangjiajie:[110.48,29.12],Furong:[109.95,28.17],Fenghuang:[109.60,27.95],Yangshuo:[110.49,24.78],Chongqing:[106.55,29.56]};
+ const names=d.ciudad.split('→').map(s=>s.trim());
+ const frame=(content,aria=d.ciudad)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" role="img" aria-label="Mapa orientativo de ${esc(aria)}"><defs><linearGradient id="mapbg${i}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f7f1e4"/><stop offset="1" stop-color="#e8e1cd"/></linearGradient><pattern id="mapgrain${i}" width="24" height="24" patternUnits="userSpaceOnUse"><circle cx="3" cy="4" r=".8" fill="#b8c7a8" opacity=".55"/><circle cx="16" cy="17" r=".6" fill="#cdbf9e" opacity=".5"/></pattern></defs><rect width="360" height="300" rx="14" fill="url(#mapbg${i})"/><rect width="360" height="300" rx="14" fill="url(#mapgrain${i})"/>${content}<rect x="12" y="10" width="165" height="20" rx="10" fill="#fffaf0" opacity=".92"/><text x="22" y="23" font-family="system-ui,sans-serif" font-size="8" letter-spacing="1.1" fill="#8a785f">INFO FAMILIAR · MAPA ORIENTATIVO</text><path d="M0 278Q70 269 140 280T270 275T360 279V300H0Z" fill="#d8c8a9" opacity=".4"/></svg>`;
+ const pin=(x,y,label,anchor='start',n=0)=>`<g><circle cx="${x}" cy="${y}" r="${n?3.7:5}" fill="#b94a3b" stroke="#fffaf0" stroke-width="2"/><circle cx="${x}" cy="${y}" r="1.4" fill="#fffaf0"/><text x="${x+(anchor==='start'?7:-7)}" y="${y-5}" text-anchor="${anchor}" font-family="system-ui,sans-serif" font-size="${n?8:9.5}" font-weight="650" fill="#574b3c" paint-order="stroke" stroke="#f7f1e4" stroke-width="3" stroke-linejoin="round">${esc(label)}</text></g>`;
+ const proj=(lon,lat,b)=>[24+(lon-b.minLon)/(b.maxLon-b.minLon)*312,44+(b.maxLat-lat)/(b.maxLat-b.minLat)*205];
+ const route=(a,b,dash=false)=>`<path d="M${a[0]} ${a[1]} Q${(a[0]+b[0])/2} ${(a[1]+b[1])/2-14} ${b[0]} ${b[1]}" fill="none" stroke="#b94a3b" stroke-width="3" stroke-linecap="round" ${dash?'stroke-dasharray="5 5"':''}/>`;
+ const terrain=`<path d="M8 83L29 59 54 67 74 47 97 69 121 57 142 75 164 60 187 78 211 55 232 72 254 53 277 69 301 56 352 80V248L326 230 305 247 279 230 253 249 227 230 203 246 178 227 151 245 127 226 103 241 78 219 53 232 31 214 8 223Z" fill="#cbd8bd" stroke="#b3c5a6" stroke-width="1"/><path d="M15 111Q75 88 127 117T231 113T350 123M12 176Q70 151 129 179T241 171T350 182M77 48Q111 101 100 151T137 246M215 53Q191 111 216 162T233 242M300 55Q270 111 290 168T266 240" fill="none" stroke="#f8f2e5" stroke-width="3" opacity=".95"/>`;
  if(d.arte==='avion'){
   const back=d.fecha==='2026-11-02';
-  const world=`<path d="M18 83L37 58 67 52 91 66 107 83 100 104 83 112 74 133 55 143 43 123 28 112Z M77 146L94 153 103 180 92 208 82 235 69 218 68 188 58 168Z M153 65L178 48 205 50 222 60 246 61 268 75 294 77 322 96 332 117 312 127 295 118 277 131 255 124 238 143 218 143 201 123 185 118 171 98 152 92Z M184 126L207 133 222 157 215 187 199 212 185 191 176 165Z M287 178L311 172 331 184 327 202 306 208 289 196Z" fill="#c6d7bb" fill-rule="evenodd"/>`;
-  const pos={'Madrid':[101,104],'Roma':[145,100],'Pekín':[282,103],'Chongqing':[269,132]};
-  let c;
-  if(back){c=`${path(pos.Chongqing,pos.Roma,true)}${path(pos.Roma,pos.Madrid,true)}${pin(...pos.Chongqing,'Chongqing')}${pin(...pos.Roma,'Roma')}${pin(...pos.Madrid,'Madrid','end')}<text x="180" y="239" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#806c5c">Regreso con escala en Roma</text>`;}
-  else {c=`${path(pos.Madrid,pos.Pekín,true)}${pin(...pos.Madrid,'Madrid')}${pin(...pos.Pekín,'Pekín','end')}<text x="180" y="239" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#806c5c">España · Europa · China</text>`;}
-  return frame(`${world}<path d="M20 252H340" stroke="#cbb99a" stroke-width="1"/><text x="180" y="268" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#806c5c">Ruta aérea · posición aproximada</text>${c}`);
+  const world=`<path d="M22 81L40 58 70 52 94 67 108 84 99 105 83 113 73 132 55 144 43 124 29 112Z M77 147L94 154 103 180 92 208 82 235 69 218 68 188 58 168Z M151 64L177 48 205 50 222 60 246 61 268 75 294 77 322 96 332 117 312 127 295 118 277 131 255 124 238 143 218 143 201 123 185 118 171 98 152 92Z M184 126L207 133 222 157 215 187 199 212 185 191 176 165Z M287 178L311 172 331 184 327 202 306 208 289 196Z" fill="#cbd8bd" fill-rule="evenodd"/>`;
+  const pos={Madrid:[96,106],Roma:[143,99],Pekín:[286,103],Chongqing:[272,134]};
+  const c=back?`${route(pos.Chongqing,pos.Roma,true)}${route(pos.Roma,pos.Madrid,true)}${pin(...pos.Chongqing,'Chongqing')}${pin(...pos.Roma,'Roma')}${pin(...pos.Madrid,'Madrid','end')}<text x="180" y="241" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#75644f">Escala en Roma · regreso a casa</text>`:`${route(pos.Madrid,pos.Pekín,true)}${pin(...pos.Madrid,'Madrid')}${pin(...pos.Pekín,'Pekín','end')}<text x="180" y="241" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#75644f">Europa → China</text>`;
+  return frame(`${world}<path d="M22 253H338" stroke="#c8b99b" stroke-width="1"/><text x="180" y="270" text-anchor="middle" font-family="Georgia,serif" font-size="12" fill="#75644f">Ruta aérea · no a escala</text>${c}`);
  }
  if(d.ciudad.includes('→')){
-  const aName=names[0], bName=names[1], aLL=places[aName]||places.Pekín, bLL=places[bName]||places.Zhangjiajie;
-  const isFlight=d.fecha==='2026-10-19';
-  let bounds;
-  if([aLL[0],bLL[0]].some(x=>x<50)) bounds={minLon:-10,maxLon:125,minLat:20,maxLat:55};
-  else {const dx=Math.abs(aLL[0]-bLL[0]),dy=Math.abs(aLL[1]-bLL[1]),padX=Math.max(.35,dx*.22),padY=Math.max(.35,dy*.22);bounds={minLon:Math.min(aLL[0],bLL[0])-padX,maxLon:Math.max(aLL[0],bLL[0])+padX,minLat:Math.min(aLL[1],bLL[1])-padY,maxLat:Math.max(aLL[1],bLL[1])+padY};}
-  const a=project(...aLL,bounds), b=project(...bLL,bounds);
-  const terrain=`<path d="M15 80L44 54 76 65 99 48 129 70 153 58 180 77 211 57 237 71 264 50 298 72 344 63V243L312 228 283 245 252 226 222 245 192 223 162 242 130 221 102 238 73 213 39 224 15 199Z" fill="#d2dfc5" stroke="#b5c9ac" stroke-width="1.2"/><path d="M24 111Q92 83 149 117T258 113T338 125M24 176Q84 150 146 178T260 170T338 180M88 54Q120 110 102 153T138 238M218 54Q195 111 218 163T235 238M294 58Q266 110 288 166T267 237" stroke="#f8f0df" stroke-width="3" fill="none"/>`;
-  const labels=`${pin(...a,aName,a[0]>b[0]?'end':'start')}${pin(...b,bName,b[0]<a[0]?'end':'start')}`;
-  const icon=isFlight?`<g transform="translate(${(a[0]+b[0])/2} ${(a[1]+b[1])/2-8}) rotate(-25)" fill="#b3201f"><path d="M-12 0L-2 -3L-5 -13L-1 -14L5 -4L14 -1Q17 0 14 2L5 4L-1 14L-5 13L-2 3Z"/></g>`:`<g transform="translate(${(a[0]+b[0])/2} ${(a[1]+b[1])/2-4})" fill="#b3201f"><rect x="-10" y="-7" width="20" height="14" rx="3"/><rect x="-6" y="-4" width="5" height="4" fill="#f8edda"/><rect x="2" y="-4" width="5" height="4" fill="#f8edda"/><circle cx="-5" cy="8" r="2.5"/><circle cx="5" cy="8" r="2.5"/></g>`;
-  return frame(`${terrain}${path(a,b,isFlight)}${icon}${labels}<text x="180" y="276" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#806c5c">${isFlight?'Vuelo':'Trayecto entre destinos'} · posiciones aproximadas</text>`);
+  const aName=names[0],bName=names[1],aLL=places[aName]||places.Pekín,bLL=places[bName]||places.Zhangjiajie;
+  const flight=d.fecha==='2026-10-19';
+  const bnds=(aLL[0]<30||bLL[0]<30)?{minLon:-10,maxLon:125,minLat:20,maxLat:56}:(()=>{const dx=Math.abs(aLL[0]-bLL[0]),dy=Math.abs(aLL[1]-bLL[1]);return {minLon:Math.min(aLL[0],bLL[0])-Math.max(.35,dx*.3),maxLon:Math.max(aLL[0],bLL[0])+Math.max(.35,dx*.3),minLat:Math.min(aLL[1],bLL[1])-Math.max(.35,dy*.3),maxLat:Math.max(aLL[1],bLL[1])+Math.max(.35,dy*.3)}})();
+  const a=proj(...aLL,bnds),b=proj(...bLL,bnds);
+  const content=`${terrain}${route(a,b,flight)}<g transform="translate(${(a[0]+b[0])/2} ${(a[1]+b[1])/2-8})" fill="#b94a3b"><path d="M-12 0L-2 -3 -5 -12 -1 -13 5 -4 14 -1Q17 0 14 2L5 4 -1 13 -5 12 -2 3Z"/></g>${pin(...a,aName,a[0]>b[0]?'end':'start')}${pin(...b,bName,b[0]<a[0]?'end':'start')}<rect x="73" y="252" width="214" height="25" rx="12" fill="#fffaf0" opacity=".9"/><text x="180" y="268" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#75644f">${flight?'Vuelo · posición aproximada':'Traslado · posición aproximada'}</text>`;
+  return frame(content);
  }
- const city=d.ciudad.split('→')[0].trim();
- // Puntos locales ubicados según su posición geográfica relativa, no repartidos al azar.
- const sets={
-  'Pekín':{bounds:{minLon:116.20,maxLon:116.65,minLat:39.82,maxLat:40.48},points:[['Ciudad Prohibida',116.397,39.916],['Jingshan',116.397,39.926],['Hutongs',116.403,39.937],['Templo Lama',116.417,39.947],['Mutianyu',116.56,40.43],['Palacio de Verano',116.275,39.999],['Templo del Cielo',116.407,39.882],['Nido de Pájaro',116.397,40.0]]},
-  'Zhangjiajie':{bounds:{minLon:110.35,maxLon:110.62,minLat:29.02,maxLat:29.42},points:[['Centro',110.48,29.12],['Tianmen',110.48,29.05],['Wulingyuan',110.55,29.35],['Gran Cañón',110.53,29.33],['Cueva Dragón',110.55,29.36],['Yuanjiajie',110.45,29.35],['Arroyo Dorado',110.47,29.32]]},
-  'Fenghuang':{bounds:{minLon:109.52,maxLon:109.69,minLat:27.90,maxLat:28.04},points:[['Casco antiguo',109.60,27.95],['Río Tuojiang',109.605,27.956],['Hongqiao',109.607,27.954],['Pagoda',109.615,27.96]]},
-  'Yangshuo':{bounds:{minLon:110.35,maxLon:110.58,minLat:24.72,maxLat:24.98},points:[['West Street',110.49,24.78],['Río Yulong',110.42,24.83],['Xingping',110.53,24.92],['Xianggong',110.54,24.95],['Galería Diez Li',110.47,24.82]]},
-  'Chongqing':{bounds:{minLon:106.48,maxLon:106.66,minLat:29.50,maxLat:29.62},points:[['Jiefangbei',106.58,29.56],['Hongyadong',106.58,29.565],['Liziba',106.54,29.56],['Shibati',106.57,29.55],['Río Yangtsé',106.57,29.53]]},
-  'Furong':{bounds:{minLon:109.90,maxLon:110.02,minLat:28.12,maxLat:28.23},points:[['Cascada',109.95,28.17],['Casco antiguo',109.952,28.175],['Puente',109.944,28.174],['Río',109.95,28.18] ]}
+ const city=d.ciudad;
+ const maps={
+ 'Pekín':[
+  {range:['2026-10-17'],b:{minLon:116.37,maxLon:116.43,minLat:39.88,maxLat:39.96},p:[['Tiananmen',116.397,39.905],['Ciudad Prohibida',116.397,39.916],['Jingshan',116.397,39.926],['Hutongs',116.403,39.937],['Houhai',116.38,39.94],['Torres del Tambor',116.393,39.94]]},
+  {range:['2026-10-18'],b:{minLon:116.20,maxLon:116.66,minLat:39.82,maxLat:40.48},p:[['Mutianyu',116.56,40.43],['Nido de Pájaro',116.397,40.0],['Distrito 798',116.50,39.98],['Sanlitun',116.45,39.94]]},
+  {range:['2026-10-19'],b:{minLon:116.20,maxLon:116.45,minLat:39.86,maxLat:40.03},p:[['Palacio de Verano',116.275,39.999],['Templo del Cielo',116.407,39.882],['Centro de Pekín',116.397,39.916]]}
+ ],
+ 'Zhangjiajie':[
+  {range:['2026-10-20'],b:{minLon:110.42,maxLon:110.62,minLat:29.27,maxLat:29.39},p:[['Wulingyuan',110.55,29.35],['Arroyo del Látigo Dorado',110.47,29.32],['Cueva Dragón Amarillo',110.53,29.34]]},
+  {range:['2026-10-21'],b:{minLon:110.40,maxLon:110.57,minLat:29.30,maxLat:29.40},p:[['Yuanjiajie',110.45,29.35],['Ascensor Bailong',110.44,29.34],['Tianzi',110.48,29.38]]},
+  {range:['2026-10-22'],b:{minLon:110.48,maxLon:110.60,minLat:29.30,maxLat:29.39},p:[['Gran Cañón',110.53,29.33],['Puente de Cristal',110.54,29.34]]},
+  {range:['2026-10-23'],b:{minLon:110.43,maxLon:110.54,minLat:29.02,maxLat:29.15},p:[['Montaña Tianmen',110.48,29.05],['Puerta del Cielo',110.48,29.06],['Centro de Zhangjiajie',110.48,29.12]]},
+  {range:['2026-10-24'],b:{minLon:110.38,maxLon:110.62,minLat:29.02,maxLat:29.39},p:[['Wulingyuan',110.55,29.35],['Lago Baofeng',110.52,29.33],['Centro',110.48,29.12],['Furong',109.95,28.17]]}
+ ],
+ 'Furong':[{range:['2026-10-25'],b:{minLon:109.91,maxLon:110.00,minLat:28.13,maxLat:28.21},p:[['Cascada',109.95,28.17],['Casco antiguo',109.952,28.175],['Paso bajo la roca',109.947,28.174]]}],
+ 'Fenghuang':[{range:['2026-10-26','2026-10-27'],b:{minLon:109.56,maxLon:109.64,minLat:27.92,maxLat:27.98},p:[['Río Tuojiang',109.605,27.956],['Puente Hongqiao',109.607,27.954],['Pagoda Wanming',109.615,27.96],['Casco antiguo',109.60,27.95]]}],
+ 'Yangshuo':[
+  {range:['2026-10-28'],b:{minLon:110.40,maxLon:110.54,minLat:24.74,maxLat:24.88},p:[['Río Yulong',110.42,24.83],['West Street',110.49,24.78],['Galería Diez Li',110.47,24.82]]},
+  {range:['2026-10-29'],b:{minLon:110.47,maxLon:110.57,minLat:24.76,maxLat:24.97},p:[['Xianggong',110.54,24.95],['Xingping',110.53,24.92],['Río Li',110.52,24.90]]},
+  {range:['2026-10-30'],b:{minLon:110.40,maxLon:110.54,minLat:24.73,maxLat:24.88},p:[['Galería Diez Li',110.47,24.82],['Colina de la Luna',110.43,24.77],['West Street',110.49,24.78]]}
+ ],
+ 'Chongqing':[{range:['2026-11-01','2026-10-31'],b:{minLon:106.51,maxLon:106.62,minLat:29.52,maxLat:29.59},p:[['Liziba',106.54,29.56],['Hongyadong',106.58,29.565],['Jiefangbei',106.58,29.56],['Shibati',106.57,29.55],['Río Yangtsé',106.57,29.53]]}]
  };
- const set=sets[city]||{bounds:{minLon:109,maxLon:111,minLat:24,maxLat:30},points:[[city,110,27]]};
- const b=set.bounds;
- const roads=`<path d="M18 72Q100 90 176 130T342 219M28 235Q100 182 176 157T340 60M80 42Q115 110 145 155T220 258M300 42Q250 105 267 155T245 258" stroke="#fff9ec" stroke-width="3.5" fill="none"/>`;
- const water=['Fenghuang','Furong','Yangshuo','Chongqing'].includes(city)?`<path d="M-5 184Q65 157 112 179T220 174T365 190" stroke="#8fc9d0" stroke-width="10" fill="none" opacity=".8"/>`:'';
- const points=set.points.map(([name,lon,lat],idx)=>{const [x,y]=project(lon,lat,b);return pin(x,y,name,(x>260?'end':'start'),true);}).join('');
- return frame(`<path d="M20 40Q80 32 130 48T245 40T350 53V260H20Z" fill="#d2dfc5" opacity=".55"/>${roads}${water}${points}<text x="180" y="282" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#806c5c">${esc(city)} · ubicaciones orientativas</text>`);
+ const candidates=maps[city]||[];let set=candidates.find(x=>x.range.includes(d.fecha));
+ if(!set){set=candidates[0]||{b:{minLon:109,maxLon:111,minLat:24,maxLat:30},p:[[city,110,27]]};}
+ const b=set.b;
+ let landscape='',water='';
+ if(city==='Pekín'){
+  landscape=`<rect x="20" y="42" width="320" height="205" rx="8" fill="#e5e2c9"/><path d="M20 83H340M20 124H340M20 165H340M20 206H340M70 42V247M120 42V247M170 42V247M220 42V247M270 42V247M320 42V247" stroke="#fffaf0" stroke-width="5"/><path d="M180 42V247" stroke="#d6c59f" stroke-width="8"/><rect x="151" y="91" width="58" height="67" rx="3" fill="#c7d7b9" stroke="#fffaf0" stroke-width="4"/><rect x="160" y="101" width="40" height="47" fill="#e4c8a1"/>`;
+ } else if(city==='Zhangjiajie'){
+  landscape=`<path d="M0 160L16 132 30 144 49 80 62 110 78 49 95 125 113 86 132 139 152 62 169 115 187 44 204 105 225 63 243 128 262 54 281 119 301 78 320 132 342 98 360 151V264H0Z" fill="#a9c49d"/><path d="M0 188L30 165 51 180 77 130 97 176 122 151 145 184 166 134 190 177 212 145 238 184 260 141 282 180 309 148 333 181 360 164V264H0Z" fill="#d4dfc7"/><path d="M0 221Q90 204 180 220T360 216" stroke="#f8f2e5" stroke-width="4" fill="none"/>`;
+ } else if(city==='Furong'){
+  landscape=`<path d="M0 44H360V264H0Z" fill="#d3dfc6"/><path d="M0 65L45 78 77 61 113 81 143 67 170 85 201 63 230 79 270 61 305 81 360 67V135H0Z" fill="#b4cba8"/><path d="M170 82L190 110 180 139 202 162 191 191 207 219" stroke="#79b8c4" stroke-width="30" fill="none"/><path d="M170 82L190 110 180 139 202 162 191 191 207 219" stroke="#d9f0ef" stroke-width="3" fill="none"/><path d="M145 90L159 80 175 91 189 82 203 94 216 85V120H145Z" fill="#9b7353"/>`;
+ } else if(city==='Fenghuang'){
+  landscape=`<path d="M0 44H360V264H0Z" fill="#d4dfc8"/><path d="M-10 151Q45 119 88 151T173 151T258 150T370 150" stroke="#83bdc6" stroke-width="38" fill="none"/><path d="M-10 151Q45 119 88 151T173 151T258 150T370 150" stroke="#d7eff0" stroke-width="2" fill="none"/><path d="M0 104L45 93 74 110 103 96 137 109 170 95 201 108 232 95 265 108 300 94 360 106V127H0Z" fill="#a7c19b"/><path d="M0 179L40 170 75 184 112 171 151 184 193 171 235 185 276 172 318 184 360 173V205H0Z" fill="#a7c19b"/>`;
+ } else if(city==='Yangshuo'){
+  landscape=`<path d="M0 44H360V264H0Z" fill="#dbe3ca"/><path d="M0 153L24 130 39 99 54 127 72 73 91 127 110 103 130 143 150 83 170 131 188 95 207 140 231 69 249 124 269 91 290 135 313 80 336 125 360 105V191H0Z" fill="#9dbb91"/><path d="M-10 195Q35 173 73 195T145 194T218 195T291 191T370 194" stroke="#82bbc5" stroke-width="23" fill="none"/><path d="M-10 195Q35 173 73 195T145 194T218 195T291 191T370 194" stroke="#d8eff0" stroke-width="2" fill="none"/>`;
+ } else if(city==='Chongqing'){
+  landscape=`<path d="M0 44H360V264H0Z" fill="#d9dfc9"/><path d="M-10 150Q55 113 111 153T222 151T370 142" stroke="#82bbc5" stroke-width="28" fill="none"/><path d="M180 44Q150 94 182 146T195 264" stroke="#82bbc5" stroke-width="23" fill="none"/><path d="M-10 150Q55 113 111 153T222 151T370 142M180 44Q150 94 182 146T195 264" stroke="#d8eff0" stroke-width="2" fill="none"/><path d="M0 80L55 67 83 90 112 66 145 83 175 62 210 84 243 65 274 84 310 66 360 80V112H0Z" fill="#a9c19c"/>`;
+ } else { landscape=`<path d="M0 80L26 63 44 76 69 48 92 71 117 55 141 78 168 60 193 79 217 52 242 71 264 55 289 74 317 54 360 77V264H0Z" fill="#d2ddc6" opacity=".85"/><path d="M0 111Q57 85 112 117T224 111T360 125M0 207Q65 171 122 203T246 194T360 208" stroke="#f8f2e5" stroke-width="3" fill="none"/>`; }
+
+ const marks=set.p.map(([label,lon,lat],j)=>{const [x,y]=proj(lon,lat,b);return pin(x,y,label,x>260?'end':'start',j>3);}).join('');
+ const compass=`<g transform="translate(330 48)"><circle r="13" fill="#fffaf0" opacity=".88"/><path d="M0 -9L3 2 0 0 -3 2Z" fill="#8c6c4a"/><text x="0" y="21" text-anchor="middle" font-size="7" fill="#8c6c4a">N</text></g>`;
+ return frame(`${landscape}${water}${marks}${compass}<rect x="54" y="253" width="252" height="24" rx="12" fill="#fffaf0" opacity=".92"/><text x="180" y="269" text-anchor="middle" font-family="Georgia,serif" font-size="11" fill="#75644f">${esc(city)} · puntos de interés del día</text>`);
 }
 
 const car=document.getElementById("car");
