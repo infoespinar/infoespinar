@@ -404,7 +404,7 @@ const LIVE={},fmt=t=>new Date(t).toLocaleString("es-ES",{day:"numeric",month:"sh
 // IMPORTANTE: esta clave será visible para cualquiera que inspeccione el código fuente de la web.
 // Para mantenerla privada, usa un pequeño proxy/backend y no la incluyas en este HTML.
 // Sin clave, el código usa Open-Meteo como alternativa.
-const QW_HOST="nn7dnbxebp.re.qweatherapi.com",QW_KEY="";
+const QW_HOST="nn7dnbxebp.re.qweatherapi.com",QW_KEY="7faafc4c6301452f9b21766fe37bf6fd";
 (()=>{const LOC={bj:[39.9042,116.4074],wl:[29.3466,110.55],zj:[29.117,110.479],fr:[28.97,109.97],fh:[27.9486,109.599],ys:[24.7784,110.4967],cq:[29.563,106.5516]},DL={16:"bj",17:"bj",18:"bj",19:"bj",20:"wl",21:"wl",22:"wl",23:"zj",24:"fr",25:"fh",26:"fh",27:"ys",28:"ys",29:"ys",30:"ys",31:"cq",1:"cq",2:"cq"},ks=Object.keys(LOC),
 ic=c=>c==0?"☀️":c==1?"🌤️":c==2?"⛅":c==3?"☁️":c<=48?"🌫️":c<=57?"🌦️":c<=67?"🌧️":c<=77?"🌨️":c==80?"🌦️":c<=82?"🌧️":c<=86?"🌨️":"⛈️",
 qic=c=>c==100?"☀️":c==101||c==102?"🌤️":c==103?"⛅":c==104?"☁️":c==300||c==301||c==309?"🌦️":c>=302&&c<=304?"⛈️":c>=305&&c<=399?"🌧️":c>=400&&c<=499?"🌨️":c>=500&&c<=515?"🌫️":"☁️",
