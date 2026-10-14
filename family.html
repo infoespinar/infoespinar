@@ -33,8 +33,13 @@ button:focus-visible{outline:3px solid #c8962b;outline-offset:3px}
 .more,.back{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(179,32,31,.22);border-radius:22px;color:#a0221e;background:rgba(179,32,31,.06);padding:9px 13px;font-size:.82rem}
 .more{margin-top:15px}
 .gesture{font:.73rem system-ui,sans-serif;color:#8b7867;margin:8px 0 0}
-.details{position:absolute;inset:0;z-index:4;background:#fbf4e6;overflow-y:auto;padding:16px 22px calc(76px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch;animation:panelIn .25s ease}
-.details h3{color:#b3201f;font-size:1.3rem;margin:15px 0 8px}
+.details,.map-panel{position:absolute;inset:0;z-index:4;background:#fbf4e6;overflow-y:auto;padding:16px 22px calc(76px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch;animation:panelIn .25s ease}
+.map-panel{overflow-y:auto;padding:16px 18px calc(76px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch;animation:panelIn .25s ease}
+.map-panel h3{color:#b3201f;font-size:1.25rem;margin:14px 0 6px}
+.map-panel .map-art{width:100%;display:block;border-radius:12px;overflow:hidden;background:#efe3cb;border:1px solid #e5d4b5}
+.map-panel .map-art svg{display:block;width:100%;height:auto;max-height:48vh}
+.map-note{font: .82rem system-ui,sans-serif;color:#806c5c;line-height:1.45;margin:10px 2px}
+.map-panel h3{color:#b3201f;font-size:1.3rem;margin:15px 0 8px}
 .detail-block{margin:17px 0}
 .detail-block h4{color:#8a6a1f;font:600 .86rem system-ui,sans-serif;margin:0 0 6px}
 .detail-block p{font-size:.98rem;line-height:1.6;margin:0}
@@ -304,6 +309,47 @@ default:p=sol(70,48,15,"#ffe0b0")+nube(200,34,1)+nube(320,56,.7)+aves(240,60)+[[
 
 const adorno=`<div class="adorno" aria-hidden="true"><svg viewBox="0 0 400 80" preserveAspectRatio="xMidYMax slice"><g fill="none" stroke="currentColor" color="#b3201f" stroke-width="3" stroke-linecap="round"><path d="M20 62q18 -26 44 -12q10 -22 36 -14q22 -18 42 2q24 -8 34 14"/><path d="M150 66q16 -22 40 -12q12 -20 38 -10q20 -16 40 4q22 -6 32 16"/><path d="M280 62q16 -24 42 -12q12 -20 36 -10q22 -16 42 6"/></g><g fill="#c8962b"><circle cx="200" cy="30" r="4"/><circle cx="188" cy="38" r="2.5"/><circle cx="212" cy="38" r="2.5"/></g></svg></div>`;
 
+// Mapas esquemáticos SVG: mantienen la paleta cálida de las ilustraciones del diario.
+function textoMapa(d){
+  if(d.arte==="avion") return d.fecha==="2026-10-16" ? "Vuelo internacional desde Madrid hasta Pekín." : "Regreso a casa desde Chongqing, con escala en Roma.";
+  if(d.ciudad.includes("→")) return "Trayecto entre las ciudades de esta etapa. La línea representa el desplazamiento de forma esquemática.";
+  return "Mapa ilustrado de la zona y de los lugares destacados en el plan de hoy. Es una vista orientativa, no un mapa de navegación.";
+}
+function mapaSVG(d,i){
+ const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+ const defs=`<defs><linearGradient id="bg${i}" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f8edda"/><stop offset="1" stop-color="#e9dfc8"/></linearGradient></defs>`;
+ const frame=(content)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 300" role="img" aria-label="Mapa ilustrado de ${esc(d.ciudad)}">${defs}<rect width="360" height="300" rx="12" fill="url(#bg${i})"/>${content}<path d="M0 250Q65 225 120 250T240 246T360 235V300H0Z" fill="#d9c8a9" opacity=".28"/><text x="18" y="25" font-family="system-ui,sans-serif" font-size="9" letter-spacing="2" fill="#a28a6a">DIARIO DE VIAJE · CHINA</text></svg>`;
+ const pin=(x,y,label)=>`<circle cx="${x}" cy="${y}" r="7" fill="#b3201f" stroke="#fff8eb" stroke-width="3"/><text x="${x+12}" y="${y+4}" font-family="Georgia,serif" font-size="12" font-weight="bold" fill="#6b382b">${esc(label)}</text>`;
+ const route=(a,b,dashed=false)=>`<path d="${a} ${b}" fill="none" stroke="#b3201f" stroke-width="3" stroke-linecap="round" ${dashed?'stroke-dasharray="5 7"':''}/>`;
+ const plane=`<g transform="translate(180 105) rotate(-18)" fill="#b3201f"><path d="M-16 0L-3 -3L-8 -17L-3 -18L7 -4L19 -2Q23 0 19 2L7 4L-3 18L-8 17L-3 3Z"/></g>`;
+ const train=`<g transform="translate(180 240)" fill="#b3201f"><rect x="-19" y="-13" width="38" height="23" rx="5"/><rect x="-13" y="-8" width="9" height="7" fill="#f8edda"/><rect x="3" y="-8" width="9" height="7" fill="#f8edda"/><circle cx="-10" cy="12" r="4"/><circle cx="10" cy="12" r="4"/></g>`;
+ const cities={
+  "Madrid": [62,174], "Pekín":[282,104], "Zhangjiajie":[105,193], "Furong":[210,205], "Fenghuang":[244,170], "Yangshuo":[245,218], "Chongqing":[145,154], "Roma":[110,150]
+ };
+ const isFlight=d.arte==="avion";
+ if(isFlight){
+   const back=d.fecha==="2026-11-02";
+   const c=back?`<path d="M55 190 Q160 30 300 112" stroke="#b3201f" stroke-width="3" stroke-dasharray="5 7" fill="none"/>${pin(55,190,'Chongqing')}${pin(300,112,'Madrid')}${plane}<text x="180" y="65" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" fill="#806c5c">VÍA ROMA</text>`:`<path d="M55 190 Q165 25 300 112" stroke="#b3201f" stroke-width="3" stroke-dasharray="5 7" fill="none"/>${pin(55,190,'Madrid')}${pin(300,112,'Pekín')}${plane}`;
+   return frame(`<path d="M20 90Q80 50 120 95T210 80T340 85M15 220Q80 185 135 220T260 215T350 225" stroke="#b5cbb5" stroke-width="15" opacity=".65" fill="none"/><path d="M25 130Q100 110 145 140T250 140T340 125" stroke="#d1c5a8" stroke-width="1.5" fill="none"/>${c}<text x="180" y="275" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#806c5c">Ruta aérea · vista esquemática</text>`);
+ }
+ if(d.ciudad.includes('→')){
+   const parts=d.ciudad.split('→').map(x=>x.trim()); const a=cities[parts[0]]||[70,190], b=cities[parts[1]]||[285,105];
+   const path=`M${a[0]} ${a[1]} Q${(a[0]+b[0])/2+20} ${(a[1]+b[1])/2-45} ${b[0]} ${b[1]}`;
+   return frame(`<path d="M0 70Q75 45 140 75T360 65V300H0Z" fill="#d8e3cc" opacity=".55"/><path d="M0 125Q90 155 150 120T360 150M0 240Q80 205 160 235T360 220" stroke="#c5d6c2" stroke-width="14" fill="none" opacity=".7"/>${route(path,'',d.arte==='avion')}${pin(a[0],a[1],parts[0])}${pin(b[0],b[1],parts[1])}${d.ciudad.includes('Zhangjiajie')&&d.fecha==='2026-10-19'?plane:train}<text x="180" y="275" text-anchor="middle" font-family="system-ui,sans-serif" font-size="11" fill="#806c5c">Trayecto entre ciudades</text>`);
+ }
+ const city=d.ciudad; let landmarks=[];
+ if(city==='Pekín') landmarks=[['Ciudad Prohibida',75,95],['Jingshan',270,80],['Hutongs',90,205],['Templo Lama',270,210]];
+ else if(city==='Zhangjiajie') landmarks=[['Yuanjiajie',70,90],['Arroyo',260,100],['Gran Cañón',95,210],['Tianmen',270,210]];
+ else if(city==='Fenghuang') landmarks=[['Puente Hongqiao',80,100],['Río Tuojiang',245,115],['Pagoda Wanming',105,210],['Casco antiguo',270,215]];
+ else if(city==='Yangshuo') landmarks=[['Río Yulong',75,100],['Xianggong',270,90],['Xingping',90,210],['West Street',265,215]];
+ else if(city==='Chongqing') landmarks=[['Hongyadong',75,100],['Liziba',270,95],['Jiefangbei',90,210],['Yangtsé',260,215]];
+ else if(city==='Furong') landmarks=[['Cascada',90,100],['Casas antiguas',260,110],['Puente',115,215],['Río',270,220]];
+ else landmarks=[[city,180,150]];
+ let roads=''; for(let y=55;y<280;y+=45) roads+=`<path d="M15 ${y}Q120 ${y-24} 345 ${y+10}" stroke="#fff9ec" stroke-width="5" fill="none"/>`; for(let x=45;x<350;x+=65) roads+=`<path d="M${x} 45Q${x+22} 140 ${x-8} 280" stroke="#fff9ec" stroke-width="4" fill="none"/>`;
+ const marks=landmarks.map(([name,x,y])=>`<g><circle cx="${x}" cy="${y}" r="6" fill="#b3201f" stroke="#fff8eb" stroke-width="2"/><text x="${x}" y="${y+20}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" fill="#6b382b">${esc(name)}</text></g>`).join('');
+ return frame(`${roads}<path d="M0 170Q80 145 150 175T360 160" stroke="#8fc9d0" stroke-width="12" opacity=".8" fill="none"/>${marks}<text x="180" y="275" text-anchor="middle" font-family="Georgia,serif" font-size="13" fill="#806c5c">${esc(city)} · lugares del día</text>`);
+}
+
 const car=document.getElementById("car");
 const progreso=document.getElementById("progreso");
 const avisoMusica=document.getElementById("avisoMusica");
@@ -388,7 +434,7 @@ function generarWeb(irAHoy){
           <h3 class="ttl">${d.titulo}</h3>
           <p class="desc">${d.resumen}</p>
           <button type="button" class="more" aria-expanded="false" aria-controls="detalle-${n}">＋ Más detalles</button>
-          <p class="gesture">También puedes deslizar hacia la derecha →</p>
+          <p class="gesture">Desliza a la derecha para detalles · a la izquierda para el mapa</p>
         </div>
         <div class="details" id="detalle-${n}" hidden role="region" aria-label="Información ampliada del ${fechaTexto(d.fecha)}">
           <button type="button" class="back">← Resumen</button>
@@ -396,6 +442,14 @@ function generarWeb(irAHoy){
           <h3>${d.titulo}</h3>
           ${d.detalles.map(([t,p])=>`<section class="detail-block"><h4>${t}</h4><p>${p}</p></section>`).join("")}
           <p class="gesture">Desliza hacia la izquierda para volver ←</p>
+        </div>
+        <div class="map-panel" id="mapa-${n}" hidden role="region" aria-label="Mapa del ${fechaTexto(d.fecha)}">
+          <button type="button" class="back map-back">← Resumen</button>
+          <div class="day" style="margin-top:14px">${fechaTexto(d.fecha)} · MAPA DEL DÍA</div>
+          <h3>${d.ciudad}</h3>
+          <div class="map-art">${mapaSVG(d,n)}</div>
+          <p class="map-note">${textoMapa(d)}</p>
+          <p class="gesture">Desliza hacia la derecha para volver al resumen →</p>
         </div>
       </div>
     </section>`;
@@ -422,32 +476,29 @@ function generarWeb(irAHoy){
   actualizarProgreso();
 }
 
-function cambiarDetalle(card,abrir,enfocar){
+function cambiarPanel(card,tipo,enfocar){
   const resumen=card.querySelector(".txt");
-  const panel=card.querySelector(".details");
-  const boton=resumen.querySelector(".more");
-  panel.hidden=!abrir;
-  resumen.hidden=abrir;
-  boton.setAttribute("aria-expanded",String(abrir));
-  if(abrir){
-    panel.scrollTop=0;
-    if(enfocar)panel.querySelector(".back").focus();
-  }else if(enfocar){
-    boton.focus();
-  }
+  const details=card.querySelector(".details");
+  const mapa=card.querySelector(".map-panel");
+  const abrir=tipo!=="resumen";
+  resumen.hidden=abrir; details.hidden=tipo!=="detalle"; mapa.hidden=tipo!=="mapa";
+  const boton=resumen.querySelector(".more"); boton.setAttribute("aria-expanded",String(tipo==="detalle"));
+  const panel=tipo==="detalle"?details:mapa;
+  if(abrir){panel.scrollTop=0;if(enfocar)panel.querySelector(".back").focus();}else if(enfocar)boton.focus();
 }
+function cambiarDetalle(card,abrir,enfocar){cambiarPanel(card,abrir?"detalle":"resumen",enfocar)}
 
 car.addEventListener("click",e=>{
   const abrir=e.target.closest(".more");
   const cerrar=e.target.closest(".back");
-  if(abrir)cambiarDetalle(abrir.closest(".day-card"),true,true);
-  if(cerrar)cambiarDetalle(cerrar.closest(".day-card"),false,true);
+  if(abrir)cambiarPanel(abrir.closest(".day-card"),"detalle",true);
+  if(cerrar)cambiarPanel(cerrar.closest(".day-card"),"resumen",true);
 });
 
 document.addEventListener("keydown",e=>{
   if(e.key!=="Escape")return;
-  const panel=car.querySelector(".details:not([hidden])");
-  if(panel)cambiarDetalle(panel.closest(".day-card"),false,true);
+  const panel=car.querySelector(".details:not([hidden]), .map-panel:not([hidden])");
+  if(panel)cambiarPanel(panel.closest(".day-card"),"resumen",true);
 });
 
 let toque=null;
@@ -465,9 +516,12 @@ car.addEventListener("touchend",e=>{
   const card=toque.card;
   toque=null;
   if(Math.abs(dx)<65||Math.abs(dx)<Math.abs(dy)*1.6)return;
-  const abierto=!card.querySelector(".details").hidden;
-  if(dx>0&&!abierto)cambiarDetalle(card,true,false);
-  if(dx<0&&abierto)cambiarDetalle(card,false,false);
+  const details=card.querySelector(".details"), mapa=card.querySelector(".map-panel");
+  const detalleAbierto=!details.hidden, mapaAbierto=!mapa.hidden;
+  if(dx>0&&mapaAbierto)cambiarPanel(card,"resumen",false);
+  else if(dx<0&&detalleAbierto)cambiarPanel(card,"resumen",false);
+  else if(dx>0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"detalle",false);
+  else if(dx<0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"mapa",false);
 },{passive:true});
 
 car.addEventListener("touchcancel",()=>{toque=null},{passive:true});
@@ -475,7 +529,7 @@ car.addEventListener("scroll",actualizarProgreso,{passive:true});
 window.addEventListener("resize",actualizarProgreso);
 
 document.getElementById("btnInicio").addEventListener("click",()=>{
-  car.querySelectorAll(".details:not([hidden])").forEach(p=>cambiarDetalle(p.closest(".day-card"),false,false));
+  car.querySelectorAll(".details:not([hidden]), .map-panel:not([hidden])").forEach(p=>cambiarPanel(p.closest(".day-card"),"resumen",false));
   car.scrollTo({top:0,behavior:reducido.matches?"auto":"smooth"});
   avisoMusica.hidden=false;
 });
