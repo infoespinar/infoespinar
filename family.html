@@ -453,7 +453,7 @@ function generarWeb(irAHoy){
           <p class="gesture">Desliza a la derecha para detalles · a la izquierda para el mapa</p>
         </div>
         <div class="details" id="detalle-${n}" hidden role="region" aria-label="Información ampliada del ${fechaTexto(d.fecha)}">
-          <button type="button" class="back">← Resumen</button>
+          <button type="button" class="back">Resumen →</button>
           <div class="day" style="margin-top:14px">${fechaTexto(d.fecha)}</div>
           <h3>${d.titulo}</h3>
           ${d.detalles.map(([t,p])=>`<section class="detail-block"><h4>${t}</h4><p>${p}</p></section>`).join("")}
