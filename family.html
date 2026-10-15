@@ -598,7 +598,7 @@ function generarWeb(irAHoy){
           <h3 class="ttl">${d.titulo}</h3>
           <p class="desc">${d.resumen}</p>
           <button type="button" class="more" aria-expanded="false" aria-controls="detalle-${n}">＋ Más detalles</button>
-          <p class="gesture">${["2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(d.fecha)?"Desliza a la derecha para detalles":"Desliza a la derecha para detalles · a la izquierda para la foto o el mapa"}</p>
+          <p class="gesture">${["2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(d.fecha)?"Desliza a la derecha para detalles":["2026-10-18","2026-10-26"].includes(d.fecha)?"Desliza a la derecha para detalles · a la izquierda para la foto":"Desliza a la derecha para detalles · a la izquierda para el mapa"}</p>
         </div>
         <div class="details" id="detalle-${n}" hidden role="region" aria-label="Información ampliada del ${fechaTexto(d.fecha)}">
           <button type="button" class="back">Resumen →</button>
@@ -683,7 +683,7 @@ car.addEventListener("touchend",e=>{
   if(dx>0&&mapaAbierto)cambiarPanel(card,"resumen",false);
   else if(dx<0&&detalleAbierto)cambiarPanel(card,"resumen",false);
   else if(dx>0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"detalle",false);
-  else if(dx<0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"mapa",false);
+  else if(dx<0&&!detalleAbierto&&!mapaAbierto&&! ["2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(card.dataset.fecha))cambiarPanel(card,"mapa",false);
 },{passive:true});
 
 car.addEventListener("touchcancel",()=>{toque=null},{passive:true});
