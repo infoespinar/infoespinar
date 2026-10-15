@@ -88,7 +88,7 @@ button:focus-visible{outline:3px solid #c8962b;outline-offset:3px}
 const D=[
 {fecha:"2026-10-16",ciudad:"Madrid → Pekín",zh:"北京",arte:"avion",
 titulo:"Primeras luces de Pekín",
-resumen:"Salimos de Madrid de madrugada (00:35, Air China CA898) y aterrizamos en Pekín a las 17:35. Primera cena con pato laqueado y paseo por la calle peatonal de Wangfujing.",
+resumen:"Salimos de Madrid de madrugada (00:35, Air China CA898) y aterrizamos en Pekín a las 17:35 (11:35 hora española). Primera cena con pato laqueado y paseo por la calle peatonal de Wangfujing.",
 detalles:[
 ["Llegada a Pekín","Traslado al hotel, check-in y primera toma de contacto con una ciudad enorme donde conviven palacios imperiales, barrios tradicionales y avenidas modernas."],
 ["Alojamiento","Lavande Hotel (Tian'anmen Wangfujing), en pleno centro. Nos quedamos tres noches, del 16 al 19."],
@@ -498,11 +498,13 @@ function mgYS(day){const s={b:[110.30,24.70,110.66,24.975],aria:"Mapa de Yangshu
 function mapasDia(d,n){
  const f=d.fecha;
  // Fotografías subidas al repositorio en la carpeta fotos/
- if(f==="2026-10-18") return `<img src="fotos/3.jpeg" alt="Fotografía del día 3 del viaje" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
- if(f==="2026-10-26") return `<img src="fotos/11.jpeg" alt="Fotografía del día 11 del viaje" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(f==="2026-10-18") return `<img class="foto-ampliable" src="fotos/3.jpeg" alt="Fotografía del día 3 del viaje" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(f==="2026-10-26") return `<img class="foto-ampliable" src="fotos/11.png" alt="Ilustración del día 11 del viaje en Guilin" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px;cursor:zoom-in">`;
+ if(f==="2026-10-24") return `<img class="foto-ampliable" src="fotos/9.png" alt="Ilustración del día 9: traslado de Zhangjiajie a Furong" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px;cursor:zoom-in">`;
+ if(f==="2026-10-25") return `<img class="foto-ampliable" src="fotos/10.png" alt="Ilustración del día 10: Furong y Fenghuang" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px;cursor:zoom-in">`;
  // Días 5 y 6 del viaje: ilustraciones propias en formato PNG.
- if(f==="2026-10-20") return `<img src="fotos/5.png" alt="Ilustración de Zhangjiajie: arroyo y cueva del dragón" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
- if(f==="2026-10-21") return `<img src="fotos/6.png" alt="Ilustración de Zhangjiajie: montañas de Avatar, ascensor Bailong y teleférico" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(f==="2026-10-20") return `<img class="foto-ampliable" src="fotos/5.png" alt="Ilustración de Zhangjiajie: arroyo y cueva del dragón" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(f==="2026-10-21") return `<img class="foto-ampliable" src="fotos/6.png" alt="Ilustración de Zhangjiajie: montañas de Avatar, ascensor Bailong y teleférico" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
  if(["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(f)) return "";
  const B=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaGeo(sp,n+"_"+k)}</div>`;
  const V=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaVuelo(sp,n+"_"+k)}</div>`;
@@ -601,7 +603,7 @@ function generarWeb(irAHoy){
           <h3 class="ttl">${d.titulo}</h3>
           <p class="desc">${d.resumen}</p>
           <button type="button" class="more" aria-expanded="false" aria-controls="detalle-${n}">＋ Más detalles</button>
-          <p class="gesture">${["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(d.fecha)?"Desliza a la derecha para detalles":["2026-10-18","2026-10-20","2026-10-21","2026-10-26"].includes(d.fecha)?"Desliza a la derecha para detalles · a la izquierda para la foto":"Desliza a la derecha para detalles · a la izquierda para el mapa"}</p>
+          <p class="gesture">${["2026-10-22","2026-10-23","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(d.fecha)?"Desliza a la derecha para detalles":["2026-10-18","2026-10-20","2026-10-21","2026-10-24","2026-10-25","2026-10-26"].includes(d.fecha)?"Desliza a la derecha para detalles · a la izquierda para la foto":"Desliza a la derecha para detalles · a la izquierda para el mapa"}</p>
         </div>
         <div class="details" id="detalle-${n}" hidden role="region" aria-label="Información ampliada del ${fechaTexto(d.fecha)}">
           <button type="button" class="back">Resumen →</button>
@@ -656,9 +658,40 @@ function cambiarDetalle(card,abrir,enfocar){cambiarPanel(card,abrir?"detalle":"r
 car.addEventListener("click",e=>{
   const abrir=e.target.closest(".more");
   const cerrar=e.target.closest(".back");
+  const foto=e.target.closest(".foto-ampliable");
   if(abrir)cambiarPanel(abrir.closest(".day-card"),"detalle",true);
   if(cerrar)cambiarPanel(cerrar.closest(".day-card"),"resumen",true);
+  if(foto){
+    const visor=document.getElementById("visorFotoCompleta");
+    const imagen=visor.querySelector("img");
+    imagen.src=foto.currentSrc||foto.src;
+    imagen.alt=foto.alt||"Fotografía del viaje";
+    visor.hidden=false;
+    document.body.style.overflow="hidden";
+  }
 });
+
+// Visor a pantalla completa para ampliar las ilustraciones al tocarlas.
+if(!document.getElementById("visorFotoCompleta")){
+  const visor=document.createElement("div");
+  visor.id="visorFotoCompleta";
+  visor.hidden=true;
+  visor.setAttribute("role","dialog");
+  visor.setAttribute("aria-modal","true");
+  visor.setAttribute("aria-label","Imagen ampliada");
+  visor.innerHTML='<button type="button" class="visor-foto-cerrar" aria-label="Cerrar imagen">×</button><img alt="Imagen ampliada">';
+  Object.assign(visor.style,{position:"fixed",inset:"0",zIndex:"99999",background:"rgba(10,10,15,.96)",display:"flex",alignItems:"center",justifyContent:"center",padding:"12px",boxSizing:"border-box"});
+  visor.querySelector("img").style.cssText="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:8px;cursor:zoom-out";
+  const cerrarVisor=()=>{visor.hidden=true;visor.style.display="none";visor.querySelector("img").removeAttribute("src");document.body.style.overflow="";};
+  const boton=visor.querySelector("button");
+  boton.style.cssText="position:absolute;top:calc(12px + env(safe-area-inset-top,0px));right:16px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.18);color:white;font-size:32px;line-height:1;cursor:pointer";
+  boton.addEventListener("click",cerrarVisor);
+  visor.addEventListener("click",e=>{if(e.target===visor||e.target.tagName==="IMG")cerrarVisor();});
+  document.body.appendChild(visor);
+  const observadorVisor=new MutationObserver(()=>{if(visor.hidden)visor.style.display="none";else visor.style.display="flex";});
+  observadorVisor.observe(visor,{attributes:true,attributeFilter:["hidden"]});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&!visor.hidden)cerrarVisor();});
+}
 
 document.addEventListener("keydown",e=>{
   if(e.key!=="Escape")return;
@@ -686,7 +719,7 @@ car.addEventListener("touchend",e=>{
   if(dx>0&&mapaAbierto)cambiarPanel(card,"resumen",false);
   else if(dx<0&&detalleAbierto)cambiarPanel(card,"resumen",false);
   else if(dx>0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"detalle",false);
-  else if(dx<0&&!detalleAbierto&&!mapaAbierto&&! ["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(card.dataset.fecha))cambiarPanel(card,"mapa",false);
+  else if(dx<0&&!detalleAbierto&&!mapaAbierto&&! ["2026-10-22","2026-10-23","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(card.dataset.fecha))cambiarPanel(card,"mapa",false);
 },{passive:true});
 
 car.addEventListener("touchcancel",()=>{toque=null},{passive:true});
