@@ -498,9 +498,12 @@ function mgYS(day){const s={b:[110.30,24.70,110.66,24.975],aria:"Mapa de Yangshu
 function mapasDia(d,n){
  const f=d.fecha;
  // Fotografías subidas al repositorio en la carpeta fotos/
- if(f==="2026-10-18") return `<img src="fotos/3.jpeg" alt="Fotografía del día 18 en la Gran Muralla" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
- if(f==="2026-10-26") return `<img src="fotos/11.jpeg" alt="Fotografía del día 26 en Fenghuang" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
- if(["2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(f)) return "";
+ if(f==="2026-10-18") return `<img src="fotos/3.jpeg" alt="Fotografía del día 3 del viaje" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(f==="2026-10-26") return `<img src="fotos/11.jpeg" alt="Fotografía del día 11 del viaje" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ // Días 5 y 6 del viaje: ilustraciones propias en formato PNG.
+ if(f==="2026-10-20") return `<img src="fotos/5.png" alt="Ilustración de Zhangjiajie: arroyo y cueva del dragón" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(f==="2026-10-21") return `<img src="fotos/6.png" alt="Ilustración de Zhangjiajie: montañas de Avatar, ascensor Bailong y teleférico" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(f)) return "";
  const B=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaGeo(sp,n+"_"+k)}</div>`;
  const V=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaVuelo(sp,n+"_"+k)}</div>`;
  let h="",air=0;
@@ -598,7 +601,7 @@ function generarWeb(irAHoy){
           <h3 class="ttl">${d.titulo}</h3>
           <p class="desc">${d.resumen}</p>
           <button type="button" class="more" aria-expanded="false" aria-controls="detalle-${n}">＋ Más detalles</button>
-          <p class="gesture">${["2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(d.fecha)?"Desliza a la derecha para detalles":["2026-10-18","2026-10-26"].includes(d.fecha)?"Desliza a la derecha para detalles · a la izquierda para la foto":"Desliza a la derecha para detalles · a la izquierda para el mapa"}</p>
+          <p class="gesture">${["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(d.fecha)?"Desliza a la derecha para detalles":["2026-10-18","2026-10-20","2026-10-21","2026-10-26"].includes(d.fecha)?"Desliza a la derecha para detalles · a la izquierda para la foto":"Desliza a la derecha para detalles · a la izquierda para el mapa"}</p>
         </div>
         <div class="details" id="detalle-${n}" hidden role="region" aria-label="Información ampliada del ${fechaTexto(d.fecha)}">
           <button type="button" class="back">Resumen →</button>
@@ -683,7 +686,7 @@ car.addEventListener("touchend",e=>{
   if(dx>0&&mapaAbierto)cambiarPanel(card,"resumen",false);
   else if(dx<0&&detalleAbierto)cambiarPanel(card,"resumen",false);
   else if(dx>0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"detalle",false);
-  else if(dx<0&&!detalleAbierto&&!mapaAbierto&&! ["2026-10-20","2026-10-21","2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(card.dataset.fecha))cambiarPanel(card,"mapa",false);
+  else if(dx<0&&!detalleAbierto&&!mapaAbierto&&! ["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(card.dataset.fecha))cambiarPanel(card,"mapa",false);
 },{passive:true});
 
 car.addEventListener("touchcancel",()=>{toque=null},{passive:true});
