@@ -36,9 +36,13 @@ button:focus-visible{outline:3px solid #c8962b;outline-offset:3px}
 .details,.map-panel{position:absolute;inset:0;z-index:4;background:#fbf4e6;overflow-y:auto;padding:16px 22px calc(76px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch;animation:panelIn .25s ease}
 .map-panel{overflow-y:auto;padding:16px 18px calc(76px + env(safe-area-inset-bottom,0px));-webkit-overflow-scrolling:touch;animation:panelIn .25s ease}
 .map-panel h3{color:#b3201f;font-size:1.25rem;margin:14px 0 6px}
-.map-panel .map-art{width:100%;display:block;border-radius:12px;overflow:hidden;background:#efe3cb;border:1px solid #e5d4b5}
+.map-panel .map-art{position:relative;width:100%;display:block;border-radius:12px;overflow:visible;background:#efe3cb;border:1px solid #e5d4b5}
 .map-panel .map-art svg{display:block;width:100%;height:auto;max-height:48vh}
-.map-cap{font:700 1rem Georgia,serif;color:#7d1110;margin:18px 2px 8px}
+.map-cap{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font:700 1rem Georgia,serif;color:#7d1110;margin:18px 2px 8px}
+.map-hint{font:500 .7rem system-ui,sans-serif;color:#9a8672;white-space:nowrap}
+.mg-pin:focus{outline:none}.mg-pin:focus-visible circle:not([r="17"]){stroke:#c8962b}
+.mg-pop{position:absolute;z-index:6;transform:translate(-50%,-100%);background:#fffaf0;border:1px solid #d8c7a0;border-radius:10px;padding:6px 10px;box-shadow:0 4px 14px rgba(60,20,10,.25);font:.78rem/1.3 system-ui,sans-serif;color:#6b382b;text-align:center;max-width:200px;display:flex;flex-direction:column;gap:2px}
+.mg-pop.abajo{transform:translate(-50%,0)}.mg-pop b{font-weight:700}.mg-pop a{color:#b3201f;font-weight:600;text-decoration:none;white-space:nowrap}
 .map-note{font: .82rem system-ui,sans-serif;color:#806c5c;line-height:1.45;margin:10px 2px}
 .map-panel h3{color:#b3201f;font-size:1.3rem;margin:15px 0 8px}
 .detail-block{margin:17px 0}
@@ -385,8 +389,8 @@ function mapaVuelo(sp,id){const hh=sp.h||200,K=mgK,Q=mgPM(sp.b,360,hh),o=[],H=s=
  sp.legs.forEach(([a,b,t,bw])=>{const pts=mgGC(a,b),i=Math.floor(pts.length/2),q1=Q.f(pts[i][0],pts[i][1]),q2=Q.f(pts[i+1][0],pts[i+1][1]),ang=Math.atan2(q2[1]-q1[1],q2[0]-q1[0])*180/Math.PI;
   o.push(`<path d="${mgD(pts,Q)}" fill="none" stroke="${K.red}" stroke-width="2.6" stroke-dasharray="7 5" stroke-linecap="round"/>`+mgPlane(q1[0],q1[1],ang));
   const ls=(t+"|≈ "+mgKm(a,b)+" km").split("|");ls.forEach((s,k)=>o.push(`<text x="${q1[0].toFixed(0)}" y="${(bw?q1[1]+24+k*11.5:q1[1]-26+k*11.5-(ls.length-2)*11.5).toFixed(0)}" text-anchor="middle" ${H()} font-size="${k==ls.length-1?9.5:10.5}" font-weight="${k==ls.length-1?500:700}" fill="${k==ls.length-1?K.mut:K.ink}">${mgE(s)}</text>`))});
- sp.pins.forEach(([x,y,t,n,pos])=>{const q=Q.f(x,y),X=q[0].toFixed(1),Y=q[1].toFixed(1);o.push(`<circle cx="${X}" cy="${Y}" r="8.5" fill="${K.red}" stroke="#fff8eb" stroke-width="2.2"/><text x="${X}" y="${(q[1]+3.6).toFixed(1)}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#fff">${n}</text>`);
-  const p=pos||"b",tx=p=="l"?q[0]-13:p=="r"?q[0]+13:q[0],ty=p=="b"?q[1]+22:p=="t"?q[1]-14:q[1]+4;o.push(`<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${p=="l"?"end":p=="r"?"start":"middle"}" ${H()} font-size="10.5" font-weight="700" fill="${K.ink}">${mgE(t)}</text>`)});
+ sp.pins.forEach(([x,y,t,n,pos])=>{const q=Q.f(x,y),X=q[0].toFixed(1),Y=q[1].toFixed(1);o.push(`<g class="mg-pin" data-t="${mgE(String(t).replace(/\|/g," "))}" data-ll="${y},${x}" role="button" tabindex="0" style="cursor:pointer"><circle cx="${X}" cy="${Y}" r="17" fill="transparent"/>`);o.push(`<circle cx="${X}" cy="${Y}" r="8.5" fill="${K.red}" stroke="#fff8eb" stroke-width="2.2"/><text x="${X}" y="${(q[1]+3.6).toFixed(1)}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#fff">${n}</text>`);
+  const p=pos||"b",tx=p=="l"?q[0]-13:p=="r"?q[0]+13:q[0],ty=p=="b"?q[1]+22:p=="t"?q[1]-14:q[1]+4;o.push(`<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${p=="l"?"end":p=="r"?"start":"middle"}" ${H()} font-size="10.5" font-weight="700" fill="${K.ink}">${mgE(t)}</text>`);o.push("</g>")});
  o.push(`<g transform="translate(342 22)"><path d="M0 -12L5 4L0 1L-5 4Z" fill="${K.ink}"/><text y="16" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9" font-weight="700" fill="${K.ink}">N</text></g></g>`);
  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 ${hh}" role="img" aria-label="${mgE(sp.aria||"Mapa del vuelo")}">${o.join("")}</svg>`}
 const mgPL={hunan:[111.6,27.55,"HUNAN"],guizhou:[106.8,26.6,"GUIZHOU"],guangxi:[108.2,23.9,"GUANGXI"],guangdong:[112.9,23.9,"GUANGDONG"],chongqing:[108.4,30.4,"CHONGQING"],hubei:[112.5,30.6,"HUBEI"],jiangxi:[114.3,27.4,"JIANGXI"],sichuan:[105.2,30.3,"SICHUAN"],yunnan:[104.3,25.2,"YUNNAN"],beijing:[116.2,40.2,"PEKÍN"],hebei:[116.0,40.55,"HEBEI"],tianjin:[117.3,39.4,"TIANJIN"]};
@@ -410,13 +414,13 @@ function mapaGeo(sp,id){
   else o.push(`<path d="${d}" fill="none" stroke="#bda57a" stroke-width="2" stroke-dasharray="6 5" stroke-linecap="round"/>`)});
  (sp.fly||[]).forEach(([a,b])=>{const pts=mgGC(a,b,30),d=mgD(pts,P),i=Math.floor(pts.length/2),q1=P.f(pts[i][0],pts[i][1]),q2=P.f(pts[i+1][0],pts[i+1][1]);o.push(`<path d="${d}" fill="none" stroke="${K.red}" stroke-width="2.8" stroke-dasharray="7 5" stroke-linecap="round"/>`+mgPlane(q1[0],q1[1],Math.atan2(q2[1]-q1[1],q2[0]-q1[0])*180/Math.PI))});
  (sp.lab||[]).forEach(([x,y,t,a])=>{const q=P.f(x,y);o.push(`<text x="${q[0].toFixed(0)}" y="${q[1].toFixed(0)}" text-anchor="${a||"middle"}" font-family="Georgia,serif" font-size="9.5" font-style="italic" fill="#7e8f8f" paint-order="stroke" stroke="${K.land}" stroke-width="2.5">${mgE(t)}</text>`)});
- (sp.pins||[]).forEach(([x,y,t,n,pos,dim])=>{const q=P.f(x,y),X=q[0].toFixed(1),Y=q[1].toFixed(1);
+ (sp.pins||[]).forEach(([x,y,t,n,pos,dim])=>{const q=P.f(x,y),X=q[0].toFixed(1),Y=q[1].toFixed(1);o.push(`<g class="mg-pin" data-t="${mgE(String(t).replace(/\|/g," "))}" data-ll="${y},${x}" role="button" tabindex="0" style="cursor:pointer"><circle cx="${X}" cy="${Y}" r="17" fill="transparent"/>`);
   if(dim)o.push(`<circle cx="${X}" cy="${Y}" r="4.5" fill="#cdb98f" stroke="#fff8eb" stroke-width="2"/>`);
   else if(n==="H")o.push(`<rect x="${(q[0]-7.5).toFixed(1)}" y="${(q[1]-7.5).toFixed(1)}" width="15" height="15" rx="4" fill="#7d1110" stroke="#fff8eb" stroke-width="2"/><text x="${X}" y="${(q[1]+3.6).toFixed(1)}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10" font-weight="700" fill="#f6d47a">H</text>`);
   else o.push(`<circle cx="${X}" cy="${Y}" r="9" fill="${K.red}" stroke="#fff8eb" stroke-width="2.2"/><text x="${X}" y="${(q[1]+3.7).toFixed(1)}" text-anchor="middle" font-family="system-ui,sans-serif" font-size="10.5" font-weight="700" fill="#fff">${n}</text>`);
   const ls=String(t).split("|"),r=dim?8:13,p=pos||"r";
   ls.forEach((s,i)=>{let tx=q[0],ty=q[1]+3.5+i*11.5-(p=="t"?(ls.length)*11.5+r-9:0)+(p=="b"?r+7:0),an="middle";if(p=="r"){tx=q[0]+r;an="start";ty=q[1]+3.5+(i-(ls.length-1)/2)*11.5}else if(p=="l"){tx=q[0]-r;an="end";ty=q[1]+3.5+(i-(ls.length-1)/2)*11.5}
-   o.push(`<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${an}" font-family="system-ui,sans-serif" font-size="${dim?9.5:10.5}" font-weight="${dim?500:700}" fill="${dim?K.mut:K.ink}" paint-order="stroke" stroke="${K.land}" stroke-width="3" stroke-linejoin="round">${mgE(s)}</text>`)})});
+   o.push(`<text x="${tx.toFixed(1)}" y="${ty.toFixed(1)}" text-anchor="${an}" font-family="system-ui,sans-serif" font-size="${dim?9.5:10.5}" font-weight="${dim?500:700}" fill="${dim?K.mut:K.ink}" paint-order="stroke" stroke="${K.land}" stroke-width="3" stroke-linejoin="round">${mgE(s)}</text>`)});o.push("</g>")});
  if(sp.loc){const Q=mgP([73,17,136,54],68,50,10,10);o.push(`<rect x="6" y="6" width="76" height="58" rx="7" fill="#fffaf0" fill-opacity=".93" stroke="${K.line}"/>`);GEO.cn.forEach(r=>o.push(`<path d="${mgD(gz(r),Q,1)}" fill="#e6d8b4" stroke="#c9b888" stroke-width=".6"/>`));const q=Q.f(sp.loc[0],sp.loc[1]);o.push(`<circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="7" fill="${K.red}" fill-opacity=".25"/><circle cx="${q[0].toFixed(1)}" cy="${q[1].toFixed(1)}" r="3" fill="${K.red}" stroke="#fff" stroke-width="1"/>`)}
  const L=[.2,.5,1,2,5,10,20,50,100,200,500].find(v=>v/P.kmpx>=46)||500,px=L/P.kmpx,lt=L<1?(L*1000)+" m":L+" km";
  o.push(`<g transform="translate(14 284)"><path d="M0 -4V0H${px.toFixed(1)}V-4" fill="none" stroke="${K.ink}" stroke-width="1.6"/><text x="${(px/2).toFixed(1)}" y="-7" text-anchor="middle" font-family="system-ui,sans-serif" font-size="9.5" font-weight="600" fill="${K.ink}" paint-order="stroke" stroke="${K.land}" stroke-width="3">${lt}</text></g>`);
@@ -429,14 +433,14 @@ const mgS={hBJ:[116.4112,39.9138],tian:[116.3977,39.9035],fc:[116.3972,39.9163],
  hy:[106.5745,29.5645],jfb:[106.5775,29.5565],hCQ:[106.5815,29.5605],lz:[106.529,29.5535],sb:[106.5655,29.5540],ct:[106.585,29.5700],cabS:[106.5915,29.5500],gyq:[106.5500,29.5790],teatro:[106.586,29.5770],cq:[106.55,29.563]};
 const mgDim=(l,x)=>[...mgS[x],l,0,"r",1];
 function mgBJ(){return{ // día 17
- b:[116.345,39.893,116.445,39.957],aria:"Mapa del centro de Pekín",loc:[116.4,39.9],
+ b:[116.3594,39.8975,116.4406,39.9495],aria:"Mapa del centro de Pekín",loc:[116.4,39.9],
  poly:[[[[116.3928,39.9120],[116.4016,39.9120],[116.4016,39.9206],[116.3928,39.9206]],"#ecc88a","#b3201f"],[[[116.3948,39.8995],[116.4006,39.8995],[116.4006,39.9075],[116.3948,39.9075]],"#eadcc0","#cdb887"],[[[116.3935,39.9222],[116.4010,39.9222],[116.4010,39.9282],[116.3935,39.9282]],K0,"#a8c795"],
   [[[116.3800,39.9215],[116.3880,39.9210],[116.3895,39.9280],[116.3880,39.9345],[116.3810,39.9340],[116.3775,39.9300],[116.3770,39.9250]],"#a9d3da","#8cc2cc"]],
  water:[[[[116.3885,39.9345],[116.3890,39.9380],[116.3860,39.9405],[116.3822,39.9432],[116.3790,39.9455]],9]],
  roads:[[[[116.345,39.9078],[116.445,39.9078]],6],[[[116.4115,39.9078],[116.4115,39.9190]],4],[[[116.3949,39.9412],[116.445,39.9412]],3],[[[116.4030,39.9328],[116.4030,39.9420]],3]],
  rt:[[[[116.3972,39.893],[116.3972,39.957]],"axis"],[[mgS.hBJ,mgS.tian,mgS.fc,mgS.jing,mgS.nlg,mgS.tor,mgS.hou],"walk"]],
  lab:[[116.3830,39.9300,"Beihai"]],
- pins:[[...mgS.hBJ,"Hotel","H","r"],[...mgS.tian,"Plaza de|Tiananmen",1,"l"],[...mgS.fc,"Ciudad|Prohibida",2,"l"],[...mgS.jing,"Jingshan",3,"r"],[...mgS.nlg,"Nanluoguxiang",4,"r"],[...mgS.tor,"Torres Tambor|y Campana",5,"t"],[...mgS.hou,"Houhai|(cena)",6,"l"],[...mgS.lama,"Templo Lama|(opcional)",0,"r",1]]}}
+ pins:[[...mgS.hBJ,"Hotel","H","r"],[...mgS.tian,"Plaza de|Tiananmen",1,"l"],[...mgS.fc,"Ciudad|Prohibida",2,"l"],[...mgS.jing,"Jingshan",3,"r"],[...mgS.nlg,"Nanluoguxiang",4,"b"],[...mgS.tor,"Torres Tambor|y Campana",5,"r"],[...mgS.hou,"Houhai|(cena)",6,"t"]]}}
 const K0="#d3e3c4";
 const mgMAD=[-3.70,40.42],mgPEK=[116.40,39.90],mgCKG=[106.55,29.56],mgFCO=[12.50,41.90],mgEU=[-28,6,128,66];
 function mgFly16(){return{b:mgEU,aria:"Vuelo de Madrid a Pekín",legs:[[mgMAD,mgPEK,"CA898|00:35 → 17:35",1]],pins:[[...mgMAD,"Madrid",1,"b"],[...mgPEK,"Pekín",2,"b"]]}}
@@ -498,22 +502,36 @@ function mgYS(day){const s={b:[110.30,24.70,110.66,24.975],aria:"Mapa de Yangshu
  return s}
 const mgCap="Los números siguen el orden del día. Punteado fino: a pie · trazo discontinuo: coche, bus o taxi · trazo continuo: tren o metro. Posiciones aproximadas; no es un mapa de navegación.";
 function mapasDia(d,n){
- const B=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaGeo(sp,n+"_"+k)}</div>`,V=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaVuelo(sp,n+"_"+k)}</div>`,f=d.fecha;let h="",air=0;
+ const B=(t,sp,k)=>`<h4 class="map-cap"><span>${t}</span><span class="map-hint">toca una chincheta 📍</span></h4><div class="map-art">${mapaGeo(sp,n+"_"+k)}</div>`,V=(t,sp,k)=>`<h4 class="map-cap"><span>${t}</span><span class="map-hint">toca una chincheta 📍</span></h4><div class="map-art">${mapaVuelo(sp,n+"_"+k)}</div>`,f=d.fecha;let h="",air=0;
  if(f==="2026-10-16"){h=V("Vuelo de Madrid a Pekín",mgFly16(),0);air=1}
  else if(f==="2026-11-02"){h=V("Vuelos de vuelta: Chongqing, Roma y Madrid",mgFly02(),0);air=1}
  else if(f==="2026-10-17")h=B("Ruta del día en el centro de Pekín",mgBJ(),0);
- else if(f==="2026-10-18")h=B("Por la mañana: de Pekín a la Gran Muralla",mgBJmuti(),0)+B("Por la tarde: zona olímpica, 798 y Sanlitun",mgBJcity(),1);
  else if(f==="2026-10-19")h=B("Palacio de Verano, Templo del Cielo y aeropuerto",mgBJ19(),0)+B("Vuelo de Pekín a Zhangjiajie",mgFly19(),1);
  else if(["2026-10-20","2026-10-21","2026-10-22","2026-10-23"].includes(f))h=B("Wulingyuan y Zhangjiajie: ruta del día",mgZ(+f.slice(8)),0);
- else if(f==="2026-10-24")h=B("De Zhangjiajie a Furong",mgT24(),0);
  else if(f==="2026-10-25")h=B("En tren de Furong a Fenghuang",mgT25(),0);
  else if(f==="2026-10-26")h=B("Fenghuang y el desfiladero de Feishui",mgFH(),0);
  else if(f==="2026-10-27")h=B("En tren de Fenghuang a Yangshuo",mgT27(),0);
  else if(["2026-10-28","2026-10-29","2026-10-30"].includes(f))h=B("Yangshuo y el río Li: ruta del día",mgYS(+f.slice(8)),0);
  else if(f==="2026-10-31")h=B("En tren de Yangshuo a Chongqing",mgT31(),0)+B("Primera noche en Chongqing",mgCQ(31),1);
  else if(f==="2026-11-01")h=B("Chongqing: ruta del día",mgCQ(1),0);
- else return `<div class="map-art">${mapaSVG(d,n)}</div><p class="map-note">${textoMapa(d)}</p>`;
+
+ if(!h)return "";
  return h+`<p class="map-note">${air?"Los vuelos siguen el arco más corto sobre la Tierra, por eso se curvan en el mapa. Distancias aproximadas.":mgCap}</p>`}
+
+function mapaPanel(d,n){const m=mapasDia(d,n);return m?`<div class="map-panel" id="mapa-${n}" hidden role="region" aria-label="Mapa del ${fechaTexto(d.fecha)}">
+          <button type="button" class="back map-back">← Resumen</button>
+          <div class="day" style="margin-top:14px">${fechaTexto(d.fecha)} · MAPA DEL DÍA</div>
+          <h3>${d.ciudad}</h3>
+          ${m}
+          <p class="gesture">Desliza hacia la derecha para volver al resumen →</p>
+        </div>`:""}
+/* Chinchetas pulsables: globo con el nombre y enlace a Google Maps */
+(()=>{let cur=null;const cerrar=()=>{document.querySelectorAll(".mg-pop").forEach(x=>x.remove());cur=null};
+ const abrir=p=>{const art=p.closest(".map-art");if(!art)return;if(cur===p){cerrar();return}cerrar();cur=p;const a=art.getBoundingClientRect(),c=p.querySelector("circle:not([r='17'])")||p.querySelector("circle,rect"),r=c.getBoundingClientRect(),ll=p.dataset.ll,
+  x=Math.min(Math.max(r.left+r.width/2-a.left,92),a.width-92),y=r.top-a.top,abajo=y<58,d=document.createElement("div");d.className="mg-pop"+(abajo?" abajo":"");d.style.left=x+"px";d.style.top=(abajo?y+r.height+8:y-8)+"px";
+  d.innerHTML=`<b>${p.dataset.t}</b><a href="https://www.google.com/maps/search/?api=1&query=${ll}" target="_blank" rel="noopener">Abrir en Google Maps ↗</a>`;art.appendChild(d)};
+ document.addEventListener("click",e=>{const p=e.target.closest(".mg-pin");if(p){e.preventDefault();abrir(p);return}if(!e.target.closest(".mg-pop"))cerrar()});
+ document.addEventListener("keydown",e=>{const p=e.target.closest&&e.target.closest(".mg-pin");if(p&&(e.key==="Enter"||e.key===" ")){e.preventDefault();abrir(p)}if(e.key==="Escape")cerrar()})})();
 
 const car=document.getElementById("car");
 const progreso=document.getElementById("progreso");
@@ -599,7 +617,7 @@ function generarWeb(irAHoy){
           <h3 class="ttl">${d.titulo}</h3>
           <p class="desc">${d.resumen}</p>
           <button type="button" class="more" aria-expanded="false" aria-controls="detalle-${n}">＋ Más detalles</button>
-          <p class="gesture">Desliza a la derecha para detalles · a la izquierda para el mapa</p>
+          <p class="gesture">Desliza a la derecha para detalles${mapasDia(d,n)?" · a la izquierda para el mapa":""}</p>
         </div>
         <div class="details" id="detalle-${n}" hidden role="region" aria-label="Información ampliada del ${fechaTexto(d.fecha)}">
           <button type="button" class="back">Resumen →</button>
@@ -608,13 +626,7 @@ function generarWeb(irAHoy){
           ${d.detalles.map(([t,p])=>`<section class="detail-block"><h4>${t}</h4><p>${p}</p></section>`).join("")}
           <p class="gesture">Desliza hacia la izquierda para volver ←</p>
         </div>
-        <div class="map-panel" id="mapa-${n}" hidden role="region" aria-label="Mapa del ${fechaTexto(d.fecha)}">
-          <button type="button" class="back map-back">← Resumen</button>
-          <div class="day" style="margin-top:14px">${fechaTexto(d.fecha)} · MAPA DEL DÍA</div>
-          <h3>${d.ciudad}</h3>
-          ${mapasDia(d,n)}
-          <p class="gesture">Desliza hacia la derecha para volver al resumen →</p>
-        </div>
+        ${mapaPanel(d,n)}
       </div>
     </section>`;
   });
@@ -645,7 +657,7 @@ function cambiarPanel(card,tipo,enfocar){
   const details=card.querySelector(".details");
   const mapa=card.querySelector(".map-panel");
   const abrir=tipo!=="resumen";
-  resumen.hidden=abrir; details.hidden=tipo!=="detalle"; mapa.hidden=tipo!=="mapa";
+  resumen.hidden=abrir; details.hidden=tipo!=="detalle"; if(mapa)mapa.hidden=tipo!=="mapa";
   const boton=resumen.querySelector(".more"); boton.setAttribute("aria-expanded",String(tipo==="detalle"));
   const panel=tipo==="detalle"?details:mapa;
   if(abrir){panel.scrollTop=0;if(enfocar)panel.querySelector(".back").focus();}else if(enfocar)boton.focus();
@@ -681,11 +693,11 @@ car.addEventListener("touchend",e=>{
   toque=null;
   if(Math.abs(dx)<65||Math.abs(dx)<Math.abs(dy)*1.6)return;
   const details=card.querySelector(".details"), mapa=card.querySelector(".map-panel");
-  const detalleAbierto=!details.hidden, mapaAbierto=!mapa.hidden;
+  const detalleAbierto=!details.hidden, mapaAbierto=!!mapa&&!mapa.hidden;
   if(dx>0&&mapaAbierto)cambiarPanel(card,"resumen",false);
   else if(dx<0&&detalleAbierto)cambiarPanel(card,"resumen",false);
   else if(dx>0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"detalle",false);
-  else if(dx<0&&!detalleAbierto&&!mapaAbierto)cambiarPanel(card,"mapa",false);
+  else if(dx<0&&!detalleAbierto&&!mapaAbierto&&mapa)cambiarPanel(card,"mapa",false);
 },{passive:true});
 
 car.addEventListener("touchcancel",()=>{toque=null},{passive:true});
