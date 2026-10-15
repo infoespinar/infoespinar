@@ -505,7 +505,9 @@ function mapasDia(d,n){
  // Días 5 y 6 del viaje: ilustraciones propias en formato PNG.
  if(f==="2026-10-20") return `<img class="foto-ampliable" src="fotos/5.png" alt="Ilustración de Zhangjiajie: arroyo y cueva del dragón" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
  if(f==="2026-10-21") return `<img class="foto-ampliable" src="fotos/6.png" alt="Ilustración de Zhangjiajie: montañas de Avatar, ascensor Bailong y teleférico" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
- if(["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-29","2026-10-30","2026-11-01"].includes(f)) return "";
+ if(["2026-10-22","2026-10-23","2026-10-24","2026-10-25","2026-10-28","2026-10-30","2026-11-01"].includes(f)) return "";
+ if(f==="2026-10-29") return `<img class="foto-ampliable" src="fotos/14.jpeg" alt="Ilustración de Yangshuo: Amanecer sobre el " loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
+ if(f==="2026-10-21") return `<img class="foto-ampliable" src="fotos/6.png" alt="Ilustración de Zhangjiajie: montañas de Avatar, ascensor Bailong y teleférico" loading="lazy" style="display:block;width:100%;height:auto;max-height:62vh;object-fit:contain;border-radius:12px;margin-top:14px">`;
  const B=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaGeo(sp,n+"_"+k)}</div>`;
  const V=(t,sp,k)=>`<h4 class="map-cap">${t}</h4><div class="map-art">${mapaVuelo(sp,n+"_"+k)}</div>`;
  let h="",air=0;
